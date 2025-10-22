@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Custom styles */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.hero-bg {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.service-card {
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.about-box {
+  background: rgba(74, 222, 128, 0.9);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .hero-text {
+    text-align: center;
+  }
+}
