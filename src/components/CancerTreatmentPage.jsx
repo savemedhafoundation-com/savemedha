@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import { Star, Play, Phone } from 'lucide-react';
+import DoctorImg from '../assets/Photo/doc.png';
+import Leaf from '../assets/Photo/leaf.png';
+import Virus from '../assets/Photo/virus.png';
+import Dot from '../assets/Photo/dot.png';
+// 👇 Import your triangle image (update path if needed)
+import Triangle from '../assets/Photo/triangle.png'; // ← ADD THIS
 
 export default function CancerTreatmentPage() {
   const [activeVideo, setActiveVideo] = useState(null);
@@ -52,15 +58,17 @@ export default function CancerTreatmentPage() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Left: Logo + Virus */}
             <div className="flex items-center gap-4">
-              <div className="w-20 h-20 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-                <div className="w-16 h-16 bg-white rounded-full overflow-hidden">
-                  <img src="https://placehold.co/64x64" alt="Logo" className="w-full h-full object-cover" />
+              <div className="w-40 h-40 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
+                <div className="w-40 h-40 bg-white rounded-full overflow-hidden">
+                  <img src={Leaf} alt="Logo" className="w-full h-full object-cover" />
                 </div>
               </div>
-              <img src="https://placehold.co/150x80" alt="Cancer cells" className="h-20" />
+              <img src={Virus} alt="Cancer cells" className="h-40" />
             </div>
-            
+
+            {/* Center: Text + Button */}
             <div className="text-center">
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
                 "OUR GOAL" - CANCER FREE WORLD
@@ -72,9 +80,37 @@ export default function CancerTreatmentPage() {
               </button>
             </div>
 
-            <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-gray-200">
-              <img src="https://placehold.co/80x80" alt="Doctor" className="w-full h-full object-cover" />
-            </div>
+            {/* Right: Combined Doctor Card */}
+            <div className="relative w-90 h-60 bg-white rounded-lg overflow-hidden">
+      {/* Circular Doctor Photo with Light Green Background */}
+      <div className="absolute left-0 top-0 w-40 h-40 rounded-full overflow-hidden border-4 border-gray-200">
+        <div className="w-full h-full bg-green-100 flex items-center justify-center">
+          <img
+            src={DoctorImg}
+            alt="Doctor"
+            className="w-full h-full object-cover grayscale"
+          />
+        </div>
+      </div>
+
+      {/* Dot Grid Pattern (Top-Right Corner) */}
+      <div className="absolute top-1 right-0 w-40 h-22">
+        <img
+          src={Dot}
+          alt="Dot Pattern"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Green Triangle (Bottom-Right Corner) */}
+      <div className="absolute bottom-10 right-0 w-16 h-16  origin-bottom-right">
+        <img
+          src={Triangle}
+          alt="Green Triangle"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </div>
           </div>
         </div>
       </header>
@@ -84,7 +120,7 @@ export default function CancerTreatmentPage() {
         <h2 className="text-4xl font-bold text-center mb-8">
           PATIENT <span className="text-green-500">SUCCESS STORY</span>
         </h2>
-        
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {patientStories.map((story) => (
             <div key={story.id} className="flex flex-col">
