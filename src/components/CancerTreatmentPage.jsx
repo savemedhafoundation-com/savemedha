@@ -83,7 +83,7 @@ export default function CancerTreatmentPage() {
             {/* Right: Combined Doctor Card */}
             <div className="relative w-90 h-60 bg-white rounded-lg overflow-hidden">
       {/* Circular Doctor Photo with Light Green Background */}
-      <div className="absolute left-0 top-0 w-40 h-40 rounded-full overflow-hidden border-4 border-gray-200">
+      <div className="absolute left-0 top-0 w-60 h-60 rounded-full overflow-hidden border-4 border-gray-200">
         <div className="w-full h-full bg-green-100 flex items-center justify-center">
           <img
             src={DoctorImg}
@@ -94,7 +94,7 @@ export default function CancerTreatmentPage() {
       </div>
 
       {/* Dot Grid Pattern (Top-Right Corner) */}
-      <div className="absolute top-1 right-0 w-40 h-22">
+      <div className="absolute top-1 left-50 w-50 h-20">
         <img
           src={Dot}
           alt="Dot Pattern"
@@ -103,7 +103,7 @@ export default function CancerTreatmentPage() {
       </div>
 
       {/* Green Triangle (Bottom-Right Corner) */}
-      <div className="absolute bottom-10 right-0 w-16 h-16  origin-bottom-right">
+      <div className="absolute bottom-0 left-60 w-32 h-32  origin-bottom-right">
         <img
           src={Triangle}
           alt="Green Triangle"
