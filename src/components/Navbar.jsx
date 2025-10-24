@@ -1,13 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { FaCalendarAlt } from "react-icons/fa";
+import { FiPhone } from "react-icons/fi";
+import { IoLocationSharp } from "react-icons/io5";
+import { MdOutlineMailOutline } from "react-icons/md";
+import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
 
-import { FaCalendarAlt } from 'react-icons/fa';
-import { FiPhone } from 'react-icons/fi';
-import { IoLocationSharp } from 'react-icons/io5';
-import { MdOutlineMailOutline } from 'react-icons/md';
-
-import savemedhaLogo from '../assets/Photo/SavemedhaLogo.png';
-
-// Custom colors matching the design
 const COLORS = {
   NAV_GREEN: "#66b300",
   HOME_BLUE: "#003399",
@@ -31,51 +28,51 @@ export default function Navbar() {
 
   return (
     <header className="font-sans w-full">
-      {/* Top Section with White Background */}
+      {/* ===============================
+          TOP SECTION
+      =============================== */}
       <div
-  className="px-4 sm:px-8 lg:px-12 py-3"
-  style={{
-    background: 'linear-gradient(to right, #ffffff, #e6ffe6)',
-  }}
->
-        <div className="flex gap-6">
-          {/* Logo - Spans both rows */}
-          <div className="flex-shrink-0">
+        className="px-4 sm:px-6 lg:px-12 py-3"
+        style={{
+          background: "linear-gradient(to right, #ffffff, #e6ffe6)",
+        }}
+      >
+        <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+          {/* Logo */}
+          <div className="flex-shrink-0 flex justify-center md:justify-start">
             <img
               src={savemedhaLogo}
               alt="Save Medha Foundation Logo"
-              className="h-24 w-auto object-contain"
+              className="h-20 sm:h-24 w-auto object-contain"
             />
           </div>
 
-          {/* Right side content with 2 rows */}
-          <div className="flex-1 flex flex-col">
-            {/* Row 1: Phone and Email (Right Aligned) */}
-            <div className="flex items-center justify-end gap-6 mb-3 border-b border-gray-200 pb-3">
-              {/* Phone */}
+          {/* ===============================
+              RIGHT CONTENT (STACKED ON SMALL)
+          =============================== */}
+          <div className="flex-1 flex flex-col gap-3">
+            {/* === Row 1: Phone + Email === */}
+            <div className="flex flex-wrap justify-center md:justify-end items-center gap-4 border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2 text-sm">
                 <FiPhone className="text-gray-700" size={16} />
                 <span className="font-semibold text-gray-900">9800808595</span>
               </div>
-
-              {/* Email */}
               <div className="flex items-center gap-2 text-sm">
                 <MdOutlineMailOutline className="text-blue-600" size={20} />
-                <span className="font-medium text-blue-600">
+                <span className="font-medium text-blue-600 truncate max-w-[180px] sm:max-w-none">
                   savemedhafoundation@gmail.com
                 </span>
               </div>
             </div>
 
-            {/* Row 2: Controls on Right */}
-            <div className="flex flex-wrap items-center justify-end gap-4">
+            {/* === Row 2: Search, Language, Date, Location, Appointment === */}
+            <div className="flex flex-wrap justify-center md:justify-end items-center gap-3 md:gap-4">
               {/* Search */}
-              <div className="relative">
+              <div className="relative w-[180px] sm:w-[200px]">
                 <input
                   type="text"
-                  placeholder="search"
-                  className="w-48 px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                  aria-label="Search"
+                  placeholder="Search"
+                  className="w-full px-3 py-2 text-sm text-gray-700 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
                 <button
                   type="submit"
@@ -97,7 +94,7 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* Language Dropdown */}
+              {/* Language */}
               <select className="px-3 py-2 border border-gray-300 rounded bg-white text-sm text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500">
                 <option>Select Language</option>
                 <option>English</option>
@@ -106,32 +103,34 @@ export default function Navbar() {
                 <option>Urdu</option>
               </select>
 
-              {/* Date with Calendar Icon */}
-              <div className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-900">
-                <FaCalendarAlt className="text-blue-600" size={18} />
+              {/* Date */}
+              <div className="flex items-center gap-2 px-2 text-sm font-medium text-gray-900">
+                <FaCalendarAlt className="text-blue-600" size={16} />
                 <span className="whitespace-nowrap">
                   {new Intl.DateTimeFormat("en-US", {
-                    weekday: "long",
-                    month: "long",
+                    weekday: "short",
+                    month: "short",
                     day: "numeric",
                     year: "numeric",
                   }).format(new Date())}
                 </span>
               </div>
 
-              {/* Location Button */}
-              <button className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-300 rounded hover:bg-gray-50 transition-colors">
+              {/* Location */}
+              <button className="flex items-center gap-2 px-3 py-2 bg-white border-2 border-gray-300 rounded hover:bg-gray-50 transition">
                 <IoLocationSharp className="text-red-600" size={18} />
                 <span className="text-sm font-semibold text-gray-900">
                   Location
                 </span>
               </button>
 
-              {/* Book Appointment Button */}
+              {/* Appointment Button */}
               <button
-                className="px-5 py-2 text-sm text-white font-bold rounded transition-colors whitespace-nowrap"
+                className="px-5 py-2 text-sm text-white font-bold rounded whitespace-nowrap transition-colors"
                 style={{ backgroundColor: COLORS.ACTION_ORANGE }}
-                onMouseEnter={(e) => (e.target.style.backgroundColor = "#e05529")}
+                onMouseEnter={(e) =>
+                  (e.target.style.backgroundColor = "#e05529")
+                }
                 onMouseLeave={(e) =>
                   (e.target.style.backgroundColor = COLORS.ACTION_ORANGE)
                 }
@@ -143,74 +142,83 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navigation Bar - Green with Blue HOME */}
+      {/* ===============================
+          NAVIGATION BAR
+      =============================== */}
       <div
-        className="text-white px-4 sm:px-8 lg:px-12 relative"
+        className="text-white px-4 sm:px-8 lg:px-12"
         style={{ backgroundColor: COLORS.NAV_GREEN }}
       >
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden py-4 cursor-pointer"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div className="flex items-center justify-between">
+          {/* Hamburger Button (Mobile) */}
+          <button
+            className="md:hidden py-4"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.name}
-              href={`#${item.name.toLowerCase().replace(/ /g, "-")}`}
-              className={`flex items-center gap-1 px-5 py-4 text-sm font-bold uppercase transition-colors ${
-                item.isActive
-                  ? "text-white"
-                  : "text-white hover:bg-black hover:bg-opacity-10"
-              }`}
-              style={
-                item.isActive ? { backgroundColor: COLORS.HOME_BLUE } : {}
-              }
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <span>{item.name}</span>
-              {item.hasDropdown && (
-                <svg
-                  className="w-3 h-3 ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              )}
-            </a>
-          ))}
-        </nav>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <nav className="md:hidden absolute top-full left-0 w-full z-50 shadow-xl" style={{ backgroundColor: COLORS.NAV_GREEN }}>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.name}
                 href={`#${item.name.toLowerCase().replace(/ /g, "-")}`}
-                className={`flex items-center justify-between px-4 py-4 text-sm font-bold uppercase border-b border-white border-opacity-10 ${
-                  item.isActive ? "bg-blue-900" : "hover:bg-black hover:bg-opacity-10"
+                className={`flex items-center gap-1 px-5 py-4 text-sm font-bold uppercase transition ${
+                  item.isActive
+                    ? "text-white"
+                    : "text-white hover:bg-[#013970] hover:bg-opacity-10"
+                }`}
+                style={
+                  item.isActive ? { backgroundColor: COLORS.HOME_BLUE } : {}
+                }
+              >
+                <span>{item.name}</span>
+                {item.hasDropdown && (
+                  <svg
+                    className="w-3 h-3 ml-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMenuOpen && (
+          <nav
+            className="md:hidden flex flex-col w-full border-t border-green-700"
+            style={{ backgroundColor: COLORS.NAV_GREEN }}
+          >
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.name}
+                href={`#${item.name.toLowerCase().replace(/ /g, "-")}`}
+                className={`flex items-center justify-between px-5 py-3 text-sm font-bold uppercase border-b border-white border-opacity-10 ${
+                  item.isActive
+                    ? "bg-blue-900 text-white"
+                    : "hover:bg-black hover:bg-opacity-10"
                 }`}
               >
                 <span>{item.name}</span>
@@ -234,4 +242,4 @@ export default function Navbar() {
       </div>
     </header>
   );
-} 
+}
