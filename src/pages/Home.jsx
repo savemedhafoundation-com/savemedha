@@ -1,3 +1,4 @@
+import { Clock } from 'lucide-react';
 import AboutSection from '../components/AboutSection';
 import CancerTreatmentPage from '../components/CancerTreatmentPage';
 import Footer from '../components/Footer';
@@ -14,6 +15,7 @@ export default function Home() {
       <VolunteerAndSupportSection />
       <AboutSection />
       <Footer />
+      <Clock />
     </div>
   );
 }

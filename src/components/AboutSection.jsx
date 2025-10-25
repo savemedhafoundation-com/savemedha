@@ -1,6 +1,11 @@
+import BgOffice from '../assets/Photo/background.jpg';
+
 export default function AboutSection() {
   return (
-    <section className="py-16 relative">
+    <section
+      className="py-16 relative bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${BgOffice})` }}
+    >
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center">
           <div className="lg:w-1/2 mb-10 lg:mb-0">
@@ -21,13 +26,6 @@ export default function AboutSection() {
             </div>
           </div>
           
-          <div className="lg:w-1/2">
-            <img 
-              src="https://via.placeholder.com/600x400?text=Office+with+logo+on+wall" 
-              alt="Save Medha Foundation Office" 
-              className="w-full h-auto rounded"
-            />
-          </div>
         </div>
       </div>
     </section>

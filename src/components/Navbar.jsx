@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { IoLocationSharp } from "react-icons/io5";
@@ -25,6 +25,14 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header className="font-sans w-full">
@@ -146,7 +154,9 @@ export default function Navbar() {
           NAVIGATION BAR
       =============================== */}
       <div
-        className="text-white px-4 sm:px-8 lg:px-12"
+        className={`text-white px-4 sm:px-8 lg:px-12 sticky top-0 z-50 ${
+          scrolled ? "shadow-md" : ""
+        }`}
         style={{ backgroundColor: COLORS.NAV_GREEN }}
       >
         <div className="flex items-center justify-between">

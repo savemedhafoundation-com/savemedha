@@ -1,4 +1,5 @@
 import React from 'react';
+import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
 
 import {
   ArrowRight,
@@ -33,9 +34,9 @@ const Footer = () => {
             
             {/* Column 1 - Logo and Tagline */}
             <div className="flex flex-col space-y-6">
-              {/* Logo Placeholder */}
-              <div className="w-64 h-32 bg-gray-700 border-2 border-dashed border-gray-500 rounded flex items-center justify-center">
-                <span className="text-gray-400 text-sm text-center px-4">Logo Image<br/>Placeholder</span>
+              {/* Logo */}
+              <div className="w-64 h-32 rounded flex items-center justify-center">
+                <img src={SmfLogoWhite} alt="Save Medha Foundation logo" className="max-h-28 w-auto object-contain" />
               </div>
 
               {/* Tagline */}
@@ -78,7 +79,7 @@ const Footer = () => {
               <div className="relative">
                 <button className="w-full bg-gray-200 hover:bg-gray-100 text-gray-700 font-semibold text-sm py-4 px-6 rounded shadow-md transition-all flex items-center justify-between group">
                   <span>BOOK AN APPOINTMENT TODAY</span>
-                  <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center absolute -right-2 group-hover:bg-green-700 transition-colors">
+                  <div className="w-10 h-10  bg-green-800 rounded-full flex items-center justify-center absolute -right-0.5 group-hover:bg-green-900 transition-colors cursor-pointer">
                     <ArrowRight className="w-6 h-6 text-white" />
                   </div>
                 </button>

@@ -92,7 +92,7 @@ const HeroBanner = () => {
           <button
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`bg-[#74C425] text-white px-10 py-3 font-bold text-xl tracking-wide rounded-sm transition-transform duration-300 ${
+            className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-10 py-3 font-bold  text-xl tracking-wide rounded-sm transition-transform duration-300 ${
               isHovered ? "scale-105 shadow-lg" : "scale-100 shadow-md"
             }`}
           >

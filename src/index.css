@@ -5,6 +5,11 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+/* Global button font: Open Sans (loaded via index.html) */
+button, .btn {
+  font-family: 'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif !important;
+}
+
 .hero-bg {
   background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
 }
@@ -18,7 +23,8 @@ body {
 }
 
 .about-box {
-  background: rgba(74, 222, 128, 0.9);
+  /* Linear gradient from light to dark green */
+  background: linear-gradient(135deg, #74C425 0%, #385E12 100%);
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -28,4 +34,24 @@ body {
   .hero-text {
     text-align: center;
   }
+}
+
+/* Larger, styled horizontal scrollbar for testimonials */
+.testimonial-scroller {
+  scrollbar-width: auto; /* Firefox */
+  scrollbar-color: #34a853 #eaf7ea; /* thumb track */
+}
+.testimonial-scroller::-webkit-scrollbar {
+  height: 12px; /* thicker horizontal bar */
+}
+.testimonial-scroller::-webkit-scrollbar-track {
+  background: #eaf7ea;
+  border-radius: 9999px;
+}
+.testimonial-scroller::-webkit-scrollbar-thumb {
+  background: #34a853;
+  border-radius: 9999px;
+}
+.testimonial-scroller::-webkit-scrollbar-thumb:hover {
+  background: #2f994b;
 }
