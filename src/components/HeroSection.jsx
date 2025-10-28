@@ -54,7 +54,6 @@ const HeroBanner = () => {
   }, []);
 
   const isMobile = deviceType === "mobile";
-  const isTablet = deviceType === "tablet";
 
   return (
     <div className="flex flex-col lg:flex-row w-full bg-white overflow-hidden">
@@ -109,19 +108,21 @@ const HeroBanner = () => {
 
       {/* RIGHT IMAGE PANEL */}
       <div
-        className={`relative flex justify-center items-start gap-4 ${
-          isMobile ? "w-full h-[100px] p-4" : "flex-2 p-2 h-[400px] "
-        }`} // 👈 added for debugging
+        className={`relative flex ${
+          isMobile
+            ? "w-full flex-col items-center gap-6 px-6 pt-8 pb-4"
+            : "flex-1 items-center justify-center gap-8 px-10 py-8"
+        }`}
       >
         <img
           src={People}
           alt="People"
-          className="object-cover  w-[45%] h-[70%] md:h-[100%]"
+          className="object-cover rounded-xl shadow-lg w-[60vw] max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[400px]"
         />
         <img
           src={Earth}
           alt="Earth"
-          className="object-contain w-[45%] h-[70%] md:h-[100%]"
+          className="object-contain rounded-xl shadow-lg w-[60vw] max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[400px] lg:-mt-8"
         />
         {!isMobile && (
           <div className="absolute bottom-5 right-5 opacity-40">

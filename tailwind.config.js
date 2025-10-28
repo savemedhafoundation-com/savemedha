@@ -8,6 +8,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif','Open Sans'],
+        poppins: ['Poppins', 'sans-serif'],       
+        source: ['"Source Sans 3"', 'sans-serif'],
       },
     },
   },

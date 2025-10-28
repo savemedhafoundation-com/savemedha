@@ -60,8 +60,8 @@ const VolunteerAndSupportSection = () => {
       {/* Volunteer Section */}
       <div className="relative bg-gray-50 py-12 px-4 md:px-8 lg:px-16 overflow-hidden">
         {/* Left background image: JOINED */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-[42%]">
-          <img src={Hands} alt="Joined" className="w-50% h-full object-cover" />
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-[35%]">
+          <img src={Hands} alt="Joined" className="w-45% h-full object-cover" />
         </div>
         {/* Right background image: HANDS */}
         <div className="hidden lg:block absolute inset-y-0 right-0 w-[42%]">
@@ -72,8 +72,8 @@ const VolunteerAndSupportSection = () => {
           />
         </div>
         {/* Soft white gradients over images to improve text contrast */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-[45%] bg-gradient-to-r from-white to-transparent pointer-events-none" />
-        <div className="hidden lg:block absolute inset-y-0 right-0 w-[45%] bg-gradient-to-l from-white to-transparent pointer-events-none" />
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-[45%] bg-gradient-to-r from-gray to-transparent pointer-events-none" />
+        <div className="hidden lg:block absolute inset-y-0 right-0 w-[45%] bg-gradient-to-l from-gray to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Left Side - Headings and copy (moved left as requested) */}
