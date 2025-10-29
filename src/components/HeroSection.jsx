@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Earth from "../assets/Photo/earth.png";
 import People from "../assets/Photo/people.png";
 import imageCancerCare from "../assets/Photo/5.jpg";
@@ -40,50 +40,28 @@ const DotPattern = () => (
 
 const HeroBanner = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const [deviceType, setDeviceType] = useState("desktop");
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) setDeviceType("mobile");
-      else if (window.innerWidth <= 1024) setDeviceType("tablet");
-      else setDeviceType("desktop");
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const isMobile = deviceType === "mobile";
 
   return (
-    <div className="flex flex-col lg:flex-row w-full bg-white overflow-hidden">
+    <div className="flex flex-row w-full bg-white overflow-hidden">
       {/* LEFT TEXT PANEL */}
-      <div
-        className={`relative ${
-          isMobile
-            ? "w-full   text-center"
-            : "lg:w-[45%] xl:w-[603px] py-10 px-18 text-left"
-        } flex flex-col justify-top`}
-      >
-        {!isMobile && (
-          <div className="absolute top-1 left-5 opacity-40">
-            <DotPattern />
-          </div>
-        )}
+      <div className="relative w-[600px] pt-16 pl-14 text-left flex flex-col justify-start">
+        <div className="absolute top-4 left-6 opacity-40">
+          <DotPattern />
+        </div>
 
         <div className="max-w-[603px]">
           <div className="inline-block bg-[#74C425] text-white px-1 py-1 rounded-sm mb-6 font-bold uppercase tracking-wide text-[25px]">
             Natural Immunotherapy
           </div>
 
-          <h1 className="font-serif font-extrabold text-black leading-tight text-[2rem] md:text-[2.5rem] lg:text-[3rem]">
+          <h1 className="font-serif font-extrabold text-black leading-tight text-[3rem]">
             Empowering lives,
           </h1>
-          <h2 className="font-serif font-extrabold text-[#74C425] leading-tight text-[3rem] md:text-[2.2rem] lg:text-[2.5rem] mb-4">
+          <h2 className="font-serif font-extrabold text-[#74C425] leading-tight text-[2.5rem] mb-4">
             Saving futures
           </h2>
 
-          <p className="font-sans text-[16px] md:text-[17px] font-semibold mb-6">
+          <p className="font-sans text-[17px] font-semibold mb-6">
             Fighting to make a{" "}
             <span className="text-blue-600 font-bold">CANCER FREE WORLD</span>
           </p>
@@ -99,36 +77,26 @@ const HeroBanner = () => {
           </button>
         </div>
 
-        {!isMobile && (
-          <div className="absolute bottom-5 right-5 opacity-40">
-            <DotPattern />
-          </div>
-        )}
+        <div className="absolute bottom-5 right-5 opacity-40">
+          <DotPattern />
+        </div>
       </div>
 
       {/* RIGHT IMAGE PANEL */}
-      <div
-        className={`relative flex ${
-          isMobile
-            ? "w-full flex-col items-center gap-6 px-6 pt-8 pb-4"
-            : "flex-1 items-center justify-center gap-8 px-10 py-8"
-        }`}
-      >
+      <div className="relative flex flex-1 items-center justify-center gap-8 pl-8 pb-8">
         <img
           src={People}
           alt="People"
-          className="object-cover rounded-xl shadow-lg w-[60vw] max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[400px]"
+          className="object-cover  max-w-[420px]"
         />
         <img
           src={Earth}
           alt="Earth"
-          className="object-contain rounded-xl shadow-lg w-[60vw] max-w-[240px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[400px] lg:-mt-8"
+          className="object-contain  max-w-[460px] pl-4"
         />
-        {!isMobile && (
-          <div className="absolute bottom-5 right-5 opacity-40">
-            <DotPattern />
-          </div>
-        )}
+        <div className="absolute bottom-5 right-5 opacity-40">
+          <DotPattern />
+        </div>
       </div>
     </div>
   );
@@ -167,7 +135,7 @@ const ServicesSection = () => {
 
   return (
     <section className="py-16 bg-white">
-      <div className="container mx-auto px-6">
+      <div className="w-full">
         {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold relative inline-block">
@@ -180,11 +148,11 @@ const ServicesSection = () => {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-4 gap-8">
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer bg-gray-50"
+              className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
             >
               {/* Image */}
               <div className="relative">
@@ -195,11 +163,11 @@ const ServicesSection = () => {
                 />
 
                 {/* Description - appears only on hover */}
-               <div className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out px-4">
-  <p className="text-sm text-white bg-[#A51111]/40 backdrop-blur-sm px-3 py-2 rounded-md shadow-md text-center border border-[#A51111]/50">
-    {service.description}
-  </p>
-</div>
+                <div className="absolute inset-0 flex items-center justify-center bg-[#A51111]/60 backdrop-blur-sm text-white px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                  <p className="text-sm leading-relaxed text-center">
+                    {service.description}
+                  </p>
+                </div>
 
 
               </div>

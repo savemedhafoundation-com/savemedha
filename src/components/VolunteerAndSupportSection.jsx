@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import Icon2 from "../assets/Photo/ICON 2.png";
 import CharityJar from "../assets/Photo/CHARITY.jpg";
 import Hands from "../assets/Photo/HANDS.png";
@@ -56,15 +56,15 @@ const VolunteerAndSupportSection = () => {
   };
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-gradient-to-b from-green-50 to-green-50">
       {/* Volunteer Section */}
-      <div className="relative bg-gray-50 py-12 px-4 md:px-8 lg:px-16 overflow-hidden">
+      <div className="relative bg-gradient-to-b from-green-50 to-green-50 py-12 px-16 overflow-hidden">
         {/* Left background image: JOINED */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-[35%]">
+        <div className="absolute inset-y-0 left-0 w-[35%] pl-35 bg-gradient-to-b from-green-50 to-green-1">
           <img src={Hands} alt="Joined" className="w-45% h-full object-cover" />
         </div>
         {/* Right background image: HANDS */}
-        <div className="hidden lg:block absolute inset-y-0 right-0 w-[42%]">
+        <div className="absolute inset-y-0 right-0 w-[45%] pr-30 bg-gradient-to-b from-green-50 to-green-50">
           <img
             src={Joined}
             alt="Hands"
@@ -72,17 +72,17 @@ const VolunteerAndSupportSection = () => {
           />
         </div>
         {/* Soft white gradients over images to improve text contrast */}
-        <div className="hidden lg:block absolute inset-y-0 left-0 w-[45%] bg-gradient-to-r from-gray to-transparent pointer-events-none" />
-        <div className="hidden lg:block absolute inset-y-0 right-0 w-[45%] bg-gradient-to-l from-gray to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-[45%] bg-gradient-to-r from-gray to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-[45%] bg-gradient-to-l from-gray to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-2 gap-8 items-start">
             {/* Left Side - Headings and copy (moved left as requested) */}
-            <div className="relative z-20 flex flex-col items-center lg:col-span-2">
+            <div className="relative z-20 flex flex-col items-center col-span-2">
               <div className="text-center mb-6">
-                <h1 className="font-black text-gray-900 mb-2 leading-tight uppercase tracking-tight text-[34px] md:text-[44px] lg:text-[56px] xl:text-[64px] 2xl:text-[72px] lg:whitespace-nowrap">
+                <h1 className="font-black text-gray-900 mb-2 leading-tight uppercase tracking-tight text-[64px] whitespace-nowrap">
                   BECOME A VOLUNTEER!
                 </h1>
-                <h2 className="font-extrabold leading-tight text-[30px] md:text-[40px] lg:text-[48px] text-[#7CB342] mb-4">
+                <h2 className="font-extrabold leading-tight text-[48px] text-[#7CB342] mb-4">
                   JOIN OUR TEAM
                 </h2>
                 <p className="text-gray-800 text-base mb-1">
@@ -97,9 +97,7 @@ const VolunteerAndSupportSection = () => {
                 <p className="text-gray-800 text-base mb-6">
                   that helps the body to defeat cancer from within.
                 </p>
-                <div className="flex justify-center mb-4">
-                  {" "}
-                  {/* 👈 changed from justify-center */}
+                <div className="flex justify-center mb-4 ">
                   <img
                     src={Joinus}
                     alt="JOIN US"
@@ -117,15 +115,15 @@ const VolunteerAndSupportSection = () => {
             </div>
 
             {/* Right Side now acts as spacer (images are absolutely positioned) */}
-            <div className="hidden lg:block" />
+            <div className="block" />
           </div>
         </div>
       </div>
 
       {/* Support Our Cause Section */}
-      <div className="py-12 px-4 md:px-8 lg:px-16 bg-white">
+      <div className="py-12 px-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-2 gap-12 items-start">
             {/* Left Side - Title and Statistics */}
             <div>
               {/* Green Line Accent */}
@@ -134,7 +132,7 @@ const VolunteerAndSupportSection = () => {
                 style={{ backgroundColor: "#7CB342" }}
               ></div>
 
-              <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-3 leading-tight">
+              <h2 className="text-6xl font-black text-gray-900 mb-3 leading-tight">
                 SUPPORT OUR CAUSE
               </h2>
               <p
@@ -147,8 +145,8 @@ const VolunteerAndSupportSection = () => {
               {/* Cancer Statistics Bar with icon outside on the right */}
               <div className="flex items-center gap-6 mb-6">
                 {/* Percentage bar */}
-                <div className="bg-black rounded-lg p-5 md:p-6 inline-block flex-1">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="bg-black rounded-lg p-6 inline-block flex-1">
+                  <div className="grid grid-cols-4 gap-6">
                     {cancerStats.map((stat, idx) => (
                       <div
                         key={idx}
@@ -167,7 +165,7 @@ const VolunteerAndSupportSection = () => {
                   </div>
                 </div>
                 {/* Icon outside the bar */}
-                <div className="hidden sm:flex items-center justify-center pt-15 w-30 h-30 rounded-full bg-white ">
+                <div className="flex items-center justify-center pt-15 w-30 h-30 rounded-full bg-white ">
                   <img
                     src={Icon2}
                     alt="Healthcare icon"
@@ -178,7 +176,7 @@ const VolunteerAndSupportSection = () => {
 
               {/* Description Text */}
               <p className="text-gray-700 text-base leading-relaxed mb-4">
-                Fighting cancer the natural way — through{" "}
+                Fighting cancer the natural way - through{" "}
                 <span
                   className="italic font-semibold"
                   style={{ color: "#7CB342" }}

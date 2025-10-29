@@ -24,7 +24,6 @@ const NAV_ITEMS = [
 ];
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -40,18 +39,18 @@ export default function Navbar() {
           TOP SECTION
       =============================== */}
       <div
-        className="px-4 sm:px-6 lg:px-12 py-3"
+        className="px-12 py-3"
         style={{
           background: "linear-gradient(to right, #ffffff, #e6ffe6)",
         }}
       >
-        <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+        <div className="flex flex-row items-start gap-8">
           {/* Logo */}
-          <div className="flex-shrink-0 flex justify-center md:justify-start">
+          <div className="flex-shrink-0 flex justify-start">
             <img
               src={savemedhaLogo}
               alt="Save Medha Foundation Logo"
-              className="h-20 sm:h-24 w-auto object-contain"
+              className="h-24 w-auto object-contain"
             />
           </div>
 
@@ -60,23 +59,23 @@ export default function Navbar() {
           =============================== */}
           <div className="flex-1 flex flex-col gap-3">
             {/* === Row 1: Phone + Email === */}
-            <div className="flex flex-wrap justify-center md:justify-end items-center gap-4 border-b border-gray-200 pb-2">
+            <div className="flex flex-wrap justify-end items-center gap-4 border-b border-gray-200 pb-2">
               <div className="flex items-center gap-2 text-sm">
                 <FiPhone className="text-gray-700" size={16} />
                 <span className="font-semibold text-gray-900">9800808595</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <MdOutlineMailOutline className="text-blue-600" size={20} />
-                <span className="font-medium text-blue-600 truncate max-w-[180px] sm:max-w-none">
+                <span className="font-medium text-blue-600 truncate max-w-none">
                   savemedhafoundation@gmail.com
                 </span>
               </div>
             </div>
 
             {/* === Row 2: Search, Language, Date, Location, Appointment === */}
-            <div className="flex flex-wrap justify-center md:justify-end items-center gap-3 md:gap-4">
+            <div className="flex flex-wrap justify-end items-center gap-4">
               {/* Search */}
-              <div className="relative w-[180px] sm:w-[200px]">
+              <div className="relative w-[200px]">
                 <input
                   type="text"
                   placeholder="Search"
@@ -154,35 +153,14 @@ export default function Navbar() {
           NAVIGATION BAR
       =============================== */}
       <div
-        className={`text-white px-4 sm:px-8 lg:px-12 sticky top-0 z-50 ${
+        className={`text-white px-12 sticky top-0 z-50 ${
           scrolled ? "shadow-md" : ""
         }`}
         style={{ backgroundColor: COLORS.NAV_GREEN }}
       >
         <div className="flex items-center justify-between">
-          {/* Hamburger Button (Mobile) */}
-          <button
-            className="md:hidden py-4"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center">
+          {/* Navigation */}
+          <nav className="flex items-center">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.name}
@@ -214,41 +192,6 @@ export default function Navbar() {
             ))}
           </nav>
         </div>
-
-        {/* Mobile Navigation Menu */}
-        {isMenuOpen && (
-          <nav
-            className="md:hidden flex flex-col w-full border-t border-green-700"
-            style={{ backgroundColor: COLORS.NAV_GREEN }}
-          >
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.name}
-                href={`#${item.name.toLowerCase().replace(/ /g, "-")}`}
-                className={`flex items-center justify-between px-5 py-3 text-sm font-bold uppercase border-b border-white border-opacity-10 ${
-                  item.isActive
-                    ? "bg-blue-900 text-white"
-                    : "hover:bg-black hover:bg-opacity-10"
-                }`}
-              >
-                <span>{item.name}</span>
-                {item.hasDropdown && (
-                  <svg
-                    className="w-3 h-3"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
-              </a>
-            ))}
-          </nav>
-        )}
       </div>
     </header>
   );

@@ -7,8 +7,8 @@ export default function AboutSection() {
       style={{ backgroundImage: `url(${BgOffice})` }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center">
-          <div className="lg:w-1/2 mb-10 lg:mb-0">
+        <div className="flex flex-row items-center">
+          <div className="w-1/2 mb-0">
             <div className="about-box">
               <h2 className="text-3xl font-bold text-white mb-6">ABOUT OUR FOUNDATION</h2>
               <p className="text-white mb-6">

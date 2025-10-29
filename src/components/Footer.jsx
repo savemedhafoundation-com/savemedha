@@ -28,9 +28,9 @@ const Footer = () => {
   return (
     <footer className="bg-gray-800 text-white">
       {/* Main Footer Content */}
-      <div className="px-4 md:px-8 lg:px-16 py-12">
+      <div className="px-16 py-12">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          <div className="grid grid-cols-4 gap-12">
             
             {/* Column 1 - Logo and Tagline */}
             <div className="flex flex-col space-y-6">
@@ -143,7 +143,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Copyright Bar */}
-      <div className="bg-black py-4 px-4 md:px-8 lg:px-16">
+      <div className="bg-black py-4 px-16">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-white text-base">
             Copyright ©2025 Save Medha Foundation

@@ -6,9 +6,9 @@ import {
   Play,
   Star,
 } from "lucide-react";
+import { MdAddCall } from "react-icons/md";
 
 import DoctorImg from "../assets/Photo/doc.png";
-import Dot from "../assets/Photo/dot.png";
 import Leaf from "../assets/Photo/leaf.png";
 import Computerimg from "../assets/Photo/Remote work and video call with colleagues.png";
 import Triangle from "../assets/Photo/triangle.png";
@@ -16,6 +16,17 @@ import Virus from "../assets/Photo/virus.png";
 import Review1 from "../assets/Photo/review1.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
+
+const DotPattern = () => (
+  <div className="grid grid-cols-8 gap-[6px]">
+    {Array.from({ length: 48 }).map((_, idx) => (
+      <span
+        key={idx}
+        className="h-[2px] w-[3px] rounded-full bg-[#74C425]"
+      />
+    ))}
+  </div>
+);
 
 const getInitial = (name) => {
   if (!name) return "?";
@@ -142,7 +153,12 @@ export default function CancerTreatmentPage() {
     { id: 2, duration: "19:52", label: "FEEDBACK 2", color: "green" },
     { id: 3, duration: "6:04", label: "FEEDBACK 3", color: "green" },
     { id: 4, duration: "7:45", label: "FEEDBACK 4", color: "green" },
-    { id: 5, duration: "45:24", label: "FEEDBACK 5", color: "green" },
+    { id: 5, duration: "12:18", label: "FEEDBACK 5", color: "blue" },
+    { id: 6, duration: "9:16", label: "FEEDBACK 6", color: "green" },
+    { id: 7, duration: "5:32", label: "FEEDBACK 7", color: "blue" },
+    { id: 8, duration: "14:41", label: "FEEDBACK 8", color: "green" },
+    { id: 9, duration: "11:05", label: "FEEDBACK 9", color: "blue" },
+    { id: 10, duration: "4:57", label: "FEEDBACK 10", color: "green" },
   ];
 
   const initialHealthVideos = useMemo(
@@ -184,6 +200,56 @@ export default function CancerTreatmentPage() {
         viewCount: 8,
         viewCountLabel: "8 views",
         publishedAtLabel: "4 months ago",
+        thumbnail: DEFAULT_THUMBNAIL,
+        videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
+      },
+      {
+        id: "placeholder-5",
+        title: "Rebuilding Immunity: Lifestyle Guidance from Save Medha Experts",
+        duration: "5:12",
+        viewCount: 112,
+        viewCountLabel: "112 views",
+        publishedAtLabel: "3 months ago",
+        thumbnail: DEFAULT_THUMBNAIL,
+        videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
+      },
+      {
+        id: "placeholder-6",
+        title: "Understanding Detox Therapy for Cancer Prevention",
+        duration: "7:08",
+        viewCount: 97,
+        viewCountLabel: "97 views",
+        publishedAtLabel: "3 months ago",
+        thumbnail: DEFAULT_THUMBNAIL,
+        videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
+      },
+      {
+        id: "placeholder-7",
+        title: "Kidney Revival Success Story: Natural Healing Journey",
+        duration: "6:29",
+        viewCount: 54,
+        viewCountLabel: "54 views",
+        publishedAtLabel: "2 months ago",
+        thumbnail: DEFAULT_THUMBNAIL,
+        videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
+      },
+      {
+        id: "placeholder-8",
+        title: "Daily Nutrition Tips for a Cancer-Free Lifestyle",
+        duration: "3:57",
+        viewCount: 135,
+        viewCountLabel: "135 views",
+        publishedAtLabel: "2 months ago",
+        thumbnail: DEFAULT_THUMBNAIL,
+        videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
+      },
+      {
+        id: "placeholder-9",
+        title: "Live Q&A: Natural Immunotherapy Myths Debunked",
+        duration: "9:44",
+        viewCount: 210,
+        viewCountLabel: "210 views",
+        publishedAtLabel: "1 month ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -398,11 +464,11 @@ export default function CancerTreatmentPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white10">
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+      <header className="bg-transparent">
+        <div className="w-full py-6">
+          <div className="flex flex-row items-center justify-between gap-12 rounded-2xl border border-gray-200 bg-white px-12 py-10 shadow-md">
             {/* Left: Logo */}
             <div className="flex items-center gap-4">
               <div className="w-40 h-40 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
@@ -419,19 +485,19 @@ export default function CancerTreatmentPage() {
 
             {/* Center */}
             <div className="text-center">
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-gray-900">
                 "OUR GOAL" - CANCER FREE WORLD
               </h1>
               <p className="text-gray-600 mt-1">Subhankar Sarkar</p>
               <button className="mt-2 bg-[#74C425] hover:bg-[#1118A6] text-white px-6 py-4 rounded-lg flex items-center gap-2 mx-auto transition-colors font-sans cursor-pointer">
-                <Phone size={20} />
+                <MdAddCall />
                 CONTACT US
               </button>
             </div>
 
             {/* Right: Doctor */}
-            <div className="relative w-90 h-60 bg-white rounded-lg overflow-hidden">
-              <div className="absolute left-0 top-0 w-60 h-60 rounded-full overflow-hidden border-4 border-gray-200">
+            <div className="relative w-[360px] h-[240px] bg-white rounded-2xl overflow-hidden">
+              <div className="absolute left-0 top-0 w-40 h-40 rounded-full overflow-hidden border-4 border-gray-200">
                 <div className="w-full h-full bg-green-100 flex items-center justify-center">
                   <img
                     src={DoctorImg}
@@ -440,10 +506,10 @@ export default function CancerTreatmentPage() {
                   />
                 </div>
               </div>
-              <div className="absolute top-1 left-60 w-30 h-20">
-                <img src={Dot} alt="Dot Pattern" className="w-full h-full" />
+              <div className="absolute top-1 left-40">
+                <DotPattern />
               </div>
-              <div className="absolute bottom-0 left-60 w-16 h-16">
+              <div className="absolute bottom-8 left-32 w-16 h-16">
                 <img src={Triangle} alt="Triangle" className="w-full h-full" />
               </div>
             </div>
@@ -452,7 +518,7 @@ export default function CancerTreatmentPage() {
       </header>
 
       {/* ===================== PATIENT STORIES ===================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+      <section className="w-full py-12 relative">
         <h2 className="text-4xl font-bold text-center mb-8">
           PATIENT <span className="text-green-500">SUCCESS STORY</span>
         </h2>
@@ -460,13 +526,13 @@ export default function CancerTreatmentPage() {
         {/* Scroll buttons */}
         <button
           onClick={() => scrollStories(-1)}
-          className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
+          className="flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
         >
           <ArrowLeft size={18} />
         </button>
         <button
           onClick={() => scrollStories(1)}
-          className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
+          className="flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
         >
           <ArrowRight size={18} />
         </button>
@@ -509,7 +575,7 @@ export default function CancerTreatmentPage() {
       </section>
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+      <section className="w-full py-12 relative">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-2">
             <img src={Computerimg} alt="Healthcare icon" className="w-20 h-20" />
@@ -525,13 +591,13 @@ export default function CancerTreatmentPage() {
         {/* Scroll buttons */}
         <button
           onClick={() => scrollVideos(-1)}
-          className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
+          className="flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
         >
           <ArrowLeft size={18} />
         </button>
         <button
           onClick={() => scrollVideos(1)}
-          className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
+          className="flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
         >
           <ArrowRight size={18} />
         </button>
@@ -558,7 +624,7 @@ export default function CancerTreatmentPage() {
               const timeText = video.publishedAt
                 ? formatRelativeTime(video.publishedAt)
                 : video.publishedAtLabel || "";
-              const metaText = [viewsText, timeText].filter(Boolean).join(" � ");
+              const metaText = [viewsText, timeText].filter(Boolean).join(" | ");
 
               return (
                 <a
@@ -615,7 +681,7 @@ export default function CancerTreatmentPage() {
       </section>
       {/* ===================== TESTIMONIALS ===================== */}
       <section className="bg-gradient-to-b from-green-50 to-green-50 py-10">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="w-full">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold">
               TESTI<span className="text-[#74C425]">MONIALS</span>
@@ -627,13 +693,13 @@ export default function CancerTreatmentPage() {
             {/* Arrows */}
             <button
               onClick={() => scrollTestimonials(-1)}
-              className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow hover:bg-[#92eeb8]"
+              className="flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow hover:bg-[#92eeb8]"
             >
               <ArrowLeft size={18} />
             </button>
             <button
               onClick={() => scrollTestimonials(1)}
-              className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow hover:bg-[#86ff95]"
+              className="flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow hover:bg-[#86ff95]"
             >
               <ArrowRight size={18} />
             </button>
@@ -646,7 +712,7 @@ export default function CancerTreatmentPage() {
               {testimonials.map((t, idx) => (
                 <div
                   key={idx}
-                  className="snap-start flex-shrink-0 w-[280px] sm:w-[300px] lg:w-[390px] bg-white border border-[#1D942B] rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-sm"
+                  className="snap-start flex-shrink-0 w-[390px] bg-white border border-[#1D942B] rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-sm"
                 >
                   <div className="absolute top-4 left-1 w-4 h-4   rounded-full bg-[#74C425] mt-4 ml-2 " />
                   
