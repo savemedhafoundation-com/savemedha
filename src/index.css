@@ -57,3 +57,39 @@ button, .btn {
 .testimonial-scroller::-webkit-scrollbar-thumb:hover {
   background: #2f994b;
 }
+
+:root {
+  --app-scale: 1;
+  --app-desktop-width: 1280;
+}
+
+#root {
+  width: 100%;
+}
+
+.app-scale-wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1280px) {
+  :root {
+    --app-scale: calc(100vw / (var(--app-desktop-width) * 1px));
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  #root {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .app-scale-wrapper {
+    width: calc(var(--app-desktop-width) * 1px);
+    transform-origin: top center;
+    transform: scale(var(--app-scale));
+  }
+}

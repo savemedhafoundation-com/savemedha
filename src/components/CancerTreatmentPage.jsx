@@ -153,11 +153,11 @@ export default function CancerTreatmentPage() {
     { id: 2, duration: "19:52", label: "FEEDBACK 2", color: "green" },
     { id: 3, duration: "6:04", label: "FEEDBACK 3", color: "green" },
     { id: 4, duration: "7:45", label: "FEEDBACK 4", color: "green" },
-    { id: 5, duration: "12:18", label: "FEEDBACK 5", color: "blue" },
+    { id: 5, duration: "12:18", label: "FEEDBACK 5", color: "green" },
     { id: 6, duration: "9:16", label: "FEEDBACK 6", color: "green" },
-    { id: 7, duration: "5:32", label: "FEEDBACK 7", color: "blue" },
+    { id: 7, duration: "5:32", label: "FEEDBACK 7", color: "green" },
     { id: 8, duration: "14:41", label: "FEEDBACK 8", color: "green" },
-    { id: 9, duration: "11:05", label: "FEEDBACK 9", color: "blue" },
+    { id: 9, duration: "11:05", label: "FEEDBACK 9", color: "green" },
     { id: 10, duration: "4:57", label: "FEEDBACK 10", color: "green" },
   ];
 

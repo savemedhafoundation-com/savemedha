@@ -102,8 +102,6 @@ const HeroBanner = () => {
   );
 };
 
-
-
 const ServicesSection = () => {
   const services = [
     {
@@ -139,12 +137,11 @@ const ServicesSection = () => {
         {/* Section Title */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold relative inline-block">
-           <span  className="relative">OUR </span>  
-           
-             <div className="absolute bottom-[-10px] left-0 w-20 h-1 bg-[#74C425]"></div>
-           <span className="text-[#74C425]">SERVICES</span>
+            <span className="relative">OUR </span>
+
+            <div className="absolute bottom-[-10px] left-0 w-20 h-1 bg-[#74C425]"></div>
+            <span className="text-[#74C425]">SERVICES</span>
           </h2>
-         
         </div>
 
         {/* Grid */}
@@ -159,17 +156,15 @@ const ServicesSection = () => {
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-65 object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
 
                 {/* Description - appears only on hover */}
-                <div className="absolute inset-0 flex items-center justify-center bg-[#A51111]/60 backdrop-blur-sm text-white px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-                  <p className="text-sm leading-relaxed text-center">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in-out">
+                  <p className="w-full h-full text-sm text-white bg-[#A51111]/60 backdrop-blur-sm px-6 py-4 rounded-md shadow-md text-center border border-[#A51111]/50 flex items-center justify-center">
                     {service.description}
                   </p>
                 </div>
-
-
               </div>
 
               {/* Title - always visible */}
@@ -189,9 +184,6 @@ const ServicesSection = () => {
     </section>
   );
 };
-
-
-
 
 // ✅ Combined Page
 export default function HomePage() {
