@@ -12,18 +12,18 @@ const COLORS = {
 };
 
 const NAV_ITEMS = [
-  { name: "HOME", isActive: true, hasDropdown: false },
-  { name: "ABOUT US", isActive: false, hasDropdown: false },
-  { name: "TREATMENT", isActive: false, hasDropdown: true },
-  { name: "DONATE", isActive: false, hasDropdown: true },
-  { name: "EVENTS & PROJECTS", isActive: false, hasDropdown: true },
-  { name: "BLOGS", isActive: false, hasDropdown: false },
-  { name: "E-BOOK", isActive: false, hasDropdown: false },
-  { name: "CAREERS", isActive: false, hasDropdown: false },
-  { name: "CONTACT US", isActive: false, hasDropdown: false },
+  { name: "HOME", key: "home", hasDropdown: false },
+  { name: "ABOUT US", key: "about", hasDropdown: false },
+  { name: "TREATMENT", key: null, hasDropdown: true },
+  { name: "DONATE", key: null, hasDropdown: true },
+  { name: "EVENTS & PROJECTS", key: null, hasDropdown: true },
+  { name: "BLOGS", key: null, hasDropdown: false },
+  { name: "E-BOOK", key: null, hasDropdown: false },
+  { name: "CAREERS", key: null, hasDropdown: false },
+  { name: "CONTACT US", key: null, hasDropdown: false },
 ];
 
-export default function Navbar() {
+export default function Navbar({ currentPage = "home", onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -32,6 +32,13 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleNavClick = (event, key) => {
+    if (key && typeof onNavigate === "function") {
+      event.preventDefault();
+      onNavigate(key);
+    }
+  };
 
   return (
     <header className="font-sans w-full">
@@ -161,35 +168,44 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Navigation */}
           <nav className="flex items-center">
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.name}
-                href={`#${item.name.toLowerCase().replace(/ /g, "-")}`}
-                className={`flex items-center gap-1 px-5 py-4 text-sm font-bold uppercase transition ${
-                  item.isActive
-                    ? "text-white"
-                    : "text-white hover:bg-[#013970] hover:bg-opacity-10"
-                }`}
-                style={
-                  item.isActive ? { backgroundColor: COLORS.HOME_BLUE } : {}
-                }
-              >
-                <span>{item.name}</span>
-                {item.hasDropdown && (
-                  <svg
-                    className="w-3 h-3 ml-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
-              </a>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const isActive = item.key && item.key === currentPage;
+              const hrefValue = item.key
+                ? "#"
+                : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
+              const clickHandler = item.key
+                ? (event) => handleNavClick(event, item.key)
+                : undefined;
+
+              return (
+                <a
+                  key={item.name}
+                  href={hrefValue}
+                  onClick={clickHandler}
+                  className={`flex items-center gap-1 px-5 py-4 text-sm font-bold uppercase transition ${
+                    isActive
+                      ? "text-white"
+                      : "text-white hover:bg-[#013970] hover:bg-opacity-10"
+                  }`}
+                  style={isActive ? { backgroundColor: COLORS.HOME_BLUE } : {}}
+                >
+                  <span>{item.name}</span>
+                  {item.hasDropdown && (
+                    <svg
+                      className="w-3 h-3 ml-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </a>
+              );
+            })}
           </nav>
         </div>
       </div>

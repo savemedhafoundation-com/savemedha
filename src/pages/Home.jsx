@@ -1,21 +1,21 @@
-﻿import AboutSection from '../components/AboutSection';
+import AboutSection from '../components/AboutSection';
 import CancerTreatmentPage from '../components/CancerTreatmentPage';
 import Footer from '../components/Footer';
-import HomePage from '../components/HeroSection'; 
+import HomePage from '../components/HeroSection';
 import Navbar from '../components/Navbar';
 import VolunteerAndSupportSection from '../components/VolunteerAndSupportSection';
 
-export default function Home() {
+export default function Home({ onNavigate }) {
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
+      <Navbar currentPage="home" onNavigate={onNavigate} />
       <main className="w-full px-20 space-y-16">
         <HomePage />
         <CancerTreatmentPage />
         <VolunteerAndSupportSection />
-        <AboutSection />
+        <AboutSection onNavigate={onNavigate} />
       </main>
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }
