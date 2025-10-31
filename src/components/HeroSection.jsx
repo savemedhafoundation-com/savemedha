@@ -149,21 +149,24 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+              className="group relative overflow-hidden  border border-gray-200 bg-white shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
             >
               {/* Image */}
               <div className="relative">
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-65 object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-65 object-cover transform group-hover:scale-100  transition-transform duration-500"
                 />
 
                 {/* Description - appears only on hover */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-100 ease-in-out">
-                  <p className="w-full h-full text-sm text-white bg-[#A51111]/60 backdrop-blur-sm px-6 py-4 rounded-md shadow-md text-center border border-[#A51111]/50 flex items-center justify-center">
-                    {service.description}
-                  </p>
+                <div className="absolute inset-0 flex items-center justify-center overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out pointer-events-none">
+                  <div className="absolute top-4 bottom-0 left-3 right-3 origin-bottom scale-y-0 group-hover:scale-y-100  bg-[#A51111]/60 backdrop-blur-sm transition-transform duration-500 ease-out" />
+                  <div className="absolute top-4 bottom-0 left-3 right-3 flex items-center justify-center px-6 py-4   shadow-md">
+                    <p className="text-sm text-white text-center">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
               </div>
 
