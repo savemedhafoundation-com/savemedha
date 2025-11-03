@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
   Phone,
   Play,
   Star,
+  X,
 } from "lucide-react";
 import { MdAddCall } from "react-icons/md";
 
@@ -16,6 +17,19 @@ import Virus from "../assets/Photo/virus.png";
 import Review1 from "../assets/Photo/review1.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
+const MAX_VIDEOS_TO_FETCH = 15;
+
+const chunkArray = (input, size) => {
+  if (!Array.isArray(input) || size <= 0) return [];
+
+  const chunks = [];
+
+  for (let index = 0; index < input.length; index += size) {
+    chunks.push(input.slice(index, index + size));
+  }
+
+  return chunks;
+};
 
 const DotPattern = () => (
   <div className="grid grid-cols-8 gap-[6px]">
@@ -102,6 +116,53 @@ const formatViewCount = (value) => {
   return numericValue.toLocaleString();
 };
 
+const YOUTUBE_ID_PATTERN = /^[\w-]{11}$/;
+
+const extractYoutubeId = (video) => {
+  if (!video) return null;
+
+  if (video.id && YOUTUBE_ID_PATTERN.test(video.id)) {
+    return video.id;
+  }
+
+  if (typeof video.videoUrl === "string") {
+    try {
+      const url = new URL(video.videoUrl);
+      const hostname = url.hostname.toLowerCase();
+
+      if (hostname.includes("youtu.be")) {
+        const potentialId = url.pathname.split("/").filter(Boolean)[0];
+        if (potentialId && YOUTUBE_ID_PATTERN.test(potentialId)) {
+          return potentialId;
+        }
+      }
+
+      if (hostname.includes("youtube.com")) {
+        if (url.pathname === "/watch") {
+          const v = url.searchParams.get("v");
+          if (v && YOUTUBE_ID_PATTERN.test(v)) return v;
+        }
+
+        const parts = url.pathname.split("/").filter(Boolean);
+        const candidate = parts[1];
+
+        if (
+          parts[0] &&
+          ["embed", "shorts", "live"].includes(parts[0]) &&
+          candidate &&
+          YOUTUBE_ID_PATTERN.test(candidate)
+        ) {
+          return candidate;
+        }
+      }
+    } catch (error) {
+      // Ignore malformed URLs
+    }
+  }
+
+  return null;
+};
+
 export default function CancerTreatmentPage() {
 
   // Refs for each scrollable section
@@ -148,38 +209,19 @@ export default function CancerTreatmentPage() {
     el.scrollBy({ left: dir * 320, behavior: "smooth" });
   };
 
-  const patientStories = [
-    { id: 1, duration: "8:24", label: "FEEDBACK 1", color: "blue" },
-    { id: 2, duration: "19:52", label: "FEEDBACK 2", color: "green" },
-    { id: 3, duration: "6:04", label: "FEEDBACK 3", color: "green" },
-    { id: 4, duration: "7:45", label: "FEEDBACK 4", color: "green" },
-    { id: 5, duration: "12:18", label: "FEEDBACK 5", color: "green" },
-    { id: 6, duration: "9:16", label: "FEEDBACK 6", color: "green" },
-    { id: 7, duration: "5:32", label: "FEEDBACK 7", color: "green" },
-    { id: 8, duration: "14:41", label: "FEEDBACK 8", color: "green" },
-    { id: 9, duration: "11:05", label: "FEEDBACK 9", color: "green" },
-    { id: 10, duration: "4:57", label: "FEEDBACK 10", color: "green" },
-  ];
-
   const initialHealthVideos = useMemo(
     () => [
       {
         id: "placeholder-1",
-        title: "Breast Cancer Treatment by Natural Immunotherapy - A New Hope",
+        title: "PATIENT FEEDBACK",
         duration: "2:22",
-        viewCount: 47,
-        viewCountLabel: "47 views",
-        publishedAtLabel: "4 months ago",
-       
-        videoUrl: "https://youtu.be/RZG-rUkvkSA?si=ssCVM0IOKM3psuMP",
+        thumbnail: DEFAULT_THUMBNAIL,
+        videoUrl: "https://youtu.be/6JbRVZuDZo4",
       },
       {
         id: "placeholder-2",
         title: "What is Natural Immunotherapy? The Future of Healing",
         duration: "3:18",
-        viewCount: 75,
-        viewCountLabel: "75 views",
-        publishedAtLabel: "4 months ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -187,9 +229,6 @@ export default function CancerTreatmentPage() {
         id: "placeholder-3",
         title: "Hope Beyond Blood - Natural Immunotherapy for Thalassemia",
         duration: "4:21",
-        viewCount: 25,
-        viewCountLabel: "25 views",
-        publishedAtLabel: "4 months ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -197,9 +236,6 @@ export default function CancerTreatmentPage() {
         id: "placeholder-4",
         title: "How Toxins Turn a Healthy Cell into a Cancer Cell",
         duration: "1:45",
-        viewCount: 8,
-        viewCountLabel: "8 views",
-        publishedAtLabel: "4 months ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -207,9 +243,6 @@ export default function CancerTreatmentPage() {
         id: "placeholder-5",
         title: "Rebuilding Immunity: Lifestyle Guidance from Save Medha Experts",
         duration: "5:12",
-        viewCount: 112,
-        viewCountLabel: "112 views",
-        publishedAtLabel: "3 months ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -217,9 +250,6 @@ export default function CancerTreatmentPage() {
         id: "placeholder-6",
         title: "Understanding Detox Therapy for Cancer Prevention",
         duration: "7:08",
-        viewCount: 97,
-        viewCountLabel: "97 views",
-        publishedAtLabel: "3 months ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -227,9 +257,6 @@ export default function CancerTreatmentPage() {
         id: "placeholder-7",
         title: "Kidney Revival Success Story: Natural Healing Journey",
         duration: "6:29",
-        viewCount: 54,
-        viewCountLabel: "54 views",
-        publishedAtLabel: "2 months ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -237,9 +264,6 @@ export default function CancerTreatmentPage() {
         id: "placeholder-8",
         title: "Daily Nutrition Tips for a Cancer-Free Lifestyle",
         duration: "3:57",
-        viewCount: 135,
-        viewCountLabel: "135 views",
-        publishedAtLabel: "2 months ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -247,9 +271,6 @@ export default function CancerTreatmentPage() {
         id: "placeholder-9",
         title: "Live Q&A: Natural Immunotherapy Myths Debunked",
         duration: "9:44",
-        viewCount: 210,
-        viewCountLabel: "210 views",
-        publishedAtLabel: "1 month ago",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
       },
@@ -257,9 +278,42 @@ export default function CancerTreatmentPage() {
     []
   );
 
+  const patientStories = useMemo(
+    () =>
+      initialHealthVideos.slice(0, 6).map((video) => ({
+        ...video,
+        thumbnail: video.thumbnail || DEFAULT_THUMBNAIL,
+        duration: video.duration || "",
+      })),
+    [initialHealthVideos]
+  );
+
+  const [activeStoryId, setActiveStoryId] = useState(
+    () => patientStories[0]?.id ?? null
+  );
+
+  useEffect(() => {
+    if (!patientStories.length) return;
+    const activeExists = patientStories.some(
+      (story) => story.id === activeStoryId
+    );
+    if (!activeExists) {
+      setActiveStoryId(patientStories[0].id);
+    }
+  }, [patientStories, activeStoryId]);
+
+  const fallbackVideoIds = useMemo(
+    () =>
+      initialHealthVideos
+        .map((video) => extractYoutubeId(video))
+        .filter(Boolean),
+    [initialHealthVideos]
+  );
+
   const [healthVideos, setHealthVideos] = useState(initialHealthVideos);
   const [loadingVideos, setLoadingVideos] = useState(false);
   const [videoError, setVideoError] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -281,6 +335,45 @@ export default function CancerTreatmentPage() {
 
       try {
         let channelId = envChannelId;
+        let channelResolutionError = "";
+
+        const deriveChannelIdFromFallback = async () => {
+          for (const fallbackVideoId of fallbackVideoIds) {
+            if (!fallbackVideoId) continue;
+
+            try {
+              const videoParams = new URLSearchParams({
+                key: apiKey,
+                id: fallbackVideoId,
+                part: "snippet",
+              });
+
+              const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?${videoParams.toString()}`,
+                { signal: controller.signal }
+              );
+
+              if (!response.ok) {
+                continue;
+              }
+
+              const data = await response.json();
+              const candidate =
+                data.items?.[0]?.snippet?.channelId ||
+                "";
+
+              if (candidate) {
+                return candidate;
+              }
+            } catch (lookupError) {
+              if (lookupError.name === "AbortError") {
+                throw lookupError;
+              }
+            }
+          }
+
+          return null;
+        };
 
         if (!channelId) {
           const query = fallbackHandle.startsWith("@")
@@ -295,74 +388,146 @@ export default function CancerTreatmentPage() {
             maxResults: "1",
           });
 
-          const channelResponse = await fetch(
-            `https://www.googleapis.com/youtube/v3/search?${channelParams.toString()}`,
-            { signal: controller.signal }
-          );
+          try {
+            const channelResponse = await fetch(
+              `https://www.googleapis.com/youtube/v3/search?${channelParams.toString()}`,
+              { signal: controller.signal }
+            );
 
-          if (!channelResponse.ok) {
-            throw new Error("Unable to locate channel on YouTube.");
+            if (channelResponse.ok) {
+              const channelData = await channelResponse.json();
+              channelId =
+                channelData.items?.[0]?.id?.channelId ||
+                channelData.items?.[0]?.snippet?.channelId ||
+                "";
+
+              if (!channelId) {
+                channelResolutionError = "channel search returned no results";
+              }
+            } else {
+              const statusText = channelResponse.statusText
+                ? channelResponse.statusText.trim()
+                : "";
+              channelResolutionError = statusText
+                ? `${channelResponse.status} ${statusText}`
+                : `status ${channelResponse.status}`;
+            }
+          } catch (lookupError) {
+            if (lookupError.name === "AbortError") return;
+            channelResolutionError =
+              lookupError.message || "channel lookup request failed";
           }
+        }
 
-          const channelData = await channelResponse.json();
-          channelId =
-            channelData.items?.[0]?.id?.channelId ||
-            channelData.items?.[0]?.snippet?.channelId ||
-            "";
+        if (!channelId && fallbackVideoIds.length) {
+          try {
+            channelId = await deriveChannelIdFromFallback();
+          } catch (fallbackError) {
+            if (fallbackError.name === "AbortError") return;
+            if (!channelResolutionError) {
+              channelResolutionError =
+                fallbackError.message || "fallback channel resolution failed";
+            }
+          }
         }
 
         if (!channelId) {
-          throw new Error("Could not resolve YouTube channel ID.");
+          const message = channelResolutionError
+            ? `Unable to locate channel on YouTube (${channelResolutionError}).`
+            : "Unable to locate channel on YouTube.";
+          throw new Error(message);
         }
 
-        const searchParams = new URLSearchParams({
-          key: apiKey,
-          channelId,
-          part: "snippet",
-          order: "date",
-          maxResults: "8",
-          type: "video",
-        });
+        const fetchChannelVideos = async (resolvedChannelId) => {
+          let allItems = [];
+          let pageToken;
 
-        const videosResponse = await fetch(
-          `https://www.googleapis.com/youtube/v3/search?${searchParams.toString()}`,
-          { signal: controller.signal }
-        );
+          do {
+            const searchParams = new URLSearchParams({
+              key: apiKey,
+              channelId: resolvedChannelId,
+              part: "snippet",
+              order: "date",
+              maxResults: "50",
+              type: "video",
+            });
 
-        if (!videosResponse.ok) {
-          throw new Error("Unable to load videos from YouTube.");
+            if (pageToken) {
+              searchParams.set("pageToken", pageToken);
+            }
+
+            const response = await fetch(
+              `https://www.googleapis.com/youtube/v3/search?${searchParams.toString()}`,
+              { signal: controller.signal }
+            );
+
+            if (!response.ok) {
+              throw new Error("Unable to load videos from YouTube.");
+            }
+
+            const data = await response.json();
+            const items = data.items || [];
+
+            allItems = allItems.concat(items);
+            pageToken = data.nextPageToken;
+
+            if (!pageToken || allItems.length >= MAX_VIDEOS_TO_FETCH) {
+              break;
+            }
+          } while (true);
+
+          return allItems.slice(0, MAX_VIDEOS_TO_FETCH);
+        };
+
+        const fetchVideoDetails = async (ids) => {
+          const chunks = chunkArray(ids, 50);
+          if (!chunks.length) return [];
+
+          const detailResponses = await Promise.all(
+            chunks.map(async (chunk) => {
+              const detailsParams = new URLSearchParams({
+                key: apiKey,
+                id: chunk.join(","),
+                part: "contentDetails,statistics",
+              });
+
+              const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?${detailsParams.toString()}`,
+                { signal: controller.signal }
+              );
+
+              if (!response.ok) {
+                throw new Error("Unable to load video details.");
+              }
+
+              const data = await response.json();
+              return data.items || [];
+            })
+          );
+
+          return detailResponses.reduce((acc, items) => acc.concat(items), []);
+        };
+
+        const videoItems = await fetchChannelVideos(channelId);
+
+        if (!videoItems.length) {
+          setHealthVideos([]);
+          return;
         }
 
-        const videosData = await videosResponse.json();
-        const videoIds =
-          videosData.items?.map((item) => item.id?.videoId).filter(Boolean) || [];
+        const videoIds = videoItems
+          .map((item) => item.id?.videoId)
+          .filter(Boolean);
 
         if (!videoIds.length) {
           setHealthVideos([]);
           return;
         }
 
-        const detailsParams = new URLSearchParams({
-          key: apiKey,
-          id: videoIds.join(","),
-          part: "contentDetails,statistics",
-        });
+        const details = await fetchVideoDetails(videoIds);
+        const detailsMap = new Map(details.map((item) => [item.id, item]));
 
-        const detailsResponse = await fetch(
-          `https://www.googleapis.com/youtube/v3/videos?${detailsParams.toString()}`,
-          { signal: controller.signal }
-        );
-
-        if (!detailsResponse.ok) {
-          throw new Error("Unable to load video details.");
-        }
-
-        const detailsData = await detailsResponse.json();
-        const detailsMap = new Map(
-          (detailsData.items || []).map((item) => [item.id, item])
-        );
-
-        const formattedVideos = videosData.items
+        const formattedVideos = videoItems
           .map((item) => {
             const videoId = item.id?.videoId;
             if (!videoId) return null;
@@ -411,7 +576,58 @@ export default function CancerTreatmentPage() {
     loadVideos();
 
     return () => controller.abort();
-  }, [initialHealthVideos]);
+  }, [initialHealthVideos, fallbackVideoIds]);
+
+  const selectedVideoId = useMemo(
+    () => extractYoutubeId(selectedVideo),
+    [selectedVideo]
+  );
+
+  const embedSrc = useMemo(() => {
+    if (!selectedVideoId) return null;
+
+    const params = new URLSearchParams({
+      autoplay: "1",
+      rel: "0",
+      playsinline: "1",
+      modestbranding: "1",
+    });
+
+    return `https://www.youtube.com/embed/${selectedVideoId}?${params.toString()}`;
+  }, [selectedVideoId]);
+
+  const closeVideoModal = useCallback(() => {
+    setSelectedVideo(null);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedVideo) return undefined;
+    if (typeof document === "undefined") return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [selectedVideo]);
+
+  useEffect(() => {
+    if (!selectedVideo) return undefined;
+    if (typeof window === "undefined") return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeVideoModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeVideoModal, selectedVideo]);
   const testimonials = [
     {
       name: "Bidhan Kumar Halder",
@@ -542,35 +758,47 @@ export default function CancerTreatmentPage() {
           ref={patientStoriesRef}
           className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
         >
-          {patientStories.map((story) => (
-            <div
-              key={story.id}
-              className="flex-shrink-0 w-[250px] snap-start flex flex-col"
+          {patientStories.map((story) => {
+            const isActiveStory = story.id === activeStoryId;
+            return (
+              <button
+                key={story.id}
+                type="button"
+                onClick={() => {
+                  setActiveStoryId(story.id);
+                setSelectedVideo(story);
+              }}
+              className="flex-shrink-0 w-[250px] snap-start flex flex-col text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 rounded-lg"
             >
-              <div className="relative bg-gray-200 rounded-lg overflow-hidden aspect-video group cursor-pointer">
+              <div className="relative bg-gray-200 rounded-lg overflow-hidden aspect-video">
                 <img
-                  src="https://placehold.co/300x200"
-                  alt={`Patient ${story.id}`}
+                  src={story.thumbnail || DEFAULT_THUMBNAIL}
+                  alt={story.title || "Patient success story"}
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center group-hover:bg-opacity-40 transition-all">
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center transition-all group-hover:bg-black/45">
                   <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center">
                     <Play fill="white" className="text-white ml-1" size={28} />
                   </div>
                 </div>
-                <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
-                  {story.duration}
-                </div>
+                {story.duration && (
+                  <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
+                    {story.duration}
+                  </div>
+                )}
               </div>
               <div
                 className={`mt-2 ${
-                  story.color === "blue" ? "bg-blue-700" : "bg-green-500"
-                } text-white text-center py-2 rounded font-semibold text-sm`}
+                  isActiveStory ? "bg-blue-700" : "bg-green-500"
+                } text-white text-center py-3 rounded font-semibold text-sm px-3 min-h-[64px] flex items-center justify-center`}
+                title={story.title}
               >
-                {story.label}
+                {story.title}
               </div>
-            </div>
-          ))}
+            </button>
+            );
+          })}
         </div>
       </section>
 
@@ -627,12 +855,11 @@ export default function CancerTreatmentPage() {
               const metaText = [viewsText, timeText].filter(Boolean).join(" | ");
 
               return (
-                <a
+                <button
                   key={video.id}
-                  href={video.videoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-shrink-0 w-[250px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow snap-start focus:outline-none focus:ring-2 focus:ring-green-500"
+                  type="button"
+                  onClick={() => setSelectedVideo(video)}
+                  className="flex-shrink-0 w-[250px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                 >
                   <div className="relative">
                     <img
@@ -655,7 +882,7 @@ export default function CancerTreatmentPage() {
                       <p className="text-xs text-gray-600">{metaText}</p>
                     )}
                   </div>
-                </a>
+                </button>
               );
             })
           ) : (
@@ -759,6 +986,54 @@ export default function CancerTreatmentPage() {
           </div>
         </div>
       </section>
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-8"
+          onClick={closeVideoModal}
+        >
+          <div
+            className="relative w-full max-w-4xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={closeVideoModal}
+              className="absolute top-4 right-4 text-white hover:text-green-300 transition-colors bg-black/60 rounded-full p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400"
+            >
+              <span className="sr-only">Close video</span>
+              <X size={28} />
+            </button>
+            {embedSrc ? (
+              <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl bg-black aspect-video">
+                <iframe
+                  src={embedSrc}
+                  title={selectedVideo.title || "YouTube video"}
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl p-8 text-center shadow-2xl">
+                <p className="text-gray-800 font-medium mb-4">
+                  Unable to play this video here. You can watch it directly on YouTube.
+                </p>
+                {selectedVideo.videoUrl && (
+                  <a
+                    href={selectedVideo.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-5 py-2 rounded-lg bg-green-500 text-white font-semibold hover:bg-[#1118A6] transition-colors"
+                    onClick={closeVideoModal}
+                  >
+                    Open in YouTube
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

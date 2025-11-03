@@ -12,7 +12,7 @@ const Footer = ({ onNavigate }) => {
   const navLinks1 = [
     { name: "HOME", key: "home" },
     { name: "ABOUT US", key: "about" },
-    { name: "TREATMENT", href: "#" },
+    { name: "TREATMENT", key: "treatment" },
     { name: "DONATE", href: "#" },
     { name: "EVENTS & PROJECTS", href: "#" },
   ];

@@ -14,7 +14,7 @@ const COLORS = {
 const NAV_ITEMS = [
   { name: "HOME", key: "home", hasDropdown: false },
   { name: "ABOUT US", key: "about", hasDropdown: false },
-  { name: "TREATMENT", key: null, hasDropdown: true },
+  { name: "TREATMENT", key: "treatment", hasDropdown: true },
   { name: "DONATE", key: null, hasDropdown: true },
   { name: "EVENTS & PROJECTS", key: null, hasDropdown: true },
   { name: "BLOGS", key: null, hasDropdown: false },

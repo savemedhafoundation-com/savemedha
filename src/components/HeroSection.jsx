@@ -45,12 +45,12 @@ const HeroBanner = () => {
     <div className="flex flex-row w-full bg-white overflow-hidden">
       {/* LEFT TEXT PANEL */}
       <div className="relative w-[600px] pt-16 pl-14 text-left flex flex-col justify-start">
-        <div className="absolute top-4 left-6 opacity-40">
+        <div className="absolute top-4 left-2 opacity-60">
           <DotPattern />
         </div>
 
         <div className="max-w-[603px]">
-          <div className="inline-block bg-[#74C425] text-white px-1 py-1 rounded-sm mb-6 font-bold uppercase tracking-wide text-[25px]">
+          <div className="inline-block bg-[#74C425] text-white px-1  rounded-sm mb-6 font-bold uppercase tracking-wide text-[25px]">
             Natural Immunotherapy
           </div>
 
@@ -77,13 +77,11 @@ const HeroBanner = () => {
           </button>
         </div>
 
-        <div className="absolute bottom-5 right-5 opacity-40">
-          <DotPattern />
-        </div>
+        
       </div>
 
       {/* RIGHT IMAGE PANEL */}
-      <div className="relative flex flex-1 items-center justify-center gap-8 pl-8 pb-8">
+      <div className="relative flex flex-1 items-center justify-center gap-2 pl-8 pb-8 left-24">
         <img
           src={People}
           alt="People"
@@ -94,9 +92,7 @@ const HeroBanner = () => {
           alt="Earth"
           className="object-contain  max-w-[460px] pl-4"
         />
-        <div className="absolute bottom-5 right-5 opacity-40">
-          <DotPattern />
-        </div>
+        
       </div>
     </div>
   );
