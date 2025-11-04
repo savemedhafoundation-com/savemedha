@@ -50,26 +50,26 @@ const HeroBanner = () => {
         </div>
 
         <div className="max-w-[603px]">
-          <div className="inline-block bg-[#74C425] text-white px-1  rounded-sm mb-6 font-bold uppercase tracking-wide text-[25px]">
+          <div className="inline-block bg-[#74C425] px-[25px] py-[5px] text-white rounded-sm mb-6 font-bold-200px italic uppercase tracking-wide text-[18px] ">
             Natural Immunotherapy
           </div>
 
-          <h1 className="font-serif font-extrabold text-black leading-tight text-[3rem]">
+          <h1 className="font-serif font-extrabold text-black leading-tight text-[57px]">
             Empowering lives,
           </h1>
-          <h2 className="font-serif font-extrabold text-[#74C425] leading-tight text-[2.5rem] mb-4">
+          <h2 className="font-serif font-extrabold text-[#74C425] leading-tight text-[55px] mb-4">
             Saving futures
           </h2>
 
-          <p className="font-sans text-[17px] font-semibold mb-6">
+          <p className="font-sans text-[20px] font-semibold mb-6">
             Fighting to make a{" "}
-            <span className="text-blue-600 font-bold">CANCER FREE WORLD</span>
+            <span className="text-blue-600 font-bold text-[20px]">CANCER FREE WORLD</span>
           </p>
 
           <button
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-10 py-3 font-bold  text-xl tracking-wide rounded-sm transition-transform duration-300 ${
+            className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-10 py-3 font-medium OpenSans text-xl tracking-wide rounded-sm transition-transform duration-300 ${
               isHovered ? "scale-105 shadow-lg" : "scale-100 shadow-md"
             }`}
           >

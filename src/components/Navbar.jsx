@@ -140,7 +140,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
 
               {/* Appointment Button */}
               <button
-                className="px-5 py-2 text-sm text-white font-bold rounded whitespace-nowrap transition-colors"
+                className="px-5 py-2 text-sm text-white font-bold font-koho rounded whitespace-nowrap transition-colors"
                 style={{ backgroundColor: COLORS.ACTION_ORANGE }}
                 onMouseEnter={(e) =>
                   (e.target.style.backgroundColor = "#e05529")

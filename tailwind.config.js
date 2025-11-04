@@ -10,6 +10,8 @@ export default {
         sans: ['Inter', 'sans-serif','Open Sans'],
         poppins: ['Poppins', 'sans-serif'],       
         source: ['"Source Sans 3"', 'sans-serif'],
+        open: ['"Open Sans"'],
+        koho: ['"KoHo"', 'sans-serif'],
       },
     },
   },
