@@ -3,6 +3,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
+import { EllipsisVertical } from "lucide-react";
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
 
 const COLORS = {
@@ -17,7 +18,7 @@ const NAV_ITEMS = [
   { name: "TREATMENT", key: "treatment", hasDropdown: true },
   { name: "DONATE", key: null, hasDropdown: true },
   { name: "EVENTS & PROJECTS", key: null, hasDropdown: true },
-  { name: "BLOGS", key: null, hasDropdown: false },
+  { name: "BLOGS", key: "blogs", hasDropdown: false },
   { name: "E-BOOK", key: null, hasDropdown: false },
   { name: "CAREERS", key: null, hasDropdown: false },
   { name: "CONTACT US", key: null, hasDropdown: false },
@@ -25,6 +26,7 @@ const NAV_ITEMS = [
 
 export default function Navbar({ currentPage = "home", onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -38,6 +40,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
       event.preventDefault();
       onNavigate(key);
     }
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -167,7 +170,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
       >
         <div className="flex items-center justify-between">
           {/* Navigation */}
-          <nav className="flex items-center">
+          <nav className="hidden lg:flex items-center">
             {NAV_ITEMS.map((item) => {
               const isActive = item.key && item.key === currentPage;
               const hrefValue = item.key
@@ -207,6 +210,48 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               );
             })}
           </nav>
+
+          {/* Mobile menu trigger */}
+          <div className="lg:hidden relative">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              className="p-2 text-white hover:text-gray-200 transition"
+              aria-label="Open navigation menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <EllipsisVertical className="w-6 h-6" />
+            </button>
+
+            {isMobileMenuOpen && (
+              <div className="absolute right-0 mt-2 w-56 rounded-lg bg-white text-gray-900 shadow-xl ring-1 ring-black/5 overflow-hidden z-50">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = item.key && item.key === currentPage;
+                  const hrefValue = item.key
+                    ? "#"
+                    : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
+                  const clickHandler = item.key
+                    ? (event) => handleNavClick(event, item.key)
+                    : () => setIsMobileMenuOpen(false);
+
+                  return (
+                    <a
+                      key={item.name}
+                      href={hrefValue}
+                      onClick={clickHandler}
+                      className={`block px-4 py-3 text-sm font-semibold uppercase tracking-wide transition ${
+                        isActive
+                          ? "bg-[#003399] text-white"
+                          : "text-gray-800 hover:bg-gray-100"
+                      }`}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

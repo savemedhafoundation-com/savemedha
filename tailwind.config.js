@@ -7,11 +7,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif','Open Sans'],
-        poppins: ['Poppins', 'sans-serif'],       
+        sans: ['"Open Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
         source: ['"Source Sans 3"', 'sans-serif'],
         open: ['"Open Sans"'],
         koho: ['"KoHo"', 'sans-serif'],
+        opensans: ['"Open Sans"', 'sans-serif'],
       },
     },
   },

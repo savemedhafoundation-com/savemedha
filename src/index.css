@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Source+Sans+3:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=KoHo:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;600;700&family=Source+Sans+3:wght@400;500;600&display=swap');
 
 @import "tailwindcss";
 
 /* Custom styles */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Open Sans', 'Inter', sans-serif;
 }
 
 /* Global button font: Open Sans (loaded via index.html) */
@@ -24,9 +24,61 @@ button, .btn {
   transform: translateY(-5px);
 }
 
+.treatment-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.treatment-card:hover {
+  transform: translateY(-6px);
+}
+
+.neon-text {
+  color: #0bd3f0;
+  letter-spacing: 0.25em;
+  text-shadow:
+    0 0 10px rgba(11, 211, 240, 0.9),
+    0 0 30px rgba(11, 211, 240, 0.7),
+    0 0 60px rgba(11, 211, 240, 0.5);
+}
+
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #000;
+  animation: typing 2.5s steps(30, end), blink 0.7s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: black;
+  }
+}
+
+.treatment-btn {
+  background-color: var(--btn-color, #74C425);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.treatment-card:hover .treatment-btn {
+  background-color: var(--btn-hover-color, #006705);
+}
+
 .about-box {
   /* Linear gradient from light to dark green */
-  background: linear-gradient(135deg, #74C425 0%, #385E12 100%);
+  background: linear-gradient(135deg, #385E12 0%, #74C425 100%);
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);

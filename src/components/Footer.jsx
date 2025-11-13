@@ -18,7 +18,7 @@ const Footer = ({ onNavigate }) => {
   ];
 
   const navLinks2 = [
-    { name: "BLOGS", href: "#" },
+    { name: "BLOGS", key: "blogs" },
     { name: "E-BOOK", href: "#" },
     { name: "CAREERS", href: "#" },
     { name: "CONTACT", href: "#" },
