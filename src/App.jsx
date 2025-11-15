@@ -4,10 +4,12 @@ import AboutUs from "./pages/AboutUs";
 import Treatment from "./pages/Treatment";
 import TreatmentDetail from "./pages/TreatmentDetail";
 import Blogs from "./pages/Blogs";
+import CancerLearnMore from "./pages/CancerLearnMore";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [selectedTreatment, setSelectedTreatment] = useState(null);
+  const [selectedCancer, setSelectedCancer] = useState(null);
 
   const handleNavigate = (pageKey, options = {}) => {
     if (!pageKey) return;
@@ -16,8 +18,19 @@ function App() {
       if (options?.treatment) {
         setSelectedTreatment(options.treatment);
       }
-    } else if (selectedTreatment) {
+    } else if (pageKey !== "cancer-detail" && selectedTreatment) {
       setSelectedTreatment(null);
+    }
+
+    if (pageKey === "cancer-detail") {
+      if (options?.cancerKey) {
+        setSelectedCancer({
+          key: options.cancerKey,
+          title: options?.title,
+        });
+      }
+    } else if (selectedCancer) {
+      setSelectedCancer(null);
     }
 
     if (pageKey !== currentPage) {
@@ -44,6 +57,17 @@ function App() {
         return (
           <TreatmentDetail
             treatment={selectedTreatment}
+            onNavigate={handleNavigate}
+          />
+        );
+      case "cancer-detail":
+        if (!selectedCancer) {
+          return <Treatment onNavigate={handleNavigate} />;
+        }
+        return (
+          <CancerLearnMore
+            cancerKey={selectedCancer.key}
+            fallbackTitle={selectedCancer.title}
             onNavigate={handleNavigate}
           />
         );

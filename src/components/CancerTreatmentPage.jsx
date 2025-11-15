@@ -8,6 +8,7 @@ import {
   X,
 } from "lucide-react";
 import { MdAddCall } from "react-icons/md";
+import PatientStories from "./PatientStories";
 
 import DoctorImg from "../assets/Photo/doc.png";
 import Leaf from "../assets/Photo/leaf.png";
@@ -18,6 +19,22 @@ import Review1 from "../assets/Photo/review1.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
 const MAX_VIDEOS_TO_FETCH = 15;
+
+const parseJsonSafely = async (response, contextLabel = "response") => {
+  const sourceLabel = contextLabel || "response";
+  const rawBody = await response.text();
+  const trimmedBody = rawBody.trim();
+
+  if (!trimmedBody) {
+    throw new Error(`${sourceLabel} returned an empty response.`);
+  }
+
+  try {
+    return JSON.parse(trimmedBody);
+  } catch (error) {
+    throw new Error(`${sourceLabel} returned malformed JSON.`);
+  }
+};
 
 const chunkArray = (input, size) => {
   if (!Array.isArray(input) || size <= 0) return [];
@@ -167,7 +184,6 @@ export default function CancerTreatmentPage() {
 
   // Refs for each scrollable section
   const testimonialsRef = useRef(null);
-  const patientStoriesRef = useRef(null);
   const healthVideosRef = useRef(null);
 
   // Scroll handlers
@@ -195,12 +211,6 @@ export default function CancerTreatmentPage() {
     }
 
     el.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  };
-
-  const scrollStories = (dir) => {
-    const el = patientStoriesRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 320, behavior: "smooth" });
   };
 
   const scrollVideos = (dir) => {
@@ -278,30 +288,6 @@ export default function CancerTreatmentPage() {
     []
   );
 
-  const patientStories = useMemo(
-    () =>
-      initialHealthVideos.slice(0, 6).map((video) => ({
-        ...video,
-        thumbnail: video.thumbnail || DEFAULT_THUMBNAIL,
-        duration: video.duration || "",
-      })),
-    [initialHealthVideos]
-  );
-
-  const [activeStoryId, setActiveStoryId] = useState(
-    () => patientStories[0]?.id ?? null
-  );
-
-  useEffect(() => {
-    if (!patientStories.length) return;
-    const activeExists = patientStories.some(
-      (story) => story.id === activeStoryId
-    );
-    if (!activeExists) {
-      setActiveStoryId(patientStories[0].id);
-    }
-  }, [patientStories, activeStoryId]);
-
   const fallbackVideoIds = useMemo(
     () =>
       initialHealthVideos
@@ -357,7 +343,10 @@ export default function CancerTreatmentPage() {
                 continue;
               }
 
-              const data = await response.json();
+              const data = await parseJsonSafely(
+                response,
+                "YouTube video lookup"
+              );
               const candidate =
                 data.items?.[0]?.snippet?.channelId ||
                 "";
@@ -395,7 +384,10 @@ export default function CancerTreatmentPage() {
             );
 
             if (channelResponse.ok) {
-              const channelData = await channelResponse.json();
+              const channelData = await parseJsonSafely(
+                channelResponse,
+                "YouTube channel lookup"
+              );
               channelId =
                 channelData.items?.[0]?.id?.channelId ||
                 channelData.items?.[0]?.snippet?.channelId ||
@@ -465,7 +457,10 @@ export default function CancerTreatmentPage() {
               throw new Error("Unable to load videos from YouTube.");
             }
 
-            const data = await response.json();
+            const data = await parseJsonSafely(
+              response,
+              "YouTube channel videos"
+            );
             const items = data.items || [];
 
             allItems = allItems.concat(items);
@@ -500,7 +495,10 @@ export default function CancerTreatmentPage() {
                 throw new Error("Unable to load video details.");
               }
 
-              const data = await response.json();
+              const data = await parseJsonSafely(
+                response,
+                "YouTube video details"
+              );
               return data.items || [];
             })
           );
@@ -734,73 +732,7 @@ export default function CancerTreatmentPage() {
       </header>
 
       {/* ===================== PATIENT STORIES ===================== */}
-      <section className="w-full py-12 relative">
-        <h2 className="text-4xl font-bold text-center mb-8">
-          PATIENT <span className="text-green-500">SUCCESS STORY</span>
-        </h2>
-
-        {/* Scroll buttons */}
-        <button
-          onClick={() => scrollStories(-1)}
-          className="flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
-        >
-          <ArrowLeft size={18} />
-        </button>
-        <button
-          onClick={() => scrollStories(1)}
-          className="flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
-        >
-          <ArrowRight size={18} />
-        </button>
-
-        {/* Horizontal Scroll */}
-        <div
-          ref={patientStoriesRef}
-          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
-        >
-          {patientStories.map((story) => {
-            const isActiveStory = story.id === activeStoryId;
-            return (
-              <button
-                key={story.id}
-                type="button"
-                onClick={() => {
-                  setActiveStoryId(story.id);
-                setSelectedVideo(story);
-              }}
-              className="flex-shrink-0 w-[250px] snap-start flex flex-col text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 rounded-lg"
-            >
-              <div className="relative bg-gray-200 rounded-lg overflow-hidden aspect-video">
-                <img
-                  src={story.thumbnail || DEFAULT_THUMBNAIL}
-                  alt={story.title || "Patient success story"}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/30 flex items-center justify-center transition-all group-hover:bg-black/45">
-                  <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center">
-                    <Play fill="white" className="text-white ml-1" size={28} />
-                  </div>
-                </div>
-                {story.duration && (
-                  <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
-                    {story.duration}
-                  </div>
-                )}
-              </div>
-              <div
-                className={`mt-2 ${
-                  isActiveStory ? "bg-blue-700" : "bg-green-500"
-                } text-white text-center py-3 rounded font-semibold text-sm px-3 min-h-[64px] flex items-center justify-center`}
-                title={story.title}
-              >
-                {story.title}
-              </div>
-            </button>
-            );
-          })}
-        </div>
-      </section>
+      <PatientStories />
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
       <section className="w-full py-12 relative">

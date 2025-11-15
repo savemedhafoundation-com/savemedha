@@ -1,48 +1,14 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import cancerHeroVideo from "../assets/Photo/Sequence 01_1.mp4";
-import bloodImg from "../assets/Photo/blood.png";
-import boneImg from "../assets/Photo/bone.png";
-import brainImg from "../assets/Photo/brain.png";
-import breastImg from "../assets/Photo/breast.png";
-import cervixImg from "../assets/Photo/cervix.png";
-import colonImg from "../assets/Photo/colon.png";
-import eyeImg from "../assets/Photo/eye.png";
-import gallBladderImg from "../assets/Photo/gall bladder.png";
-import kidneyImg from "../assets/Photo/kidney.png";
-import liverImg from "../assets/Photo/liver.png";
-import lungsImg from "../assets/Photo/lungs.png";
-import oralImg from "../assets/Photo/oral.png";
-import pancreasImg from "../assets/Photo/pancreas.png";
-import prostateImg from "../assets/Photo/prostate.png";
-import skinImg from "../assets/Photo/skin.png";
-import stomachImg from "../assets/Photo/stomach.png";
-import throatImg from "../assets/Photo/throat.png";
-import thyroidImg from "../assets/Photo/thyroid.png";
-import tongueImg from "../assets/Photo/tongue.png";
+import { CANCER_DETAILS } from "../data/cancerLearnMore";
 
 const SUB_TREATMENT_LIBRARY = {
-  cancer: [
-    { name: "Blood Cancer", image: bloodImg },
-    { name: "Bone Cancer", image: boneImg },
-    { name: "Brain Cancer", image: brainImg },
-    { name: "Breast Cancer", image: breastImg },
-    { name: "Cervix Cancer", image: cervixImg },
-    { name: "Colon Cancer", image: colonImg },
-    { name: "Eye Cancer", image: eyeImg },
-    { name: "Gall Bladder Cancer", image: gallBladderImg },
-    { name: "Kidney Cancer", image: kidneyImg },
-    { name: "Liver Cancer", image: liverImg },
-    { name: "Lungs Cancer", image: lungsImg },
-    { name: "Oral Cancer", image: oralImg },
-    { name: "Pancreas Cancer", image: pancreasImg },
-    { name: "Prostate Cancer", image: prostateImg },
-    { name: "Skin Cancer", image: skinImg },
-    { name: "Stomach Cancer", image: stomachImg },
-    { name: "Throat Cancer", image: throatImg },
-    { name: "Thyroid Cancer", image: thyroidImg },
-    { name: "Tongue Cancer", image: tongueImg },
-  ],
+  cancer: Object.values(CANCER_DETAILS).map((entry) => ({
+    key: entry.key,
+    name: entry.name,
+    image: entry.heroImage,
+  })),
   kidney: [
     { name: "Chronic Kidney Disease" },
     { name: "Dialysis Support" },
@@ -117,6 +83,14 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
     treatment.title?.split(" ")[0]?.toUpperCase() || "TREATMENT";
   const handleBack = () => onNavigate?.("treatment");
   const isCancerTreatment = treatment.key === "cancer";
+  const handleSubTreatmentSelect = (item) => {
+    if (!isCancerTreatment || !item?.key) return;
+
+    onNavigate?.("cancer-detail", {
+      cancerKey: item.key,
+      title: item.name,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -214,6 +188,7 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
                   <div className="flex flex-1 items-end px-6 py-5">
                     <button
                       type="button"
+                      onClick={() => handleSubTreatmentSelect(item)}
                       className="inline-flex items-center gap-2 rounded-full border border-[#74C425] bg-white px-5 py-2 text-xs font-semibold uppercase text-[#0b2fa1] transition-colors group-hover:bg-[#74C425] group-hover:text-white"
                     >
                       Learn More

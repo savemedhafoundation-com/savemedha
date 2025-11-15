@@ -56,15 +56,15 @@ const VolunteerAndSupportSection = () => {
   };
 
   return (
-    <div className="w-full bg-gradient-to-b from-green-50 to-green-50">
+    <div className="w-full bg-gradient-to-b from-green-50 to-white-50">
       {/* Volunteer Section */}
-      <div className="relative bg-gradient-to-b from-green-50 to-green-50 py-12 px-16 overflow-hidden">
+      <div className="relative bg-gradient-to-b from-green-50 to-white-50 py-12 px-16 overflow-hidden">
         {/* Left background image: JOINED */}
-        <div className="absolute inset-y-0 left-0 w-[35%] pl-35 bg-gradient-to-b from-green-50 to-green-1">
+        <div className="absolute inset-y-0 left-0 w-[100%] pl-35 bg-gradient-to-b from-green-50 to-white-50">
           <img src={Hands} alt="Joined" className="w-45% h-full object-cover" />
         </div>
         {/* Right background image: HANDS */}
-        <div className="absolute inset-y-0 right-0 w-[45%] pr-30 bg-gradient-to-b from-green-50 to-green-50">
+        <div className="absolute inset-y-0 right-0 w-[45%]  bg-gradient-to-b from-green-50 to-green-50">
           <img
             src={Joined}
             alt="Hands"
