@@ -4,8 +4,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import placeholderHero from "../assets/cancer type img/9.png";
+
 import { getCancerDetail } from "../data/cancerLearnMore";
+
+const heroModules = import.meta.glob(
+  "/src/assets/heroimgofcancertreatment/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+  }
+);
+
+const heroImages = Object.entries(heroModules)
+  .map(([path, mod]) => {
+    if (typeof mod === "string") return mod;
+    if (mod?.default) return mod.default;
+    // Vite keeps the path key usable as a src if no default export
+    return path.replace(/^\/src/, "");
+  })
+  .filter(Boolean)
+  .sort((a, b) => {
+    const getNum = (p) => {
+      const file = p.split("/").pop() ?? "";
+      const num = parseInt(file.replace(/\D+/g, ""), 10);
+      return Number.isFinite(num) ? num : file.localeCompare(file);
+    };
+    return getNum(a) - getNum(b);
+  });
 
 const byPrefixAndName = {
   far: {
@@ -19,12 +43,13 @@ const CancerTypeBadge = ({
   baseShadow,
   hoverColor = "#7A2300",
   hoverShadow = "rgba(122,35,0,0.3)",
+  href,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <a
-      href="https://dantura.com/"
+      href={href}
       target="_blank"
       rel="noreferrer"
       onMouseEnter={() => setIsHovered(true)}
@@ -45,6 +70,19 @@ const CancerTypeBadge = ({
 export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }) {
   const detail = getCancerDetail(cancerKey, fallbackTitle);
   const handleBack = () => onNavigate?.("treatment-detail");
+  const storeLink =
+    detail?.storeUrl ||
+    "https://dantura.com/";
+  const ctaLink = "https://dantura.com/";
+
+  const heroIndex = detail?.key
+    ? Math.abs(
+        detail.key
+          .split("")
+          .reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      ) % (heroImages.length || 1)
+    : 0;
+  const heroSrc = heroImages[heroIndex];
 
   if (!detail) return null;
 
@@ -93,13 +131,13 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
       
       <div className="bg-[#3c6513] ">
         <img
-          src={placeholderHero}
-          alt="Blood Cancer visualization"
+          src={heroSrc}
+          alt={detail.name}
           className="h-99 w-full object-cover"
         />
       </div>
 
-      <div className="bg-white px-7 py-8 w-full">
+      <div className="bg-white px-4 py-8 w-full">
         <p className="text-xs uppercase tracking-[0.35em] text-[#3c6513]">
            CAN BE CURED BY
         </p>
@@ -151,7 +189,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
 
       {/* CTA Button */}
       <a
-        href="https://dantura.com/"
+        href={ctaLink}
         target="_blank"
         rel="noreferrer"
         className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#FFD54F] px-8 py-3 text-lg font-semibold text-[#0d3805] shadow-md transition hover:bg-[#f7c533]"
@@ -217,6 +255,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
                   label={t}
                   baseColor={bgColors[index] ?? "#74C425"}
                   baseShadow={shadowColors[index] ?? "rgba(116,196,37,0.3)"}
+                  href={storeLink}
                 />
               );
             })}

@@ -10,54 +10,54 @@ const SUB_TREATMENT_LIBRARY = {
     image: entry.heroImage,
   })),
   kidney: [
-    { name: "Chronic Kidney Disease" },
-    { name: "Dialysis Support" },
-    { name: "Kidney Stone Care" },
-    { name: "Renal Hypertension" },
-    { name: "Transplant Recovery" },
-    { name: "Urinary Tract Health" },
-    { name: "Proteinuria Control" },
-    { name: "Glomerulonephritis Relief" },
+    { key: "chronic-kidney-disease", name: "Chronic Kidney Disease" },
+    { key: "dialysis-support", name: "Dialysis Support" },
+    { key: "kidney-stone-care", name: "Kidney Stone Care" },
+    { key: "renal-hypertension", name: "Renal Hypertension" },
+    { key: "transplant-recovery", name: "Transplant Recovery" },
+    { key: "urinary-tract-health", name: "Urinary Tract Health" },
+    { key: "proteinuria-control", name: "Proteinuria Control" },
+    { key: "glomerulonephritis-relief", name: "Glomerulonephritis Relief" },
   ],
   heart: [
-    { name: "Hypertension Control" },
-    { name: "Cholesterol Reset" },
-    { name: "Arrhythmia Care" },
-    { name: "Heart Failure Support" },
-    { name: "Post-Bypass Rehab" },
-    { name: "Valve Disorder Care" },
-    { name: "Cardiac Fitness" },
-    { name: "Stress Cardiology" },
+    { key: "hypertension-control", name: "Hypertension Control" },
+    { key: "cholesterol-reset", name: "Cholesterol Reset" },
+    { key: "arrhythmia-care", name: "Arrhythmia Care" },
+    { key: "heart-failure-support", name: "Heart Failure Support" },
+    { key: "post-bypass-rehab", name: "Post-Bypass Rehab" },
+    { key: "valve-disorder-care", name: "Valve Disorder Care" },
+    { key: "cardiac-fitness", name: "Cardiac Fitness" },
+    { key: "stress-cardiology", name: "Stress Cardiology" },
   ],
   nerve: [
-    { name: "Peripheral Neuropathy" },
-    { name: "Sciatica Relief" },
-    { name: "Parkinson's Support" },
-    { name: "Multiple Sclerosis Care" },
-    { name: "Migraine Therapy" },
-    { name: "Stroke Recovery" },
-    { name: "Carpal Tunnel" },
-    { name: "Autonomic Balance" },
+    { key: "peripheral-neuropathy", name: "Peripheral Neuropathy" },
+    { key: "sciatica-relief", name: "Sciatica Relief" },
+    { key: "parkinsons-support", name: "Parkinson's Support" },
+    { key: "multiple-sclerosis-care", name: "Multiple Sclerosis Care" },
+    { key: "migraine-therapy", name: "Migraine Therapy" },
+    { key: "stroke-recovery", name: "Stroke Recovery" },
+    { key: "carpal-tunnel", name: "Carpal Tunnel" },
+    { key: "autonomic-balance", name: "Autonomic Balance" },
   ],
   sma: [
-    { name: "Respiratory Strength" },
-    { name: "Mobility Therapy" },
-    { name: "Nutritional Support" },
-    { name: "Adaptive Physiotherapy" },
-    { name: "Assistive Tech Fitment" },
-    { name: "Family Training" },
-    { name: "Speech & Swallow Care" },
-    { name: "Hydrotherapy Blocks" },
+    { key: "respiratory-strength", name: "Respiratory Strength" },
+    { key: "mobility-therapy", name: "Mobility Therapy" },
+    { key: "nutritional-support", name: "Nutritional Support" },
+    { key: "adaptive-physiotherapy", name: "Adaptive Physiotherapy" },
+    { key: "assistive-tech-fitment", name: "Assistive Tech Fitment" },
+    { key: "family-training", name: "Family Training" },
+    { key: "speech-swallow-care", name: "Speech & Swallow Care" },
+    { key: "hydrotherapy-blocks", name: "Hydrotherapy Blocks" },
   ],
   other: [
-    { name: "Autoimmune Reset" },
-    { name: "Metabolic Syndrome" },
-    { name: "Chronic Fatigue" },
-    { name: "PCOS & Hormone Care" },
-    { name: "Gut & Microbiome" },
-    { name: "Detox Intensives" },
-    { name: "Pain Management" },
-    { name: "Sleep Restoration" },
+    { key: "autoimmune-reset", name: "Autoimmune Reset" },
+    { key: "metabolic-syndrome", name: "Metabolic Syndrome" },
+    { key: "chronic-fatigue", name: "Chronic Fatigue" },
+    { key: "pcos-hormone-care", name: "PCOS & Hormone Care" },
+    { key: "gut-microbiome", name: "Gut & Microbiome" },
+    { key: "detox-intensives", name: "Detox Intensives" },
+    { key: "pain-management", name: "Pain Management" },
+    { key: "sleep-restoration", name: "Sleep Restoration" },
   ],
 };
 
@@ -83,13 +83,57 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
     treatment.title?.split(" ")[0]?.toUpperCase() || "TREATMENT";
   const handleBack = () => onNavigate?.("treatment");
   const isCancerTreatment = treatment.key === "cancer";
+  const isKidneyTreatment = treatment.key === "kidney";
+  const isHeartTreatment = treatment.key === "heart";
+  const isNerveTreatment = treatment.key === "nerve";
+  const isSMATreatment = treatment.key === "sma";
+  const isOtherTreatment = treatment.key === "other";
   const handleSubTreatmentSelect = (item) => {
-    if (!isCancerTreatment || !item?.key) return;
+    if (isCancerTreatment && item?.key) {
+      onNavigate?.("cancer-detail", {
+        cancerKey: item.key,
+        title: item.name,
+      });
+      return;
+    }
 
-    onNavigate?.("cancer-detail", {
-      cancerKey: item.key,
-      title: item.name,
-    });
+    if (isKidneyTreatment && item?.key) {
+      onNavigate?.("kidney-detail", {
+        kidneyKey: item.key,
+        title: item.name,
+      });
+    }
+
+    if (isHeartTreatment && item?.key) {
+      onNavigate?.("heart-detail", {
+        heartKey: item.key,
+        title: item.name,
+      });
+      return;
+    }
+
+    if (isNerveTreatment && item?.key) {
+      onNavigate?.("nerve-detail", {
+        nerveKey: item.key,
+        title: item.name,
+      });
+      return;
+    }
+
+    if (isSMATreatment && item?.key) {
+      onNavigate?.("sma-detail", {
+        smaKey: item.key,
+        title: item.name,
+      });
+      return;
+    }
+
+    if (isOtherTreatment && item?.key) {
+      onNavigate?.("other-detail", {
+        otherKey: item.key,
+        title: item.name,
+      });
+    }
   };
 
   return (

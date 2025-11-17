@@ -18,14 +18,47 @@ import throatImg from "../assets/Photo/throat.png";
 import thyroidImg from "../assets/Photo/thyroid.png";
 import tongueImg from "../assets/Photo/tongue.png";
 import cancerImg from "../assets/Photo/cancertreatment.png";
+import boneSymptom3 from "../assets/bone cancer/Ellipse 15.png";
+import boneSymptom8 from "../assets/bone cancer/Ellipse 15-1.png";
+import boneSymptom7 from "../assets/bone cancer/icon2.png";
+import boneSymptom4 from "../assets/bone cancer/Ellipse 16-1.png";
+import boneSymptom5 from "../assets/bone cancer/Fatigue.png";
+import boneSymptom2 from "../assets/bone cancer/Numbness.png";
+import boneSymptom1 from "../assets/bone cancer/1.png";
+import boneSymptom6 from "../assets/bone cancer/Weight loss.png";
 
-const symptomImageModules = import.meta.glob(
-  "../assets/cancer type img/*.{png,jpg,jpeg,webp}",
-  {
+const STORE_URLS = {
+  blood: "https://dantura.com/product/platelet-booster/?v=13b5bfe96f3e",
+  brain: "https://dantura.com/product/nerve-booster/?v=13b5bfe96f3e",
+  breast: "https://dantura.com/product/tumor-breaker/?v=13b5bfe96f3e",
+  cervix: "https://dantura.com/product/detox-booster/?v=13b5bfe96f3e",
+  colon: "https://dantura.com/product/detox-booster/?v=13b5bfe96f3e",
+  eye: "https://dantura.com/product/tumor-breaker/?v=13b5bfe96f3e",
+  "gall-bladder": "https://dantura.com/product/spleen-booster/?v=13b5bfe96f3e",
+  "kidney-cancer": "https://dantura.com/product/kidney-booster/?v=13b5bfe96f3e",
+  "liver-cancer": "https://dantura.com/product/liver-booster/?v=13b5bfe96f3e",
+  lungs: "https://dantura.com/product/heart-booster/?v=13b5bfe96f3e",
+  oral: "https://dantura.com/product/tumor-breaker/?v=13b5bfe96f3e",
+  pancreas: "https://dantura.com/product/pancrease-booster/?v=13b5bfe96f3e",
+  prostate: "https://dantura.com/product/tumor-breaker/?v=13b5bfe96f3e",
+  skin: "https://dantura.com/product/hair-root-booster/?v=13b5bfe96f3e",
+  stomach: "https://dantura.com/product/detox-booster/?v=13b5bfe96f3e",
+  throat: "https://dantura.com/product/thymus-booster/?v=13b5bfe96f3e",
+  thyroid: "https://dantura.com/product/thyroid-booster/?v=13b5bfe96f3e",
+  tongue: "https://dantura.com/product/detox-booster/?v=13b5bfe96f3e",
+  default: "https://dantura.com/product/tumor-breaker/?v=13b5bfe96f3e",
+};
+
+const symptomImageModules = {
+  ...import.meta.glob("../assets/cancer type img/*.{png,jpg,jpeg,webp}", {
     eager: true,
     import: "default",
-  }
-);
+  }),
+  ...import.meta.glob("../assets/symptoms -brain cancer/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
+};
 
 const symptomImageEntries = Object.entries(symptomImageModules);
 const fallbackSymptomImages = symptomImageEntries.map(([, value]) => value);
@@ -75,6 +108,11 @@ const buildGenericParagraphs = (name, areaDescription) => [
   "Our natural immunotherapy roadmap focuses on detox, immune-balancing nutrition, oxygen therapy, and emotional resilience so you can move through conventional care with less stress and more control.",
 ];
 
+const buildStoreUrl = (key) => {
+  const normalized = normalizeKey(key);
+  return STORE_URLS[normalized] || STORE_URLS.default;
+};
+
 const createDetail = ({
   key,
   name,
@@ -89,34 +127,42 @@ const createDetail = ({
   relatedTypes,
   bulletIntro,
   bulletHighlights,
-}) => ({
-  key,
-  name,
-  heroImage: heroImage ?? cancerImg,
-  cureBy: "Natural Immunotherapy",
-  intro:
-    intro ??
-    `Learn how we decode ${name.toLowerCase()} and build gentle, daily actions that help your body fight back.`,
-  descriptionTitle: `What is ${name}?`,
-  heroQuote:
-    heroQuote ??
-    `"${name} starts inside ${areaDescription || "specific tissues"} and impacts how healthy cells grow, repair, and protect you."`,
-  quickFacts:
-    quickFacts ??
-    [
-      "Early-stage cases respond faster when lifestyle stressors are removed.",
-      "Chronic inflammation fuels tumour growth, so calming the immune system is critical.",
-    ],
-  bodyParagraphs:
-    bodyParagraphs ?? buildGenericParagraphs(name, areaDescription),
-  stats:
-    stats ??
-    `Around the world, ${name.toLowerCase()} diagnoses continue to rise, but early personalized care dramatically improves outcomes.`,
-  symptoms: symptoms ?? DEFAULT_SYMPTOMS,
-  relatedTypes: relatedTypes ?? [],
-  bulletIntro,
-  bulletHighlights,
-});
+  storeUrl,
+  ctaUrl,
+}) => {
+  const resolvedStore = storeUrl ?? buildStoreUrl(key);
+
+  return {
+    key,
+    name,
+    heroImage: heroImage ?? cancerImg,
+    cureBy: "Natural Immunotherapy",
+    intro:
+      intro ??
+      `Learn how we decode ${name.toLowerCase()} and build gentle, daily actions that help your body fight back.`,
+    descriptionTitle: `What is ${name}?`,
+    heroQuote:
+      heroQuote ??
+      `"${name} starts inside ${areaDescription || "specific tissues"} and impacts how healthy cells grow, repair, and protect you."`,
+    quickFacts:
+      quickFacts ??
+      [
+        "Early-stage cases respond faster when lifestyle stressors are removed.",
+        "Chronic inflammation fuels tumour growth, so calming the immune system is critical.",
+      ],
+    storeUrl: resolvedStore,
+    ctaUrl: ctaUrl ?? resolvedStore,
+    bodyParagraphs:
+      bodyParagraphs ?? buildGenericParagraphs(name, areaDescription),
+    stats:
+      stats ??
+      `Around the world, ${name.toLowerCase()} diagnoses continue to rise, but early personalized care dramatically improves outcomes.`,
+    symptoms: symptoms ?? DEFAULT_SYMPTOMS,
+    relatedTypes: relatedTypes ?? [],
+    bulletIntro,
+    bulletHighlights,
+  };
+};
 
 export const CANCER_DETAILS = {
   blood: createDetail({
@@ -179,7 +225,22 @@ export const CANCER_DETAILS = {
       { label: "Limited motion" },
       { label: "Fatigue" },
       { label: "Weight loss" },
-    ],
+      { label: "Persistent night pain" },
+      { label: "Numbness" },
+    ].map((symptom, index) => ({
+      ...symptom,
+      img: [
+        boneSymptom1,
+        boneSymptom2,
+        boneSymptom3,
+        boneSymptom4,
+        boneSymptom5,
+        boneSymptom6,
+        boneSymptom7,
+        boneSymptom8,
+
+      ][index % 8],
+    })),
     relatedTypes: ["Osteosarcoma", "Chondrosarcoma", "Ewing Sarcoma", "Chordoma"],
   }),
   brain: createDetail({
@@ -197,13 +258,16 @@ export const CANCER_DETAILS = {
     ],
     stats: "Primary brain tumours account for roughly 3% of cancers but carry life-altering symptoms.",
     symptoms: [
-      { label: "Severe headaches" },
-      { label: "Vision issues" },
-      { label: "Speech changes" },
-      { label: "Personality shifts" },
-      { label: "Seizures" },
-      { label: "Balance problems" },
-    ],
+      "Severe headaches",
+      "Vision issues",
+      "Speech changes",
+      "Personality shifts",
+      "Seizures",
+      "Balance problems",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
     relatedTypes: ["Glioma", "Meningioma", "Pituitary Tumors"],
   }),
   breast: createDetail({
