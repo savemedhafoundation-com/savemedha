@@ -21,7 +21,7 @@ const NAV_ITEMS = [
   { name: "BLOGS", key: "blogs", hasDropdown: false },
   { name: "E-BOOK", key: null, hasDropdown: false },
   { name: "CAREERS", key: null, hasDropdown: false },
-  { name: "CONTACT US", key: null, hasDropdown: false },
+  { name: "CONTACT US", key: "contact", hasDropdown: false },
 ];
 
 export default function Navbar({ currentPage = "home", onNavigate }) {

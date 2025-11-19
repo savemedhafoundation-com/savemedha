@@ -6,6 +6,17 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getKidneyDetail } from "../data/kidneyLearnMore";
 
+const KIDNEY_KEY_ORDER = [
+  "chronic-kidney-disease",
+  "dialysis-support",
+  "kidney-stone-care",
+  "renal-hypertension",
+  "transplant-recovery",
+  "urinary-tract-health",
+  "proteinuria-control",
+  "glomerulonephritis-relief",
+];
+
 const byPrefixAndName = {
   far: {
     "globe-pointer": faGlobe,
@@ -44,6 +55,17 @@ const KidneyTypeBadge = ({
 export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }) {
   const detail = getKidneyDetail(kidneyKey, fallbackTitle);
   const handleBack = () => onNavigate?.("treatment-detail");
+  const normalizedKey = detail?.key?.toLowerCase();
+  const currentIndex = KIDNEY_KEY_ORDER.indexOf(normalizedKey);
+  const prevKey = currentIndex > 0 ? KIDNEY_KEY_ORDER[currentIndex - 1] : null;
+  const nextKey =
+    currentIndex >= 0 && currentIndex < KIDNEY_KEY_ORDER.length - 1
+      ? KIDNEY_KEY_ORDER[currentIndex + 1]
+      : null;
+  const handleNavigateTo = (targetKey) => {
+    if (!targetKey) return;
+    onNavigate?.("kidney-detail", { kidneyKey: targetKey });
+  };
 
   if (!detail) return null;
 
@@ -187,6 +209,38 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
             TYPES OF KIDNEY CARE WE OFFER
           </h2>
           <div className="mx-auto mt-2 mb-8 h-[2px] w-32 bg-[#74C425]" />
+
+          <div className="mt-6 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => handleNavigateTo(prevKey)}
+              disabled={!prevKey}
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
+              style={{
+                color: "#0b2fa1",
+                borderColor: "#0b2fa1",
+                backgroundColor: "white",
+                opacity: prevKey ? 1 : 0.5,
+              }}
+            >
+              &larr; Prev
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleNavigateTo(nextKey)}
+              disabled={!nextKey}
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
+              style={{
+                color: "#0b2fa1",
+                borderColor: "#0b2fa1",
+                backgroundColor: "white",
+                opacity: nextKey ? 1 : 0.5,
+              }}
+            >
+              Next &rarr;
+            </button>
+          </div>
 
           <div className="mt-10 flex flex-wrap justify-center gap-15">
             {detail.relatedTypes.map((t, index) => {

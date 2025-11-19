@@ -6,18 +6,31 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getOtherDetail } from "../data/otherLearnMore";
 
+const OTHER_KEY_ORDER = [
+  "autoimmune-reset",
+  "metabolic-syndrome",
+  "chronic-fatigue",
+  "pcos-hormone-care",
+];
+
 const byPrefixAndName = {
   far: {
     "globe-pointer": faGlobe,
   },
 };
 
+// Kidney Page Color Scheme
+const themePrimary = "#3c6513"; // Main Green
+const themeHighlight = "#BFFF80";
+const themeBlue = "#0b2fa1";
+const symptomBg = "#f1ffe7";
+
 const TreatmentBadge = ({
   label,
   baseColor,
   baseShadow,
-  hoverColor = "#0b2fa1",
-  hoverShadow = "rgba(11,47,161,0.25)",
+  hoverColor = "#7A2300",
+  hoverShadow = "rgba(122,35,0,0.3)",
   href,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -46,8 +59,17 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
   const detail = getOtherDetail(otherKey, fallbackTitle);
   const handleBack = () => onNavigate?.("treatment-detail");
   const storeLink = detail?.storeUrl || "https://dantura.com/";
-  const ctaLink = "https://dantura.com/";
-  const themeColor = "#0b2fa1";
+  const normalizedKey = detail?.key?.toLowerCase();
+  const currentIndex = OTHER_KEY_ORDER.indexOf(normalizedKey);
+  const prevKey = currentIndex > 0 ? OTHER_KEY_ORDER[currentIndex - 1] : null;
+  const nextKey =
+    currentIndex >= 0 && currentIndex < OTHER_KEY_ORDER.length - 1
+      ? OTHER_KEY_ORDER[currentIndex + 1]
+      : null;
+  const handleNavigateTo = (targetKey) => {
+    if (!targetKey) return;
+    onNavigate?.("other-detail", { otherKey: targetKey });
+  };
 
   if (!detail) return null;
 
@@ -55,7 +77,8 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
 
-      <div className="w-full" style={{ backgroundColor: themeColor }}>
+      {/* TOP BAR */}
+      <div className="w-full" style={{ backgroundColor: themePrimary }}>
         <div className="mx-auto max-w-6xl px-6 text-white py-4">
           <button
             type="button"
@@ -71,17 +94,19 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
               TREATMENT
             </p>
             <IoIosArrowForward className="text-lg" />
-            <p className="text-base font-semibold uppercase tracking-[0.2em] text-[#BFFF80]">
+            <p className="text-base font-semibold uppercase tracking-[0.2em]" style={{ color: themeHighlight }}>
               {detail.name}
             </p>
           </div>
         </div>
       </div>
 
-      <section className="w-full py-2" style={{ backgroundColor: themeColor }}>
+      {/* MAIN BLUE SECTION */}
+      <section className="w-full py-2" style={{ backgroundColor: themePrimary }}>
         <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 px-6">
+          
           <div className="flex flex-col">
-            <div>
+            <div className="bg-[#0b2fa1]">
               <img
                 src={detail.heroImage}
                 alt={detail.name}
@@ -90,12 +115,12 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
             </div>
 
             <div className="bg-white px-4 py-8 w-full">
-              <p className="text-xs uppercase tracking-[0.35em]" style={{ color: themeColor }}>
+              <p className="text-xs uppercase tracking-[0.35em]" style={{ color: themeBlue }}>
                 CAN BE CURED BY
               </p>
               <h3
                 className="font-koho text-xl font-semibold italic mt-1"
-                style={{ color: themeColor }}
+                style={{ color: themeBlue }}
               >
                 {detail.cureBy}
               </h3>
@@ -103,6 +128,7 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
             </div>
           </div>
 
+          {/* RIGHT TEXT */}
           <div className="text-white self-start -mt-6">
             <h2 className="font-koho text-[32px] font-bold">{detail.descriptionTitle}</h2>
             <blockquote className="italic text-[#d8f7a8] text-lg mb-2 leading-relaxed">
@@ -128,7 +154,7 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
             <p className="mt-4 mr-2 text-[17px] font-medium text-white">{detail.stats}</p>
 
             <a
-              href={ctaLink}
+              href={storeLink}
               target="_blank"
               rel="noreferrer"
               className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#FFD54F] px-8 py-3 text-lg font-semibold text-[#0b2fa1] shadow-md transition hover:bg-[#f7c533]"
@@ -137,9 +163,11 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
               Start Natural Immunotherapy
             </a>
           </div>
+
         </div>
       </section>
 
+      {/* SYMPTOMS */}
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-6xl px-6 text-center">
           <h2 className="font-koho text-3xl font-bold mb-10">SYMPTOMS</h2>
@@ -153,7 +181,10 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
                     className="mx-auto h-50 w-50 rounded-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 ) : (
-                  <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-[#f1ffe7] text-base font-semibold text-[#0b2fa1] transition-transform duration-300 group-hover:scale-110">
+                  <div
+                    className="mx-auto flex h-32 w-32 items-center justify-center rounded-full text-base font-semibold transition-transform duration-300 group-hover:scale-110"
+                    style={{ backgroundColor: symptomBg, color: themeBlue }}
+                  >
                     {sym.label}
                   </div>
                 )}
@@ -166,30 +197,54 @@ export default function OtherLearnMore({ otherKey, onNavigate, fallbackTitle }) 
         </div>
       </section>
 
+      {/* CARE TYPES */}
       <section className="py-16 bg-gradient-to-b from-white to-[#f1ffe7]">
         <div className="px-6 text-center">
           <h2 className="font-serif text-3xl font-bold tracking-wide">TYPES OF CUSTOM CARE</h2>
           <div className="mx-auto mt-2 mb-8 h-[2px] w-32 bg-[#74C425]" />
 
-          <div className="mt-10 flex flex-wrap justify-center gap-15">
-            {detail.relatedTypes.map((t, index) => {
-              const bgColors = ["#74C425", themeColor, "#74C425"];
-              const shadowColors = [
-                "rgba(116,196,37,0.3)",
-                "rgba(11,47,161,0.3)",
-                "rgba(116,196,37,0.3)",
-              ];
+          <div className="mt-6 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => handleNavigateTo(prevKey)}
+              disabled={!prevKey}
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
+              style={{
+                color: themeBlue,
+                borderColor: themeBlue,
+                backgroundColor: "white",
+                opacity: prevKey ? 1 : 0.5,
+              }}
+            >
+              &larr; Prev
+            </button>
 
-              return (
-                <TreatmentBadge
-                  key={t}
-                  label={t}
-                  href={storeLink}
-                  baseColor={bgColors[index] ?? "#74C425"}
-                  baseShadow={shadowColors[index] ?? "rgba(116,196,37,0.3)"}
-                />
-              );
-            })}
+            <button
+              type="button"
+              onClick={() => handleNavigateTo(nextKey)}
+              disabled={!nextKey}
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
+              style={{
+                color: themeBlue,
+                borderColor: themeBlue,
+                backgroundColor: "white",
+                opacity: nextKey ? 1 : 0.5,
+              }}
+            >
+              Next &rarr;
+            </button>
+          </div>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-15">
+            {detail.relatedTypes.map((t, index) => (
+              <TreatmentBadge
+                key={t}
+                label={t}
+                href={storeLink}
+                baseColor={["#74C425", "#74C425", "#74C425"][index] ?? "#74C425"}
+                baseShadow={["rgba(116,196,37,0.3)", "rgba(116,196,37,0.3)", "rgba(116,196,37,0.3)"][index]}
+              />
+            ))}
           </div>
         </div>
       </section>

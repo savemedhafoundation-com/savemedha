@@ -46,7 +46,9 @@ const STORE_URLS = {
   throat: "https://dantura.com/product/thymus-booster/?v=13b5bfe96f3e",
   thyroid: "https://dantura.com/product/thyroid-booster/?v=13b5bfe96f3e",
   tongue: "https://dantura.com/product/detox-booster/?v=13b5bfe96f3e",
+  bone: "https://dantura.com/product/bone-marrow-booster/?v=13b5bfe96f3e",
   default: "https://dantura.com/product/tumor-breaker/?v=13b5bfe96f3e",
+
 };
 
 const symptomImageModules = {
@@ -58,10 +60,61 @@ const symptomImageModules = {
     eager: true,
     import: "default",
   }),
+  ...import.meta.glob("../assets/symptoms of cervix cancer/**/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/Symptoms of Colon Cancer/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/symptoms of breast cancer/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
 };
 
 const symptomImageEntries = Object.entries(symptomImageModules);
 const fallbackSymptomImages = symptomImageEntries.map(([, value]) => value);
+
+const SYMPTOM_IMAGE_ALIASES = {
+  "nausea-or-vomiting": {
+    label: "nausea-and-vomiting",
+    folder: "symptoms -brain cancer",
+  },
+  "abnormal-vaginal-bleeding": { label: "1", folder: "symptoms of cervix cancer" },
+  "unusual-vaginal-discharge": { label: "2", folder: "symptoms of cervix cancer" },
+  "pelvic-pain": { label: "3", folder: "symptoms of cervix cancer" },
+  "urinary-symptoms": { label: "4", folder: "symptoms of cervix cancer" },
+  "unexplained-weight-loss": { label: "5", folder: "symptoms of cervix cancer" },
+  "heavy-prolonged-menstrual-bleeding": { label: "6", folder: "symptoms of cervix cancer" },
+  "leg-swelling": { label: "7", folder: "symptoms of cervix cancer" },
+  "pain-during-intercourse": { label: "8", folder: "symptoms of cervix cancer" },
+  "new-lump": { label: "1", folder: "symptoms of breast cancer" },
+  "skin-dimpling": { label: "2", folder: "symptoms of breast cancer" },
+  "nipple-changes": { label: "3", folder: "symptoms of breast cancer" },
+  swelling: { label: "4", folder: "symptoms of breast cancer" },
+  pain: { label: "5", folder: "symptoms of breast cancer" },
+  "underarm-nodes": { label: "6", folder: "symptoms of breast cancer" },
+  "rectal-bleeding-or-blood-in-the-stool": {
+    label: "1",
+    folder: "Symptoms of Colon Cancer",
+  },
+  "abdominal-discomfort": { label: "2", folder: "Symptoms of Colon Cancer" },
+  "jaundice-if-cancer-spreads-to-liver": { label: "3", folder: "Symptoms of Colon Cancer" },
+  "unexplained-weight-loss-fatigue": {
+    label: "4",
+    folder: "Symptoms of Colon Cancer",
+    matchFull: true,
+  },
+  "constipation-diarrhea": { label: "5", folder: "Symptoms of Colon Cancer" },
+  "iron-deficiency-anemia": { label: "6", folder: "Symptoms of Colon Cancer" },
+  "abdominal-mass-or-lump": { label: "7", folder: "Symptoms of Colon Cancer" },
+  "vomiting-due-to-blocked-intestine": {
+    label: "8",
+    folder: "Symptoms of Colon Cancer",
+  },
+};
 
 const normalizeKey = (value = "") =>
   value
@@ -74,16 +127,33 @@ const getSymptomImage = (label, fallbackIndex = 0) => {
   const normalizedLabel = normalizeKey(label);
   if (!normalizedLabel) return null;
 
-  const entry = symptomImageEntries.find(([path]) => {
-    const fileName = path.split("/").pop()?.split(".")[0] ?? "";
-    const normalizedFile = normalizeKey(fileName);
+  const aliasConfig = SYMPTOM_IMAGE_ALIASES[normalizedLabel];
+  const searchLabels = aliasConfig
+    ? [aliasConfig.label, normalizedLabel].filter(Boolean)
+    : [normalizedLabel];
 
-    return (
-      normalizedFile === normalizedLabel ||
-      normalizedFile.includes(normalizedLabel) ||
-      normalizedLabel.includes(normalizedFile)
-    );
-  });
+  const findEntry = (preferredFolder) =>
+    symptomImageEntries.find(([path]) => {
+      if (preferredFolder && !path.includes(preferredFolder)) return false;
+
+      const fileName = path.split("/").pop()?.split(".")[0] ?? "";
+      const normalizedFile = normalizeKey(fileName);
+
+      return searchLabels.some((candidate, idx) => {
+        if (aliasConfig?.matchFull && idx === 0) {
+          return normalizedFile === candidate;
+        }
+        return (
+          normalizedFile === candidate ||
+          normalizedFile.includes(candidate) ||
+          candidate.includes(normalizedFile)
+        );
+      });
+    });
+
+  const entry =
+    findEntry(aliasConfig?.folder) ||
+    findEntry();
 
   if (entry) return entry[1];
 
@@ -264,6 +334,8 @@ export const CANCER_DETAILS = {
       "Personality shifts",
       "Seizures",
       "Balance problems",
+      "Changes in mental status",
+      "Nausea or vomiting",
     ].map((label, index) => ({
       label,
       img: getSymptomImage(label, index),
@@ -281,14 +353,26 @@ export const CANCER_DETAILS = {
     ],
     stats: "Breast cancer is the most common cancer in women worldwide.",
     symptoms: [
-      { label: "New lump" },
-      { label: "Skin dimpling" },
-      { label: "Nipple changes" },
-      { label: "Swelling" },
-      { label: "Pain" },
-      { label: "Underarm nodes" },
+      "New lump",
+      "Skin dimpling",
+      "Nipple changes",
+      "Swelling",
+      "Pain",
+      "Underarm nodes",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
+    relatedTypes: [
+      "Invasive Ductal Carcinoma (IDC)",
+      "Invasive Lobular Carcinoma (ILC)",
+      "Ductal Carcinoma In Situ (DCIS)",
+      "Hormone Receptor-Positive Breast Cancer",
+      "HER2-Positive Breast Cancer",
+      "Triple-Negative Breast Cancer",
+      "Paget's Disease of the Nipple",
+      "Inflammatory Breast Cancer (IBC)",
     ],
-    relatedTypes: ["Ductal", "Lobular", "Triple-negative", "Inflammatory"],
   }),
   cervix: createDetail({
     key: "cervix",
@@ -301,33 +385,45 @@ export const CANCER_DETAILS = {
     ],
     stats: "Cervical cancer is preventable and highly treatable when detected early.",
     symptoms: [
-      { label: "Abnormal bleeding" },
-      { label: "Pelvic pain" },
-      { label: "Painful intercourse" },
-      { label: "Discharge" },
-      { label: "Back pain" },
-      { label: "Fatigue" },
-    ],
+      "Abnormal Vaginal Bleeding",
+      "Unusual Vaginal Discharge",
+      "Pelvic Pain",
+      "Urinary Symptoms",
+      "Unexplained Weight Loss",
+      "Heavy, prolonged menstrual bleeding",
+      "Leg swelling",
+      "Pain during intercourse",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
     relatedTypes: ["Squamous Cell", "Adenocarcinoma"],
   }),
   colon: createDetail({
     key: "colon",
     name: "Colon Cancer",
     heroImage: colonImg,
-    areaDescription: "the large intestine",
-    quickFacts: [
-      "Polyps can transform into cancer over time, so colonoscopies matter.",
-      "Fiber-rich diets, hydration, and stress relief protect the gut terrain.",
+    areaDescription: "the colon and rectum, key parts of the digestive system",
+    intro:
+      "\"Colon cancer, also known as colorectal cancer, develops in the colon or rectum, which are parts of the digestive system responsible for processing and eliminating waste.\"",
+    bodyParagraphs: [
+      "It typically starts as a small growth called a polyp, which can become cancerous over time. We focus on gut detox, fiber-rich nutrition, and anti-inflammatory rituals that support the colon's healing capacity.",
+      "Colon cancer is one of the most common types of cancer worldwide, but it is also highly preventable with screening and lifestyle changes. Our protocols aim to keep bowels moving, inflammation low, and immunity strong during treatment.",
     ],
-    stats: "Colon cancer is the third most common cancer globally.",
+    stats: "Global percentage of Colon cancer among all types of cancer = 9% to 10%.",
     symptoms: [
-      { label: "Change in bowel habits" },
-      { label: "Blood in stool" },
-      { label: "Abdominal cramps" },
-      { label: "Bloating" },
-      { label: "Weakness" },
-      { label: "Weight loss" },
-    ],
+      { label: "Rectal Bleeding or Blood in the Stool" },
+      { label: "Abdominal Discomfort" },
+      { label: "Jaundice (if cancer spreads to liver)" },
+      { label: "Unexplained Weight Loss & Fatigue" },
+      { label: "Constipation, Diarrhea" },
+      { label: "Iron Deficiency Anemia" },
+      { label: "Abdominal Mass or Lump" },
+      { label: "Vomiting due to blocked intestine" },
+    ].map((sym, index) => ({
+      label: sym.label,
+      img: sym.img ?? getSymptomImage(sym.label, index),
+    })),
     relatedTypes: ["Colon Polyps", "Rectal Cancer", "Hereditary Syndromes"],
   }),
   eye: createDetail({

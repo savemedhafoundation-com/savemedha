@@ -11,6 +11,7 @@ import NerveLearnMore from "./pages/NerveLearnMore";
 import SMALearnMore from "./pages/SMALearnMore";
 import OtherLearnMore from "./pages/OtherLearnMore";
 import Donate from "./pages/Donate";
+import Contact from "./pages/Contact";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -29,7 +30,11 @@ function App() {
       if (options?.treatment) {
         setSelectedTreatment(options.treatment);
       }
-    } else if (pageKey !== "cancer-detail" && selectedTreatment) {
+    } else if (
+      typeof pageKey === "string" &&
+      !pageKey.endsWith("detail") &&
+      selectedTreatment
+    ) {
       setSelectedTreatment(null);
     }
 
@@ -118,6 +123,8 @@ function App() {
         return <Blogs onNavigate={handleNavigate} />;
       case "donate":
         return <Donate onNavigate={handleNavigate} />;
+      case "contact":
+        return <Contact onNavigate={handleNavigate} />;
       case "treatment-detail":
         if (!selectedTreatment) {
           return <Treatment onNavigate={handleNavigate} />;

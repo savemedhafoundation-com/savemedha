@@ -6,6 +6,13 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getHeartDetail } from "../data/heartLearnMore";
 
+const HEART_KEY_ORDER = [
+  "hypertension-control",
+  "cholesterol-reset",
+  "arrhythmia-care",
+  "heart-failure-support",
+];
+
 const byPrefixAndName = {
   far: {
     "globe-pointer": faGlobe,
@@ -47,7 +54,17 @@ export default function HeartLearnMore({ heartKey, onNavigate, fallbackTitle }) 
   const handleBack = () => onNavigate?.("treatment-detail");
   const storeLink = detail?.storeUrl || "https://dantura.com/";
   const ctaLink = "https://dantura.com/";
-
+  const normalizedKey = detail?.key?.toLowerCase();
+  const currentIndex = HEART_KEY_ORDER.indexOf(normalizedKey);
+  const prevKey = currentIndex > 0 ? HEART_KEY_ORDER[currentIndex - 1] : null;
+  const nextKey =
+    currentIndex >= 0 && currentIndex < HEART_KEY_ORDER.length - 1
+      ? HEART_KEY_ORDER[currentIndex + 1]
+      : null;
+  const handleNavigateTo = (targetKey) => {
+    if (!targetKey) return;
+    onNavigate?.("heart-detail", { heartKey: targetKey });
+  };
   if (!detail) return null;
 
   const themeColor = "#b6002c";
@@ -178,9 +195,41 @@ export default function HeartLearnMore({ heartKey, onNavigate, fallbackTitle }) 
           <h2 className="font-serif text-3xl font-bold tracking-wide">TYPES OF HEART CARE</h2>
           <div className="mx-auto mt-2 mb-8 h-[2px] w-32 bg-[#74C425]" />
 
+          <div className="mt-6 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => handleNavigateTo(prevKey)}
+              disabled={!prevKey}
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
+              style={{
+                color: themeColor,
+                borderColor: themeColor,
+                backgroundColor: "white",
+                opacity: prevKey ? 1 : 0.5,
+              }}
+            >
+              &larr; Prev
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleNavigateTo(nextKey)}
+              disabled={!nextKey}
+              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
+              style={{
+                color: themeColor,
+                borderColor: themeColor,
+                backgroundColor: "white",
+                opacity: nextKey ? 1 : 0.5,
+              }}
+            >
+              Next &rarr;
+            </button>
+          </div>
+
           <div className="mt-10 flex flex-wrap justify-center gap-15">
             {detail.relatedTypes.map((t, index) => {
-              const bgColors = ["#74C425", themeColor, "#74C425"];
+              const bgColors = ["#74C425", "#74C425", "#74C425"];
               const shadowColors = [
                 "rgba(116,196,37,0.3)",
                 "rgba(182,0,44,0.3)",
