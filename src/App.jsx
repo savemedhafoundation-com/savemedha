@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import Treatment from "./pages/Treatment";
@@ -12,106 +13,27 @@ import SMALearnMore from "./pages/SMALearnMore";
 import OtherLearnMore from "./pages/OtherLearnMore";
 import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
+import { navigate } from "./store";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-  const [selectedTreatment, setSelectedTreatment] = useState(null);
-  const [selectedCancer, setSelectedCancer] = useState(null);
-  const [selectedKidney, setSelectedKidney] = useState(null);
-  const [selectedHeart, setSelectedHeart] = useState(null);
-  const [selectedNerve, setSelectedNerve] = useState(null);
-  const [selectedSMA, setSelectedSMA] = useState(null);
-  const [selectedOther, setSelectedOther] = useState(null);
+  const dispatch = useDispatch();
+  const currentPage = useSelector((state) => state.navigation.currentPage);
+  const {
+    selectedTreatment,
+    selectedCancer,
+    selectedKidney,
+    selectedHeart,
+    selectedNerve,
+    selectedSMA,
+    selectedOther,
+  } = useSelector((state) => state.selections);
 
-  const handleNavigate = (pageKey, options = {}) => {
-    if (!pageKey) return;
-
-    if (pageKey === "treatment-detail") {
-      if (options?.treatment) {
-        setSelectedTreatment(options.treatment);
-      }
-    } else if (
-      typeof pageKey === "string" &&
-      !pageKey.endsWith("detail") &&
-      selectedTreatment
-    ) {
-      setSelectedTreatment(null);
-    }
-
-    if (pageKey === "cancer-detail") {
-      if (options?.cancerKey) {
-        setSelectedCancer({
-          key: options.cancerKey,
-          title: options?.title,
-        });
-      }
-    } else if (selectedCancer) {
-      setSelectedCancer(null);
-    }
-
-    if (pageKey === "kidney-detail") {
-      if (options?.kidneyKey) {
-        setSelectedKidney({
-          key: options.kidneyKey,
-          title: options?.title,
-        });
-      }
-    } else if (selectedKidney) {
-      setSelectedKidney(null);
-    }
-
-    if (pageKey === "heart-detail") {
-      if (options?.heartKey) {
-        setSelectedHeart({
-          key: options.heartKey,
-          title: options?.title,
-        });
-      }
-    } else if (selectedHeart) {
-      setSelectedHeart(null);
-    }
-
-    if (pageKey === "nerve-detail") {
-      if (options?.nerveKey) {
-        setSelectedNerve({
-          key: options.nerveKey,
-          title: options?.title,
-        });
-      }
-    } else if (selectedNerve) {
-      setSelectedNerve(null);
-    }
-
-    if (pageKey === "sma-detail") {
-      if (options?.smaKey) {
-        setSelectedSMA({
-          key: options.smaKey,
-          title: options?.title,
-        });
-      }
-    } else if (selectedSMA) {
-      setSelectedSMA(null);
-    }
-
-    if (pageKey === "other-detail") {
-      if (options?.otherKey) {
-        setSelectedOther({
-          key: options.otherKey,
-          title: options?.title,
-        });
-      }
-    } else if (selectedOther) {
-      setSelectedOther(null);
-    }
-
-    if (pageKey !== currentPage) {
-      setCurrentPage(pageKey);
-    }
-
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
+  const handleNavigate = useCallback(
+    (pageKey, options = {}) => {
+      dispatch(navigate(pageKey, options));
+    },
+    [dispatch]
+  );
 
   const renderCurrentPage = () => {
     switch (currentPage) {

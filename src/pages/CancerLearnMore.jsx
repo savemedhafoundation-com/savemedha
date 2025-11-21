@@ -6,6 +6,7 @@ import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getCancerDetail } from "../data/cancerLearnMore";
+import { TREATMENTS } from "../data/treatments";
 
 // Load all hero images (1.png, 2.png, etc.)
 const heroModules = import.meta.glob(
@@ -127,10 +128,20 @@ const CancerTypeBadge = ({
   );
 };
 
+const CANCER_TREATMENT = TREATMENTS.find((item) => item.key === "cancer");
+
 export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }) {
   const detail = getCancerDetail(cancerKey, fallbackTitle);
   const theme = getCancerTheme(detail?.key);
-  const handleBack = () => onNavigate?.("treatment-detail");
+  const handleBack = () => {
+    if (!onNavigate) return;
+
+    if (CANCER_TREATMENT) {
+      onNavigate("treatment-detail", { treatment: CANCER_TREATMENT });
+    } else {
+      onNavigate("treatment-detail");
+    }
+  };
 
   const storeLink = detail?.storeUrl || "https://dantura.com/";
   const ctaLink = "https://dantura.com/";
@@ -188,6 +199,10 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
             >
               {detail.name}
             </p>
+            <IoIosArrowForward className="text-lg" />
+            <p className="text-base font-semibold uppercase tracking-[0.35em]">
+              Learn More
+            </p>
           </div>
         </div>
       </div>
@@ -226,7 +241,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
 
           {/* RIGHT CONTENT */}
           <div
-            className="self-start -mt-6"
+            className="self-start -mt-3"
             style={{ color: theme.primaryText }}
           >
 
