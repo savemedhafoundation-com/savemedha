@@ -5,6 +5,8 @@ import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { EllipsisVertical } from "lucide-react";
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
+import { MdPhoneInTalk } from "react-icons/md";
+import { MdAttachEmail } from "react-icons/md";
 
 const COLORS = {
   NAV_GREEN: "#66b300",
@@ -51,7 +53,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
       <div
         className="px-12 py-3"
         style={{
-          background: "linear-gradient(to right, #ffffff, #e6ffe6)",
+          // background: "linear-gradient(to right, #ffffff, #e6ffe6)",
+          background:
+            "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 27.88%, #B7DE4E 100%)",
         }}
       >
         <div className="flex flex-row items-start gap-8">
@@ -60,7 +64,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <img
               src={savemedhaLogo}
               alt="Save Medha Foundation Logo"
-              className="h-24 w-auto object-contain"
+              className="h-17 w-auto object-contain"
             />
           </div>
 
@@ -69,14 +73,30 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           =============================== */}
           <div className="flex-1 flex flex-col gap-3">
             {/* === Row 1: Phone + Email === */}
-            <div className="flex flex-wrap justify-end items-center gap-4 border-b border-gray-200 pb-2">
-              <div className="flex items-center gap-2 text-sm">
-                <FiPhone className="text-gray-700" size={16} />
+            <div className="flex flex-wrap justify-end items-center gap-4 pb-2 divide-x divide-gray-600">
+              {/* Date */}
+              <div className="flex items-center gap-2 px-2 text-[15px] font-semibold text-gray-900">
+                <FaCalendarAlt className="text-gray-700" size={18} />
+                <span className="whitespace-nowrap">
+                  {new Intl.DateTimeFormat("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  }).format(new Date())}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 text-[15px] pr-2">
+                {/* <FiPhone className="text-gray-700" size={16} /> */}
+                <MdPhoneInTalk className="text-gray-700" size={18} />
                 <span className="font-semibold text-gray-900">9800808595</span>
               </div>
-              <div className="flex items-center gap-2 text-sm">
-                <MdOutlineMailOutline className="text-blue-600" size={20} />
-                <span className="font-medium text-blue-600 truncate max-w-none">
+
+              <div className="flex items-center justify-center gap-2 text-[15px]">
+                {/* <MdOutlineMailOutline className="text-blue-600" size={20} /> */}
+                <MdAttachEmail className="text-blue-600" size={18} />
+                <span className="font-semibold text-[#0728CF] truncate max-w-none">
                   savemedhafoundation@gmail.com
                 </span>
               </div>
@@ -85,18 +105,19 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             {/* === Row 2: Search, Language, Date, Location, Appointment === */}
             <div className="flex flex-wrap justify-end items-center gap-4">
               {/* Search */}
-              <div className="relative w-[200px]">
+              <div className="relative w-[170px] shadow-md">
                 <input
                   type="text"
                   placeholder="Search"
-                  className="w-full px-3 py-2 text-sm text-gray-700 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-2 py-2 text-[15px] bg-white font-semibold text-gray-700 border-2 border-[#74C425] rounded focus:outline-none "
                 />
+                {/* focus:ring-2       focus:ring-green-500 */}
                 <button
                   type="submit"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                 >
                   <svg
-                    className="h-4 w-4"
+                    className="h-4 w-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -112,38 +133,70 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               </div>
 
               {/* Language */}
-              <select className="px-3 py-2 border border-gray-300 rounded bg-white text-sm text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500">
+              {/* <select className="px-3 py-2 border border-gray-300 rounded bg-white text-sm text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md">
                 <option>Select Language</option>
                 <option>English</option>
                 <option>Bangla</option>
                 <option>Hindi</option>
                 <option>Urdu</option>
+              </select> */}
+              {/* <select
+  className="px-3 py-2 border-2 border-[#74C425] rounded bg-white text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none"
+> */}
+              {/* focus:outline-none focus:ring-2 focus:ring-green-500 */}
+              {/* <option value="">Select Language</option>
+  <option value="eng">English</option>
+  <option value="bn">Bangla</option>
+  <option value="hi">Hindi</option>
+  <option value="ur">Urdu</option>
+</select> */}
+
+              <select className="px-3 py-2 border-2 border-[#74C425] rounded bg-transparent text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none ">
+                <option
+                  className="bg-[#ffffff] text-black font-semibold"
+                  value=""
+                >
+                  Select Language
+                </option>
+                <option
+                  className="bg-[#ebf6cd] text-black font-semibold"
+                  value="eng"
+                >
+                  English
+                </option>
+                <option
+                  className="bg-[#d5eb98] text-black font-semibold"
+                  value="bn"
+                >
+                  Bangla
+                </option>
+                <option
+                  className="bg-[#c8e676] text-black font-semibold"
+                  value="hi"
+                >
+                  Hindi
+                </option>
+                <option
+                  className="bg-[#badf55] text-black font-semibold "
+                  value="ur"
+                >
+                  Urdu
+                </option>
               </select>
 
-              {/* Date */}
-              <div className="flex items-center gap-2 px-2 text-sm font-medium text-gray-900">
-                <FaCalendarAlt className="text-blue-600" size={16} />
-                <span className="whitespace-nowrap">
-                  {new Intl.DateTimeFormat("en-US", {
-                    weekday: "short",
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  }).format(new Date())}
-                </span>
-              </div>
-
               {/* Location */}
-              <button className="flex items-center gap-2 px-3 py-2 bg-white border-2 border-gray-300 rounded hover:bg-gray-50 transition">
-                <IoLocationSharp className="text-red-600" size={18} />
+              <button className=" text-[15px] font-semibold flex items-center gap-2 px-3 py-2 bg-white border-2 border-[#74C425] rounded shadow-md">
+                <IoLocationSharp className="text-[#e05529]" size={18} />
                 <span className="text-sm font-semibold text-gray-900">
-                  Location
+                  Locate us
                 </span>
               </button>
 
+
               {/* Appointment Button */}
               <button
-                className="px-5 py-2 text-sm text-white font-bold font-koho rounded whitespace-nowrap transition-colors"
+                className="px-5 py-2 text-sm text-white font-bold font-koho rounded whitespace-nowrap transition-colors border-2 border-[
+#fffefb] px-4 py-2 rounded shadow-md"
                 style={{ backgroundColor: COLORS.ACTION_ORANGE }}
                 onMouseEnter={(e) =>
                   (e.target.style.backgroundColor = "#e05529")
@@ -192,7 +245,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                   }`}
                   style={isActive ? { backgroundColor: COLORS.HOME_BLUE } : {}}
                 >
-                  <span>{item.name}</span>
+                  <span className="text-[12px] font-semibold">{item.name}</span>
                   {item.hasDropdown && (
                     <svg
                       className="w-3 h-3 ml-1"

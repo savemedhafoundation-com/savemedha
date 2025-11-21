@@ -113,7 +113,7 @@ const PatientStories = () => {
   return (
     <section
       id="patient-stories"
-      className="relative w-full bg-[#ffffffd8] py-16 text-center rounded-3xl shadow-md"
+      className="relative w-full bg-[#ffffffd8] border border-gray-200 py-16 text-center rounded-3xl shadow-md"
     >
       <div className="mb-12 text-center">
         <h2 className="relative inline-block text-4xl font-bold text-slate-900">

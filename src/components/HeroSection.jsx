@@ -12,7 +12,7 @@ const DotPattern = () => (
     style={{
       display: "flex",
       gap: "4px",
-      paddingLeft: "52px",
+      paddingLeft: "0px",
       top: "12px",
       // 👈 for debugging
     }}
@@ -42,9 +42,9 @@ const HeroBanner = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="flex flex-row w-full bg-white overflow-hidden">
+    <div className="flex flex-row w-full bg-[#ffffff] overflow-hidden">
       {/* LEFT TEXT PANEL */}
-      <div className="relative w-[600px] pt-16 pl-14 text-left flex flex-col justify-start">
+      <div className="relative w-[700px] pt-16 text-left flex flex-col justify-start">
         <div className="absolute top-4 left-2 opacity-60">
           <DotPattern />
         </div>
@@ -69,8 +69,8 @@ const HeroBanner = () => {
           <button
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-10 py-3 font-medium OpenSans text-xl tracking-wide rounded-sm transition-transform duration-300 ${
-              isHovered ? "scale-105 shadow-lg" : "scale-100 shadow-md"
+            className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-10 py-3 font-medium OpenSans text-xl tracking-wide rounded-sm transition-transform duration-500 ${
+              isHovered ? "shadow-lg" : "shadow-md"
             }`}
           >
             DISCOVER
@@ -81,7 +81,7 @@ const HeroBanner = () => {
       </div>
 
       {/* RIGHT IMAGE PANEL */}
-      <div className="relative flex flex-1 items-center justify-center gap-2 pl-8 pb-8 left-24">
+      <div className="relative flex flex-1 items-center justify-center gap-2 pl-8 pb-8 left-24 pt-5">
         <img
           src={People}
           alt="People"
@@ -128,7 +128,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-[#ffffff]">
       <div className="w-full">
         {/* Section Title */}
         <div className="text-center mb-12">

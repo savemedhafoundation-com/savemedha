@@ -60,7 +60,7 @@ const VolunteerAndSupportSection = () => {
       {/* Volunteer Section */}
       <div className="relative bg-gradient-to-b from-green-50 to-white-50 py-12 px-16 overflow-hidden">
         {/* Left background image: JOINED */}
-        <div className="absolute inset-y-0 left-0 w-[100%] pl-35 bg-gradient-to-b from-green-50 to-white-50">
+        <div className="absolute inset-y-0 left-0 w-[100%] pl-35 bg-[#ffffff]">
           <img src={Hands} alt="Joined" className="w-45% h-full object-cover" />
         </div>
         {/* Right background image: HANDS */}

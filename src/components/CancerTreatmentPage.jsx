@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Phone,
-  Play,
-  Star,
-  X,
-} from "lucide-react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { ArrowLeft, ArrowRight, Phone, Play, Star, X } from "lucide-react";
 import { MdAddCall } from "react-icons/md";
 import PatientStories from "./PatientStories";
 
@@ -51,10 +50,7 @@ const chunkArray = (input, size) => {
 const DotPattern = () => (
   <div className="grid grid-cols-8 gap-[6px]">
     {Array.from({ length: 48 }).map((_, idx) => (
-      <span
-        key={idx}
-        className="h-[2px] w-[3px] rounded-full bg-[#74C425]"
-      />
+      <span key={idx} className="h-[2px] w-[3px] rounded-full bg-[#74C425]" />
     ))}
   </div>
 );
@@ -93,7 +89,9 @@ const formatRelativeTime = (dateString) => {
   const publishedDate = new Date(dateString);
   if (Number.isNaN(publishedDate.getTime())) return "";
 
-  const secondsElapsed = Math.floor((Date.now() - publishedDate.getTime()) / 1000);
+  const secondsElapsed = Math.floor(
+    (Date.now() - publishedDate.getTime()) / 1000
+  );
   if (secondsElapsed < 60) return "just now";
 
   const intervals = [
@@ -181,7 +179,6 @@ const extractYoutubeId = (video) => {
 };
 
 export default function CancerTreatmentPage() {
-
   // Refs for each scrollable section
   const testimonialsRef = useRef(null);
   const healthVideosRef = useRef(null);
@@ -251,7 +248,8 @@ export default function CancerTreatmentPage() {
       },
       {
         id: "placeholder-5",
-        title: "Rebuilding Immunity: Lifestyle Guidance from Save Medha Experts",
+        title:
+          "Rebuilding Immunity: Lifestyle Guidance from Save Medha Experts",
         duration: "5:12",
         thumbnail: DEFAULT_THUMBNAIL,
         videoUrl: "https://www.youtube.com/@savemedhafoundation7959",
@@ -347,9 +345,7 @@ export default function CancerTreatmentPage() {
                 response,
                 "YouTube video lookup"
               );
-              const candidate =
-                data.items?.[0]?.snippet?.channelId ||
-                "";
+              const candidate = data.items?.[0]?.snippet?.channelId || "";
 
               if (candidate) {
                 return candidate;
@@ -551,7 +547,9 @@ export default function CancerTreatmentPage() {
               duration: durationLabel,
               viewCount: rawViews,
               viewCountLabel:
-                rawViews != null ? `${formatViewCount(rawViews)} views` : undefined,
+                rawViews != null
+                  ? `${formatViewCount(rawViews)} views`
+                  : undefined,
               publishedAt: snippet.publishedAt || null,
               publishedAtLabel: snippet.publishedAt ? undefined : "",
               thumbnail,
@@ -678,7 +676,8 @@ export default function CancerTreatmentPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white10">
+    // <div className="min-h-screen bg-gradient-to-b from-green-50 to-white10">
+    <div className="min-h-screen bg-[#ffffff]">
       {/* Header */}
       <header className="bg-transparent">
         <div className="w-full py-6">
@@ -737,13 +736,15 @@ export default function CancerTreatmentPage() {
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
       <section className="w-full py-12 relative">
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <img src={Computerimg} alt="Healthcare icon" className="w-20 h-20" />
-            <h2 className="text-3xl font-bold">
-              Browse our latest Videos on
-            </h2>
+          <div className="flex items-center justify-center gap-3">
+            <img
+              src={Computerimg}
+              alt="Healthcare icon"
+              className="w-20 h-20"
+            />
+            <h2 className="text-3xl font-bold">Browse our latest Videos on</h2>
           </div>
-          <h3 className="text-3xl font-bold text-green-500">
+          <h3 className="text-3xl font-bold text-green-500 pl-4">
             Healthcare & Wellness
           </h3>
         </div>
@@ -769,7 +770,7 @@ export default function CancerTreatmentPage() {
         {/* Horizontal Scroll */}
         <div
           ref={healthVideosRef}
-          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
+          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 hide-scrollbar"
         >
           {loadingVideos ? (
             <div className="flex items-center justify-center w-full py-12 text-sm text-gray-600">
@@ -784,7 +785,9 @@ export default function CancerTreatmentPage() {
               const timeText = video.publishedAt
                 ? formatRelativeTime(video.publishedAt)
                 : video.publishedAtLabel || "";
-              const metaText = [viewsText, timeText].filter(Boolean).join(" | ");
+              const metaText = [viewsText, timeText]
+                .filter(Boolean)
+                .join(" | ");
 
               return (
                 <button
@@ -839,15 +842,32 @@ export default function CancerTreatmentPage() {
         </div>
       </section>
       {/* ===================== TESTIMONIALS ===================== */}
-      <section className="bg-gradient-to-b from-green-50 to-green-50 py-10">
+      <section className="bg-[#ffffff] py-10">
         <div className="w-full">
-          <div className="text-center mb-12">
+          {/* <div className="text-center mb-12">
             <h2 className="text-4xl font-bold">
-              TESTI<span className="text-[#74C425]">MONIALS</span>
+              <span className="relative">
+                TESTI
+              </span>
+                <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
+              <span className="text-[#74C425]">MONIALS</span>
             </h2>
-            <p className="text-gray-600 mt-2 font-medium">Turning Vision into Reality</p>
-          </div>
 
+            <p className="text-gray-600 mt-2 font-medium">
+              Turning Vision into Reality
+            </p>
+          </div> */}
+
+ <div className="mb-12 text-center mb-6">
+        <h2 className="relative inline-block text-4xl font-bold text-slate-900">
+          <span className="relative">TESTI </span>
+          <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
+          <span className="text-[#74C425]">MONIALS</span>
+        </h2>
+          <p className="text-gray-600 mt-2 font-medium pt-3">
+              Turning Vision into Reality
+            </p>
+      </div>
           <div className="relative w-full">
             {/* Arrows */}
             <button
@@ -866,7 +886,7 @@ export default function CancerTreatmentPage() {
             {/* Scroll container */}
             <div
               ref={testimonialsRef}
-              className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3"
+              className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 hide-scrollbar"
             >
               {testimonials.map((t, idx) => (
                 <div
@@ -874,12 +894,11 @@ export default function CancerTreatmentPage() {
                   className="snap-start flex-shrink-0 w-[390px] bg-white border border-[#1D942B] rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-sm"
                 >
                   <div className="absolute top-4 left-1 w-4 h-4   rounded-full bg-[#74C425] mt-4 ml-2 " />
-                  
+
                   <div className="absolute top-3 left-3 w-12 h-12 rounded-full bg-[#74C425] opacity-70 mt-8 ml-2 " />
 
                   <div className="relative z-10 flex items-start gap-4 mt-8 ml-4">
                     <div className="relative shrink-0">
-                      
                       {t.image ? (
                         <img
                           src={t.image}
@@ -948,7 +967,8 @@ export default function CancerTreatmentPage() {
             ) : (
               <div className="bg-white rounded-2xl p-8 text-center shadow-2xl">
                 <p className="text-gray-800 font-medium mb-4">
-                  Unable to play this video here. You can watch it directly on YouTube.
+                  Unable to play this video here. You can watch it directly on
+                  YouTube.
                 </p>
                 {selectedVideo.videoUrl && (
                   <a
@@ -969,11 +989,3 @@ export default function CancerTreatmentPage() {
     </div>
   );
 }
-
-
-
-
-
-
-
-

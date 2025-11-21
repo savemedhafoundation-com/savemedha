@@ -110,6 +110,19 @@ button, .btn {
   background: #2f994b;
 }
 
+
+/* Hide Scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE, Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+
+
 :root {
   --app-scale: 1;
   --app-desktop-width: 1280;

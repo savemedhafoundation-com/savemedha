@@ -260,13 +260,13 @@ export default function AboutUs({ onNavigate }) {
                 <button
                   type="button"
                   onClick={() => onNavigate && onNavigate('home')}
-                  className="bg-[#74C425] hover:bg-[#5a9c1c] text-white font-semibold px-6 py-3 rounded-md transition-colors"
+                  className="bg-[#74C425] hover:bg-[#5a9c1c] text-white font-semibold px-6 py-3 rounded-md transition-colors cursor-pointer"
                 >
                   Back To Home
                 </button>
                 <button
                   type="button"
-                  className="border-2 border-[#74C425] text-[#74C425] hover:bg-[#74C425] hover:text-white font-semibold px-6 py-3 rounded-md transition-colors"
+                  className="border-2 border-[#74C425] text-[#74C425] hover:bg-blue-800 hover:border-none hover:text-white font-semibold px-6 py-3 rounded-md transition-colors cursor-pointer"
                 >
                   Support The Mission
                 </button>
