@@ -136,7 +136,7 @@ export default function Treatment({ onNavigate }) {
         </section>
 
         {/* Treatment Grid */}
-        <section className="py-20">
+        <section className="py-20 bg-[#f5fbef]">
           <div className="mx-auto max-w-6xl px-0">
             <FadeInSection className="space-y-4 text-center">
               <motion.p

@@ -133,6 +133,10 @@ const CANCER_TREATMENT = TREATMENTS.find((item) => item.key === "cancer");
 export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }) {
   const detail = getCancerDetail(cancerKey, fallbackTitle);
   const theme = getCancerTheme(detail?.key);
+  const recoveryImages = Array.isArray(detail?.recoveryImages)
+    ? detail.recoveryImages.filter(Boolean)
+    : [];
+  const hasRecoveryImages = recoveryImages.length > 0;
   const handleBack = () => {
     if (!onNavigate) return;
 
@@ -411,6 +415,34 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
           </div>
         </div>
       </section>
+
+      {hasRecoveryImages && (
+        <section className="py-16 bg-white">
+          <div className="mx-auto max-w-6xl px-6 text-center">
+            <h2 className="text-3xl font-bold">PATIENT&apos;S RECOVERY GALLERY</h2>
+            <div
+              className="mx-auto mt-2 mb-10 h-[2px] w-32"
+              style={{ backgroundColor: theme.divider }}
+            />
+
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+              {recoveryImages.map((imgSrc, idx) => (
+                <div
+                  key={`${imgSrc}-${idx}`}
+                  className="overflow-hidden rounded-4xl h-fullshadow-md shadow-slate-200 transition-transform hover:-translate-y-1"
+                  style={{ backgroundColor: theme.cardBg }}
+                >
+                  <img
+                    src={imgSrc}
+                    alt={`${detail.name} recovery ${idx + 1}`}
+                    className="h-60 w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer onNavigate={onNavigate} />
     </div>

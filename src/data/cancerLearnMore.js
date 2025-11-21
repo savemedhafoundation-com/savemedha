@@ -84,6 +84,14 @@ const symptomImageModules = {
     eager: true,
     import: "default",
   }),
+  ...import.meta.glob("../assets/Symptoms of Lungs Cancer/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/Symptoms of Oral Cancer/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
   ...import.meta.glob("../assets/symptoms of breast cancer/*.{png,jpg,jpeg,webp}", {
     eager: true,
     import: "default",
@@ -92,6 +100,22 @@ const symptomImageModules = {
 
 const symptomImageEntries = Object.entries(symptomImageModules);
 const fallbackSymptomImages = symptomImageEntries.map(([, value]) => value);
+
+const recoveryImageModules = import.meta.glob(
+  "../assets/Patient's Gallery/**/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+const buildRecoveryImages = (folderName) =>
+  Object.entries(recoveryImageModules)
+    .filter(([path]) => (folderName ? path.includes(folderName) : true))
+    .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+    .map(([, value]) => value);
+
+const ORAL_RECOVERY_IMAGES = buildRecoveryImages("Patient's Recovery Gallery");
 
 const SYMPTOM_IMAGE_ALIASES = {
   "nausea-or-vomiting": {
@@ -205,6 +229,42 @@ const SYMPTOM_IMAGE_ALIASES = {
   "itchy-skin": { label: "6", folder: "Symptoms of  Liver Cancer" },
   "abdominal-swelling-ascites": { label: "7", folder: "Symptoms of  Liver Cancer" },
   "right-shoulder-pain": { label: "8", folder: "Symptoms of  Liver Cancer" },
+  pain: { label: "1", folder: "Symptoms of Oral Cancer" },
+  "difficulty-swallowing": { label: "2", folder: "Symptoms of Oral Cancer" },
+  swelling: { label: "3", folder: "Symptoms of Oral Cancer" },
+  "unexplained-bleeding": { label: "4", folder: "Symptoms of Oral Cancer" },
+  "persistent-or-changing-cough": {
+    label: "1",
+    folder: "Symptoms of Lungs Cancer",
+  },
+  "coughing-up-blood-hemoptysis": {
+    label: "2",
+    folder: "Symptoms of Lungs Cancer",
+  },
+  "shortness-of-breath-dyspnea": {
+    label: "3",
+    folder: "Symptoms of Lungs Cancer",
+  },
+  "persistent-chest-pain": {
+    label: "4",
+    folder: "Symptoms of Lungs Cancer",
+  },
+  "recurrent-respiratory-infections": {
+    label: "5",
+    folder: "Symptoms of Lungs Cancer",
+  },
+  "hoarseness-and-voice-changes": {
+    label: "6",
+    folder: "Symptoms of Lungs Cancer",
+  },
+  "weight-loss-and-fatigue": {
+    label: "7",
+    folder: "Symptoms of Lungs Cancer",
+  },
+  "physical-signs-finger-clubbing": {
+    label: "8",
+    folder: "Symptoms of Lungs Cancer",
+  },
 };
 
 const normalizeKey = (value = "") =>
@@ -290,8 +350,12 @@ const createDetail = ({
   bulletHighlights,
   storeUrl,
   ctaUrl,
+  recoveryImages,
 }) => {
   const resolvedStore = storeUrl ?? buildStoreUrl(key);
+  const resolvedRecoveryImages = Array.isArray(recoveryImages)
+    ? recoveryImages.filter(Boolean)
+    : [];
 
   return {
     key,
@@ -322,6 +386,7 @@ const createDetail = ({
     relatedTypes: relatedTypes ?? [],
     bulletIntro,
     bulletHighlights,
+    recoveryImages: resolvedRecoveryImages,
   };
 };
 
@@ -657,39 +722,66 @@ export const CANCER_DETAILS = {
     heroImage: lungsImg,
     areaDescription: "lung tissue and airways",
     quickFacts: [
-      "Smoking remains the biggest risk, but pollution also plays a role.",
-      "Breathwork, oxygen therapy, and detox aid lung recovery.",
+      "Lung cancer forms in the lining of the air passages and is the leading cause of cancer death worldwide.",
+      "Small cell lung cancer accounts for about 15% of cases and tends to grow quickly; non-small cell lung cancer makes up roughly 85% and usually grows and spreads more slowly.",
+      "Smoking drives most cases, while air pollution also contributes to risk and outcomes.",
     ],
-    stats: "Lung cancer is responsible for the highest number of cancer deaths worldwide.",
+    bodyParagraphs: [
+      "Lung cancer is cancer that forms in tissues of the lung, usually in the cells that line the air passages. It is the leading cause of cancer death in both men and women because it is often detected after it has already spread.",
+      "There are two main types: small cell lung cancer (SCLC) and non-small cell lung cancer (NSCLC). Small cell lung cancer is less common, accounting for about 15% of cases, but it tends to grow more quickly and is strongly associated with smoking.",
+      "Non-small cell lung cancer is the most common type, making up about 85% of cases. It includes adenocarcinoma, squamous cell carcinoma, and large cell carcinoma, and these cancers generally grow and spread more slowly than small cell lung cancer.",
+    ],
+    stats: "Global percentage of Lungs cancer among all types of cancer = 11% to 13%.",
     symptoms: [
-      { label: "Chronic cough" },
-      { label: "Chest pain" },
-      { label: "Hoarseness" },
-      { label: "Coughing blood" },
-      { label: "Shortness of breath" },
-      { label: "Weight loss" },
-    ],
-    relatedTypes: ["NSCLC", "Small-cell", "Mesothelioma"],
+      "Persistent or Changing Cough",
+      "Coughing Up Blood (Hemoptysis)",
+      "Shortness of Breath (Dyspnea)",
+      "Persistent Chest Pain",
+      "Recurrent Respiratory Infections",
+      "Hoarseness and Voice Changes",
+      "Weight Loss and Fatigue",
+      "Physical Signs (Finger Clubbing)",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
+    relatedTypes: ["Small cell lung cancer (SCLC)", "Non-small cell lung cancer (NSCLC)"],
   }),
   oral: createDetail({
     key: "oral",
     name: "Oral Cancer",
     heroImage: oralImg,
-    areaDescription: "the mouth, tongue, and inner cheeks",
+    areaDescription: "the lips, tongue, gums, palate, tonsils, and back of the throat",
     quickFacts: [
-      "Tobacco, alcohol, and HPV infections elevate risk.",
-      "Persistent mouth sores or patches should be evaluated quickly.",
+      "Oral cancer starts in the tissues of the mouth or throat, most often in the squamous cells that line these areas.",
+      "It can involve the lips, tongue, gums, floor and roof of the mouth (palate), tonsils, and the back of the throat (pharynx).",
+      "Early treatment is critical because these cancers can spread to other parts of the head and neck.",
     ],
-    stats: "Oral cancers make up about 3% of all malignancies annually.",
+    bodyParagraphs: [
+      "Oral cancer refers to cancers that develop in the tissues of the mouth or throat. It typically begins in the squamous cells that line these areas—flat cells that look like fish scales when viewed under a microscope.",
+      "It includes cancers of the lips, tongue, gums, floor of the mouth, roof of the mouth (palate), tonsils, and the back of the throat (pharynx).",
+      "These cancers often start in the lining cells and, if not treated early, can spread to nearby parts of the head and neck region.",
+    ],
+    stats: "Global percentage of Oral cancer among all types of cancer = 7% to 9%.",
     symptoms: [
-      { label: "Mouth sore" },
-      { label: "White or red patch" },
-      { label: "Jaw pain" },
-      { label: "Loose teeth" },
-      { label: "Difficulty swallowing" },
-      { label: "Voice changes" },
+      "Pain",
+      "Difficulty swallowing",
+      "Swelling",
+      "Unexplained bleeding",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
+    relatedTypes: [
+      "Squamous Cell Carcinoma (SCC)",
+      "Oral Melanoma",
+      "Salivary Gland Cancer",
+      "Lymphoma",
+      "Sarcoma",
+      "Kaposi’s Sarcoma",
+      "Verrucous Carcinoma",
     ],
-    relatedTypes: ["Tongue", "Gums", "Floor of mouth"],
+    recoveryImages: ORAL_RECOVERY_IMAGES,
   }),
   pancreas: createDetail({
     key: "pancreas",
