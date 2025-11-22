@@ -1,6 +1,13 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import Treatment from "./pages/Treatment";
@@ -16,6 +23,8 @@ import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import { TREATMENTS } from "./data/treatments";
 import { navigate } from "./store";
+import LocateUs from "./pages/LocateUs";
+import BlogsDetails from "./pages/BlogsDetails";
 
 const resolveTreatmentFromId = (id) => {
   if (!id) return null;
@@ -61,21 +70,49 @@ function App() {
         case "blogs":
           targetPath = "/blogs";
           break;
+
+        //           case "blogs-detail": {
+        //   const blogId = options?.id;
+        //   console.log("id", blogId);
+        //   if (!blogId) {
+        //     console.warn("blog-detail navigation requires id");
+        //     return;
+        //   }
+        //   targetPath = `/blogs/${blogId}`;
+        //   break;
+        // }
+        case "blogs-detail": {
+          const blogId = options?.id;
+          if (!blogId) {
+            console.warn("blogs-detail navigation requires id");
+            return;
+          }
+          targetPath = `/blogs/${blogId}`;
+          break;
+        }
         case "donate":
           targetPath = "/donate";
           break;
         case "contact":
           targetPath = "/contact";
           break;
+        case "locateus":
+          targetPath = "/locate-us";
+          break;
+
         case "cancer-detail": {
           const cancerKey = options?.cancerKey || selectedCancer?.key;
-          const search = cancerKey ? `?key=${encodeURIComponent(cancerKey)}` : "";
+          const search = cancerKey
+            ? `?key=${encodeURIComponent(cancerKey)}`
+            : "";
           targetPath = `/cancer-learn-more${search}`;
           break;
         }
         case "kidney-detail": {
           const kidneyKey = options?.kidneyKey || selectedKidney?.key;
-          const search = kidneyKey ? `?key=${encodeURIComponent(kidneyKey)}` : "";
+          const search = kidneyKey
+            ? `?key=${encodeURIComponent(kidneyKey)}`
+            : "";
           targetPath = `/kidney-learn-more${search}`;
           break;
         }
@@ -103,6 +140,7 @@ function App() {
           targetPath = `/other-learn-more${search}`;
           break;
         }
+
         case "home":
         default:
           targetPath = "/";
@@ -126,15 +164,10 @@ function App() {
   const TreatmentDetailRoute = () => {
     const { id } = useParams();
     const treatment =
-      resolveTreatmentFromId(id) ||
-      selectedTreatment ||
-      TREATMENTS[0];
+      resolveTreatmentFromId(id) || selectedTreatment || TREATMENTS[0];
 
     return (
-      <TreatmentDetail
-        treatment={treatment}
-        onNavigate={handleNavigate}
-      />
+      <TreatmentDetail treatment={treatment} onNavigate={handleNavigate} />
     );
   };
 
@@ -145,9 +178,7 @@ function App() {
       location.state?.cancerKey ||
       selectedCancer?.key;
     const fallbackTitle =
-      location.state?.title ||
-      selectedCancer?.title ||
-      "Cancer";
+      location.state?.title || selectedCancer?.title || "Cancer";
 
     return (
       <CancerLearnMore
@@ -165,9 +196,7 @@ function App() {
       location.state?.kidneyKey ||
       selectedKidney?.key;
     const fallbackTitle =
-      location.state?.title ||
-      selectedKidney?.title ||
-      "Kidney";
+      location.state?.title || selectedKidney?.title || "Kidney";
 
     return (
       <KidneyLearnMore
@@ -181,13 +210,9 @@ function App() {
   const HeartRoute = () => {
     const [searchParams] = useSearchParams();
     const heartKey =
-      searchParams.get("key") ||
-      location.state?.heartKey ||
-      selectedHeart?.key;
+      searchParams.get("key") || location.state?.heartKey || selectedHeart?.key;
     const fallbackTitle =
-      location.state?.title ||
-      selectedHeart?.title ||
-      "Heart";
+      location.state?.title || selectedHeart?.title || "Heart";
 
     return (
       <HeartLearnMore
@@ -201,13 +226,9 @@ function App() {
   const NerveRoute = () => {
     const [searchParams] = useSearchParams();
     const nerveKey =
-      searchParams.get("key") ||
-      location.state?.nerveKey ||
-      selectedNerve?.key;
+      searchParams.get("key") || location.state?.nerveKey || selectedNerve?.key;
     const fallbackTitle =
-      location.state?.title ||
-      selectedNerve?.title ||
-      "Nerve";
+      location.state?.title || selectedNerve?.title || "Nerve";
 
     return (
       <NerveLearnMore
@@ -221,13 +242,8 @@ function App() {
   const SMARoute = () => {
     const [searchParams] = useSearchParams();
     const smaKey =
-      searchParams.get("key") ||
-      location.state?.smaKey ||
-      selectedSMA?.key;
-    const fallbackTitle =
-      location.state?.title ||
-      selectedSMA?.title ||
-      "SMA";
+      searchParams.get("key") || location.state?.smaKey || selectedSMA?.key;
+    const fallbackTitle = location.state?.title || selectedSMA?.title || "SMA";
 
     return (
       <SMALearnMore
@@ -241,13 +257,9 @@ function App() {
   const OtherRoute = () => {
     const [searchParams] = useSearchParams();
     const otherKey =
-      searchParams.get("key") ||
-      location.state?.otherKey ||
-      selectedOther?.key;
+      searchParams.get("key") || location.state?.otherKey || selectedOther?.key;
     const fallbackTitle =
-      location.state?.title ||
-      selectedOther?.title ||
-      "Other";
+      location.state?.title || selectedOther?.title || "Other";
 
     return (
       <OtherLearnMore
@@ -262,12 +274,28 @@ function App() {
     <div className="app-scale-wrapper">
       <Routes>
         <Route path="/" element={<Home onNavigate={handleNavigate} />} />
-        <Route path="/about-us" element={<AboutUs onNavigate={handleNavigate} />} />
-        <Route path="/treatment" element={<Treatment onNavigate={handleNavigate} />} />
+        <Route
+          path="/about-us"
+          element={<AboutUs onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/treatment"
+          element={<Treatment onNavigate={handleNavigate} />}
+        />
         <Route path="/treatment/:id" element={<TreatmentDetailRoute />} />
         <Route path="/blogs" element={<Blogs onNavigate={handleNavigate} />} />
-        <Route path="/donate" element={<Donate onNavigate={handleNavigate} />} />
-        <Route path="/contact" element={<Contact onNavigate={handleNavigate} />} />
+        <Route
+          path="/blogs/:id"
+          element={<BlogsDetails onNavigate={handleNavigate}/>}
+        />
+        <Route
+          path="/donate"
+          element={<Donate onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/contact"
+          element={<Contact onNavigate={handleNavigate} />}
+        />
         <Route path="/cancer-learn-more" element={<CancerRoute />} />
         <Route path="/kidney-learn-more" element={<KidneyRoute />} />
         <Route path="/heart-learn-more" element={<HeartRoute />} />
@@ -275,6 +303,10 @@ function App() {
         <Route path="/sma-learn-more" element={<SMARoute />} />
         <Route path="/other-learn-more" element={<OtherRoute />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
+        <Route
+          path="/locate-us"
+          element={<LocateUs onNavigate={handleNavigate} />}
+        />
       </Routes>
     </div>
   );

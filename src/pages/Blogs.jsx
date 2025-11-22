@@ -156,9 +156,11 @@ export default function Blogs({ onNavigate }) {
     }
 
     return (
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col gap-5">
         {normalizedPosts.map((post) => (
-          <BlogCard key={post.id} {...post} />
+          <>
+          <BlogCard key={post.id} {...post} onNavigate={onNavigate} />
+          </>
         ))}
       </div>
     );
@@ -168,7 +170,7 @@ export default function Blogs({ onNavigate }) {
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar currentPage="blogs" onNavigate={onNavigate} />
 
-      <main className="space-y-16 pb-16 pt-6">
+      <main className="space-y-16 pb-16 pt-6 px-20">
         <section className="bg-gradient-to-r from-[#0b2fa1] via-[#1d4ed8] to-[#74C425] text-white">
           <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-16 lg:flex-row lg:items-center">
             <div className="flex-1 space-y-4">

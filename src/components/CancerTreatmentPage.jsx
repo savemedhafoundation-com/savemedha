@@ -17,7 +17,7 @@ import Virus from "../assets/Photo/virus.png";
 import Review1 from "../assets/Photo/review1.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
-const MAX_VIDEOS_TO_FETCH = 15;
+const MAX_VIDEOS_TO_FETCH = 100;
 
 const parseJsonSafely = async (response, contextLabel = "response") => {
   const sourceLabel = contextLabel || "response";
@@ -797,7 +797,7 @@ export default function CancerTreatmentPage() {
       <PatientStories />
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
-      <section className="w-full py-16">
+      {/* <section className="w-full py-16">
         <div className="mx-auto max-w-8xl">
           <div className="relative w-full rounded-3xl border border-gray-200 bg-[#ffffffd8] py-14 text-center shadow-md">
             <div className="mb-10 text-center">
@@ -939,7 +939,98 @@ export default function CancerTreatmentPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+
+      {/* ===================== HEALTHCARE VIDEOS ===================== */}
+<section className="w-full py-16">
+  <div className="mx-auto max-w-8xl px-4">
+    <div className="relative rounded-3xl overflow-hidden">
+      
+      {/* Top Header */}
+      <div className="text-center pt-12 pb-8 px-8">
+        <div className="inline-flex items-center gap-6 mb-6">
+          <div className="relative">
+            <img
+              src={Computerimg}
+              alt="Healthcare icon"
+              className="w-24 h-24 drop-shadow-lg"
+            />
+            <div className="absolute -top-2 -right-2 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+              <Play className="text-white ml-0.5" size={20} />
+            </div>
+          </div>
+          <div className="text-left">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+              BROWSE OUR LATEST VIDEOS ON
+            </h2>
+            <p className="text-4xl md:text-5xl font-extrabold text-[#74C425] mt-2">
+              HEALTHCARE & WELLNESS
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Video Grid - 5 columns, fixed card design like screenshot */}
+      <div className="bg-gradient-to-b from-[#74C425] to-[#346700] rounded-t-[60px] pt-12 pb-16 px-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+          {healthVideos.slice(0, 20).map((video, index) => (
+            <button
+              key={video.id}
+              onClick={() => handleVideoSelect(video)}
+              className="group flex flex-col items-center text-center transform transition-all duration-300 hover:scale-105"
+            >
+              {/* Video Thumbnail */}
+              <div className="relative w-full mb-0">
+                <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                  <img
+                    src={video.thumbnail || DEFAULT_THUMBNAIL}
+                    alt={video.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center rounded-2xl">
+                    <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
+                      <Play className="text-white ml-1" size={32} />
+                    </div>
+                  </div>
+                  {video.duration && (
+                    <div className="absolute bottom-3 right-3 bg-black/80 text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                      {video.duration}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Title & Meta */}
+              <div className="space-y-2 bg-gradient-to-br from-[#D6FFBB] to-[#FFFFFF] rounded-3xl p-4">
+                <h3 className="font-bold text-sm leading-tight line-clamp-2 text-gray-800 group-hover:text-[#74C425] transition-colors">
+                  {index % 2 === 0 ? "Video 1" : "Video 2"}
+                </h3>
+                <p className="text-base text-[#155300]">
+                  Lorem ipsum is simply dummy text of the printing and typesetting industry.
+                </p>
+                <span className="inline-block px-6 py-2 bg-[#74C425] text-white text-xs font-bold rounded-full hover:bg-[#1118A6] transition-colors">
+                  WATCH NOW
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Watch More Button */}
+        <div className="text-center mt-12">
+          <button className="inline-flex items-center gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full shadow-2xl transition-all transform hover:scale-105">
+            WATCH MORE
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+              <Play className="text-red-600" size={28} fill="red" />
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
       {/* ===================== TESTIMONIALS ===================== */}
       <section className="bg-[#ffffff] py-10">
         <div className="w-full">

@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 const truncateToNearestWord = (text = '', limit = 250) => {
   if (text.length <= limit) {
@@ -12,12 +14,19 @@ const truncateToNearestWord = (text = '', limit = 250) => {
   return `${safeSlice.trimEnd()}...`;
 };
 
-const BlogCard = ({ title, author, date, excerpt = '', coverImage }) => {
+const BlogCard = ({id, title, author, date, excerpt = '', coverImage, onNavigate }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const preview = useMemo(() => truncateToNearestWord(excerpt), [excerpt]);
   const showToggle = excerpt && excerpt.length > preview.length;
   const content = isExpanded ? excerpt : preview;
+
+  const hasMore = excerpt && excerpt.length > preview.length;
+  const handleReadMore = () => {
+    if (onNavigate && id) {
+      onNavigate("blogs-detail", { id });
+    }
+  };
 
   return (
     <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 shadow-sm transition-shadow duration-200 hover:shadow-md">
@@ -45,13 +54,24 @@ const BlogCard = ({ title, author, date, excerpt = '', coverImage }) => {
           {content}
         </p>
 
-        {showToggle && (
+        {/* {showToggle && (
           <button
             type="button"
-            onClick={() => setIsExpanded(prev => !prev)}
+            // onClick={() => setIsExpanded(prev => !prev)}
+            onClick={() => onNavigate("blogs-detail", { id: blog.id })}
             className="mt-4 w-fit text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 focus:outline-none focus-visible:ring focus-visible:ring-blue-300"
           >
             {isExpanded ? 'Read Less' : 'Read More'}
+          </button>
+        )} */}
+
+        {hasMore && (
+          <button
+            type="button"
+            onClick={handleReadMore}
+            className="mt-4 w-fit text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+          >
+            Read More →
           </button>
         )}
       </div>

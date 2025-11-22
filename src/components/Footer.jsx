@@ -77,7 +77,7 @@ const Footer = ({ onNavigate }) => {
               <div className="relative">
                 <button className="w-full bg-gray-200 hover:bg-gray-100 text-gray-700 font-semibold text-sm py-4 px-6 rounded shadow-md transition-all flex items-center justify-between group">
                   <span>BOOK AN APPOINTMENT TODAY</span>
-                  <div className="w-10 h-10 bg-green-800 rounded-full flex items-center justify-center absolute -right-0.5 group-hover:bg-green-900 transition-colors cursor-pointer">
+                  <div className="w-10 h-10 bg-green-800 rounded-full flex items-center justify-center absolute -right-0.5 group-hover:bg-green-900 transition-colors cursor-pointer mr-3">
                     <ArrowRight className="w-6 h-6 text-white" />
                   </div>
                 </button>

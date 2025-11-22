@@ -51,7 +51,7 @@ const Contact = ({ onNavigate }) => {
     <div className="min-h-screen bg-[#f8ffdb] text-slate-900">
       <Navbar currentPage="contact" onNavigate={onNavigate} />
 
-      <section id="contact" className="bg-[#f8ffdb]">
+      <section id="contact" className="bg-[#f8ffdb] px-20">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
         {/* ----- Left Side Info ----- */}
           <div className="space-y-6 text-slate-800">

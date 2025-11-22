@@ -88,17 +88,33 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               </div>
 
               <div className="flex items-center gap-2 text-[15px] pr-2">
-                {/* <FiPhone className="text-gray-700" size={16} /> */}
-                <MdPhoneInTalk className="text-gray-700" size={18} />
-                <span className="font-semibold text-gray-900">9800808595</span>
+                <a
+                  href="tel:+919800808595"
+                  className="flex items-center gap-2 text-[15px] pr-2"
+                >
+                  <MdPhoneInTalk
+                    className="text-gray-700 fill-current"
+                    size={18}
+                  />
+                  <span className="font-semibold text-gray-900">
+                    9800808595
+                  </span>
+                </a>
               </div>
 
               <div className="flex items-center justify-center gap-2 text-[15px]">
-                {/* <MdOutlineMailOutline className="text-blue-600" size={20} /> */}
-                <MdAttachEmail className="text-blue-600" size={18} />
-                <span className="font-semibold text-[#0728CF] truncate max-w-none">
-                  savemedhafoundation@gmail.com
-                </span>
+                <a
+                  href="mailto:savemedhafoundation@gmail.com"
+                  className="flex items-center gap-2 text-[15px] pl-2"
+                >
+                  <MdAttachEmail
+                    className="text-blue-600 fill-current"
+                    size={18}
+                  />
+                  <span className="font-semibold text-[#0728CF] truncate max-w-none">
+                    savemedhafoundation@gmail.com
+                  </span>
+                </a>
               </div>
             </div>
 
@@ -185,13 +201,15 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               </select>
 
               {/* Location */}
-              <button className=" text-[15px] font-semibold flex items-center gap-2 px-3 py-2 bg-white border-2 border-[#74C425] rounded shadow-md">
+              <button
+                onClick={() => onNavigate("locateus")}
+                className="text-[15px] font-semibold flex items-center gap-2 px-3 py-2 bg-white border-2 border-[#74C425] rounded shadow-md hover:bg-gray-50 transition"
+              >
                 <IoLocationSharp className="text-[#e05529]" size={18} />
                 <span className="text-sm font-semibold text-gray-900">
                   Locate us
                 </span>
               </button>
-
 
               {/* Appointment Button */}
               <button
