@@ -210,12 +210,6 @@ export default function CancerTreatmentPage() {
     el.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
-  const scrollVideos = (dir) => {
-    const el = healthVideosRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 320, behavior: "smooth" });
-  };
-
   const initialHealthVideos = useMemo(
     () => [
       {
@@ -298,6 +292,9 @@ export default function CancerTreatmentPage() {
   const [loadingVideos, setLoadingVideos] = useState(false);
   const [videoError, setVideoError] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [activeVideoId, setActiveVideoId] = useState(
+    initialHealthVideos[0]?.id || null
+  );
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -574,6 +571,18 @@ export default function CancerTreatmentPage() {
     return () => controller.abort();
   }, [initialHealthVideos, fallbackVideoIds]);
 
+  useEffect(() => {
+    if (!healthVideos.length) return;
+
+    const hasActive = healthVideos.some(
+      (video) => video.id === activeVideoId
+    );
+
+    if (!hasActive) {
+      setActiveVideoId(healthVideos[0].id);
+    }
+  }, [activeVideoId, healthVideos]);
+
   const selectedVideoId = useMemo(
     () => extractYoutubeId(selectedVideo),
     [selectedVideo]
@@ -624,6 +633,49 @@ export default function CancerTreatmentPage() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [closeVideoModal, selectedVideo]);
+
+  const scrollVideos = useCallback(
+    (dir) => {
+      const el = healthVideosRef.current;
+      if (!el || !healthVideos.length) return;
+
+      const currentIndex = Math.max(
+        healthVideos.findIndex((video) => video.id === activeVideoId),
+        0
+      );
+      const nextIndex = Math.min(
+        Math.max(currentIndex + dir, 0),
+        healthVideos.length - 1
+      );
+
+      const targetVideo = healthVideos[nextIndex];
+      if (targetVideo) {
+        setActiveVideoId(targetVideo.id);
+
+        const targetNode = el.querySelector(
+          `[data-video-id="${targetVideo.id}"]`
+        );
+        if (targetNode) {
+          targetNode.scrollIntoView({
+            behavior: "smooth",
+            inline: "center",
+            block: "nearest",
+          });
+          return;
+        }
+      }
+
+      el.scrollBy({ left: dir * 320, behavior: "smooth" });
+    },
+    [activeVideoId, healthVideos]
+  );
+
+  const handleVideoSelect = useCallback((video) => {
+    if (!video) return;
+    setActiveVideoId(video.id);
+    setSelectedVideo(video);
+  }, []);
+
   const testimonials = [
     {
       name: "Bidhan Kumar Halder",
@@ -674,6 +726,17 @@ export default function CancerTreatmentPage() {
       image: "https://i.pravatar.cc/150?img=56",
     },
   ];
+
+  const activeVideoIndex = Math.max(
+    healthVideos.findIndex((video) => video.id === activeVideoId),
+    0
+  );
+  const videoSliderPercent =
+    healthVideos.length > 1
+      ? (activeVideoIndex / (healthVideos.length - 1)) * 100
+      : healthVideos.length === 1
+        ? 100
+        : 0;
 
   return (
     // <div className="min-h-screen bg-gradient-to-b from-green-50 to-white10">
@@ -734,111 +797,147 @@ export default function CancerTreatmentPage() {
       <PatientStories />
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
-      <section className="w-full py-12 relative">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3">
-            <img
-              src={Computerimg}
-              alt="Healthcare icon"
-              className="w-20 h-20"
-            />
-            <h2 className="text-3xl font-bold">Browse our latest Videos on</h2>
-          </div>
-          <h3 className="text-3xl font-bold text-green-500 pl-4">
-            Healthcare & Wellness
-          </h3>
-        </div>
-
-        {/* Scroll buttons */}
-        <button
-          onClick={() => scrollVideos(-1)}
-          className="flex absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
-        >
-          <ArrowLeft size={18} />
-        </button>
-        <button
-          onClick={() => scrollVideos(1)}
-          className="flex absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow"
-        >
-          <ArrowRight size={18} />
-        </button>
-
-        {videoError && (
-          <p className="text-center text-sm text-red-600 mb-4">{videoError}</p>
-        )}
-
-        {/* Horizontal Scroll */}
-        <div
-          ref={healthVideosRef}
-          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 hide-scrollbar"
-        >
-          {loadingVideos ? (
-            <div className="flex items-center justify-center w-full py-12 text-sm text-gray-600">
-              Loading latest videos...
+      <section className="w-full py-16">
+        <div className="mx-auto max-w-8xl">
+          <div className="relative w-full rounded-3xl border border-gray-200 bg-[#ffffffd8] py-14 text-center shadow-md">
+            <div className="mb-10 text-center">
+              <div className="inline-flex items-center gap-4">
+                <img
+                  src={Computerimg}
+                  alt="Healthcare icon"
+                  className="h-16 w-16 sm:h-20 sm:w-20"
+                />
+                <div className="text-left">
+                  <h2 className="relative inline-block text-3xl font-bold text-slate-900 sm:text-4xl">
+                    <span className="relative">Browse our latest Videos on</span>
+                    <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
+                  </h2>
+                  <p className="mt-2 text-2xl font-bold text-[#74C425] sm:text-3xl">
+                    Healthcare & Wellness
+                  </p>
+                </div>
+              </div>
+              {videoError && (
+                <p className="mt-4 text-sm text-red-600">{videoError}</p>
+              )}
             </div>
-          ) : healthVideos.length ? (
-            healthVideos.map((video) => {
-              const viewsText =
-                video.viewCount != null
-                  ? `${formatViewCount(video.viewCount)} views`
-                  : video.viewCountLabel || "";
-              const timeText = video.publishedAt
-                ? formatRelativeTime(video.publishedAt)
-                : video.publishedAtLabel || "";
-              const metaText = [viewsText, timeText]
-                .filter(Boolean)
-                .join(" | ");
 
-              return (
-                <button
-                  key={video.id}
-                  type="button"
-                  onClick={() => setSelectedVideo(video)}
-                  className="flex-shrink-0 w-[250px] bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow snap-start text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
-                >
-                  <div className="relative">
-                    <img
-                      src={video.thumbnail || DEFAULT_THUMBNAIL}
-                      alt={video.title}
-                      className="w-full aspect-video object-cover"
-                      loading="lazy"
-                    />
-                    {video.duration && (
-                      <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
-                        {video.duration}
+            <button
+              type="button"
+              onClick={() => scrollVideos(-1)}
+              className="absolute left-6 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[#0d8b1f] bg-white text-[#0d8b1f] shadow-lg transition hover:bg-[#edfce0]"
+              aria-label="Scroll videos left"
+            >
+              <ArrowLeft size={26} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollVideos(1)}
+              className="absolute right-6 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[#0d8b1f] bg-white text-[#0d8b1f] shadow-lg transition hover:bg-[#edfce0]"
+              aria-label="Scroll videos right"
+            >
+              <ArrowRight size={26} />
+            </button>
+
+            <div
+              ref={healthVideosRef}
+              className="relative mx-auto flex max-w-7xl justify-center gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-6 sm:px-10 hide-scrollbar"
+            >
+              {loadingVideos ? (
+                <div className="flex w-full items-center justify-center py-12 text-sm text-gray-600">
+                  Loading latest videos...
+                </div>
+              ) : healthVideos.length ? (
+                healthVideos.map((video) => {
+                  const viewsText =
+                    video.viewCount != null
+                      ? `${formatViewCount(video.viewCount)} views`
+                      : video.viewCountLabel || "";
+                  const timeText = video.publishedAt
+                    ? formatRelativeTime(video.publishedAt)
+                    : video.publishedAtLabel || "";
+                  const metaText = [viewsText, timeText]
+                    .filter(Boolean)
+                    .join(" | ");
+                  const isActive = video.id === activeVideoId;
+
+                  return (
+                    <button
+                      key={video.id}
+                      type="button"
+                      data-video-id={video.id}
+                      onClick={() => handleVideoSelect(video)}
+                      className="group flex w-[250px] flex-shrink-0 snap-center flex-col text-left focus:outline-none"
+                    >
+                      <div className="relative aspect-video overflow-hidden rounded-[26px] bg-gray-200 shadow-[0_18px_26px_rgba(17,50,24,0.25)]">
+                        <img
+                          src={video.thumbnail || DEFAULT_THUMBNAIL}
+                          alt={video.title}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors group-hover:bg-black/45">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#E2231A] shadow-lg">
+                            <Play className="ml-1 text-white" size={28} />
+                          </div>
+                        </div>
+                        {video.duration && (
+                          <span className="absolute bottom-2 right-2 rounded bg-black/80 px-2 py-1 text-xs text-white">
+                            {video.duration}
+                          </span>
+                        )}
                       </div>
-                    )}
-                  </div>
-                  <div className="p-4">
-                    <h4 className="font-semibold text-sm line-clamp-2 mb-2">
-                      {video.title}
-                    </h4>
-                    {metaText && (
-                      <p className="text-xs text-gray-600">{metaText}</p>
-                    )}
-                  </div>
-                </button>
-              );
-            })
-          ) : (
-            <div className="flex items-center justify-center w-full py-12 text-sm text-gray-600">
-              No videos available right now. Please check back soon.
+                      <div
+                        className={`mt-3 min-h-[88px] rounded-[18px] px-4 py-3 text-center text-sm font-semibold transition ${
+                          isActive
+                            ? "bg-[#1345c3] text-white"
+                            : "bg-[#e0f7d4] text-[#0d8b1f]"
+                        }`}
+                      >
+                        <p className="line-clamp-2">{video.title}</p>
+                        {metaText && (
+                          <p
+                            className={`mt-1 text-xs ${
+                              isActive ? "text-white/80" : "text-[#0d8b1f]/80"
+                            }`}
+                          >
+                            {metaText}
+                          </p>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="flex w-full items-center justify-center py-12 text-sm text-gray-600">
+                  No videos available right now. Please check back soon.
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        <div className="text-center mt-8">
-          <a
-            href="http://www.youtube.com/@savemedhafoundation7959"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-500 hover:bg-[#1118A6] text-white px-8 py-3 rounded-lg text-lg font-semibold inline-flex items-center gap-3 transition-colors cursor-pointer"
-          >
-            WATCH NOW
-            <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-              <Play fill="red" className="text-red-200" size={20} />
+            <div className="mx-auto mt-4 w-72" aria-hidden="true">
+              <div className="h-1 rounded-full bg-gray-200">
+                <div
+                  className="h-1 rounded-full bg-[#74C425] transition-all"
+                  style={{ width: `${videoSliderPercent}%` }}
+                />
+              </div>
             </div>
-          </a>
+
+            <div className="mt-8 flex justify-center">
+              <a
+                href="http://www.youtube.com/@savemedhafoundation7959"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 rounded-full bg-[#74C425] px-8 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-[#0f36a1]"
+              >
+                WATCH NOW
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white">
+                  <Play fill="red" className="text-red-200" size={20} />
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
       {/* ===================== TESTIMONIALS ===================== */}

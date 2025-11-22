@@ -76,6 +76,10 @@ const symptomImageModules = {
     eager: true,
     import: "default",
   }),
+  ...import.meta.glob("../assets/Symptoms of Pancreatic Cancer/**/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
   ...import.meta.glob("../assets/Symptoms of Kidney Cancer/*.{png,jpg,jpeg,webp}", {
     eager: true,
     import: "default",
@@ -93,6 +97,10 @@ const symptomImageModules = {
     import: "default",
   }),
   ...import.meta.glob("../assets/symptoms of breast cancer/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/Symptoms of Prostate Cancer/*.{png,jpg,jpeg,webp}", {
     eager: true,
     import: "default",
   }),
@@ -192,6 +200,17 @@ const SYMPTOM_IMAGE_ALIASES = {
     label: "8",
     folder: "Symptoms of GallBladder Cancer",
   },
+  "abdominal-pain": { label: "1", folder: "Symptoms of Pancreatic Cancer" },
+  jaundice: { label: "2", folder: "Symptoms of Pancreatic Cancer" },
+  "digestive-problems": { label: "3", folder: "Symptoms of Pancreatic Cancer" },
+  "loss-of-appetite": { label: "4", folder: "Symptoms of Pancreatic Cancer" },
+  "new-onset-diabetes": { label: "5", folder: "Symptoms of Pancreatic Cancer" },
+  fatigue: { label: "6", folder: "Symptoms of Pancreatic Cancer" },
+  "blood-clots": { label: "7", folder: "Symptoms of Pancreatic Cancer" },
+  "persistent-nausea-or-vomiting": {
+    label: "8",
+    folder: "Symptoms of Pancreatic Cancer",
+  },
   "blood-in-the-urine-hematuria": {
     label: "1",
     folder: "Symptoms of Kidney Cancer",
@@ -264,6 +283,19 @@ const SYMPTOM_IMAGE_ALIASES = {
   "physical-signs-finger-clubbing": {
     label: "8",
     folder: "Symptoms of Lungs Cancer",
+  },
+  "urinary-problems": { label: "1", folder: "Symptoms of Prostate Cancer" },
+  "blood-in-urine-or-semen": {
+    label: "2",
+    folder: "Symptoms of Prostate Cancer",
+  },
+  "discomfort-in-the-pelvic-area": {
+    label: "3",
+    folder: "Symptoms of Prostate Cancer",
+  },
+  "needing-to-pee-more-frequently": {
+    label: "4",
+    folder: "Symptoms of Prostate Cancer",
   },
 };
 
@@ -788,40 +820,71 @@ export const CANCER_DETAILS = {
     name: "Pancreas Cancer",
     heroImage: pancreasImg,
     areaDescription: "the pancreas and digestive enzymes",
+    descriptionTitle: "What is Pancreatic Cancer ?",
+    bodyParagraphs: [
+      "Pancreatic cancer develops when abnormal cells in the pancreas grow uncontrollably, forming tumors.",
+      "The pancreas is an organ located behind the stomach that plays a crucial role in digestion and hormone regulation.",
+      "Pancreatic cancer is often difficult to detect early and tends to spread rapidly to nearby organs and tissues.",
+      "The two main types of pancreatic cancer are exocrine tumors, which make up the majority of cases and arise from the cells that produce digestive enzymes (such as pancreatic adenocarcinoma), and endocrine tumors (such as pancreatic neuroendocrine tumors), which are less common but originate from hormone-producing cells in the pancreas.",
+    ],
     quickFacts: [
       "Often silent until advanced, making metabolic screening critical.",
       "Blood sugar balance and liver detox support the pancreas.",
     ],
-    stats: "Pancreatic cancer accounts for about 3% of all cancers yet has an outsized mortality rate.",
+    stats:
+      "Global percentage of Pancreatic cancer among all types of cancer = 2.5% to 3%.",
     symptoms: [
-      { label: "Upper abdominal pain" },
-      { label: "Back pain" },
-      { label: "Jaundice" },
-      { label: "Loss of appetite" },
-      { label: "Diabetes onset" },
-      { label: "Weight loss" },
+      "abdominal pain",
+      "Jaundice",
+      "Digestive Problems",
+      "Loss of Appetite",
+      "New-Onset Diabetes:",
+      "Fatigue",
+      "Blood Clots",
+      "Persistent Nausea or Vomiting",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
+    relatedTypes: [
+      "Exocrine tumors",
+      "Pancreatic adenocarcinoma",
+      "Endocrine tumors",
+      "Pancreatic neuroendocrine tumors",
     ],
-    relatedTypes: ["Exocrine", "Neuroendocrine"],
   }),
   prostate: createDetail({
     key: "prostate",
     name: "Prostate Cancer",
     heroImage: prostateImg,
     areaDescription: "the prostate gland",
+    descriptionTitle: "What is Prostate Cancer ?",
+    bodyParagraphs: [
+      "Prostate cancer is a type of cancer that develops in the prostate gland, which is a small walnut-shaped gland located in men just below the bladder.",
+      "It develops when cells in the prostate mutate and begin to grow uncontrollably, forming a tumor.",
+      "If not detected early and treated, prostate cancer can spread to other parts of the body.",
+    ],
     quickFacts: [
       "Most cases grow slowly, but some are aggressive and spread quickly.",
       "Hormone balance, pelvic floor care, and stress reduction matter.",
     ],
-    stats: "Prostate cancer is the second most common cancer in men globally.",
+    stats: "Global percentage of Prostate cancer among all types of cancer = 7% to 8%.",
     symptoms: [
-      { label: "Frequent urination" },
-      { label: "Weak urine flow" },
-      { label: "Blood in semen" },
-      { label: "Pelvic discomfort" },
-      { label: "Erectile issues" },
-      { label: "Bone pain (late)" },
+      "Urinary problems",
+      "Blood in urine or semen",
+      "Discomfort in the pelvic area",
+      "needing to pee more frequently",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
+    relatedTypes: [
+      "Adenocarcinoma",
+      "Small Cell Prostate Cancer",
+      "Transitional Cell Carcinoma",
+      "Squamous Cell Carcinoma",
+      "Neuroendocrine Tumors*",
     ],
-    relatedTypes: ["Localized", "Advanced", "Castration-resistant"],
   }),
   skin: createDetail({
     key: "skin",
