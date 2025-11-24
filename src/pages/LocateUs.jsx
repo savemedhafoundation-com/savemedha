@@ -149,6 +149,7 @@ export default function LocateUs({ onNavigate }) {
   return (
     <>
       <Navbar currentPage="locateus" onNavigate={onNavigate} />
+        <img src="src\assets\Photo\Contact_us.png" alt="Locate Us Banner" className="w-full h-[400px] object-cover" />
 
       <div className="min-h-screen bg-gray-50 py-12 px-4">
         <div className="max-w-7xl mx-auto">
@@ -178,7 +179,8 @@ export default function LocateUs({ onNavigate }) {
             </button>
             {userLocation && nearestLocation && (
               <p className="mt-4 text-green-700 font-semibold text-lg">
-                Nearest Center Highlighted ({getDistance(userLocation.lat, userLocation.lng, nearestLocation.lat, nearestLocation.lng).toFixed(1)} km away)
+                Nearest Center Highlighted !
+                {/* ({getDistance(userLocation.lat, userLocation.lng, nearestLocation.lat, nearestLocation.lng).toFixed(1)} km away) */}
               </p>
             )}
           </div>

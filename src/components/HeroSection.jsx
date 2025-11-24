@@ -81,7 +81,7 @@ const HeroBanner = () => {
       </div>
 
       {/* RIGHT IMAGE PANEL */}
-      <div className="relative flex flex-1 items-center justify-center gap-2 pl-8 pb-8 left-24 pt-5">
+      <div className="relative flex flex-1 items-center justify-center gap-2 pl-8 pb-8 left-24">
         <img
           src={People}
           alt="People"
@@ -105,7 +105,7 @@ const ServicesSection = () => {
       description:
         "We focus on managing abnormal cells—classified as high-protein and high-toxin cells—through dietary control and detox therapies. By regulating protein intake and cleansing the body naturally, we help restore balance and combat the growth of these cells effectively.",
       image: imageCancerCare,
-      highlight: true,
+      // highlight: true,
     },
     {
       title: "HEART HEALTH",
@@ -145,14 +145,14 @@ const ServicesSection = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden  border border-gray-200 bg-white shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+              className="min-h-[400px] group relative overflow-hidden border border-gray-200 bg-white shadow-[5px_4px_4px_0px_#215C0740] hover:shadow-xl transition-all duration-300 cursor-pointer rounded-2xl"
             >
               {/* Image */}
               <div className="relative">
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-65 object-cover transform group-hover:scale-100  transition-transform duration-500"
+                  className="w-full h-80 object-cover transform group-hover:scale-100  transition-transform duration-500"
                 />
 
                 {/* Description - appears only on hover */}
@@ -167,11 +167,9 @@ const ServicesSection = () => {
               </div>
 
               {/* Title - always visible */}
-              <div className="p-4 text-center">
+              <div className="p-4 text-center hover:text-red-600 transition-colors duration-300">
                 <h3
-                  className={`font-bold text-lg ${
-                    service.highlight ? "text-red-600" : "text-black"
-                  }`}
+                  className={`font-bold text-lg`}
                 >
                   {service.title}
                 </h3>

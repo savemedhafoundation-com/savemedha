@@ -15,6 +15,7 @@ import Computerimg from "../assets/Photo/Remote work and video call with colleag
 import Triangle from "../assets/Photo/triangle.png";
 import Virus from "../assets/Photo/virus.png";
 import Review1 from "../assets/Photo/review1.png";
+import { MdPhoneInTalk } from "react-icons/md";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
 const MAX_VIDEOS_TO_FETCH = 100;
@@ -289,6 +290,7 @@ export default function CancerTreatmentPage() {
   );
 
   const [healthVideos, setHealthVideos] = useState(initialHealthVideos);
+  console.log("healthvideos",healthVideos);
   const [loadingVideos, setLoadingVideos] = useState(false);
   const [videoError, setVideoError] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -744,9 +746,9 @@ export default function CancerTreatmentPage() {
       {/* Header */}
       <header className="bg-transparent">
         <div className="w-full py-6">
-          <div className="flex flex-row items-center justify-between gap-12 rounded-2xl border border-gray-200 bg-white px-12 py-10 shadow-md">
+          <div className="flex flex-row items-center justify-between gap-12 rounded-2xl border border-gray-200 bg-[#FBFFF9] px-12 py-8 shadow-[5px_4px_4px_0px_#215C0740]">
             {/* Left: Logo */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mb-18">
               <div className="w-40 h-40 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
                 <div className="w-40 h-40 bg-white rounded-full overflow-hidden">
                   <img
@@ -760,13 +762,13 @@ export default function CancerTreatmentPage() {
             </div>
 
             {/* Center */}
-            <div className="text-center">
+            <div className="flex flex-col items-left gap-2 mb-18 text-left">
               <h1 className="text-3xl font-bold text-gray-900">
                 "OUR GOAL" - CANCER FREE WORLD
               </h1>
-              <p className="text-gray-600 mt-1">Subhankar Sarkar</p>
-              <button className="mt-2 bg-[#74C425] hover:bg-[#1118A6] text-white px-6 py-4 rounded-lg flex items-center gap-2 mx-auto transition-colors font-sans cursor-pointer">
-                <MdAddCall />
+              <p className="text-gray-600 mt-1 font-semibold pl-3">Subhankar Sarkar</p>
+              <button className="ml-2 mt-2 bg-[#74C425] hover:bg-[#1118A6] text-white px-6 py-4 rounded-lg flex items-center gap-2 mx-auto transition-colors font-sans cursor-pointer">
+                <MdPhoneInTalk size={20} />
                 CONTACT US
               </button>
             </div>
@@ -943,35 +945,37 @@ export default function CancerTreatmentPage() {
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
 <section className="w-full py-16">
-  <div className="mx-auto max-w-8xl px-4">
-    <div className="relative rounded-3xl overflow-hidden">
+  <div className="mx-auto max-w-10xl px-4">
+    <div className="relative rounded-3xl overflow-hidden  border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] bg-[#FBFFF9]">
       
       {/* Top Header */}
-      <div className="text-center pt-12 pb-8 px-8">
-        <div className="inline-flex items-center gap-6 mb-6">
+      <div className="text-center pt-12 pb-2 px-8">
+        <div className="inline-flex items-center gap-6 mb-0">
           <div className="relative">
             <img
               src={Computerimg}
               alt="Healthcare icon"
-              className="w-24 h-24 drop-shadow-lg"
+              className="w-40 h-42 drop-shadow-lg"
             />
-            <div className="absolute -top-2 -right-2 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+            <div className="absolute bottom-12 -right-5 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
               <Play className="text-white ml-0.5" size={20} />
             </div>
           </div>
           <div className="text-left">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+            <h2 className="text-4xl md:text-4xl font-bold text-slate-900 mb-2 tracking-wide [word-spacing:6px]">
               BROWSE OUR LATEST VIDEOS ON
             </h2>
-            <p className="text-4xl md:text-5xl font-extrabold text-[#74C425] mt-2">
+            <p className="text-4xl md:text-4xl font-bold text-[#74C425] mt-2 text-center relative">
               HEALTHCARE & WELLNESS
+               <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-1 w-49 bg-[#74C425]" />
             </p>
           </div>
         </div>
       </div>
 
       {/* Video Grid - 5 columns, fixed card design like screenshot */}
-      <div className="bg-gradient-to-b from-[#74C425] to-[#346700] rounded-t-[60px] pt-12 pb-16 px-8">
+      <div className="bg-transparent rounded-t-[60px] pt-12 pb-16 px-8">
+        {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
           {healthVideos.slice(0, 20).map((video, index) => (
             <button
@@ -1032,7 +1036,7 @@ export default function CancerTreatmentPage() {
 
 
       {/* ===================== TESTIMONIALS ===================== */}
-      <section className="bg-[#ffffff] py-10">
+      <section className="bg-[#F5FFEA] py-10 px-10 mb-10  border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-3xl ">
         <div className="w-full">
           {/* <div className="text-center mb-12">
             <h2 className="text-4xl font-bold">
@@ -1054,7 +1058,7 @@ export default function CancerTreatmentPage() {
           <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
           <span className="text-[#74C425]">MONIALS</span>
         </h2>
-          <p className="text-gray-600 mt-2 font-medium pt-3">
+          <p className="text-gray-600 mt-2 font-bold pt-3">
               Turning Vision into Reality
             </p>
       </div>
@@ -1062,13 +1066,13 @@ export default function CancerTreatmentPage() {
             {/* Arrows */}
             <button
               onClick={() => scrollTestimonials(-1)}
-              className="flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow hover:bg-[#92eeb8]"
+              className="flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center  shadow-lg transition hover:bg-[#edfce0]"
             >
               <ArrowLeft size={18} />
             </button>
             <button
               onClick={() => scrollTestimonials(1)}
-              className="flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-green-500 text-green-700 items-center justify-center shadow hover:bg-[#86ff95]"
+              className="flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center  shadow-lg transition hover:bg-[#edfce0]"
             >
               <ArrowRight size={18} />
             </button>
@@ -1081,7 +1085,7 @@ export default function CancerTreatmentPage() {
               {testimonials.map((t, idx) => (
                 <div
                   key={idx}
-                  className="snap-start flex-shrink-0 w-[390px] bg-white border border-[#1D942B] rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-sm"
+                  className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]"
                 >
                   <div className="absolute top-4 left-1 w-4 h-4   rounded-full bg-[#74C425] mt-4 ml-2 " />
 

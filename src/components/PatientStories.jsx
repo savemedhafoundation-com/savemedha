@@ -113,7 +113,7 @@ const PatientStories = () => {
   return (
     <section
       id="patient-stories"
-      className="relative w-full bg-[#ffffffd8] border border-gray-200 py-16 text-center rounded-3xl shadow-md"
+      className="relative w-full bg-[#FBFFF9] border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] py-16 text-center rounded-3xl"
     >
       <div className="mb-12 text-center">
         <h2 className="relative inline-block text-4xl font-bold text-slate-900">
@@ -126,7 +126,7 @@ const PatientStories = () => {
       <button
         type="button"
         onClick={() => handleArrow(-1)}
-        className="absolute left-6 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[#0d8b1f] bg-white text-[#0d8b1f] shadow-lg transition hover:bg-[#edfce0]"
+        className="absolute left-12 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#0d8b1f] bg-white text-[#0d8b1f] shadow-lg transition hover:bg-[#edfce0]"
         aria-label="Scroll stories left"
       >
         <ArrowLeft size={26} />
@@ -134,7 +134,7 @@ const PatientStories = () => {
       <button
         type="button"
         onClick={() => handleArrow(1)}
-        className="absolute right-6 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[#0d8b1f] bg-white text-[#0d8b1f] shadow-lg transition hover:bg-[#edfce0]"
+        className="absolute right-12 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#0d8b1f] bg-white text-[#0d8b1f] shadow-lg transition hover:bg-[#edfce0]"
         aria-label="Scroll stories right"
       >
         <ArrowRight size={26} />
