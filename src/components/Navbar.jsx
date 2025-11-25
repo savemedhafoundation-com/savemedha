@@ -61,11 +61,17 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
         <div className="flex flex-row items-start gap-8">
           {/* Logo */}
           <div className="flex-shrink-0 flex justify-start">
-            <img
-              src={savemedhaLogo}
-              alt="Save Medha Foundation Logo"
-              className="h-17 w-auto object-contain"
-            />
+            <button
+              type="button"
+              onClick={() => onNavigate?.("home")}
+              className="focus:outline-none"
+            >
+              <img
+                src={savemedhaLogo}
+                alt="Save Medha Foundation Logo"
+                className="h-17 w-auto object-contain"
+              />
+            </button>
           </div>
 
           {/* ===============================

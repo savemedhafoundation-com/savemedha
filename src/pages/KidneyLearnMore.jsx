@@ -1,15 +1,51 @@
-import { useState } from "react";
-import { IoIosArrowForward } from "react-icons/io";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { getKidneyDetail } from "../data/kidneyLearnMore";
+import {
+  getKidneyDetail,
+  AKI_SYMPTOM_MEDIA,
+  CKD_SYMPTOM_MEDIA,
+  PKD_SYMPTOM_MEDIA,
+  DIABETIC_NEPHROPATHY_SYMPTOM_MEDIA,
+  KIDNEY_STONE_SYMPTOM_MEDIA,
+  GLOMERULONEPHRITIS_SYMPTOM_MEDIA,
+} from "../data/kidneyLearnMore";
+import { TREATMENTS } from "../data/treatments";
+
+const kidneyHeroModules = import.meta.glob(
+  "/src/assets/kidney/Kidney Treatments Images/*.{png,jpg,jpeg,webp}",
+  { eager: true }
+);
+
+const kidneyHeroImagesByNumber = Object.entries(kidneyHeroModules).reduce(
+  (acc, [path, mod]) => {
+    const src = typeof mod === "string" ? mod : mod?.default || path;
+    if (!src) return acc;
+
+    const file = path.split("/").pop() || "";
+    const match = file.match(/^(\d+)/);
+    if (match) {
+      const num = parseInt(match[1], 10);
+      if (Number.isFinite(num)) {
+        acc[num] = src;
+      }
+    }
+
+    return acc;
+  },
+  {}
+);
+
+const kidneyHeroImagesSorted = Object.keys(kidneyHeroImagesByNumber)
+  .map((num) => parseInt(num, 10))
+  .filter(Number.isFinite)
+  .sort((a, b) => a - b)
+  .map((num) => kidneyHeroImagesByNumber[num]);
 
 const KIDNEY_KEY_ORDER = [
   "chronic-kidney-disease",
   "acute-kidney-injury",
-  "glomerulonephritis",
+  "glomeru-lonephritis",
   "polycystic-kidney-disease",
   "kidney-stones",
   "diabetic-nephropathy",
@@ -23,46 +59,24 @@ const KIDNEY_KEY_ORDER = [
   "alport-syndrome",
 ];
 
-const byPrefixAndName = {
-  far: {
-    "globe-pointer": faGlobe,
-  },
-};
-
-const KidneyTypeBadge = ({
-  label,
-  baseColor,
-  baseShadow,
-  hoverColor = "#7A2300",
-  hoverShadow = "rgba(122,35,0,0.3)",
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <a
-      href="https://dantura.com/product/bone-marrow-booster/?v=13b5bfe96f3e"
-      target="_blank"
-      rel="noreferrer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="inline-flex items-center justify-center px-14 py-4 text-2xl font-semibold italic text-white transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0b2fa1] focus-visible:ring-offset-white"
-      style={{
-        backgroundColor: isHovered ? hoverColor : baseColor,
-        borderTopLeftRadius: "30px",
-        borderBottomRightRadius: "18px",
-        boxShadow: `0px 8px 18px ${isHovered ? hoverShadow : baseShadow}`,
-      }}
-    >
-      {label}
-    </a>
-  );
-};
-
 export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }) {
   const detail = getKidneyDetail(kidneyKey, fallbackTitle);
-  const handleBack = () => onNavigate?.("treatment-detail");
+  const kidneyTreatment =
+    TREATMENTS.find((t) => t.key === "kidney") || {
+      key: "kidney",
+      title: "Kidney Treatment",
+    };
+  const handleBack = () =>
+    onNavigate?.("treatment-detail", { treatment: kidneyTreatment });
   const normalizedKey = detail?.key?.toLowerCase();
   const currentIndex = KIDNEY_KEY_ORDER.indexOf(normalizedKey);
+  const heroImageFromFolder =
+    currentIndex >= 0 ? kidneyHeroImagesByNumber[currentIndex + 1] : null;
+  const heroImageSrc =
+    heroImageFromFolder ??
+    detail?.heroImage ??
+    kidneyHeroImagesSorted[0] ??
+    "";
   const prevKey = currentIndex > 0 ? KIDNEY_KEY_ORDER[currentIndex - 1] : null;
   const nextKey =
     currentIndex >= 0 && currentIndex < KIDNEY_KEY_ORDER.length - 1
@@ -73,205 +87,215 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
     onNavigate?.("kidney-detail", { kidneyKey: targetKey });
   };
 
+  const symptomTheme = {
+    bubbleBg: "#fff5f3",
+    bubbleText: "#8a2b25",
+    label: "#8a2b25",
+  };
+
+  const fallbackSymptomMediaByKey = {
+    "acute-kidney-injury": AKI_SYMPTOM_MEDIA,
+    "chronic-kidney-disease": CKD_SYMPTOM_MEDIA,
+    "polycystic-kidney-disease": PKD_SYMPTOM_MEDIA,
+    "diabetic-nephropathy": DIABETIC_NEPHROPATHY_SYMPTOM_MEDIA,
+    "kidney-stones": KIDNEY_STONE_SYMPTOM_MEDIA,
+    glomerulonephritis: GLOMERULONEPHRITIS_SYMPTOM_MEDIA,
+  };
+
   if (!detail) return null;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white text-[#40120b]">
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
 
-      {/* ======= TOP TITLE AREA (inside green background) ======= */}
-      <div className="w-full bg-[#3c6513] text-white py-4">
-        <div className="mx-auto max-w-6xl px-6">
-          {/* Back Button */}
+      <header className="bg-[#7c2f22] text-white">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-6">
           <button
             type="button"
             onClick={handleBack}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/50 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-white transition hover:bg-white/10"
+            className="inline-flex items-center gap-3 self-start rounded-full border border-white bg-[#ffffff] px-5 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-[#7c2f22] transition hover:bg-blue"
           >
-            <span aria-hidden="true">&larr;</span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-full ">
+              <IoIosArrowBack className="text-lg " />
+            </span>
             Back
           </button>
+        </div>
 
-          {/* TREATMENT + NAME */}
-          <div className="flex items-center gap-4">
-            <p className="text-base font-semibold uppercase tracking-[0.35em]">
-              TREATMENT
-            </p>
-
-            <IoIosArrowForward className="text-lg" />
-
-            <p className="text-base font-semibold uppercase tracking-[0.2em] text-[#BFFF80]">
-              {detail.name}
-            </p>
+        <div className="w-full bg-gradient-to-r from-[#f7d0cc] via-[#fde5df] to-[#f7d0cc]">
+          <div className="mx-auto flex h-12 w-full max-w-6xl flex-wrap items-center gap-3 px-6 text-xs font-semibold uppercase tracking-[0.6em] text-black">
+            <span className="text-black/80">Treatment</span>
+            <IoIosArrowForward className="text-base" />
+            <span className="text-black">{detail.name}</span>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* ===================== MAIN CONTENT ===================== */}
-      <section className="w-full bg-[#3c6513] py-2">
-        <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 px-6">
-          {/* LEFT SIDE (Image + Cure Box) */}
-          <div className="flex flex-col">
-            <div className="bg-[#0b2fa1]">
-              <img
-                src={detail.heroImage}
-                alt={detail.name}
-                className="h-99 w-full object-cover"
-              />
-            </div>
+      <section className="bg-[#7c2f22] text-white">
+        <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-16 pt-4 lg:flex-row lg:items-start">
+          <div className="w-full lg:max-w-[460px]">
+            <div className="overflow-hidden rounded-[18px] bg-white shadow-[0_35px_70px_rgba(0,0,0,0.35)]">
+              <div className="relative h-[420px] bg-gradient-to-br from-[#ffe6c9] to-[#ffd6a8]">
+                <img
+                  src={heroImageSrc}
+                  alt={detail.name}
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
 
-            <div className="bg-white px-4 py-8 w-full">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#0b2fa1]">
-                CAN BE CURED BY
-              </p>
-              <h3 className="font-koho text-xl font-semibold italic text-[#0b2fa1] mt-1">
-                {detail.cureBy}
-              </h3>
-              <p className="mt-3 text-slate-700 leading-relaxed">{detail.intro}</p>
+              <div className="space-y-4 px-10 py-10 text-[#7a2300]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.6em] text-[#be7964]">
+                  Can be cured by
+                </p>
+                <p className="font-serif text-2xl font-semibold italic">{detail.cureBy}</p>
+                <p className="text-base leading-relaxed text-[#5b1e13]">{detail.intro}</p>
+              </div>
             </div>
           </div>
 
-          {/* RIGHT SIDE (Content Text) */}
-          <div className="text-white self-start -mt-6">
-            {/* Heading */}
-            <h2 className="font-koho text-[32px] font-bold">
+          <div className="flex-1 space-y-6">
+            <h2 className="font-serif text-4xl font-semibold leading-tight text-white md:text-[46px]">
               {detail.descriptionTitle}
             </h2>
 
-            {/* Italic Highlighted Quote */}
-            <blockquote className="italic text-[#d8f7a8] text-lg mb-2 leading-relaxed">
-              {detail.heroQuote}
-            </blockquote>
+            {detail.heroQuote && (
+              <blockquote className="rounded-3xl border-l-4 border-[#f9c3bd] bg-white/10 px-6 py-4 text-xl italic leading-relaxed text-[#fee7df]">
+                {detail.heroQuote}
+              </blockquote>
+            )}
 
-            {/* Quick Facts */}
             {detail.quickFacts?.length > 0 && (
-              <ul className="mb-4 list-disc space-y-1 pl-5 text-white/90">
+              <ul className="list-disc space-y-3 pl-6 text-lg text-white/90">
                 {detail.quickFacts.map((fact) => (
                   <li key={fact}>{fact}</li>
                 ))}
               </ul>
             )}
 
-            {/* Body Paragraphs */}
-            <div className="space-y-4 text-[16px] leading-relaxed tracking-wide">
-              {detail.bodyParagraphs.map((p, i) => (
-                <p key={i} className="text-white/90">
-                  {p}
-                </p>
+            <div className="space-y-5 text-lg leading-9 text-white/90">
+              {detail.bodyParagraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
               ))}
             </div>
 
-            {/* Stats text */}
-            <p className="mt-4 mr-2 text-[17px] font-medium text-white">
-              {detail.stats}
-            </p>
+            {detail.stats && (
+              <p className="text-lg font-semibold text-[#ffe1d6]">{detail.stats}</p>
+            )}
 
-            {/* CTA Button */}
             <a
               href="https://dantura.com/"
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#FFD54F] px-8 py-3 text-lg font-semibold text-[#0b2fa1] shadow-md transition hover:bg-[#f7c533]"
+              className="inline-flex min-h-[56px] items-center justify-center rounded-full bg-white px-10 text-lg font-semibold tracking-wide text-[#7a2300] shadow-[0_18px_35px_rgba(33,8,2,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_45px_rgba(33,8,2,0.35)]"
             >
-              <FontAwesomeIcon icon={byPrefixAndName.far["globe-pointer"]} />
               Start Natural Immunotherapy
             </a>
           </div>
         </div>
       </section>
 
-      {/* ===================== SYMPTOMS ===================== */}
+      <div className="h-6 w-full bg-gradient-to-r from-[#f7d0cc] via-[#fde5df] to-[#f7d0cc]" />
+
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-6xl px-6 text-center">
           <h2 className="font-koho text-3xl font-bold mb-10">SYMPTOMS</h2>
 
-          <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-            {detail.symptoms.map((sym) => (
-              <div key={sym.label} className="group text-center">
-                {sym.img ? (
-                  <img
-                    src={sym.img}
-                    alt={sym.label}
-                    className="mx-auto h-50 w-50 rounded-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                ) : (
-                  <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-[#f1ffe7] text-base font-semibold text-[#0b2fa1] transition-transform duration-300 group-hover:scale-110">
-                    {sym.label}
-                  </div>
-                )}
-                <p className="mt-4 text-xl font-semibold text-slate-700 transition-colors duration-200 group-hover:text-[#0b2fa1]">
-                  {sym.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===================== TYPES OF CARE ===================== */}
-      <section className="py-16 bg-gradient-to-b from-white to-[#f1ffe7]">
-        <div className="px-6 text-center">
-          <h2 className="font-serif text-3xl font-bold tracking-wide">
-            TYPES OF KIDNEY CARE WE OFFER
-          </h2>
-          <div className="mx-auto mt-2 mb-8 h-[2px] w-32 bg-[#74C425]" />
-
-          <div className="mt-6 flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => handleNavigateTo(prevKey)}
-              disabled={!prevKey}
-              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
-              style={{
-                color: "#0b2fa1",
-                borderColor: "#0b2fa1",
-                backgroundColor: "white",
-                opacity: prevKey ? 1 : 0.5,
-              }}
-            >
-              &larr; Prev
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavigateTo(nextKey)}
-              disabled={!nextKey}
-              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
-              style={{
-                color: "#0b2fa1",
-                borderColor: "#0b2fa1",
-                backgroundColor: "white",
-                opacity: nextKey ? 1 : 0.5,
-              }}
-            >
-              Next &rarr;
-            </button>
-          </div>
-
-          <div className="mt-10 flex flex-wrap justify-center gap-15">
-            {detail.relatedTypes.map((t, index) => {
-              const bgColors = ["#74C425", "#74C425", "#74C425"];
-              const shadowColors = [
-                "rgba(116,196,37,0.3)",
-                "rgba(11,47,161,0.3)",
-                "rgba(116,196,37,0.3)",
-              ];
+          <div
+            className={`grid grid-cols-2 gap-10 ${
+              detail.symptoms?.length > 6 ? "md:grid-cols-4" : "md:grid-cols-3"
+            }`}
+          >
+            {detail.symptoms.map((sym, index) => {
+              const fallbackMedia =
+                fallbackSymptomMediaByKey[detail.key]?.[index] ?? null;
+              const mediaSrc = sym.img ?? fallbackMedia;
+              const isVideo =
+                typeof mediaSrc === "string" &&
+                mediaSrc.toLowerCase().includes(".mp4");
 
               return (
-                <KidneyTypeBadge
-                  key={t}
-                  label={t}
-                  baseColor={bgColors[index] ?? "#74C425"}
-                  baseShadow={shadowColors[index] ?? "rgba(116,196,37,0.3)"}
-                />
+                <div key={sym.label} className="group text-center">
+                  {mediaSrc ? (
+                    isVideo ? (
+                      <video
+                        src={mediaSrc}
+                        title={sym.label}
+                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover  transition-transform duration-300 group-hover:scale-110"
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={mediaSrc}
+                        alt={sym.label}
+                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover  transition-transform duration-300 group-hover:scale-110"
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      />
+                    )
+                  ) : (
+                    <div
+                      className="symptom-pop mx-auto flex h-32 w-32 items-center justify-center rounded-full text-base font-semibold transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        animationDelay: `${index * 0.1}s`,
+                        backgroundColor: symptomTheme.bubbleBg,
+                        color: symptomTheme.bubbleText,
+                      }}
+                    >
+                      {sym.label}
+                    </div>
+                  )}
+                  <p
+                    className="mt-4 text-xl font-semibold transition-colors group-hover:opacity-80"
+                    style={{ color: symptomTheme.label }}
+                  >
+                    {sym.label}
+                  </p>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ===================== FOOTER ===================== */}
-      <Footer onNavigate={onNavigate} />
+      <div className="mt-8 flex flex-col gap-7 px-6">
+        
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 text-[#7a2300]">
+          <button
+            type="button"
+            onClick={() => handleNavigateTo(prevKey)}
+            disabled={!prevKey}
+            className={`group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.5em] ${
+              prevKey ? "" : "opacity-40"
+            }`}
+          >
+            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-current bg-white text-lg transition group-hover:bg-[#7a2300] group-hover:text-white">
+              <IoIosArrowBack />
+            </span>
+            Prev.
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNavigateTo(nextKey)}
+            disabled={!nextKey}
+            className={`group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.5em] ${
+              nextKey ? "" : "opacity-40"
+            }`}
+          >
+            Next
+            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-current bg-white text-lg transition group-hover:bg-[#7a2300] group-hover:text-white">
+              <IoIosArrowForward />
+            </span>
+          </button>
+        </div>
+      </div>
+        <div className="h-20 w-screen rounded-[10px] bg-gradient-to-b from-white via-[#fde5e7] to-[#f4c0c1]" />
+       <Footer onNavigate={onNavigate} />
     </div>
   );
 }
+
+

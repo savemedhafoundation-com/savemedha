@@ -2,6 +2,32 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import cancerHeroVideo from "../assets/Photo/Sequence 01_1.mp4";
 import { CANCER_DETAILS } from "../data/cancerLearnMore";
+import { KIDNEY_DETAILS } from "../data/kidneyLearnMore";
+
+const kidneyTreatmentImageModules = import.meta.glob(
+  "/src/assets/kidney/Kidney Treatments Images/*.{png,jpg,jpeg,webp}",
+  { eager: true }
+);
+
+const kidneyTreatmentImages = Object.entries(kidneyTreatmentImageModules)
+  .map(([path, mod]) => {
+    const src = typeof mod === "string" ? mod : mod?.default || path;
+    const file = path.split("/").pop() || "";
+    const match = file.match(/^(\d+)/);
+    const order = match ? parseInt(match[1], 10) : Number.MAX_SAFE_INTEGER;
+    return { order, src };
+  })
+  .sort((a, b) => a.order - b.order)
+  .map((entry) => entry.src);
+
+const KIDNEY_DETAIL_ENTRIES = Object.values(KIDNEY_DETAILS);
+
+const buildKidneySubTreatments = () =>
+  KIDNEY_DETAIL_ENTRIES.map((entry, index) => ({
+    key: entry.key,
+    name: entry.name,
+    image: kidneyTreatmentImages[index] ?? entry.heroImage,
+  }));
 
 const SUB_TREATMENT_LIBRARY = {
   cancer: Object.values(CANCER_DETAILS).map((entry) => ({
@@ -9,22 +35,7 @@ const SUB_TREATMENT_LIBRARY = {
     name: entry.name,
     image: entry.heroImage,
   })),
-  kidney: [
-    { key: "chronic-kidney-disease", name: "Chronic Kidney Disease (CKD)" },
-    { key: "acute-kidney-injury", name: "Acute Kidney Injury (AKI)" },
-    { key: "glomerulonephritis", name: "Glomerulonephritis" },
-    { key: "polycystic-kidney-disease", name: "Polycystic Kidney Disease (PKD)" },
-    { key: "kidney-stones", name: "Kidney Stones (Nephrolithiasis)" },
-    { key: "diabetic-nephropathy", name: "Diabetic Nephropathy" },
-    { key: "hypertensive-nephropathy", name: "Hypertensive Nephropathy" },
-    { key: "lupus-nephritis", name: "Lupus Nephritis" },
-    { key: "interstitial-nephritis", name: "Interstitial Nephritis" },
-    { key: "renal-cell-carcinoma", name: "Renal Cell Carcinoma (Kidney Cancer)" },
-    { key: "nephrotic-syndrome", name: "Nephrotic Syndrome" },
-    { key: "urinary-tract-infections", name: "Urinary Tract Infections (UTIs)" },
-    { key: "minimal-change-disease", name: "Minimal Change Disease" },
-    { key: "alport-syndrome", name: "Alport Syndrome" },
-  ],
+  kidney: buildKidneySubTreatments(),
   heart: [
     { key: "hypertension-control", name: "Hypertension Control" },
     { key: "cholesterol-reset", name: "Cholesterol Reset" },
@@ -227,8 +238,8 @@ console.log("treatement",treatment)
                       <div className="h-full w-full bg-gradient-to-br from-slate-200 to-slate-300" />
                     )}
                     <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[#74C425]" />
-                    <div className="absolute left-6 top-10 pr-4">
-                      <p className="font-koho text-xl font-semibold uppercase leading-5 text-white drop-shadow-md">
+                    <div className="absolute left-2 top-10 pr-4">
+                      <p className="font-koho text-xl font-semibold uppercase leading-5  text-white drop-shadow-md">
                         {item.name.split(" ").map((word) => (
                           <span className="block" key={`${item.name}-${word}`}>
                             {word}

@@ -154,6 +154,15 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
 
   if (!detail) return null;
 
+  const symptomCount = detail.symptoms?.length ?? 0;
+  const symptomBaseCols = symptomCount <= 4 ? "grid-cols-1" : "grid-cols-2";
+  const symptomMdCols =
+    symptomCount > 6
+      ? "md:grid-cols-4"
+      : symptomCount === 4
+        ? "md:grid-cols-4"
+        : "md:grid-cols-3";
+
   // Pick hero image based on numeric filename order (1.png → Blood Cancer, 2.png → Bone Cancer, ...)
   const normalizedKey = detail.key?.toLowerCase();
   const mappedNumber = HERO_KEY_ORDER.findIndex((key) => key === normalizedKey) + 1; // +1 to match 1.png, 2.png...
@@ -309,9 +318,12 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
       {/* SYMPTOMS */}
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-6xl px-6 text-center">
-          <h2 className="font-koho text-3xl font-bold mb-10 relative">SYMPTOMS</h2>
-              <div className="absolute bottom-[-220px] left-1/2 transform -translate-x-1/2 w-30 h-1 bg-[#C425B4]"></div>
-          <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
+          <div className="relative mb-10">
+            <h2 className="font-koho text-3xl font-bold">SYMPTOMS</h2>
+            <div className="absolute -bottom-4 left-1/2 h-1 w-32 -translate-x-1/2 bg-[#C425B4]" />
+          </div>
+
+          <div className={`grid ${symptomBaseCols} gap-10 ${symptomMdCols}`}>
             {detail.symptoms.map((sym) => {
               const isVideo =
                 typeof sym.img === "string" &&
