@@ -82,7 +82,7 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
   if (!treatment) {
     return null;
   }
-
+console.log("treatement",treatment)
   const subTreatments =
     SUB_TREATMENT_LIBRARY[treatment.key] || DEFAULT_SUB_TREATMENTS;
   const heroKeyword =
@@ -147,7 +147,7 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
 
       <main className="pb-16">
-        <section className="relative h-[340px] w-full overflow-hidden bg-[#05053c]">
+        <section className="relative h-[340px] w-full overflow-hidden ">
           <div className="absolute inset-0 overflow-hidden">
             {isCancerTreatment ? (
               <video
@@ -164,23 +164,25 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
               <img
                 src={treatment.image}
                 alt={treatment.title}
-                className="absolute inset-0 h-full w-full object-cover opacity-40"
+                className="absolute inset-0 h-full w-full object-cover "
+                // opacity-40
                 loading="lazy"
               />
             ) : null}
           </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/80 via-[#101f67]/80 to-[#0bd3f0]/70" />
+          <div className="absolute inset-0" />
+          {/*  bg-gradient-to-r from-[#020617]/80 via-[#101f67]/80 to-[#0bd3f0]/70 */}
           {!isCancerTreatment && (
             <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col items-center justify-center gap-4 text-center text-white">
-              <p className="text-sm font-semibold uppercase tracking-[0.5em] text-white/70">
+              {/* <p className="text-sm font-semibold uppercase tracking-[0.5em] text-white/70">
                 Save Medha Foundation
-              </p>
-              <h1 className="neon-text text-[120px] font-bold uppercase leading-none">
+              </p> */}
+              {/* <h1 className="neon-text text-[120px] font-bold uppercase leading-none">
                 {heroKeyword}
-              </h1>
-              <p className="text-lg font-semibold uppercase tracking-[0.35em] text-white/80">
+              </h1> */}
+              {/* <p className="text-lg font-semibold uppercase tracking-[0.35em] text-white/80">
                 {treatment.title}
-              </p>
+              </p> */}
             </div>
           )}
         </section>

@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getCancerDetail } from "../data/cancerLearnMore";
 import { TREATMENTS } from "../data/treatments";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 // Load all hero images (1.png, 2.png, etc.)
 const heroModules = import.meta.glob(
@@ -172,26 +173,26 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
-
-      {/* TOP TITLE BAR */}
-      <div
-        className="w-full py-4"
-        style={{ backgroundColor: theme.headerBg, color: theme.headerText }}
-      >
-        <div className="mx-auto max-w-6xl px-6">
-
+  <div className="w-full px-15 bg-[#C425B4] py-2 flex flex-row items-center">
           <button
             onClick={handleBack}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors"
+            className=" inline-flex items-center gap-2 rounded-full border px-5 py-2 text-xs font-semibold uppercase tr transition-colors"
             style={{
               color: theme.headerText,
               borderColor: theme.headerText,
               backgroundColor: "white",
             }}
           >
-            <span>&larr;</span> Back
+            <span><FaArrowCircleLeft size={20}/></span> Back
           </button>
-
+          </div>
+      {/* TOP TITLE BAR */}
+      <div
+        className="w-full py-4"
+        style={{ backgroundColor: theme.headerBg, color: theme.headerText }}
+      >
+        <div className="mx-auto px-6">
+        
           <div className="flex items-center gap-4">
             <p className="text-base font-semibold uppercase tracking-[0.35em]">
               TREATMENT

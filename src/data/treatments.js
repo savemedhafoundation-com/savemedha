@@ -1,5 +1,5 @@
 import cancerImg from "../assets/Photo/cancertreatment.png";
-import kidneyImg from "../assets/Photo/2.jpg";
+import kidneyImg from "../assets/Photo/Kidney_banner.png";
 import heartImg from "../assets/Photo/hearttreatment.png";
 import nerveImg from "../assets/Photo/nervetreatment.png";
 import smaImg from "../assets/Photo/Spinalmuscullaratrophy.png";
