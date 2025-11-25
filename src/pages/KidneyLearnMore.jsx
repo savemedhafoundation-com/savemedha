@@ -8,13 +8,19 @@ import { getKidneyDetail } from "../data/kidneyLearnMore";
 
 const KIDNEY_KEY_ORDER = [
   "chronic-kidney-disease",
-  "dialysis-support",
-  "kidney-stone-care",
-  "renal-hypertension",
-  "transplant-recovery",
-  "urinary-tract-health",
-  "proteinuria-control",
-  "glomerulonephritis-relief",
+  "acute-kidney-injury",
+  "glomerulonephritis",
+  "polycystic-kidney-disease",
+  "kidney-stones",
+  "diabetic-nephropathy",
+  "hypertensive-nephropathy",
+  "lupus-nephritis",
+  "interstitial-nephritis",
+  "renal-cell-carcinoma",
+  "nephrotic-syndrome",
+  "urinary-tract-infections",
+  "minimal-change-disease",
+  "alport-syndrome",
 ];
 
 const byPrefixAndName = {

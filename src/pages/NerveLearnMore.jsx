@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { getNerveDetail } from "../data/nerveLearnMore";
+import { getNerveDetail } from "../components/nerveLearnMore";
 
 const NERVE_KEY_ORDER = [
   "peripheral-neuropathy",

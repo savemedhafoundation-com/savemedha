@@ -104,6 +104,26 @@ const symptomImageModules = {
     eager: true,
     import: "default",
   }),
+  ...import.meta.glob("../assets/Symptoms of Skin Cancer/*.{png,jpg,jpeg,webp,mp4}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/Symptoms of Stomach Cancer/**/*.{png,jpg,jpeg,webp,mp4}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/Symptoms of Throat Cancer/*.{png,jpg,jpeg,webp,mp4}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/Symptoms of Tongue Cancer/*.{png,jpg,jpeg,webp,mp4}", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../assets/Symptoms of  Thyroid Cancer/*.{png,jpg,jpeg,webp,mp4}", {
+    eager: true,
+    import: "default",
+  }),
 };
 
 const symptomImageEntries = Object.entries(symptomImageModules);
@@ -296,6 +316,106 @@ const SYMPTOM_IMAGE_ALIASES = {
   "needing-to-pee-more-frequently": {
     label: "4",
     folder: "Symptoms of Prostate Cancer",
+  },
+  "changes-in-moles-or-skin-lesions": {
+    label: "1",
+    folder: "Symptoms of Skin Cancer",
+  },
+  "unusual-skin-growth": { label: "2", folder: "Symptoms of Skin Cancer" },
+  "sore-that-doesn-t-heal": {
+    label: "3",
+    folder: "Symptoms of Skin Cancer",
+  },
+  itching: { label: "4", folder: "Symptoms of Skin Cancer" },
+  "skin-ulcer": { label: "5", folder: "Symptoms of Skin Cancer" },
+  "spread-of-pigment": { label: "6", folder: "Symptoms of Skin Cancer" },
+  "persistent-sore-throat": {
+    label: "1",
+    folder: "Symptoms of Throat Cancer",
+  },
+  "hoarseness-or-changes-in-voice": {
+    label: "2",
+    folder: "Symptoms of Throat Cancer",
+  },
+  "difficulty-swallowing-throat": {
+    label: "3",
+    folder: "Symptoms of Throat Cancer",
+  },
+  "ear-pain": {
+    label: "4",
+    folder: "Symptoms of Throat Cancer",
+  },
+  "bleeding-from-the-tongue": {
+    label: "1",
+    folder: "Symptoms of Tongue Cancer",
+  },
+  "pain-or-difficulty-swallowing": {
+    label: "2",
+    folder: "Symptoms of Tongue Cancer",
+  },
+  "persistent-bad-breath": {
+    label: "3",
+    folder: "Symptoms of Tongue Cancer",
+  },
+  "a-lump-thickened-patch-or-rough-area-on-the-tongue": {
+    label: "4",
+    folder: "Symptoms of Tongue Cancer",
+  },
+  "abdominal-pain-stomach": {
+    label: "1",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "early-satiety-stomach": {
+    label: "2",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "unintentional-weight-loss-stomach": {
+    label: "3",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "loss-of-appetite-stomach": {
+    label: "4",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "nausea-and-vomiting-stomach": {
+    label: "5",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "difficulty-swallowing-stomach": {
+    label: "6",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "fatigue-stomach": {
+    label: "7",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "feeling-bloated-after-eating-small-amounts-stomach": {
+    label: "8",
+    folder: "Symptoms of Stomach Cancer",
+  },
+  "swollen-lymph-nodes": {
+    label: "1",
+    folder: "Symptoms of  Thyroid Cancer",
+  },
+  "hoarseness-or-voice-changes": {
+    label: "2",
+    folder: "Symptoms of  Thyroid Cancer",
+  },
+  "difficulty-swallowing-thyroid": {
+    label: "3",
+    folder: "Symptoms of  Thyroid Cancer",
+  },
+  "neck-pain-or-sensitivity": {
+    label: "4",
+    folder: "Symptoms of  Thyroid Cancer",
+  },
+  "difficulty-breathing": {
+    label: "5",
+    folder: "Symptoms of  Thyroid Cancer",
+  },
+  "chronic-cough-not-related-to-cold": {
+    label: "6",
+    folder: "Symptoms of  Thyroid Cancer",
   },
 };
 
@@ -567,11 +687,17 @@ export const CANCER_DETAILS = {
     name: "Cervix Cancer",
     heroImage: cervixImg,
     areaDescription: "the cervix and surrounding tissue",
+    descriptionTitle: "What is Cervix Cancer ?",
+    bodyParagraphs: [
+      "Cervical cancer is a growth of cells that starts in the cervix. The cervix is the lower part of the uterus that connects to the vagina.",
+      "Various strains of the human papillomavirus, also called HPV, play a role in causing most cervical cancers. HPV is a common infection that's passed through sexual contact.",
+      "Cervical cancer is the fourth most common cancer in women. In 2022, an estimated 660 000 women were diagnosed with cervical cancer worldwide and about 350 000 women died from the disease.",
+    ],
     quickFacts: [
       "Most cases are linked to persistent HPV infection and immune imbalance.",
       "Regular Pap smears help catch abnormal cells before they progress.",
     ],
-    stats: "Cervical cancer is preventable and highly treatable when detected early.",
+    stats: "Global percentage of Cervix cancer among all types of cancer = 6% to 7%.",
     symptoms: [
       "Abnormal Vaginal Bleeding",
       "Unusual Vaginal Discharge",
@@ -891,19 +1017,28 @@ export const CANCER_DETAILS = {
     name: "Skin Cancer",
     heroImage: skinImg,
     areaDescription: "layers of skin exposed to UV light",
+    descriptionTitle: "What is Skin Cancer ?",
+    bodyParagraphs: [
+      "Skin cancer is a type of cancer that develops in the cells of the skin. It is primarily caused by exposure to ultraviolet (UV) radiation from sunlight or tanning beds, which damages the DNA in skin cells.",
+      "There are three major types of skin cancer — basal cell carcinoma, squamous cell carcinoma and melanoma.",
+      "Skin cancer can spread to nearby tissue or other areas in your body if it’s not caught early. Fortunately, if skin cancer is identified and treated in early stages, most are cured.",
+    ],
     quickFacts: [
       "UV exposure and immune weakness make it easier for skin cells to mutate.",
       "Self-checks for new moles or changes catch issues early.",
     ],
-    stats: "Skin cancer is the most frequently diagnosed cancer worldwide.",
+    stats: "Global percentage of Skin cancer among all types of cancer = 10% to 12%.",
     symptoms: [
-      { label: "New mole" },
-      { label: "Color changes" },
-      { label: "Bleeding lesion" },
-      { label: "Scaling patch" },
-      { label: "Itching" },
-      { label: "Non-healing sore" },
-    ],
+      "Changes in Moles or Skin Lesions",
+      "Unusual Skin Growth",
+      "Sore that Doesn't Heal",
+      "Itching",
+      "Skin Ulcer",
+      "Spread of Pigment",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
     relatedTypes: ["Basal Cell", "Squamous Cell", "Melanoma"],
   }),
   stomach: createDetail({
@@ -915,16 +1050,34 @@ export const CANCER_DETAILS = {
       "Chronic gastritis, H. pylori infection, and salty diets increase risk.",
       "Eating slowly and supporting digestion keeps inflammation low.",
     ],
-    stats: "Stomach cancer remains common in Asia and Eastern Europe.",
-    symptoms: [
-      { label: "Indigestion" },
-      { label: "Bloating" },
-      { label: "Feeling full quickly" },
-      { label: "Vomiting blood" },
-      { label: "Heartburn" },
-      { label: "Weight loss" },
+    bodyParagraphs: [
+      "Stomach cancer, also known as gastric cancer, is a disease where cancerous cells grow uncontrollably in the lining of the stomach.",
+      "When normal cells in the stomach undergo genetic mutations that cause them to grow rapidly and form tumors, stomach cancer develops.",
+      "There are several types of stomach cancer, with the most common being adenocarcinoma, which starts in the glandular cells lining the stomach. Less common types include lymphoma, gastrointestinal stromal tumors (GISTs), and carcinoid tumors.",
     ],
-    relatedTypes: ["Gastric Adenocarcinoma", "GIST"],
+    stats: "Global percentage of Stomach cancer among all types of cancer = 5% to 6%.",
+    symptoms: [
+      { label: "abdominal pain", imgLabel: "abdominal-pain-stomach" },
+      { label: "early satiety", imgLabel: "early-satiety-stomach" },
+      { label: "Unintentional weight loss", imgLabel: "unintentional-weight-loss-stomach" },
+      { label: "Loss of appetite", imgLabel: "loss-of-appetite-stomach" },
+      { label: "Nausea and vomiting", imgLabel: "nausea-and-vomiting-stomach" },
+      { label: "Difficulty swallowing", imgLabel: "difficulty-swallowing-stomach" },
+      { label: "Fatigue", imgLabel: "fatigue-stomach" },
+      {
+        label: "Feeling bloated after eating small amounts",
+        imgLabel: "feeling-bloated-after-eating-small-amounts-stomach",
+      },
+    ].map(({ label, imgLabel }, index) => ({
+      label,
+      img: getSymptomImage(imgLabel || label, index),
+    })),
+    relatedTypes: [
+      "Adenocarcinomas",
+      "Gastrointestinal stromal tumors (GISTs)",
+      "Neuroendocrine tumors",
+      "Lymphoma",
+    ],
   }),
   throat: createDetail({
     key: "throat",
@@ -932,19 +1085,33 @@ export const CANCER_DETAILS = {
     heroImage: throatImg,
     areaDescription: "the pharynx or larynx",
     quickFacts: [
-      "Persistent hoarseness or sore throat longer than 2 weeks needs attention.",
-      "Stopping tobacco/alcohol and boosting immunity reduces recurrence.",
+      "Persistent hoarseness, throat pain, or difficulty swallowing for more than 2 weeks needs attention.",
+      "Cigarette smoke, asbestos, and other carcinogens raise risk; reducing exposure supports prevention.",
     ],
-    stats: "Throat cancers affect roughly 1 in 60 men worldwide.",
+    bodyParagraphs: [
+      "Throat cancer refers to malignant tumors that develop in the tissues of the throat, including the pharynx (which includes the nasopharynx, oropharynx, and hypopharynx) and the larynx (voice box).",
+      "Depending on the specific location within the throat, different types of throat cancer may develop, such as nasopharyngeal cancer, oropharyngeal cancer, hypopharyngeal cancer, and laryngeal cancer.",
+      "These cancers can be more common in people exposed to certain carcinogens, including cigarette smoke and asbestos.",
+    ],
+    stats: "Global percentage of Throat cancer among all types of cancer = 1.5% to 2%.",
     symptoms: [
-      { label: "Hoarseness" },
-      { label: "Throat pain" },
-      { label: "Ear pain" },
-      { label: "Difficulty swallowing" },
-      { label: "Lump in neck" },
-      { label: "Coughing blood" },
+      { label: "Persistent Sore Throat", imgLabel: "persistent-sore-throat" },
+      {
+        label: "Hoarseness or Changes in Voice",
+        imgLabel: "hoarseness-or-changes-in-voice",
+      },
+      { label: "Difficulty Swallowing", imgLabel: "difficulty-swallowing-throat" },
+      { label: "Ear Pain", imgLabel: "ear-pain" },
+    ].map(({ label, imgLabel }, index) => ({
+      label,
+      img: getSymptomImage(imgLabel || label, index),
+    })),
+    relatedTypes: [
+      "Nasopharyngeal",
+      "Oropharyngeal",
+      "Hypopharyngeal",
+      "Laryngeal",
     ],
-    relatedTypes: ["Pharyngeal", "Laryngeal", "HPV-related"],
   }),
   thyroid: createDetail({
     key: "thyroid",
@@ -955,16 +1122,29 @@ export const CANCER_DETAILS = {
       "Most thyroid cancers are highly treatable with excellent survival rates.",
       "Radiation exposure and iodine imbalance can trigger abnormal growth.",
     ],
-    stats: "Thyroid cancer is the fastest-growing cancer diagnosis among women.",
-    symptoms: [
-      { label: "Neck lump" },
-      { label: "Voice change" },
-      { label: "Swallowing issues" },
-      { label: "Throat tightness" },
-      { label: "Neck swelling" },
-      { label: "Cough" },
+    bodyParagraphs: [
+      "Thyroid cancer is a growth of cells that starts in the thyroid. The thyroid is a butterfly-shaped gland located at the base of the neck, just below the Adam's apple.",
+      "The thyroid produces hormones that regulate heart rate, blood pressure, body temperature and weight.",
+      "Several types of thyroid cancer exist. Most types grow slowly, though some types can be very aggressive.",
     ],
-    relatedTypes: ["Papillary", "Follicular", "Medullary", "Anaplastic"],
+    stats: "Global percentage of Thyroid cancer among all types of cancer = 1.5% to 2%.",
+    symptoms: [
+      { label: "Swollen Lymph Nodes" },
+      { label: "Hoarseness or Voice Changes" },
+      { label: "Difficulty Swallowing", imgLabel: "difficulty-swallowing-thyroid" },
+      { label: "Neck Pain or Sensitivity" },
+      { label: "Difficulty breathing" },
+      { label: "Chronic cough not related to cold" },
+    ].map(({ label, imgLabel }, index) => ({
+      label,
+      img: getSymptomImage(imgLabel || label, index),
+    })),
+    relatedTypes: [
+      "Papillary Thyroid Cancer (PTC)",
+      "Follicular Thyroid Cancer (FTC)",
+      "Medullary Thyroid Cancer (MTC)",
+      "Anaplastic Thyroid Cancer (ATC)",
+    ],
   }),
   tongue: createDetail({
     key: "tongue",
@@ -975,16 +1155,30 @@ export const CANCER_DETAILS = {
       "HPV, tobacco, and alcohol exposure raise risk.",
       "Speech therapy and nutrition support swallowing during care.",
     ],
-    stats: "Tongue cancer is a subset of oral cancers but needs specialized rehab plans.",
-    symptoms: [
-      { label: "Tongue sore" },
-      { label: "Burning sensation" },
-      { label: "Bleeding" },
-      { label: "Earache" },
-      { label: "Numbness" },
-      { label: "Difficulty chewing" },
+    bodyParagraphs: [
+      "Tongue cancer is a type of cancer that starts as a growth of cells on the tongue. The tongue begins in the throat and extends into the mouth. It's made up of muscles and nerves that help with movement and function, such as taste. The tongue aids in speaking, eating and swallowing.",
+      "When normal cells in the stomach undergo genetic mutations that cause them to grow rapidly and form tumors, stomach cancer develops.",
+      "There are several types of stomach cancer, with the most common being adenocarcinoma, which starts in the glandular cells lining the stomach. Less common types include lymphoma, gastrointestinal stromal tumors (GISTs), and carcinoid tumors.",
     ],
-    relatedTypes: ["Anterior tongue", "Base of tongue"],
+    stats: "Global percentage of Tongue cancer among all types of cancer = approximately 1%.",
+    symptoms: [
+      "Bleeding from the tongue",
+      "Pain or Difficulty Swallowing",
+      "Persistent Bad Breath",
+      "A lump, thickened patch, or rough area on the tongue",
+    ].map((label, index) => ({
+      label,
+      img: getSymptomImage(label, index),
+    })),
+    relatedTypes: [
+      "Squamous Cell Carcinoma (SCC)",
+      "Verrucous Carcinoma",
+      "Adenocarcinoma",
+      "Lymphoma",
+      "Sarcoma",
+      "Oral Melanoma",
+      "Neuroendocrine Tumors",
+    ],
   }),
 };
 

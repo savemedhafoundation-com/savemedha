@@ -309,33 +309,51 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
           <h2 className="font-koho text-3xl font-bold mb-10">SYMPTOMS</h2>
 
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
-            {detail.symptoms.map((sym) => (
-              <div key={sym.label} className="group text-center">
-                {sym.img ? (
-                  <img
-                    src={sym.img}
-                    alt={sym.label}
-                    className="mx-auto h-50 w-50 rounded-full object-cover transition-transform group-hover:scale-110"
-                  />
-                ) : (
-                  <div
-                    className="mx-auto flex h-32 w-32 items-center justify-center rounded-full text-base font-semibold transition-transform group-hover:scale-110"
-                    style={{
-                      backgroundColor: theme.symptomBubbleBg,
-                      color: theme.symptomBubbleText,
-                    }}
+            {detail.symptoms.map((sym) => {
+              const isVideo =
+                typeof sym.img === "string" &&
+                sym.img.toLowerCase().includes(".mp4");
+
+              return (
+                <div key={sym.label} className="group text-center">
+                  {sym.img ? (
+                    isVideo ? (
+                      <video
+                        src={sym.img}
+                        title={sym.label}
+                        className="mx-auto h-50 w-50 rounded-full object-cover transition-transform group-hover:scale-110"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={sym.img}
+                        alt={sym.label}
+                        className="mx-auto h-50 w-50 rounded-full object-cover transition-transform group-hover:scale-110"
+                      />
+                    )
+                  ) : (
+                    <div
+                      className="mx-auto flex h-32 w-32 items-center justify-center rounded-full text-base font-semibold transition-transform group-hover:scale-110"
+                      style={{
+                        backgroundColor: theme.symptomBubbleBg,
+                        color: theme.symptomBubbleText,
+                      }}
+                    >
+                      {sym.label}
+                    </div>
+                  )}
+                  <p
+                    className="mt-4 text-xl font-semibold transition-colors group-hover:opacity-80"
+                    style={{ color: theme.symptomLabelColor }}
                   >
                     {sym.label}
-                  </div>
-                )}
-                <p
-                  className="mt-4 text-xl font-semibold transition-colors group-hover:opacity-80"
-                  style={{ color: theme.symptomLabelColor }}
-                >
-                  {sym.label}
-                </p>
-              </div>
-            ))}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
