@@ -5,6 +5,11 @@ import Navbar from "../components/Navbar";
 import { ImLocation } from "react-icons/im";
 import { GoPin } from "react-icons/go";
 import Footer from "../components/Footer";
+import contact_image from "../assets/photo/contact image.png"
+import contact_call from "../assets/photo/contact_call.png"
+import { MdEmail } from "react-icons/md";
+import { MdPeopleAlt } from "react-icons/md";
+import { FaLinkedin } from "react-icons/fa";
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {
@@ -229,19 +234,24 @@ export default function LocateUs({ onNavigate }) {
           </div>
 
           {/* Query Form Section */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">
-              Having a query? fill this form
+          <div  style={{ backgroundImage: `url(${contact_image})` }} className="bg-cover rounded-2xl shadow-2xl p-8 md:p-12 max-w-8xl mx-auto bg-cover bg-center relative">
+             <div  className="absolute rounded-2xl"></div>
+            <div className="relative z-10 max-w-7xl mx-auto"> 
+            <h2 className="text-[48px] font-normal  leading-[100%] tracking-[0] md:text-4xl font-thick text-center text-[#57A30B] mb-2">
+              #have questions?
+            </h2>
+            <h2 className="text-center text-[#020202] text-[60px] font-mormal leading-[100%] tracking-[0] mb-5">
+              Fill this Form 
             </h2>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="grid md:grid-cols-[2fr_1fr] gap-8 items-start">
               {/* Left: Illustrations */}
-              <div className="flex flex-col items-center gap-6  rounded-2xl p-20 mt-12">
+              {/* <div className="flex flex-col items-center gap-6  rounded-2xl p-20 mt-12">
                 <img
                   src="src\assets\contact us\1.jpg"
                   alt="Contact illustration"
                   className="min-w-70 min-h-70 object-contain"
-                />
+                /> */}
                 {/* <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl py-4 px-10 rounded-full shadow-lg transition transform hover:scale-105">
                   CONTACT US
                 </button> */}
@@ -271,20 +281,20 @@ export default function LocateUs({ onNavigate }) {
                     <FaYoutube size={24} />
                   </a>
                 </div> */}
-              </div>
+              {/* </div> */}
 
-              {/* Right: Contact Form */}
-              <form className="space-y-6">
+              {/* Left: Contact Form */}
+              <form className="space-y-6 bg-[#fbf5fc] py-8 px-30 rounded-2xl">
                 <div className="grid grid-cols-2 gap-4">
                   <input
                     type="text"
-                    placeholder="First"
-                    className="border-b-2 border-gray-300 focus:border-green-600 px-2 py-3 outline-none text-gray-700"
+                    placeholder="First Name"
+                    className="border-2 border-gray-300 focus:border-green-600 px-2 py-3 outline-none text-gray-700 rounded" 
                   />
                   <input
                     type="text"
-                    placeholder="Last"
-                    className="border-b-2 border-gray-300 focus:border-green-600 px-2 py-3 outline-none text-gray-700"
+                    placeholder="Last Name"
+                    className="border-2 border-gray-300 focus:border-green-600 px-2 py-3 outline-none text-gray-700 rounded"
                   />
                 </div>
 
@@ -304,7 +314,7 @@ export default function LocateUs({ onNavigate }) {
                   </div>
                   <button
                     type="button"
-                    className="mt-3 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded transition"
+                    className="mt-3 bg-gradient-to-r from-[#59961C] to-[#74C425] hover:shadow-xl text-white font-semibold py-2 px-6 rounded transition transform hover:scale-105"
                   >
                     Verify Mobile
                   </button>
@@ -317,7 +327,7 @@ export default function LocateUs({ onNavigate }) {
                   <input
                     type="email"
                     required
-                    placeholder="your@email.com"
+                    placeholder="Enter your email"
                     className="w-full border border-gray-300 rounded px-4 py-3 outline-none focus:border-green-600"
                   />
                 </div>
@@ -333,16 +343,46 @@ export default function LocateUs({ onNavigate }) {
                   />
                 </div>
 
-                <div className="text-center">
+                <div className="text-left">
                   <button
                     type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white font-bold text-lg py-4 px-12 rounded-full shadow-lg transition transform hover:scale-105"
+                    className="bg-gradient-to-r from-[#59961C] to-[#74C425] hover:shadow-xl text-white font-bold text-lg py-4 px-12 rounded shadow-lg transition transform hover:scale-105"
                   >
                     Submit
                   </button>
                 </div>
               </form>
+
+                {/* Right */}
+                      <div className="bg-gradient-to-b from-[#74C425] to-[#385E12] text-white rounded-2xl p-10 text-center space-y-8 shadow-xl h-full pt-10 relative">
+                        <img src={contact_call} className="absolute h-[180px] w-[200px] top-[-150px] right-[70px]"></img>
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-4xl"><MdEmail /></div>
+          <p className="text-xl font-semibold">Let’s Call or Email</p>
+          <p className="text-lg font-normal">+91 9800808595</p>
+          <p className="text-lg font-normal">savemedhafoundation@gmail.com</p>
+        </div>
+
+        <hr className="border-white/30" />
+
+        <div className="flex flex-col items-center gap-2">
+          <div className="text-4xl"><MdPeopleAlt /></div>
+          <p className="text-xl font-semibold">Be Our Creative Team</p>
+          <p className="text-lg font-normal">+91 9800808595</p>
+          <p className="text-lg font-normal">savemedhafoundation@gmail.com</p>
+        </div>
+
+        <hr className="border-white/30" />
+
+        <div className="flex flex-col items-center gap-2">
+          <div className="bg-white text-green-700 rounded-full p-3 text-2xl"><FaLinkedin /></div>
+          <p className="text-xl font-semibold">Let’s Talk To Us</p>
+          <p className="text-lg font-normal">Save Medha Foundation</p>
+        </div>
+      </div>
+          
             </div>
+          </div>
           </div>
         </div>
       </div>

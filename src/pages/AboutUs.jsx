@@ -7,6 +7,8 @@ import IsoLogo from '../assets/Photo/Logo ISO_9001.png';
 import HalalLogo from '../assets/Photo/Halal logo.png';
 import AiaoBarLogo from '../assets/Photo/AIAO BAR.jpg';
 import CertifiedLogo from '../assets/Photo/certified.png';
+import { IoPeopleSharp } from "react-icons/io5";
+import { useEffect, useRef, useState } from 'react';
 
 const highlightText = [
   "Medha was a vibrant, spirited 14-year-old girl from Nator, Bangladesh, who had a rare gift, as she lit up every room she entered with her innocent smile and boundless curiosity. A dreamer with an artist's heart, her life was filled with joy, school, friends, and laughter until her world was abruptly changed by a diagnosis of blood cancer. What followed was a painful journey of hospital stays, rigorous chemotherapy, and unimaginable struggle. Despite the physical pain that weighed heavy in her deep, soulful eyes, Medha chose to smile - her light refusing to dim. Support for her battle came from near and far, touching hearts across the world. Renowned figures like Ratan Tata and Sonu Sood, Salman Khan, known for their generosity, extended their aid. But the disease took its toll, and Medha, despite all the love and efforts surrounding her, took her last breath, leaving behind a void that words could never fill.",
@@ -70,7 +72,94 @@ const certificationBadges = [
   },
 ];
 
-const skylineHeights = [28, 52, 36, 64, 44, 58, 32, 48, 40, 54];
+const 
+skylineHeights = [28, 52, 36, 64, 44, 58, 32, 48, 40, 54];
+
+
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+  const [cityCount, setCityCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const countRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (isVisible && count < 300) {
+      const interval = setInterval(() => {
+        setCount((prev) => prev + 1);
+      }, 25); // speed of counting
+      return () => clearInterval(interval);
+    }
+  }, [isVisible, count]);
+
+  useEffect(() => {
+    if (isVisible && cityCount < 6) {
+      const interval = setInterval(() => {
+        setCityCount((prev) => prev + 1);
+      }, 1400); // speed of counting
+      return () => clearInterval(interval);
+    }
+  }, [isVisible, cityCount]);
+
+  return (
+    <div ref={countRef} className="flex flex-row gap-25 items-start justify-center">
+      {/* Cities */}
+       <div className="text-center space-y-4">
+                      <p className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-600">
+                        Present In
+                      </p>
+                      <div className="flex flex-col items-center justify-center">
+                        <span className="text-5xl md:text-6xl font-bold text-[#74C425]">{cityCount}+</span>
+                        <span className="text-lg font-semibold text-gray-600">Cities</span>
+                      </div>
+                      <div className="mt-6 flex items-end justify-center gap-1 text-[#74C425]">
+                        {skylineHeights.map((height, idx) => (
+                          <span
+                            key={idx}
+                            className="w-4 rounded-t-md bg-gradient-to-t from-[#74C425] via-[#6ab020] to-[#e8f6e0]"
+                            style={{ height }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+      {/* Members */}
+       <div className="text-center space-y-4 max-w-[200px]">
+                      <p className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-600">
+                        We Are
+                      </p>
+                      <div className="flex flex-col items-center justify-center">
+                        <span className="text-5xl md:text-6xl font-bold text-[#74C425]">{count}+</span>
+                        <span className="text-lg font-semibold text-gray-600">Members</span>
+                      </div>
+                      <div className="mt-12 flex items-center justify-center gap-[-0.5rem] text-gray-300">
+                       <IoPeopleSharp  size={40}/>
+                       <IoPeopleSharp  size={40}/>
+                       <IoPeopleSharp  size={40}/>
+                      </div>
+                    </div>
+    </div>
+  );
+};
+
+
 
 export default function AboutUs({ onNavigate }) {
   return (
@@ -162,44 +251,11 @@ export default function AboutUs({ onNavigate }) {
               </h3>
               <div className="relative mt-10 flex justify-center">
                 <div className="relative w-full max-w-5xl rounded-[45px] bg-white border border-dashed border-gray-200 shadow-2xl overflow-hidden">
-                  <div className="grid gap-12 md:grid-cols-2 px-10 py-12">
-                    <div className="text-center space-y-4">
-                      <p className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-600">
-                        Present In
-                      </p>
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-5xl md:text-6xl font-bold text-[#74C425]">6</span>
-                        <span className="text-lg font-semibold text-gray-600">Cities</span>
-                      </div>
-                      <div className="mt-6 flex items-end justify-center gap-1 text-[#74C425]">
-                        {skylineHeights.map((height, idx) => (
-                          <span
-                            key={idx}
-                            className="w-4 rounded-t-md bg-gradient-to-t from-[#74C425] via-[#6ab020] to-[#e8f6e0]"
-                            style={{ height }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="text-center space-y-4">
-                      <p className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-600">
-                        We Are
-                      </p>
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-5xl md:text-6xl font-bold text-[#74C425]">200+</span>
-                        <span className="text-lg font-semibold text-gray-600">Members</span>
-                      </div>
-                      <div className="mt-6 flex items-center justify-center gap-3 text-gray-300">
-                        {Array.from({ length: 10 }).map((_, idx) => (
-                          <span
-                            key={idx}
-                            className="h-10 w-10 rounded-full border border-gray-200 bg-gray-100"
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                  
+                   
+                    <Counter/>
+                  
+                  
 
                   <div className="border-t border-dashed border-gray-200 bg-[#f7faf6] px-8 py-8">
                     <div className="flex flex-wrap items-center justify-center gap-6">

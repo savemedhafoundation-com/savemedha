@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 import { getCancerDetail } from "../data/cancerLearnMore";
 import { TREATMENTS } from "../data/treatments";
 import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 // Load all hero images (1.png, 2.png, etc.)
 const heroModules = import.meta.glob(
@@ -83,7 +84,7 @@ const getCancerTheme = () => ({
   ctaText: "#ffffff",
   symptomBubbleBg: "#F6D0FC",
   symptomBubbleText: "#C425B4",
-  symptomLabelColor: "#2f1230",
+  symptomLabelColor: "#C425B4",
   symptomLabelHover: "#C425B4",
   gradientTo: "#FCEBFF",
   divider: "#C425B4",
@@ -188,24 +189,24 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
           </div>
       {/* TOP TITLE BAR */}
       <div
-        className="w-full py-4"
+        className="w-full py-3"
         style={{ backgroundColor: theme.headerBg, color: theme.headerText }}
       >
-        <div className="mx-auto px-6">
+        <div className="mx-auto px-16">
         
-          <div className="flex items-center gap-4">
-            <p className="text-base font-semibold uppercase tracking-[0.35em]">
+          <div className="flex items-center gap-2">
+            <p className="text-base font-semibold uppercase tracking-[0.20em] text-[#050505]">
               TREATMENT
             </p>
             <IoIosArrowForward className="text-lg" />
             <p
-              className="text-base font-semibold uppercase tracking-[0.2em]"
+              className="text-base font-semibold uppercase tracking-[0.20em]"
               style={{ color: theme.headerAccent }}
             >
               {detail.name}
             </p>
             <IoIosArrowForward className="text-lg" />
-            <p className="text-base font-semibold uppercase tracking-[0.35em]">
+            <p className="text-base font-semibold uppercase tracking-[0.20em]">
               Learn More
             </p>
           </div>
@@ -214,20 +215,20 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
 
       {/* MAIN SECTION */}
       <section
-        className="w-full py-2"
+        className="w-full py-10"
         style={{ backgroundColor: theme.primaryBg }}
       >
-        <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-6 px-6">
+        <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10 px-6">
 
           {/* IMAGE + Cure Box */}
-          <div className="flex flex-col">
-            <div>
-              <img src={heroSrc} alt={detail.name} className="h-99 w-full object-cover" />
+          <div className="flex flex-col p-5">
+            <div className="shadow-lg">
+              <img src={heroSrc} alt={detail.name} className="h-99 w-full object-cover rounded-tl-[18px] rounded-tr-[18px]" />
             </div>
 
             <div
-              className="px-4 py-8 w-full"
-              style={{ backgroundColor: theme.cardBg }}
+              className="px-6 py-12 w-full bg-white text-left shadow-lg rounded-bl-[18px] rounded-br-[18px] min-h-[170px]"
+              // style={{ backgroundColor: theme.cardBg }}
             >
               <p
                 className="text-xs uppercase tracking-[0.35em]"
@@ -246,23 +247,23 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
 
           {/* RIGHT CONTENT */}
           <div
-            className="self-start -mt-3"
+            className="self-start -mt-3 p-5"
             style={{ color: theme.primaryText }}
           >
 
-            <h2 className="font-koho text-[32px] font-bold">
+            <h2 className="font-koho text-[32px] font-bold mb-4">
               {detail.descriptionTitle}
             </h2>
 
             <blockquote
-              className="italic text-lg mb-2 leading-relaxed"
+              className="italic text-lg mb-4 leading-relaxed font-bold"
               style={{ color: theme.quoteText }}
             >
               {detail.heroQuote}
             </blockquote>
 
             <div
-              className="space-y-4 text-[16px] leading-relaxed tracking-wide"
+              className="space-y-4 text-[16px] leading-relaxed tracking-wide font-semibold"
               style={{ color: theme.bodyText }}
             >
               {detail.bodyParagraphs.map((p, i) => (
@@ -297,7 +298,8 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
                 color: theme.ctaText,
               }}
             >
-              <FontAwesomeIcon icon={byPrefixAndName.far["globe-pointer"]} />
+              {/* <FontAwesomeIcon icon={byPrefixAndName.far["globe-pointer"]} /> */}
+              <img src="src\assets\Photo\start_natural_immuno.png" alt="start natural immunotherapy"  className="h-12 w-12"></img>
               Start Natural Immunotherapy
             </a>
           </div>
@@ -307,8 +309,8 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
       {/* SYMPTOMS */}
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-6xl px-6 text-center">
-          <h2 className="font-koho text-3xl font-bold mb-10">SYMPTOMS</h2>
-
+          <h2 className="font-koho text-3xl font-bold mb-10 relative">SYMPTOMS</h2>
+              <div className="absolute bottom-[-220px] left-1/2 transform -translate-x-1/2 w-30 h-1 bg-[#C425B4]"></div>
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {detail.symptoms.map((sym) => {
               const isVideo =
@@ -322,7 +324,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
                       <video
                         src={sym.img}
                         title={sym.label}
-                        className="mx-auto h-50 w-50 rounded-full object-cover transition-transform group-hover:scale-110"
+                        className="mx-auto h-50 w-50 rounded-full object-cover transition-transform group-hover:scale-110 border-4  border-[#FCEBFF]"
                         autoPlay
                         loop
                         muted
@@ -332,7 +334,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
                       <img
                         src={sym.img}
                         alt={sym.label}
-                        className="mx-auto h-50 w-50 rounded-full object-cover transition-transform group-hover:scale-110"
+                        className="mx-auto h-50 w-50 rounded-full object-cover transition-transform group-hover:scale-110 border-4 border-[#eebaf7]"
                       />
                     )
                   ) : (
@@ -361,15 +363,12 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
 
       {/* RELATED TYPES */}
       <section
-        className="py-16"
-        style={{
-          background: `linear-gradient(to bottom, #ffffff, ${theme.gradientTo})`,
-        }}
+        className="py-16 px-10 "
       >
         <div className="px-6 text-center">
           <h2 className="text-3xl font-bold">TYPES OF CANCER</h2>
           <div
-            className="mx-auto mt-2 mb-8 h-[2px] w-32"
+            className="mx-auto mt-2 mb-8 h-1 w-30 bg-[#74C425]"
             style={{ backgroundColor: theme.divider }}
           />
 
@@ -386,7 +385,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
                 opacity: prevKey ? 1 : 0.5,
               }}
             >
-              &larr; Prev
+               <span><FaArrowCircleLeft size={20}/></span> Prev
             </button>
 
             <button
@@ -401,11 +400,11 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
                 opacity: nextKey ? 1 : 0.5,
               }}
             >
-              Next &rarr;
+              Next <FaArrowCircleRight size={20}/>
             </button>
           </div>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-15">
+          <div className="mt-10 flex flex-wrap justify-center gap-10">
             {detail.relatedTypes.map((t, index) => {
               const bgColors = theme.badgeColors ?? ["#74C425", "#74C425", "#74C425"];
               const shadowColors =
