@@ -142,6 +142,39 @@ button, .btn {
   }
 }
 
+.kidney-banner-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.1em;
+}
+
+.kidney-letter {
+  opacity: 0;
+  transform: translateY(26px) scale(0.88);
+  animation: kidneyLetterPop 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-play-state: paused;
+}
+
+.kidney-letter.animate,
+.kidney-banner-container.animate .kidney-letter {
+  animation-play-state: running;
+}
+
+@keyframes kidneyLetterPop {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.88);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 
 
 :root {

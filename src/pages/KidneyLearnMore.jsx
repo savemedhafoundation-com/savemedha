@@ -1,4 +1,7 @@
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleRight } from "react-icons/fa";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
@@ -9,6 +12,12 @@ import {
   DIABETIC_NEPHROPATHY_SYMPTOM_MEDIA,
   KIDNEY_STONE_SYMPTOM_MEDIA,
   GLOMERULONEPHRITIS_SYMPTOM_MEDIA,
+  HYPERTENSIVE_NEPHROPATHY_SYMPTOM_MEDIA,
+  LUPUS_NEPHROPATHY_SYMPTOM_MEDIA,
+  INTERSTITIAL_NEPHRITIS_SYMPTOM_MEDIA,
+  RENAL_CELL_CARCINOMA_SYMPTOM_MEDIA,
+  NEPHROTIC_SYNDROME_SYMPTOM_MEDIA,
+  UTI_SYMPTOM_MEDIA,
 } from "../data/kidneyLearnMore";
 import { TREATMENTS } from "../data/treatments";
 
@@ -100,6 +109,12 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
     "diabetic-nephropathy": DIABETIC_NEPHROPATHY_SYMPTOM_MEDIA,
     "kidney-stones": KIDNEY_STONE_SYMPTOM_MEDIA,
     glomerulonephritis: GLOMERULONEPHRITIS_SYMPTOM_MEDIA,
+    "hypertensive-nephropathy": HYPERTENSIVE_NEPHROPATHY_SYMPTOM_MEDIA,
+    "lupus-nephritis": LUPUS_NEPHROPATHY_SYMPTOM_MEDIA,
+    "interstitial-nephritis": INTERSTITIAL_NEPHRITIS_SYMPTOM_MEDIA,
+    "renal-cell-carcinoma": RENAL_CELL_CARCINOMA_SYMPTOM_MEDIA,
+    "nephrotic-syndrome": NEPHROTIC_SYNDROME_SYMPTOM_MEDIA,
+    "urinary-tract-infections": UTI_SYMPTOM_MEDIA,
   };
 
   if (!detail) return null;
@@ -113,11 +128,9 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
           <button
             type="button"
             onClick={handleBack}
-            className="inline-flex items-center gap-3 self-start rounded-full border border-white bg-[#ffffff] px-5 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-[#7c2f22] transition hover:bg-blue"
+            className="inline-flex items-center gap-3 self-start rounded-full border border-white bg-[#ffffff] px-5 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-[#7c2f22] transition cursor-pointer"
           >
-            <span className="flex h-6 w-6 items-center justify-center rounded-full ">
-              <IoIosArrowBack className="text-lg " />
-            </span>
+             <span><FaArrowCircleLeft size={20}/></span> 
             Back
           </button>
         </div>
@@ -220,7 +233,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
                       <video
                         src={mediaSrc}
                         title={sym.label}
-                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover  transition-transform duration-300 group-hover:scale-110"
+                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover  transition-transform duration-300 group-hover:scale-110 "
                         style={{ animationDelay: `${index * 0.1}s` }}
                         autoPlay
                         loop
@@ -231,7 +244,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
                       <img
                         src={mediaSrc}
                         alt={sym.label}
-                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover  transition-transform duration-300 group-hover:scale-110"
+                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover  transition-transform duration-300 group-hover:scale-110 border-4 border-[#f7d0cc]"
                         style={{ animationDelay: `${index * 0.1}s` }}
                       />
                     )

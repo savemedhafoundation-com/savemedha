@@ -48,6 +48,54 @@ const glomeruloSymptomImageModules = import.meta.glob(
   }
 );
 
+const hypertensiveSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of Hypertensive Nephropathy/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+const lupusNephritisSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of Lupus Nephritis/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+const interstitialNephritisSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of Interstitial Nephritis/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+const renalCellCarcinomaSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of Renal Cell Carcinoma/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+const nephroticSyndromeSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of Nephrotic Syndrome/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+const utiSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of UTIs/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
 const sortMediaEntries = (pathA, pathB) =>
   pathA.localeCompare(pathB, undefined, { numeric: true, sensitivity: "base" });
 
@@ -78,6 +126,40 @@ export const KIDNEY_STONE_SYMPTOM_MEDIA = Object.entries(
 export const GLOMERULONEPHRITIS_SYMPTOM_MEDIA = Object.entries(
   glomeruloSymptomImageModules
 )
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const HYPERTENSIVE_NEPHROPATHY_SYMPTOM_MEDIA = Object.entries(
+  hypertensiveSymptomImageModules
+)
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const LUPUS_NEPHROPATHY_SYMPTOM_MEDIA = Object.entries(
+  lupusNephritisSymptomImageModules
+)
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const INTERSTITIAL_NEPHRITIS_SYMPTOM_MEDIA = Object.entries(
+  interstitialNephritisSymptomImageModules
+)
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const RENAL_CELL_CARCINOMA_SYMPTOM_MEDIA = Object.entries(
+  renalCellCarcinomaSymptomImageModules
+)
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const NEPHROTIC_SYNDROME_SYMPTOM_MEDIA = Object.entries(
+  nephroticSyndromeSymptomImageModules
+)
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const UTI_SYMPTOM_MEDIA = Object.entries(utiSymptomImageModules)
   .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
   .map(([, value]) => value);
 
@@ -156,6 +238,104 @@ const buildKidneyStoneSymptoms = () =>
   KIDNEY_STONE_SYMPTOM_LABELS.map((label, index) => ({
     label,
     img: KIDNEY_STONE_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const HYPERTENSIVE_SYMPTOM_LABELS = [
+  "Protein in the urine, leading to foamy urine (proteinuria)",
+  "Swelling in the legs, ankles, feet, or face from fluid retention",
+  "High blood pressure that becomes harder to control",
+  "Headaches, dizziness, or visual disturbances",
+  "Nausea, vomiting, or loss of appetite in advanced stages",
+  "Unexplained weight gain due to fluid buildup",
+  "Fatigue and weakness",
+  "Chest pain or shortness of breath",
+];
+
+const buildHypertensiveNephropathySymptoms = () =>
+  HYPERTENSIVE_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: HYPERTENSIVE_NEPHROPATHY_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const LUPUS_NEPHROPATHY_SYMPTOM_LABELS = [
+  "Foamy urine due to excess protein (proteinuria)",
+  "Swelling in the legs, ankles, feet, or face due to fluid retention",
+  "High blood pressure",
+  "Joint pain and stiffness",
+  "Nausea, vomiting, or loss of appetite in advanced stages",
+  "Breathing issues",
+  "Shortness of breath from fluid around the lungs",
+  "Confusion or difficulty concentrating in severe cases",
+];
+
+const buildLupusNephritisSymptoms = () =>
+  LUPUS_NEPHROPATHY_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: LUPUS_NEPHROPATHY_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const INTERSTITIAL_NEPHRITIS_SYMPTOM_LABELS = [
+  "Decreased urine output or difficulty urinating",
+  "Swelling in the legs, ankles, feet, or face due to fluid retention",
+  "Fever or rash, especially when triggered by an allergic reaction",
+  "Fatigue and weakness",
+  "Nausea, vomiting, or loss of appetite in advanced stages",
+  "Confusion or mental fatigue from toxin buildup in severe cases",
+];
+
+const buildInterstitialNephritisSymptoms = () =>
+  INTERSTITIAL_NEPHRITIS_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: INTERSTITIAL_NEPHRITIS_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const RENAL_CELL_CARCINOMA_SYMPTOM_LABELS = [
+  "Blood in the urine (hematuria)",
+  "Persistent pain in the side or lower back",
+  "Fever",
+  "Fatigue and weakness",
+  "Unexplained weight loss",
+  "Lump or mass in the abdomen or side",
+  "High blood pressure",
+  "Cough or difficulty breathing",
+];
+
+const buildRenalCellCarcinomaSymptoms = () =>
+  RENAL_CELL_CARCINOMA_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: RENAL_CELL_CARCINOMA_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const NEPHROTIC_SYNDROME_SYMPTOM_LABELS = [
+  "Severe swelling (edema)",
+  "Foamy urine",
+  "Weight gain",
+  "Fatigue",
+  "Loss of appetite",
+  "Increased risk of infections",
+  "Blood clots",
+  "High cholesterol & triglycerides",
+];
+
+const buildNephroticSyndromeSymptoms = () =>
+  NEPHROTIC_SYNDROME_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: NEPHROTIC_SYNDROME_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const UTI_SYMPTOM_LABELS = [
+  "Burning sensation during urination (dysuria)",
+  "Frequent urge to urinate",
+  "Cloudy or strong-smelling urine",
+  "Blood in the urine (hematuria)",
+  "Lower abdominal discomfort or pain",
+  "Fever or chills",
+];
+
+const buildUtiSymptoms = () =>
+  UTI_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: UTI_SYMPTOM_MEDIA[index] ?? null,
   }));
 
 const DIABETIC_NEPHROPATHY_SYMPTOM_LABELS = [
@@ -272,7 +452,7 @@ export const KIDNEY_DETAILS = {
   }),
   glomerulonephritis: createDetail({
     key: "glomerulonephritis",
-    name: "Glomerulonephritis",
+    name: "Glomerulo nephritis",
     areaDescription: "the glomerulitiny filters inside each kidney",
     heroQuote:
       '" Glomerulonephritis is a condition characterized by inflammation of the glomeruli, the tiny filters in your kidneys responsible for removing waste and excess fluid from the blood."',
@@ -347,104 +527,120 @@ export const KIDNEY_DETAILS = {
     key: "hypertensive-nephropathy",
     name: "Hypertensive Nephropathy",
     areaDescription: "kidney vessels stressed by high blood pressure",
+    heroQuote:
+      '"Hypertensive Nephropathy, also known as hypertensive kidney disease, is a condition caused by chronic high blood pressure damaging the small blood vessels and tissues of the kidneys."',
+    bodyParagraphs: [
+      "Hypertensive nephropathy develops when persistently high blood pressure damages the kidney\'s delicate vessels and filtering tissues. This reduces their ability to clear waste, balance fluids, and regulate blood pressure.",
+      "It is one of the leading causes of chronic kidney disease (CKD) and end-stage renal disease (ESRD) worldwide. Poorly controlled hypertension, diabetes, obesity, and genetic predisposition all increase the risk and speed of progression.",
+      "Monitoring blood pressure closely, taking prescribed medications, and making lifestyle adjustments—such as reducing sodium, exercising regularly, and limiting stress—can slow kidney damage and protect long-term function.",
+    ],
+    stats:
+      "Hypertensive nephropathy ranks among the top global causes of CKD and ESRD, making blood pressure control essential for kidney preservation.",
     quickFacts: [
-      "Chronic high pressure scars kidney vessels and reduces filtration.",
-      "Salt moderation, movement, and stress relief lower strain on nephrons.",
+      "Chronic hypertension scars and stiffens kidney vessels, reducing filtration capacity.",
+      "Risk rises when blood pressure is poorly controlled or compounded by diabetes or obesity.",
     ],
-    symptoms: [
-      { label: "High blood pressure" },
-      { label: "Headaches" },
-      { label: "Swelling" },
-      { label: "Fatigue" },
-      { label: "Foamy urine" },
-      { label: "Shortness of breath" },
-    ],
+    symptoms: buildHypertensiveNephropathySymptoms(),
   }),
   "lupus-nephritis": createDetail({
     key: "lupus-nephritis",
     name: "Lupus Nephritis",
     areaDescription: "autoimmune inflammation of kidney filters",
+    heroQuote:
+      '"Lupus nephritis is a serious complication of systemic lupus erythematosus (SLE), an autoimmune disease where the body\'s immune system mistakenly attacks its own tissues."',
     quickFacts: [
-      "Lupus can inflame glomeruli; immune calming and kidney protection go together.",
-      "Sun safety, medication adherence, and nutrition help reduce flares.",
+      "Autoimmune antibodies inflame the glomeruli, leading to protein loss, swelling, and rising blood pressure.",
+      "Coordinated nephrology and rheumatology care, medication adherence, and trigger awareness help reduce flares.",
     ],
-    symptoms: [
-      { label: "Foamy urine" },
-      { label: "Swelling in legs/face" },
-      { label: "High blood pressure" },
-      { label: "Joint pain" },
-      { label: "Fatigue" },
-      { label: "Rashes" },
+    bodyParagraphs: [
+      "In lupus nephritis, the immune system targets the kidneys, causing inflammation and damage to the glomeruli, the structures responsible for filtering waste from the blood.",
+      "Without treatment, this inflammation can progress to kidney dysfunction, chronic kidney disease (CKD), or even kidney failure, making early diagnosis critical.",
+      "It typically affects people already living with SLE, and symptoms often surface within the first few years of their initial autoimmune diagnosis.",
     ],
+    stats:
+      "Lupus nephritis (LN) affects approximately 40-70% of people diagnosed with systemic lupus erythematosus (SLE) globally, with notable regional and demographic differences in prevalence.",
+    symptoms: buildLupusNephritisSymptoms(),
   }),
   "interstitial-nephritis": createDetail({
     key: "interstitial-nephritis",
     name: "Interstitial Nephritis",
     areaDescription: "inflammation of the kidney tubules and surrounding tissue",
+    heroQuote:
+      '"Interstitial Nephritis is a kidney disorder characterized by inflammation of the kidney\'s interstitial tissue, the area surrounding the tubules."',
+    bodyParagraphs: [
+      "Interstitial Nephritis is a kidney disorder characterized by inflammation of the kidney's interstitial tissue, the area surrounding the tubules.",
+      "This inflammation can impair the kidneys' ability to filter waste, regulate fluids, and maintain electrolyte balance, especially when the swelling constricts the neighboring tubules.",
+      "It can be classified into two types: Acute Interstitial Nephritis (AIN), which has a sudden onset and is often caused by medications, infections, or autoimmune reactions; and Chronic Interstitial Nephritis (CIN), which develops gradually and may lead to long-term kidney damage.",
+      "The condition is frequently triggered by medications, infections, or autoimmune diseases, and without timely care it can progress to chronic kidney disease (CKD) or kidney failure.",
+    ],
     quickFacts: [
-      "Often triggered by medications, infections, or autoimmune reactions.",
-      "Stopping the trigger and hydrating can reverse damage in many cases.",
+      "Medications, infections, and autoimmune diseases commonly trigger the inflammatory response.",
+      "AIN has a sudden onset, while CIN develops gradually and may cause permanent kidney damage.",
+      "Stopping the trigger, supporting hydration, and calming inflammation are key to preventing CKD.",
     ],
-    symptoms: [
-      { label: "Frequent urination" },
-      { label: "Blood in urine" },
-      { label: "Nausea" },
-      { label: "Fever" },
-      { label: "Rash" },
-      { label: "Fatigue" },
-    ],
+    stats:
+      "Left unmanaged, interstitial nephritis can progress to chronic kidney disease or kidney failure, making early diagnosis and trigger removal critical.",
+    symptoms: buildInterstitialNephritisSymptoms(),
   }),
   "renal-cell-carcinoma": createDetail({
     key: "renal-cell-carcinoma",
     name: "Renal Cell Carcinoma (Kidney Cancer)",
     heroImage: kidneyCare,
     areaDescription: "malignant growths in kidney tissue",
+    heroQuote:
+      '"It is the most common type of kidney cancer, originating in the lining of the tiny tubules that filter blood and produce urine."',
+    bodyParagraphs: [
+      "Renal Cell Carcinoma (RCC) begins in the lining of the kidney\'s microscopic tubules that filter blood and make urine, making it the most common kidney cancer seen in adults.",
+      "Because it may not produce symptoms at first, RCC is frequently discovered incidentally during imaging tests performed for unrelated reasons.",
+      "As tumors grow they can distort kidney tissue, spread to nearby blood vessels, and eventually metastasize to distant organs if left untreated.",
+      "The exact cause is not always clear, yet smoking, obesity, high blood pressure, certain genetic syndromes, and a family history of kidney cancer all increase risk.",
+    ],
     quickFacts: [
-      "Smoking, obesity, and some inherited conditions raise risk.",
-      "Early detection improves options; blood in urine is a common warning sign.",
+      "Often detected accidentally on imaging because early stages are silent.",
+      "Tumors originate in the kidney tubules and may spread through blood and lymph if untreated.",
+      "Smoking, obesity, hypertension, and family history are leading contributors to risk.",
     ],
-    symptoms: [
-      { label: "Blood in urine" },
-      { label: "Flank pain" },
-      { label: "Unintended weight loss" },
-      { label: "Fatigue" },
-      { label: "Fever" },
-      { label: "Lump in side" },
-    ],
+    stats:
+      "RCC represents roughly 85% of adult kidney cancers worldwide, underscoring the need for early imaging and risk-factor control.",
+    symptoms: buildRenalCellCarcinomaSymptoms(),
   }),
   "nephrotic-syndrome": createDetail({
     key: "nephrotic-syndrome",
     name: "Nephrotic Syndrome",
     areaDescription: "protein leakage through damaged glomeruli",
+    heroQuote:
+      '"Nephrotic Syndrome is a kidney disorder that causes the body to excrete excessive protein in the urine due to damage to the filtering units (glomeruli)."',
+    bodyParagraphs: [
+      "This condition causes the kidneys to leak large amounts of protein into the urine, which lowers protein levels in the blood, triggers high cholesterol, and leads to fluid retention (edema).",
+      "Rather than a single disease, nephrotic syndrome describes a cluster of symptoms that stem from underlying kidney damage or systemic conditions.",
+      "It can affect both children and adults, and long-term monitoring is essential to prevent complications such as infections, blood clots, and chronic kidney disease.",
+    ],
     quickFacts: [
-      "Heavy proteinuria drives swelling; sodium and protein balance help.",
-      "Managing cholesterol and pressure protects vessels and filters.",
+      "Excess protein loss in urine leads to swelling, high cholesterol, and low blood protein.",
+      "Nephrotic syndrome is a symptom group, not a standalone disease.",
+      "Both children and adults may require ongoing care to keep complications in check.",
     ],
-    symptoms: [
-      { label: "Foamy urine" },
-      { label: "Swelling in legs/ankles" },
-      { label: "Weight gain from fluid" },
-      { label: "Fatigue" },
-      { label: "Loss of appetite" },
-      { label: "High cholesterol" },
-    ],
+    symptoms: buildNephroticSyndromeSymptoms(),
   }),
   "urinary-tract-infections": createDetail({
     key: "urinary-tract-infections",
     name: "Urinary Tract Infections (UTIs)",
     areaDescription: "kidneys, ureters, bladder, and urethra",
+    heroQuote:
+      '"A Urinary Tract Infection (UTI) is a common infection that can affect any part of the urinary system, including the kidneys, ureters, bladder, or urethra."',
+    bodyParagraphs: [
+      "Most UTIs involve the lower urinary tract (bladder and urethra), but the infection can ascend to the kidneys (upper tract) and lead to more serious complications if untreated.",
+      "They are primarily caused by bacteria, with Escherichia coli (E. coli) being the most common culprit, although viruses and fungi can occasionally be involved.",
+      "Because women have shorter urethras, they experience UTIs more frequently, yet men, children, and older adults can also be affected, especially when hydration, hygiene, or immune health are compromised.",
+    ],
     quickFacts: [
-      "Recurring infections benefit from hydration habits, pH balance, and microbiome care.",
-      "Preventive strategies reduce antibiotic cycles and protect kidney tissue.",
+      "Lower-tract infections are most common, but kidney involvement can cause significant damage.",
+      "E. coli from the gut accounts for the majority of UTIs.",
+      "Women are at higher risk due to anatomy, though UTIs can affect any age or gender.",
     ],
-    symptoms: [
-      { label: "Burning urination" },
-      { label: "Frequent urge to urinate" },
-      { label: "Cloudy urine" },
-      { label: "Pelvic discomfort" },
-      { label: "Low-grade fever" },
-      { label: "Back pain" },
-    ],
+    stats:
+      "UTIs are among the most frequent bacterial infections worldwide, with women experiencing them far more often than men.",
+    symptoms: buildUtiSymptoms(),
   }),
   "minimal-change-disease": createDetail({
     key: "minimal-change-disease",

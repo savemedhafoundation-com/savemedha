@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { FiPhone } from "react-icons/fi";
 import { IoLocationSharp } from "react-icons/io5";
-import { MdOutlineMailOutline } from "react-icons/md";
-import { EllipsisVertical } from "lucide-react";
+
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
 import { MdPhoneInTalk } from "react-icons/md";
 import { MdAttachEmail } from "react-icons/md";
@@ -289,15 +288,41 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           </nav>
 
           {/* Mobile menu trigger */}
-          <div className="lg:hidden relative">
+          <div className="lg:hidden relative pr-4">
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((open) => !open)}
-              className="p-2 text-white hover:text-gray-200 transition"
-              aria-label="Open navigation menu"
+              className="inline-flex items-center justify-center rounded-md bg-[#74C425] px-6 py-2 left-8 text-sm font-semibold text-white shadow hover:bg-[#5ca41f] focus:outline-none focus:ring-2 focus:ring-[#9bd853]"
+              aria-label="Toggle navigation menu"
               aria-expanded={isMobileMenuOpen}
             >
-              <EllipsisVertical className="w-6 h-6" />
+              {isMobileMenuOpen ? (
+                <svg
+                  className="h-5 w-5 transition-transform rotate-90"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg
+                  className="h-5 w-5 transition-transform"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+              )}
             </button>
 
             {isMobileMenuOpen && (

@@ -8,19 +8,8 @@ const patientStories = [
     youtubeUrl: "https://youtu.be/BvBIVuhY3uc?si=s3gDfzzD42Qia1Vg",
     duration: "05:12",
   },
-  {
-    id: 2,
-    title: "After defeating cancer, Saddam is now healthy and living a normal life",
-    youtubeUrl: "https://youtu.be/hO8hh1-81rk?si=KnymLfogHJlEm0Pj",
-    duration: "03:45",
-  },
-  {
-    id: 3,
-    title:
-      "A real success story of Blood cancer patient, rejected from Mumbai Tata Cancer Hospital",
-    youtubeUrl: "https://youtu.be/447i_eSRkmM?si=a4A3Dp7QEpX6kuud",
-    duration: "04:10",
-  },
+ 
+  
   {
     id: 4,
     title: "After defeating cancer, Mainul is now healthy and living a normal life",
