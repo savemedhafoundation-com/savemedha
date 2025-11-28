@@ -201,6 +201,7 @@ button, .btn {
   }
 
   #root {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -209,6 +210,12 @@ button, .btn {
   .app-scale-wrapper {
     width: calc(var(--app-desktop-width) * 1px);
     transform-origin: top center;
-    transform: scale(var(--app-scale));
+    zoom: var(--app-scale);
+  }
+
+  @supports not (zoom: 1) {
+    .app-scale-wrapper {
+      transform: scale(var(--app-scale));
+    }
   }
 }

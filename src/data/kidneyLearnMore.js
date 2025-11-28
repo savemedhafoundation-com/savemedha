@@ -96,6 +96,22 @@ const utiSymptomImageModules = import.meta.glob(
   }
 );
 
+const mcdSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of MCD/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+const alportSymptomImageModules = import.meta.glob(
+  "../assets/kidney/Symptoms of Alport Syndrome/*.{png,jpg,jpeg,webp}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
 const sortMediaEntries = (pathA, pathB) =>
   pathA.localeCompare(pathB, undefined, { numeric: true, sensitivity: "base" });
 
@@ -160,6 +176,14 @@ export const NEPHROTIC_SYNDROME_SYMPTOM_MEDIA = Object.entries(
   .map(([, value]) => value);
 
 export const UTI_SYMPTOM_MEDIA = Object.entries(utiSymptomImageModules)
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const MCD_SYMPTOM_MEDIA = Object.entries(mcdSymptomImageModules)
+  .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
+  .map(([, value]) => value);
+
+export const ALPORT_SYMPTOM_MEDIA = Object.entries(alportSymptomImageModules)
   .sort(([pathA], [pathB]) => sortMediaEntries(pathA, pathB))
   .map(([, value]) => value);
 
@@ -336,6 +360,38 @@ const buildUtiSymptoms = () =>
   UTI_SYMPTOM_LABELS.map((label, index) => ({
     label,
     img: UTI_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const MCD_SYMPTOM_LABELS = [
+  "Severe swelling (edema)",
+  "Foamy urine",
+  "Weight gain",
+  "Fatigue",
+  "Loss of appetite",
+  "Increased susceptibility to infections",
+  "Low blood albumin levels",
+  "Possible blood clots in severe cases",
+];
+
+const buildMcdSymptoms = () =>
+  MCD_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: MCD_SYMPTOM_MEDIA[index] ?? null,
+  }));
+
+const ALPORT_SYMPTOM_LABELS = [
+  "Blood in the urine (hematuria)",
+  "Protein loss in urine (proteinuria)",
+  "Progressive kidney failure",
+  "Hearing loss",
+  "Eye abnormalities",
+  "Swelling (edema)",
+];
+
+const buildAlportSymptoms = () =>
+  ALPORT_SYMPTOM_LABELS.map((label, index) => ({
+    label,
+    img: ALPORT_SYMPTOM_MEDIA[index] ?? null,
   }));
 
 const DIABETIC_NEPHROPATHY_SYMPTOM_LABELS = [
@@ -646,35 +702,36 @@ export const KIDNEY_DETAILS = {
     key: "minimal-change-disease",
     name: "Minimal Change Disease",
     areaDescription: "podocyte injury causing heavy protein leakage",
+    heroQuote:
+      '"Minimal Change Disease is a kidney disorder that primarily affects the glomeruli, causing significant protein loss in the urine (proteinuria) despite appearing nearly normal under a regular microscope."',
     quickFacts: [
-      "Common cause of nephrotic syndrome in children; often steroid-responsive.",
-      "Monitoring protein loss and swelling guides treatment and recovery.",
+      "Most common cause of nephrotic syndrome in children, though it can also affect adults.",
+      "Likely linked to immune system dysfunction; kidneys can look normal under standard microscopy.",
+      "Often responds well to corticosteroid treatment with minimal lasting scarring.",
     ],
-    symptoms: [
-      { label: "Swelling" },
-      { label: "Foamy urine" },
-      { label: "Weight gain from fluid" },
-      { label: "Fatigue" },
-      { label: "Loss of appetite" },
-      { label: "High cholesterol" },
+    bodyParagraphs: [
+      "Minimal Change Disease is a kidney disorder that primarily affects the glomeruli, causing significant protein loss in the urine (proteinuria) despite appearing nearly normal under a regular microscope.",
+      "MCD is the most common cause of nephrotic syndrome in children, though it can also affect adults. The exact cause is unknown, but it is believed to involve immune system dysfunction.",
+      "Unlike other kidney diseases, MCD does not cause significant scarring or structural damage to the kidneys, and it often responds well to corticosteroid treatment.",
     ],
+    symptoms: buildMcdSymptoms(),
   }),
   "alport-syndrome": createDetail({
     key: "alport-syndrome",
     name: "Alport Syndrome",
     areaDescription: "inherited condition affecting kidney filters, hearing, and vision",
+    heroQuote:
+      '"Alport Syndrome is a rare genetic kidney disorder that affects the glomeruli, leading to progressive kidney disease, hearing loss, and eye abnormalities."',
     quickFacts: [
       "Genetic collagen changes weaken glomeruli and can impact ears and eyes.",
       "Early monitoring and blood pressure control help slow kidney decline.",
     ],
-    symptoms: [
-      { label: "Blood in urine" },
-      { label: "Hearing loss" },
-      { label: "Swelling" },
-      { label: "High blood pressure" },
-      { label: "Foamy urine" },
-      { label: "Vision changes" },
+    bodyParagraphs: [
+      "Alport Syndrome is a rare genetic kidney disorder that affects the glomeruli, leading to progressive kidney disease, hearing loss, and eye abnormalities.",
+      "It is caused by mutations in the COL4A3, COL4A4, or COL4A5 genes, which are responsible for producing type IV collagen, a key structural protein in the kidneys, ears, and eyes.",
+      "Alport Syndrome primarily affects males in its X-linked form, as they inherit a single faulty COL4A5 gene from their mother. Females can also develop the condition, but symptoms are usually milder.",
     ],
+    symptoms: buildAlportSymptoms(),
   }),
 };
 
@@ -694,7 +751,186 @@ export const getKidneyDetail = (key, fallbackName = "Kidney Care") => {
   });
 };
 
-
+export const KIDNEY_NIT_CAUSES = {
+  "acute-kidney-injury": {
+    title:
+      "What is the cause of Acute Kidney Injury (AKI) from the perspective of Natural Immunotherapy",
+    items: [
+      "Sudden Immune Shock to Renal Tissue",
+      "Abrupt Loss of Microvascular Stability",
+      "Mitochondrial Crisis in Renal Cells",
+      "Toxin Overload Triggering Immune Alarm",
+      "Breakdown of Local Barriers and Rapid Immune Entry",
+      "Systemic Stress Overwhelming Renal Defenses",
+    ],
+  },
+  glomerulonephritis: {
+    title:
+      "What is the cause of Glomerulonephritis from the perspective of Natural Immunotherapy",
+    items: [
+      "Immune System Over-Alerting to Perceived Threats",
+      "Glomerular Barrier as an “Inflammation Magnet”",
+      "Immune Complex Overload or Mis-Clearing",
+      "Mitochondrial Stress Inside Glomerular Cells",
+      "Environmental & Lifestyle Triggers Amplifying Immune Load",
+      "Gut–Immune–Kidney Axis Disruption",
+      "Breakdown of Immune Tolerance Mechanisms",
+    ],
+  },
+  "polycystic-kidney-disease": {
+    title:
+      "What is the cause of Polycystic Kidney Disease (PKD) from the perspective of Natural Immunotherapy",
+    items: [
+      "Genetic Blueprint Weakness as the Core Vulnerability",
+      "Chronic Micro-Inflammation Accelerating Cyst Growth",
+      "Immune Overactivation From Ongoing Tissue Stress",
+      "Mitochondrial Dysfunction in Renal and Cyst-Lining Cells",
+      "Metabolic & Hormonal Stress Amplifying Cystic Signaling",
+      "Environmental Toxins as “Stress Amplifiers”",
+      "Gut–Kidney–Immune Axis Imbalance",
+    ],
+  },
+  "kidney-stones": {
+    title:
+      "What is the cause of Kidney Stones from the perspective of Natural Immunotherapy",
+    items: [
+      "Urinary Environment Becoming an “Inflammatory Terrain”",
+      "Immune Activation in the Urinary Tract",
+      "Mitochondrial Stress in Kidney Tubular Cells",
+      "Toxin Load Overwhelming Renal Detox Pathways",
+      "Gut–Kidney Axis Impairment Affecting Mineral Handling",
+      "Chronic Dehydration as an Immune Stress Signal",
+      "Metabolic and Hormonal Stress Accelerating Crystallization",
+    ],
+  },
+  "diabetic-nephropathy": {
+    title:
+      "What is the cause of Diabetic Nephropathy from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic Glucose Stress Overloading Immune and Cellular Pathways",
+      "Inflammation as the Real Accelerator of Kidney Damage",
+      "Mitochondrial Exhaustion in High-Energy Kidney Cells",
+      "Microvascular Breakdown Triggering Immune Escalation",
+      "Insulin Resistance Creating Systemic Immune Irritation",
+      "Advanced Glycation End Products (AGEs) as Immune Irritants",
+    ],
+  },
+  "hypertensive-nephropathy": {
+    title:
+      "What is the cause of Hypertensive Nephropathy from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic Vascular Pressure as an Inflammatory Signal",
+      "Microvascular Injury Leading to Immune Escalation",
+      "Glomerular Barrier Strain → Chronic Repair Mode",
+      "Mitochondrial Overload in Renal Cells",
+      "Systemic Inflammation Feeding Local Kidney Damage",
+      "Renin–Angiotensin System (RAS) Overdrive as an Immune Irritant",
+      "Gut–Kidney–Vascular Axis Imbalance",
+    ],
+  },
+  "chronic-kidney-disease": {
+    title:
+      "What is the cause of Chronic Kidney Disease (CKD) from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic Micro-Inflammation as the Primary Driver",
+      "Immune Overactivation From Continuous Tissue Stress",
+      "Mitochondrial Fatigue in Kidney Cells",
+      "Environmental & Dietary Stress Loading the Immune System",
+      "Gut–Kidney Axis Imbalance Feeding Systemic Inflammation",
+      "The Kidney Shifts from Filtering to Constant Damage Control",
+    ],
+  },
+  "lupus-nephritis": {
+    title:
+      "What is the cause of Lupus Nephritis from the perspective of Natural Immunotherapy",
+    items: [
+      "Systemic immune overactivation driving kidney involvement",
+      "Immune complex overload becoming a filtration burden",
+      "Breakdown of immune tolerance mechanisms",
+      "Mitochondrial stress intensifying immune reactivity",
+      "Environmental and toxin sensitivity amplifying immune load",
+      "Gut–immune–kidney axis disruption",
+      "Microvascular instability in the kidneys",
+    ],
+  },
+  "interstitial-nephritis": {
+    title:
+      "What is the cause of Interstitial Nephritis from the perspective of Natural Immunotherapy",
+    items: [
+      "Immune irritation triggered by external or internal stressors",
+      "Hypersensitive immune response in the renal interstitium",
+      "Toxin or drug-induced inflammatory overload",
+      "Mitochondrial stress inside tubular cells",
+      "Gut–immune–kidney axis fueling chronic irritation",
+      "Auto-inflammatory tendency from immune dysregulation",
+      "Microvascular instability increasing immune activity",
+    ],
+  },
+  "renal-cell-carcinoma": {
+    title:
+      "What is the cause of Renal Cell Carcinoma (Kidney Cancer) from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic inflammation creating a “pro-mutation environment”",
+      "Toxin accumulation overloading renal detox pathways",
+      "Mitochondrial breakdown leading to cellular transformation",
+      "Immune surveillance fatigue and loss of tumor control",
+      "Microvascular and oxygen imbalance supporting tumor growth",
+      "Metabolic stress and insulin signaling dysregulation",
+      "Gut–immune–kidney axis disruption elevating systemic inflammation",
+      "Genetic vulnerability amplified by inflammatory terrain",
+    ],
+  },
+  "nephrotic-syndrome": {
+    title:
+      "What is the cause of Nephrotic Syndrome from the perspective of Natural Immunotherapy",
+    items: [
+      "Immune dysregulation targeting the glomerular barrier",
+      "Podocyte stress from inflammation and oxidative load",
+      "Environmental and toxin sensitivity heightening immune activity",
+      "Mitochondrial dysfunction weakening glomerular resilience",
+      "Gut–immune–kidney axis imbalance sustaining flare-ups",
+      "Loss of immune tolerance leading to over-alert glomeruli",
+      "Microvascular instability altering filtration dynamics",
+    ],
+  },
+  "urinary-tract-infections": {
+    title:
+      "What is the cause of Urinary Tract Infections (UTIs) from the perspective of Natural Immunotherapy",
+    items: [
+      "Immune defense weakening in the urinary mucosa",
+      "Disruption of the microbiome in the urinary and vaginal ecosystem",
+      "Chronic low-grade inflammation as a vulnerability factor",
+      "Toxin burden irritating the urinary tract",
+      "Mitochondrial stress weakening epithelial healing",
+      "Gut–bladder axis imbalance reducing local resilience",
+      "Hormonal and hydration influences shaping susceptibility",
+    ],
+  },
+  "minimal-change-disease": {
+    title:
+      "What is the cause of Minimal Change Disease from the perspective of Natural Immunotherapy",
+    items: [
+      "Immune dysregulation as the central trigger damaging filtration balance",
+      "Cytokine-induced podocyte dysfunction weakening the slit diaphragm",
+      "Allergic or hypersensitivity patterns amplifying immune response",
+      "Environmental toxins and irritants heightening immune reactivity",
+      "Mitochondrial fragility in podocytes reducing cellular resilience",
+      "Gut–immune–kidney axis imbalance sustaining inflammatory signaling",
+      "Stress-hormone effects that skew immune calibration and barrier stability",
+    ],
+  },
+  "alport-syndrome": {
+    title:
+      "What is the cause of Alport Syndrome from the perspective of Natural Immunotherapy",
+    items: [
+      "Innate Immune Vulnerability Triggered by Genetic Weakness",
+      "Chronic Micro-Inflammation as a Progression Driver",
+      "Mitochondrial Stress in Kidney Tissue",
+      "Barrier Breakdown → Immune Overcompensation",
+      "Environmental Stressors That Worsen the Genetic Vulnerability",
+    ],
+  },
+};
 
 
 

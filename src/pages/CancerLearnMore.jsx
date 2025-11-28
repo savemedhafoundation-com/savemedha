@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -9,6 +7,7 @@ import { getCancerDetail } from "../data/cancerLearnMore";
 import { TREATMENTS } from "../data/treatments";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
+import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
 
 // Load all hero images (1.png, 2.png, etc.)
 const heroModules = import.meta.glob(
@@ -61,12 +60,6 @@ const HERO_KEY_ORDER = [
   "thyroid",
   "tongue",
 ];
-
-const byPrefixAndName = {
-  far: {
-    "globe-pointer": faGlobe,
-  },
-};
 
 // Single palette used across all learn-more pages.
 const getCancerTheme = () => ({
@@ -297,20 +290,10 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
               {detail.stats}
             </p>
 
-            <a
+            <NaturalImmunotherapyButton
               href={ctaLink}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full px-8 py-3 text-lg font-semibold shadow-md transition hover:brightness-95"
-              style={{
-                backgroundColor: theme.ctaBg,
-                color: theme.ctaText,
-              }}
-            >
-              {/* <FontAwesomeIcon icon={byPrefixAndName.far["globe-pointer"]} /> */}
-              <img src="src\assets\Photo\start_natural_immuno.png" alt="start natural immunotherapy"  className="h-12 w-12"></img>
-              Start Natural Immunotherapy
-            </a>
+              className="mt-6 shadow-md hover:brightness-105"
+            />
           </div>
         </div>
       </section>

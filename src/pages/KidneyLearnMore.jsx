@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import { FaArrowCircleRight } from "react-icons/fa";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -18,8 +18,11 @@ import {
   RENAL_CELL_CARCINOMA_SYMPTOM_MEDIA,
   NEPHROTIC_SYNDROME_SYMPTOM_MEDIA,
   UTI_SYMPTOM_MEDIA,
+  KIDNEY_NIT_CAUSES,
 } from "../data/kidneyLearnMore";
 import { TREATMENTS } from "../data/treatments";
+import nitVideo from "../assets/video/Kidney Recovery Animation.mp4";
+import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
 
 const kidneyHeroModules = import.meta.glob(
   "/src/assets/kidney/Kidney Treatments Images/*.{png,jpg,jpeg,webp}",
@@ -54,7 +57,7 @@ const kidneyHeroImagesSorted = Object.keys(kidneyHeroImagesByNumber)
 const KIDNEY_KEY_ORDER = [
   "chronic-kidney-disease",
   "acute-kidney-injury",
-  "glomeru-lonephritis",
+  "glomerulonephritis",
   "polycystic-kidney-disease",
   "kidney-stones",
   "diabetic-nephropathy",
@@ -75,6 +78,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
       key: "kidney",
       title: "Kidney Treatment",
     };
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const handleBack = () =>
     onNavigate?.("treatment-detail", { treatment: kidneyTreatment });
   const normalizedKey = detail?.key?.toLowerCase();
@@ -95,6 +99,26 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
     if (!targetKey) return;
     onNavigate?.("kidney-detail", { kidneyKey: targetKey });
   };
+  const ctaHref = detail?.ctaUrl || detail?.storeUrl || "https://dantura.com/";
+  const nitCauses = normalizedKey ? KIDNEY_NIT_CAUSES[normalizedKey] : null;
+  const faqs =
+    nitCauses && nitCauses.items?.length
+      ? [
+          {
+            q: nitCauses.title,
+            a: nitCauses.items.join(" · "),
+          },
+          {
+            q: "How does Natural Immunotherapy support recovery?",
+            a: "It aims to calm chronic inflammation, support mitochondrial energy, balance the gut–kidney axis, and reduce daily toxin and pressure load alongside your clinician’s plan.",
+          },
+          {
+            q: "Which daily habits protect my kidneys during care?",
+            a: "Steady hydration, blood-pressure-friendly nutrition, restorative sleep, movement as tolerated, and avoiding smoking or toxin exposure help reduce immune stress.",
+          },
+        ]
+      : [];
+  
 
   const symptomTheme = {
     bubbleBg: "#fff5f3",
@@ -185,7 +209,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
               </ul>
             )}
 
-            <div className="space-y-5 text-lg leading-9 text-white/90">
+            <div className="space-y-5 text-lg leading-6 text-white/90">
               {detail.bodyParagraphs.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
@@ -195,21 +219,14 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
               <p className="text-lg font-semibold text-[#ffe1d6]">{detail.stats}</p>
             )}
 
-            <a
-              href="https://dantura.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-[56px] items-center justify-center rounded-full bg-white px-10 text-lg font-semibold tracking-wide text-[#7a2300] shadow-[0_18px_35px_rgba(33,8,2,0.35)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_45px_rgba(33,8,2,0.35)]"
-            >
-              Start Natural Immunotherapy
-            </a>
+            <NaturalImmunotherapyButton href={ctaHref} className="mt-2 " />
           </div>
         </div>
       </section>
 
       <div className="h-6 w-full bg-gradient-to-r from-[#f7d0cc] via-[#fde5df] to-[#f7d0cc]" />
 
-      <section className="py-16 bg-white">
+      <section className="py-16  bg-gradient-to-b from-white via-[#fde5e7] to-white">
         <div className="mx-auto max-w-6xl px-6 text-center">
           <h2 className="font-koho text-3xl font-bold mb-10">SYMPTOMS</h2>
 
@@ -233,7 +250,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
                       <video
                         src={mediaSrc}
                         title={sym.label}
-                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover  transition-transform duration-300 group-hover:scale-110 "
+                        className="symptom-pop mx-auto h-50 w-50 rounded-full object-cover   transition-transform duration-300 group-hover:scale-110 "
                         style={{ animationDelay: `${index * 0.1}s` }}
                         autoPlay
                         loop
@@ -273,6 +290,106 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
         </div>
       </section>
 
+      {nitCauses && (
+        <section className="bg-gradient-to-b from-white via-[#fde5e7] to-white py-16 text-[#5b1e13]">
+          <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 text-center">
+            <div className="space-y-4">
+              <p className="text-xs font-semibold tracking-[0.35em] text-[#b65b52]">
+                Natural Immunotherapy Insight
+              </p>
+              <h3 className="font-serif text-3xl font-semibold leading-tight text-[#000000] md:text-4xl">
+                {nitCauses.title.replace("Natural Immunotherapy", "")}
+                <span className="text-[#5b1e13]">Natural Immunotherapy?</span>
+              </h3>
+              <div className="mx-auto h-[1px] w-24 bg-[#b65b52]" />
+            </div>
+
+            <div className="relative mx-auto w-full max-w-4xl overflow-hidden rounded-[42px] bg-[#9f4f44] px-8 py-10 text-left text-white shadow-[0_30px_70px_rgba(88,15,6,0.25)]">
+              <div className="absolute inset-y-0 -left-8 w-16 rounded-bl-[42px] rounded-tl-[42px] bg-[#fbd9d3]" aria-hidden />
+              <ol className="relative space-y-3 pl-6 text-lg leading-8">
+                {nitCauses.items.map((item, index) => (
+                  <li key={item} className="text-white/95">
+                    <span className="font-semibold">{index + 1}. </span>
+                    {item}
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-serif text-2xl font-semibold uppercase tracking-[0.12em] text-[#3b0f0a]">
+                How <span className="text-[#b65b52]">NIT</span> Works?
+              </h4>
+              <div className="mx-auto h-[1px] w-16 bg-[#b65b52]" />
+            </div>
+
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-6">
+              <div className="relative w-full overflow-hidden rounded-[28px] bg-black shadow-[0_30px_65px_rgba(88,15,6,0.22)]">
+                <video
+                  className="h-full w-full object-cover"
+                  src={nitVideo}
+                  
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={heroImageSrc}
+                />
+              </div>
+
+              <a
+                href={detail.ctaUrl ?? "https://dantura.com/"}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-[64px] items-center justify-center rounded-full bg-[#9f4f44] px-8 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-[0_25px_50px_rgba(88,15,6,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_60px_rgba(88,15,6,0.3)]"
+              >
+                Start your healthy journey with Natural Immunotherapy today!
+              </a>
+              <span className="text-sm font-medium uppercase tracking-[0.18em] text-[#6e2a1f]">
+                Click here to know more
+              </span>
+            </div>
+
+            {faqs.length > 0 && (
+              <div className="mx-auto w-full max-w-4xl space-y-6 rounded-[32px] bg-[#f5c7c2] p-6 shadow-[0_25px_60px_rgba(88,15,6,0.15)]">
+                <div className="text-center space-y-2">
+                  <h5 className="font-serif text-2xl font-semibold text-[#3b0f0a]">
+                    Frequently Asked Questions
+                  </h5>
+                  <div className="mx-auto h-[1px] w-24 bg-[#b65b52]" />
+                </div>
+                <div className="space-y-3">
+                  {faqs.map((item, index) => {
+                    const isOpen = openFaqIndex === index;
+                    return (
+                      <div
+                        key={item.q}
+                        className="overflow-hidden rounded-2xl border border-[#f5c7c2] bg-white"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                          className="flex w-full items-center justify-between px-4 py-3 text-left text-[#5b1e13] transition hover:bg-[#5b1e13] hover:text-[#ffffff]"
+                        >
+                          <span className="font-semibold">{item.q}</span>
+                          <span className="text-xl font-bold text-[#b65b52]">
+                            {isOpen ? "−" : "+"}
+                          </span>
+                        </button>
+                        {isOpen && (
+                          <div className="px-4 pb-4 text-sm leading-relaxed text-[#6b3228]">
+                            {item.a}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
       <div className="mt-8 flex flex-col gap-7 px-6">
         
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 text-[#7a2300]">
@@ -305,10 +422,10 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
           </button>
         </div>
       </div>
+
+      
         <div className="h-20 w-screen rounded-[10px] bg-gradient-to-b from-white via-[#fde5e7] to-[#f4c0c1]" />
        <Footer onNavigate={onNavigate} />
     </div>
   );
 }
-
-

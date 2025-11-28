@@ -1007,7 +1007,7 @@ export default function CancerTreatmentPage() {
               {/* Title & Meta */}
               <div className="space-y-2 bg-gradient-to-br from-[#D6FFBB] to-[#FFFFFF] rounded-3xl p-4">
                 <h3 className="font-bold text-sm leading-tight line-clamp-2 text-gray-800 group-hover:text-[#74C425] transition-colors">
-                  {index % 2 === 0 ? "Video 1" : "Video 2"}
+                  
                 </h3>
                 <p className="text-base text-[#155300]">
                   Lorem ipsum is simply dummy text of the printing and typesetting industry.

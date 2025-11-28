@@ -165,7 +165,7 @@ export default function AboutUs({ onNavigate }) {
   return (
     <div className="min-h-screen bg-white">
       <Navbar currentPage="about" onNavigate={onNavigate} />
-      <main className="w-full px-20">
+      <main className="w-full px-4 md:px-10 lg:px-20">
         <section className="relative h-[320px] md:h-[380px] lg:h-[420px] flex items-center justify-center text-white overflow-hidden">
           <img
             src={HeroBackground}

@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getNerveDetail } from "../components/nerveLearnMore";
+import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
 
 const NERVE_KEY_ORDER = [
   "peripheral-neuropathy",
@@ -12,12 +11,6 @@ const NERVE_KEY_ORDER = [
   "parkinsons-support",
   "multiple-sclerosis-care",
 ];
-
-const byPrefixAndName = {
-  far: {
-    "globe-pointer": faGlobe,
-  },
-};
 
 const TreatmentBadge = ({
   label,
@@ -145,15 +138,7 @@ export default function NerveLearnMore({ nerveKey, onNavigate, fallbackTitle }) 
 
             <p className="mt-4 mr-2 text-[17px] font-medium text-white">{detail.stats}</p>
 
-            <a
-              href={ctaLink}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#FFD54F] px-8 py-3 text-lg font-semibold text-[#0b2fa1] shadow-md transition hover:bg-[#f7c533]"
-            >
-              <FontAwesomeIcon icon={byPrefixAndName.far["globe-pointer"]} />
-              Start Natural Immunotherapy
-            </a>
+            <NaturalImmunotherapyButton href={ctaLink} className="mt-6" />
           </div>
         </div>
       </section>

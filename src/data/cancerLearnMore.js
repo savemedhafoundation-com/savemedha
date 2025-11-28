@@ -145,6 +145,44 @@ const buildRecoveryImages = (folderName) =>
 
 const ORAL_RECOVERY_IMAGES = buildRecoveryImages("Patient's Recovery Gallery");
 
+/* --------------------------------------------------
+   NATURAL IMMUNOTHERAPY CAUSE LIBRARY (Cancer)
+---------------------------------------------------*/
+const buildCancerNitCauses = (name, focus) => ({
+  title: `What is the cause of ${name} from the perspective of Natural Immunotherapy`,
+  items: [
+    `Chronic inflammation creating a pro-mutation environment in ${focus}`,
+    "Immune surveillance breakdown allowing malignant cells to persist",
+    "Toxin and oxidative load overwhelming detox and DNA repair",
+    `Mitochondrial stress driving aggressive signaling in ${focus}`,
+    "Microvascular and oxygen imbalance fueling tumour growth",
+    "Metabolic and hormonal stress amplifying proliferative pathways",
+    "Gut–immune axis disruption elevating systemic inflammatory drive",
+  ],
+});
+
+export const CANCER_NIT_CAUSES = {
+  blood: buildCancerNitCauses("Blood Cancer", "blood-forming tissues"),
+  bone: buildCancerNitCauses("Bone Cancer", "bone matrix and marrow spaces"),
+  brain: buildCancerNitCauses("Brain Cancer", "brain and CNS tissue"),
+  breast: buildCancerNitCauses("Breast Cancer", "breast ducts and lobules"),
+  cervix: buildCancerNitCauses("Cervix Cancer", "cervical epithelium"),
+  colon: buildCancerNitCauses("Colon Cancer", "colon and rectal lining"),
+  eye: buildCancerNitCauses("Eye Cancer", "ocular structures"),
+  "gall-bladder": buildCancerNitCauses("Gall Bladder Cancer", "biliary tissues"),
+  "kidney-cancer": buildCancerNitCauses("Kidney Cancer", "renal tissue"),
+  "liver-cancer": buildCancerNitCauses("Liver Cancer", "hepatic tissue"),
+  lungs: buildCancerNitCauses("Lungs Cancer", "airways and alveoli"),
+  oral: buildCancerNitCauses("Oral Cancer", "oral mucosa"),
+  pancreas: buildCancerNitCauses("Pancreas Cancer", "pancreatic tissue"),
+  prostate: buildCancerNitCauses("Prostate Cancer", "prostatic tissue"),
+  skin: buildCancerNitCauses("Skin Cancer", "cutaneous layers"),
+  stomach: buildCancerNitCauses("Stomach Cancer", "gastric lining"),
+  throat: buildCancerNitCauses("Throat Cancer", "pharyngeal tissue"),
+  thyroid: buildCancerNitCauses("Thyroid Cancer", "thyroid tissue"),
+  tongue: buildCancerNitCauses("Tongue Cancer", "tongue epithelium"),
+};
+
 const SYMPTOM_IMAGE_ALIASES = {
   "nausea-or-vomiting": {
     label: "nausea-and-vomiting",

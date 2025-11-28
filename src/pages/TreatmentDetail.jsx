@@ -4,6 +4,8 @@ import KidneyBanner from "../components/KidneyBanner";
 import cancerHeroVideo from "../assets/Photo/Sequence 01_1.mp4";
 import { CANCER_DETAILS } from "../data/cancerLearnMore";
 import { KIDNEY_DETAILS } from "../data/kidneyLearnMore";
+import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
+import naturalBg from "../assets/Photo/natural-bg.png.png";
 
 /* ----------------------------------------------
    IMAGE LOADING - AUTO MAP & SORT (Kidney)
@@ -105,6 +107,54 @@ const DEFAULT_SUB_TREATMENTS = [
   "Metabolic Fitness",
 ].map((name) => ({ key: name.toLowerCase(), name }));
 
+/* ----------------------------------------------
+   PER-TREATMENT COLOR THEMES
+------------------------------------------------*/
+const TREATMENT_THEME = {
+  cancer: {
+    bubbleBg: "#FCEBFF",
+    bubbleHover: "#C425B4",
+    text: "#C425B4",
+    textHover: "#FFFFFF",
+  },
+  kidney: {
+    bubbleBg: "#FFD1CDE5",
+    bubbleHover: "#A04742",
+    text: "#A04742",
+    textHover: "#FFFFFF",
+  },
+  heart: {
+    bubbleBg: "#FFE8E8",
+    bubbleHover: "#E11D48",
+    text: "#B91C1C",
+    textHover: "#FFFFFF",
+  },
+  nerve: {
+    bubbleBg: "#E5F1FF",
+    bubbleHover: "#2563EB",
+    text: "#1D4ED8",
+    textHover: "#FFFFFF",
+  },
+  sma: {
+    bubbleBg: "#FFF6E5",
+    bubbleHover: "#F97316",
+    text: "#EA580C",
+    textHover: "#FFFFFF",
+  },
+  other: {
+    bubbleBg: "#F4F4F5",
+    bubbleHover: "#111827",
+    text: "#111827",
+    textHover: "#FFFFFF",
+  },
+  default: {
+    bubbleBg: "#FCEBFF",
+    bubbleHover: "#C425B4",
+    text: "#C425B4",
+    textHover: "#FFFFFF",
+  },
+};
+
 /* --------------------------------------------------
    CLEAN NAVIGATION ROUTE MAP
 ---------------------------------------------------*/
@@ -129,6 +179,9 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
   const heroKeyword = treatment.title?.split(" ")[0]?.toUpperCase() || "TREATMENT";
 
   const isKidneyTreatment = treatment.key === "kidney";
+   const ctaLink = "https://dantura.com/";
+  const theme =
+    TREATMENT_THEME[treatment.key] || TREATMENT_THEME.default;
 
   /* ----------------------------------------------
      CLEAN: SUB-TREATMENT CARD CLICK HANDLER
@@ -195,9 +248,13 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
 
           <div className="text-center space-y-3">
             <h2 className="font-koho text-4xl font-semibold uppercase">
-              {heroKeyword} <span className="text-[#74C425]">TREATMENTS</span>:
+              {heroKeyword}{" "}
+              <span style={{ color: theme. bubbleHover }}>TREATMENTS</span>:
             </h2>
-            <div className="mx-auto h-1 w-32 rounded-full bg-[#74C425]" />
+            <div
+              className="mx-auto h-1 w-32 rounded-full"
+              style={{ backgroundColor: theme.bubbleHover }}
+            />
           </div>
 
           {/* ---------- GRID ---------- */}
@@ -206,6 +263,12 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
               <div
                 key={index}
                 className="group relative flex flex-col h-full rounded-tl-[28px] bg-white shadow-[0_25px_50px_rgba(15,23,42,0.12)] overflow-hidden hover:-translate-y-1.5 transition-transform"
+                style={{
+                  "--bubble-bg": theme.bubbleBg,
+                  "--bubble-hover": theme.bubbleHover,
+                  "--text-color": theme.text,
+                  "--text-hover": theme.textHover,
+                }}
               >
                 <div className="relative h-60 overflow-hidden">
                   <img
@@ -215,9 +278,9 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
                     loading="lazy"
                   />
 
-                  <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[#74C425]" />
+                  <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[var(--bubble-bg)] transition-colors duration-300 group-hover:bg-[var(--bubble-hover)]" />
                   <div className="absolute left-2 top-10 pr-4">
-                    <p className="font-koho text-xl font-semibold uppercase text-white drop-shadow-md leading-5">
+                    <p className="font-koho text-xl font-semibold uppercase text-[var(--text-color)] drop-shadow-md leading-5 transition-colors duration-300 group-hover:text-[var(--text-hover)]">
                       {item.name.split(" ").map((word) => (
                         <span key={word} className="block">
                           {word}
@@ -239,6 +302,46 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
             ))}
           </div>
         </section>
+       <section className="relative w-full px-4 md:px-10 lg:px-16">
+  <div className="relative mx-auto  rounded-3xl overflow-hidden shadow-lg bg-white">
+    {/* Background Shapes */}
+    <div className="absolute inset-0">
+      <img
+        src={naturalBg}
+        alt="background"
+        className="w-full h-full object-cover opacity-95"
+      />
+    </div>
+
+    {/* Content */}
+    <div className="relative z-10 grid md:grid-cols-2 gap-6 py-12 px-10 md:px-16 items-center">
+      
+      {/* Left Text */}
+      <div>
+        <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight">
+          Get Complete Recovery By
+        </h2>
+
+        <h3 className="text-4xl md:text-5xl font-bold text-[#74C425] mt-3">
+          Natural Immunotherapy
+        </h3>
+
+        <a
+          href={ctaLink}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-8 inline-flex items-center gap-3 bg-gradient-to-r from-[#498D05] via-[#76C528] to-[#448602] text-white text-xl font-semibold px-10 py-4 rounded-full hover:scale-105 transition-transform shadow-md"
+        >
+          <span className="text-2xl">➜</span> START NOW
+        </a>
+      </div>
+
+      {/* Right Decorative Graphics */}
+      
+    </div>
+  </div>
+</section>
+
       </main>
 
       <Footer onNavigate={onNavigate} />

@@ -288,7 +288,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           </nav>
 
           {/* Mobile menu trigger */}
-          <div className="lg:hidden relative pr-4">
+          <div className="lg:hidden relative pr-33">
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen((open) => !open)}

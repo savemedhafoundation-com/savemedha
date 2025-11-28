@@ -103,7 +103,7 @@ export default function Treatment({ onNavigate }) {
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
-      <main className="font-opensans px-20">
+      <main className="font-opensans px-4 md:px-10 lg:px-20">
         {/* Hero */}
         <section
           className="relative flex min-h-[43vh] items-start justify-start bg-cover bg-center bg-no-repeat pb-6 text-left"
