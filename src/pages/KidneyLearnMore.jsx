@@ -23,6 +23,8 @@ import {
 import { TREATMENTS } from "../data/treatments";
 import nitVideo from "../assets/video/Kidney Recovery Animation.mp4";
 import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
+import oilMassage from "../assets/Photo/Oil Massage.jpeg";
+import treatmentIcon from "../assets/Photo/Treatment icon.png";
 
 const kidneyHeroModules = import.meta.glob(
   "/src/assets/kidney/Kidney Treatments Images/*.{png,jpg,jpeg,webp}",
@@ -336,6 +338,9 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
                   poster={heroImageSrc}
                 />
               </div>
+              <span className="text-sm font-medium uppercase tracking-[0.18em] text-[#6e2a1f]">
+                Click here to know more
+              </span>
 
               <a
                 href={detail.ctaUrl ?? "https://dantura.com/"}
@@ -345,9 +350,49 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
               >
                 Start your healthy journey with Natural Immunotherapy today!
               </a>
-              <span className="text-sm font-medium uppercase tracking-[0.18em] text-[#6e2a1f]">
-                Click here to know more
-              </span>
+              
+            </div>
+
+            <div className="mt-8 w-full max-w-5xl mx-auto flex items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={() => handleNavigateTo(prevKey)}
+                disabled={!prevKey}
+                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#5b1e13] bg-white tracking-wide transition  cursor-pointer hover:bg-[#5b1e13] hover:text-white"
+                style={{
+                  borderColor: "#5b1e13",
+                  backgroundColor: "white",
+                }}
+              >
+                <IoIosArrowBack size={20} />
+                Prev.
+              </button>
+
+              
+
+              <button
+                type="button"
+                onClick={() => handleNavigateTo(nextKey)}
+                disabled={!nextKey}
+                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#5b1e13] tracking-wide transition disabled:opacity-40 cursor-pointer hover:bg-[#5b1e13] hover:text-white disabled:hover:bg-white disabled:hover:text-[#5b1e13]"
+                style={{
+                  borderColor: "#5b1e13",
+                  backgroundColor: "white",
+                }}
+              >
+                Next
+                <IoIosArrowForward size={20} />
+              </button>
+            </div>
+
+            <div className="w-full pt-2">
+              <div className="mx-auto flex justify-center">
+                <img
+                  src={treatmentIcon}
+                  alt="Treatment icon"
+                  className="h-[220px] w-[220px] object-contain"
+                />
+              </div>
             </div>
 
             {faqs.length > 0 && (
@@ -390,38 +435,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
           </div>
         </section>
       )}
-      <div className="mt-8 flex flex-col gap-7 px-6">
-        
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 text-[#7a2300]">
-          <button
-            type="button"
-            onClick={() => handleNavigateTo(prevKey)}
-            disabled={!prevKey}
-            className={`group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.5em] ${
-              prevKey ? "" : "opacity-40"
-            }`}
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-current bg-white text-lg transition group-hover:bg-[#7a2300] group-hover:text-white">
-              <IoIosArrowBack />
-            </span>
-            Prev.
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleNavigateTo(nextKey)}
-            disabled={!nextKey}
-            className={`group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.5em] ${
-              nextKey ? "" : "opacity-40"
-            }`}
-          >
-            Next
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-current bg-white text-lg transition group-hover:bg-[#7a2300] group-hover:text-white">
-              <IoIosArrowForward />
-            </span>
-          </button>
-        </div>
-      </div>
+      
 
       
         <div className="h-20 w-screen rounded-[10px] bg-gradient-to-b from-white via-[#fde5e7] to-[#f4c0c1]" />

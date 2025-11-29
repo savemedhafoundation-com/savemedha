@@ -3,11 +3,14 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { getCancerDetail } from "../data/cancerLearnMore";
+import { getCancerDetail, CANCER_NIT_CAUSES } from "../data/cancerLearnMore";
 import { TREATMENTS } from "../data/treatments";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
+import nitVideo from "../assets/video/Cancer Recovery Animation.mp4";
+import treatmentIcon from "../assets/Photo/Treatment icon.png";
+import oilMassage from "../assets/Photo/Oil Massage.jpeg";
 
 // Load all hero images (1.png, 2.png, etc.)
 const heroModules = import.meta.glob(
@@ -16,27 +19,29 @@ const heroModules = import.meta.glob(
 );
 
 // Convert module objects → usable image URLs
-const heroImagesByNumber = Object.entries(heroModules).reduce((acc, [path, mod]) => {
-  const src = typeof mod === "string" ? mod : mod?.default || path;
-  if (!src) return acc;
+const heroImagesByNumber = Object.entries(heroModules).reduce(
+  (acc, [path, mod]) => {
+    const src = typeof mod === "string" ? mod : mod?.default || path;
+    if (!src) return acc;
 
-  const file = path.split("/").pop() || "";
-  const match = file.match(/^(\d+)/); // pull numeric prefix (1.png, 2.png...)
-  if (match) {
-    const num = parseInt(match[1], 10);
-    if (Number.isFinite(num)) {
-      acc[num] = src;
+    const file = path.split("/").pop() || "";
+    const match = file.match(/^(\d+)/); // pull numeric prefix (1.png, 2.png...)
+    if (match) {
+      const num = parseInt(match[1], 10);
+      if (Number.isFinite(num)) {
+        acc[num] = src;
+      }
     }
-  }
-  return acc;
-}, {});
+    return acc;
+  },
+  {}
+);
 
-const heroImagesSorted =
-  Object.keys(heroImagesByNumber)
-    .map((num) => parseInt(num, 10))
-    .filter(Number.isFinite)
-    .sort((a, b) => a - b)
-    .map((num) => heroImagesByNumber[num]);
+const heroImagesSorted = Object.keys(heroImagesByNumber)
+  .map((num) => parseInt(num, 10))
+  .filter(Number.isFinite)
+  .sort((a, b) => a - b)
+  .map((num) => heroImagesByNumber[num]);
 
 // Order of cancers matched to hero images 1.png, 2.png, etc.
 const HERO_KEY_ORDER = [
@@ -125,9 +130,14 @@ const CancerTypeBadge = ({
 
 const CANCER_TREATMENT = TREATMENTS.find((item) => item.key === "cancer");
 
-export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }) {
+export default function CancerLearnMore({
+  cancerKey,
+  onNavigate,
+  fallbackTitle,
+}) {
   const detail = getCancerDetail(cancerKey, fallbackTitle);
   const theme = getCancerTheme(detail?.key);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const recoveryImages = Array.isArray(detail?.recoveryImages)
     ? detail.recoveryImages.filter(Boolean)
     : [];
@@ -153,12 +163,13 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
     symptomCount > 6
       ? "md:grid-cols-4"
       : symptomCount === 4
-        ? "md:grid-cols-4"
-        : "md:grid-cols-3";
+      ? "md:grid-cols-4"
+      : "md:grid-cols-3";
 
   // Pick hero image based on numeric filename order (1.png → Blood Cancer, 2.png → Bone Cancer, ...)
   const normalizedKey = detail.key?.toLowerCase();
-  const mappedNumber = HERO_KEY_ORDER.findIndex((key) => key === normalizedKey) + 1; // +1 to match 1.png, 2.png...
+  const mappedNumber =
+    HERO_KEY_ORDER.findIndex((key) => key === normalizedKey) + 1; // +1 to match 1.png, 2.png...
   const heroSrc =
     (mappedNumber && heroImagesByNumber[mappedNumber]) ||
     detail.heroImage ||
@@ -166,36 +177,59 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
 
   const currentIndex = HERO_KEY_ORDER.findIndex((key) => key === normalizedKey);
   const prevKey = currentIndex > 0 ? HERO_KEY_ORDER[currentIndex - 1] : null;
-  const nextKey = currentIndex >= 0 && currentIndex < HERO_KEY_ORDER.length - 1 ? HERO_KEY_ORDER[currentIndex + 1] : null;
+  const nextKey =
+    currentIndex >= 0 && currentIndex < HERO_KEY_ORDER.length - 1
+      ? HERO_KEY_ORDER[currentIndex + 1]
+      : null;
 
   const handleNavigateTo = (targetKey) => {
     if (!targetKey) return;
     onNavigate?.("cancer-detail", { cancerKey: targetKey });
   };
+  const nitCauses = normalizedKey ? CANCER_NIT_CAUSES[normalizedKey] : null;
+  const faqs =
+    nitCauses && nitCauses.items?.length
+      ? [
+          {
+            q: nitCauses.title,
+            a: nitCauses.items.join(" · "),
+          },
+          {
+            q: "How does Natural Immunotherapy support recovery?",
+            a: "It aims to calm chronic inflammation, support mitochondrial energy, balance the gut–immune axis, and reduce daily toxin load alongside your clinician’s plan.",
+          },
+          {
+            q: "Which daily habits protect me during cancer care?",
+            a: "Steady hydration, anti-inflammatory nutrition, restorative sleep, gentle movement as tolerated, stress regulation, and avoiding smoking or toxin exposure help reduce immune stress.",
+          },
+        ]
+      : [];
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
-  <div className="w-full px-15 bg-[#C425B4] py-2 flex flex-row items-center">
-          <button
-            onClick={handleBack}
-            className=" inline-flex items-center gap-2 rounded-full border px-5 py-2 text-xs font-semibold uppercase tr transition-colors"
-            style={{
-              color: theme.headerText,
-              borderColor: theme.headerText,
-              backgroundColor: "white",
-            }}
-          >
-            <span><FaArrowCircleLeft size={20}/></span> Back
-          </button>
-          </div>
+      <div className="w-full px-15 bg-[#C425B4] py-2 flex flex-row items-center">
+        <button
+          onClick={handleBack}
+          className=" inline-flex items-center gap-2 rounded-full border px-5 py-2 text-xs font-semibold uppercase tr transition-colors"
+          style={{
+            color: theme.headerText,
+            borderColor: theme.headerText,
+            backgroundColor: "white",
+          }}
+        >
+          <span>
+            <FaArrowCircleLeft size={20} />
+          </span>{" "}
+          Back
+        </button>
+      </div>
       {/* TOP TITLE BAR */}
       <div
         className="w-full py-3"
         style={{ backgroundColor: theme.headerBg, color: theme.headerText }}
       >
         <div className="mx-auto px-16">
-        
           <div className="flex items-center gap-2">
             <p className="text-base font-semibold uppercase tracking-[0.20em] text-[#050505]">
               TREATMENT
@@ -221,11 +255,14 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
         style={{ backgroundColor: theme.primaryBg }}
       >
         <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10 px-6">
-
           {/* IMAGE + Cure Box */}
           <div className="flex flex-col p-5">
             <div className="shadow-lg">
-              <img src={heroSrc} alt={detail.name} className="h-99 w-full object-cover rounded-tl-[18px] rounded-tr-[18px]" />
+              <img
+                src={heroSrc}
+                alt={detail.name}
+                className="h-99 w-full object-cover rounded-tl-[18px] rounded-tr-[18px]"
+              />
             </div>
 
             <div
@@ -252,7 +289,6 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
             className="self-start -mt-3 p-5"
             style={{ color: theme.primaryText }}
           >
-
             <h2 className="font-koho text-[32px] font-bold mb-4">
               {detail.descriptionTitle}
             </h2>
@@ -269,7 +305,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
               style={{ color: theme.bodyText }}
             >
               {detail.bodyParagraphs.map((p, i) => (
-              <p key={i}>{p}</p>
+                <p key={i}>{p}</p>
               ))}
             </div>
 
@@ -286,9 +322,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
               </div>
             )}
 
-            <p className="mt-2 mr-2 text-[17px] font-medium">
-              {detail.stats}
-            </p>
+            <p className="mt-2 mr-2 text-[17px] font-medium">{detail.stats}</p>
 
             <NaturalImmunotherapyButton
               href={ctaLink}
@@ -357,9 +391,7 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
       </section>
 
       {/* RELATED TYPES */}
-      <section
-        className="py-16 px-10 "
-      >
+      <section className="py-16 px-10 ">
         <div className="px-6 text-center">
           <h2 className="text-3xl font-bold">TYPES OF CANCER</h2>
           <div
@@ -367,49 +399,23 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
             style={{ backgroundColor: theme.divider }}
           />
 
-          <div className="mt-6 flex items-center justify-between">
-            <button
-              type="button"
-              onClick={() => handleNavigateTo(prevKey)}
-              disabled={!prevKey}
-              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
-              style={{
-                color: theme.headerText,
-                borderColor: theme.headerText,
-                backgroundColor: "white",
-                opacity: prevKey ? 1 : 0.5,
-              }}
-            >
-               <span><FaArrowCircleLeft size={20}/></span> Prev
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleNavigateTo(nextKey)}
-              disabled={!nextKey}
-              className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition-colors disabled:opacity-40"
-              style={{
-                color: theme.headerText,
-                borderColor: theme.headerText,
-                backgroundColor: "white",
-                opacity: nextKey ? 1 : 0.5,
-              }}
-            >
-              Next <FaArrowCircleRight size={20}/>
-            </button>
-          </div>
-
           <div className="mt-10 flex flex-wrap justify-center gap-10">
             {detail.relatedTypes.map((t, index) => {
-              const bgColors = theme.badgeColors ?? ["#74C425", "#74C425", "#74C425"];
-              const shadowColors =
-                theme.badgeShadows ?? [
-                  "rgba(122,35,0,0.3)",
-                  "rgba(116,196,37,0.3)",
-                  "rgba(116,196,37,0.3)",
-                ];
-              const textColors =
-                theme.badgeTextColors ?? ["#ffffff", "#ffffff", "#ffffff"];
+              const bgColors = theme.badgeColors ?? [
+                "#74C425",
+                "#74C425",
+                "#74C425",
+              ];
+              const shadowColors = theme.badgeShadows ?? [
+                "rgba(122,35,0,0.3)",
+                "rgba(116,196,37,0.3)",
+                "rgba(116,196,37,0.3)",
+              ];
+              const textColors = theme.badgeTextColors ?? [
+                "#ffffff",
+                "#ffffff",
+                "#ffffff",
+              ];
 
               return (
                 <CancerTypeBadge
@@ -429,10 +435,201 @@ export default function CancerLearnMore({ cancerKey, onNavigate, fallbackTitle }
         </div>
       </section>
 
+      {/* NATURAL IMMUNOTHERAPY CAUSES */}
+      {nitCauses?.items?.length > 0 && (
+        <section
+          className="py-8 px-6"
+          style={{ backgroundColor: theme.primaryBg }}
+        >
+          <div className="mx-auto max-w-5xl space-y-8 text-center">
+            <div className="space-y-2">
+              <p
+                className="text-xs font-semibold uppercase tracking-[0.35em]"
+                style={{ color: theme.headerText }}
+              >
+                Natural Immunotherapy
+              </p>
+              <h2
+                className="text-2xl font-bold md:text-3xl"
+                style={{ color: theme.bodyText }}
+              >
+                What is the cause of {detail.name} from the perspective of
+              </h2>
+              <h3
+                className="text-2xl font-extrabold uppercase tracking-wide md:text-3xl"
+                style={{ color: theme.headerText }}
+              >
+                Natural Immunotherapy?
+              </h3>
+              <div
+                className="mx-auto mt-2 h-[2px] w-32"
+                style={{ backgroundColor: theme.headerText }}
+              />
+            </div>
+
+            <div className="mx-auto max-w-4xl">
+              <div className="rounded-[30px] bg-gradient-to-br from-[#fceaff] via-[#e7b9f7] to-[#c425b4] p-[3px] shadow-xl">
+                <div className="rounded-[26px] bg-[#c425b4] px-8 py-10 md:px-12">
+                  <ol className="list-decimal list-inside space-y-3 text-left text-lg font-semibold leading-relaxed text-white md:text-xl">
+                    {nitCauses.items.map((cause, index) => (
+                      <li key={`${cause}-${index}`}>{cause}</li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            {/* HOW NIT WORKS? */}
+            <div className="mt-10 flex justify-center px-4">
+              <h3
+                className="text-center text-[48px] font-bold leading-[65px] text-black"
+                style={{ fontFamily: "'Old Standard TT', serif" }}
+              >
+                HOW <span className="text-[#C425B4]">NIT</span> WORKS?
+              </h3>
+            </div>
+
+            <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 pt-6">
+              <div className="relative w-full overflow-hidden rounded-[28px] bg-black shadow-[0_30px_65px_rgba(196,37,180,0.25)]">
+                <video
+                  className="h-full w-full object-cover"
+                  src={nitVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={heroSrc}
+                />
+              </div>
+
+              <span
+                className="text-sm font-medium uppercase tracking-[0.18em]"
+                style={{ color: theme.bodyText }}
+              >
+                Click here to know more
+              </span>
+
+              <a
+                href={detail.ctaUrl ?? "https://dantura.com/"}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-[64px] items-center justify-center rounded-full px-8 text-sm font-semibold uppercase tracking-[0.10em] text-white shadow-[0_25px_50px_rgba(196,37,180,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_60px_rgba(196,37,180,0.3)]"
+                style={{ backgroundColor: theme.headerText }}
+              >
+                Start your healthy journey with Natural Immunotherapy today!
+              </a>
+              
+            </div>
+            <div className="mt-6 w-full max-w-7xl mx-auto flex items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={() => handleNavigateTo(prevKey)}
+                disabled={!prevKey}
+                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#C425B4] tracking-wide transition disabled:opacity-40"
+                style={{
+                  borderColor: theme.headerText,
+                  backgroundColor: "white",
+                }}
+              >
+                <FaArrowCircleLeft size={20} />
+                Prev.
+              </button>
+
+              
+
+              <button
+                type="button"
+                onClick={() => handleNavigateTo(nextKey)}
+                disabled={!nextKey}
+                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#C425B4] tracking-wide transition disabled:opacity-40"
+                style={{
+                  borderColor: theme.headerText,
+                  backgroundColor: "white",
+                }}
+              >
+                Next
+                <FaArrowCircleRight size={20} />
+              </button>
+            </div>
+
+            {/* Treatment Illustration */}
+            
+          </div>
+        </section>
+      )}
+      {faqs.length > 0 && (
+        <section
+          className="pt-2 pb-16 px-6"
+          style={{ backgroundColor: theme.primaryBg }}
+        >
+          <div className="w-full pt-2">
+            <div className="mx-auto flex justify-center">
+              <img
+                src={treatmentIcon}
+                alt="Oil Massage illustration"
+                className="h-[250px] w-[250px] object-contain"
+              />
+            </div>
+          </div>
+          {/* FAQ TITLE */}
+          <div className="text-center space-y-2 mb-10">
+            <h5
+              className="text-center text-[48px] font-bold leading-[65px]"
+              style={{ color: "#000000", fontFamily: "'Old Standard TT', serif" }}
+            >
+              Frequently Asked Questions
+            </h5>
+
+            <div
+              className="mx-auto h-[2px] w-32"
+              style={{ backgroundColor: "#C425B4" }}
+            />
+          </div>
+
+          {/* FAQ BOX */}
+          <div className="mx-auto w-full max-w-5xl space-y-6 rounded-[32px] bg-[#F6D0FC] p-6 shadow-[0_25px_60px_rgba(196,37,180,0.15)]">
+            {faqs.map((item, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <div
+                  key={index}
+                  className="overflow-hidden rounded-2xl border bg-white"
+                  style={{ borderColor: theme.divider }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                    className={`flex w-full items-center justify-between px-4 py-3 text-left transition font-semibold ${
+                      isOpen ? "bg-[#C425B4] text-white" : "text-[#3f1b3d] bg-white"
+                    }`}
+                  >
+                    {item.q}
+                    <span
+                      className="text-xl font-bold"
+                      style={{ color: isOpen ? "#ffffff" : "#C425B4" }}
+                    >
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-4 pb-4 text-sm text-[#3f1b3d]">
+                      {item.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {hasRecoveryImages && (
         <section className="py-16 bg-white">
           <div className="mx-auto max-w-6xl px-6 text-center">
-            <h2 className="text-3xl font-bold">PATIENT&apos;S RECOVERY GALLERY</h2>
+            <h2 className="text-3xl font-bold">
+              PATIENT&apos;S RECOVERY GALLERY
+            </h2>
             <div
               className="mx-auto mt-2 mb-10 h-[2px] w-32"
               style={{ backgroundColor: theme.divider }}

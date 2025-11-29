@@ -148,40 +148,289 @@ const ORAL_RECOVERY_IMAGES = buildRecoveryImages("Patient's Recovery Gallery");
 /* --------------------------------------------------
    NATURAL IMMUNOTHERAPY CAUSE LIBRARY (Cancer)
 ---------------------------------------------------*/
-const buildCancerNitCauses = (name, focus) => ({
-  title: `What is the cause of ${name} from the perspective of Natural Immunotherapy`,
-  items: [
-    `Chronic inflammation creating a pro-mutation environment in ${focus}`,
-    "Immune surveillance breakdown allowing malignant cells to persist",
-    "Toxin and oxidative load overwhelming detox and DNA repair",
-    `Mitochondrial stress driving aggressive signaling in ${focus}`,
-    "Microvascular and oxygen imbalance fueling tumour growth",
-    "Metabolic and hormonal stress amplifying proliferative pathways",
-    "Gut–immune axis disruption elevating systemic inflammatory drive",
-  ],
-});
-
 export const CANCER_NIT_CAUSES = {
-  blood: buildCancerNitCauses("Blood Cancer", "blood-forming tissues"),
-  bone: buildCancerNitCauses("Bone Cancer", "bone matrix and marrow spaces"),
-  brain: buildCancerNitCauses("Brain Cancer", "brain and CNS tissue"),
-  breast: buildCancerNitCauses("Breast Cancer", "breast ducts and lobules"),
-  cervix: buildCancerNitCauses("Cervix Cancer", "cervical epithelium"),
-  colon: buildCancerNitCauses("Colon Cancer", "colon and rectal lining"),
-  eye: buildCancerNitCauses("Eye Cancer", "ocular structures"),
-  "gall-bladder": buildCancerNitCauses("Gall Bladder Cancer", "biliary tissues"),
-  "kidney-cancer": buildCancerNitCauses("Kidney Cancer", "renal tissue"),
-  "liver-cancer": buildCancerNitCauses("Liver Cancer", "hepatic tissue"),
-  lungs: buildCancerNitCauses("Lungs Cancer", "airways and alveoli"),
-  oral: buildCancerNitCauses("Oral Cancer", "oral mucosa"),
-  pancreas: buildCancerNitCauses("Pancreas Cancer", "pancreatic tissue"),
-  prostate: buildCancerNitCauses("Prostate Cancer", "prostatic tissue"),
-  skin: buildCancerNitCauses("Skin Cancer", "cutaneous layers"),
-  stomach: buildCancerNitCauses("Stomach Cancer", "gastric lining"),
-  throat: buildCancerNitCauses("Throat Cancer", "pharyngeal tissue"),
-  thyroid: buildCancerNitCauses("Thyroid Cancer", "thyroid tissue"),
-  tongue: buildCancerNitCauses("Tongue Cancer", "tongue epithelium"),
+  blood: {
+    title:
+      "What is the cause of Blood Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic Systemic Inflammation Creating a Mutation-Prone Environment",
+      "Immune Surveillance Breakdown",
+      "Toxin Accumulation in Bone Marrow",
+      "Mitochondrial Failure in Blood-Forming Cells",
+      "Gut-Immune-Marrow Axis Disruption",
+      "Viral or Microbial Stress Overloading the Immune System",
+      "Metabolic Stress Shifting Cell Growth Pathways",
+    ],
+  },
+  bone: {
+    title:
+      "What is the cause of Bone Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic Inflammation Weakening Bone Microenvironment",
+      "Immune Surveillance Failure in Bone and Marrow",
+      "Toxin and Chemical Burden Accumulating in Bone Tissue",
+      "Mitochondrial Collapse in Bone-Forming Cells",
+      "Disruption of Bone Remodeling Balance",
+      "Gut-Immune-Bone Axis Instability",
+      "Viral or Microbial Triggers Stressing Bone Immunity",
+      "Metabolic Stress Creating a Tumor-Friendly Terrain",
+    ],
+  },
+  brain: {
+    title:
+      "What is the cause of Brain Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Breakdown of the Brain's Internal Glymphatic Flow",
+      "Electrical Coherence Failure in Neuronal Networks",
+      "Neuroinflammation From Microglial Over-Sensitization",
+      "Breakdown of the Blood-Brain Barrier \"Selective Gatekeeping\"",
+      "Metabolic Shock From Unstable Glucose-Ketone Switching",
+      "Cerebrospinal Fluid (CSF) Flow Interruptions Around Ventricles",
+      "Neurochemical Smog From Excess Neurotransmitter Byproducts",
+      "Electromagnetic Field (EMF) Stress Amplifying Ion Channel Instability",
+      "Chronic Emotional-Cognitive Overload Distorting Neuroimmune Harmony",
+    ],
+  },
+  breast: {
+    title:
+      "What is the cause of Breast Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic Inflammation Creating a Pro-Tumor Internal Terrain",
+      "Hormonal Imbalance Amplifying Growth Signals",
+      "Toxin Burden Affecting Breast and Lymphatic Tissues",
+      "Immune Surveillance Exhaustion",
+      "Mitochondrial Breakdown in Breast Cells",
+      "Lymphatic Congestion Limiting Detox and Immune Support",
+      "Gut-Immune-Hormone Axis Imbalance",
+      "Metabolic Stress and Insulin Overload",
+    ],
+  },
+  cervix: {
+    title:
+      "What is the cause of Cervix Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Persistent Viral Stress (HPV) Meeting a Weakened Immune Barrier",
+      "Cervical Microenvironment Becoming Vulnerable to Cellular Instability",
+      "Hormonal and Sexual-Health-Related Immune Modulation",
+      "Disrupted Cervicovaginal Microbiome Reducing Viral Clearance",
+      "Chronic Inflammation Impairing DNA Repair Systems",
+      "Excess Toxin Load Accumulating in Pelvic and Lymphatic Tissues",
+      "Mitochondrial Weakness in Cervical Epithelial Cells",
+      "Gut-Immune-Pelvic Axis Imbalance Altering Immune Calibration",
+      "Stress-Induced Suppression of Mucosal Immunity",
+    ],
+  },
+  colon: {
+    title:
+      "What is the cause of Colon Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic Irritation Inside the Colonic Lining",
+      "Gut Dysbiosis Fueling Mutagenic Conditions",
+      "Compromised Mucosal Barrier Allowing Toxic Absorption",
+      "Stagnant Digestive Transit Increasing Carcinogen Exposure",
+      "Excess Toxin Load Passing Directly Through the Colon",
+      "Mitochondrial Exhaustion in Colon Epithelial Cells",
+      "Immune Surveillance Failure in the Gut Wall",
+      "Metabolic Stress Changing Cell-Regulation Signals",
+      "Bile Acid Imbalance Altering Epithelial Fate",
+    ],
+  },
+  eye: {
+    title:
+      "What is the cause of Eye Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Photonic Stress Overwhelming Retinal and Ocular Immunity",
+      "Oxidative Pressure on Highly Metabolic Ocular Tissues",
+      "Localized Immune Suppression in the \"Immune-Privileged\" Eye",
+      "Environmental Toxin Exposure Affecting the Eye's Surface and Pigment Cells",
+      "Viral or Microbial Factors Influencing Ocular Cell Stability",
+      "Circulatory and Lymphatic Drainage Imbalance in Ocular Tissues",
+      "Disrupted Melanin Function in Pigmented Ocular Layers",
+      "Gut-Immune-Eye Axis Dysregulation Influencing Ocular Immunity",
+    ],
+  },
+  "gall-bladder": {
+    title:
+      "What is the cause of Gall Bladder Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Prolonged Immune Irritation From Recurrent Bile Flow Disruptions",
+      "Structural Stiffness of the Gallbladder Wall Reducing Tissue Resilience",
+      "Distortion of the Bile-Mucus Interface",
+      "Microbial Shifts in the Biliary Tract Altering Local Chemistry",
+      "Overconcentration of Cholesterol and Pigments Creating a Reactive Environment",
+      "Imbalanced Neural Control of the Gallbladder",
+      "Loss of Antioxidant Buffering Within the Biliary System",
+      "Distorted Mineral and Electrolyte Gradients Inside Gallbladder Cells",
+      "Gut-Bile Communication Breakdown Disrupting Immune Calibration",
+    ],
+  },
+  "kidney-cancer": {
+    title:
+      "What is the cause of Kidney Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Failure of Renal Filter Intelligence in Detecting Cellular Abnormalities",
+      "Overaccumulation of Metabolic Residuals in Renal Tissue",
+      "Distorted Pressure Patterns Inside the Nephrons",
+      "Loss of Renal Temperature Micro-Stability",
+      "Shift in Renal Fat Composition and Local Lipid Signaling",
+      "Energetic Congestion in the Renal Meridian (NIT biofield perspective)",
+      "Breakdown of Renal Cellular Polarity",
+      "Interruption of the Kidney's Circadian Detox Cycle",
+      "Deep Immune Fatigue in Renal Interstitium",
+    ],
+  },
+  "liver-cancer": {
+    title:
+      "What is the cause of Liver Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Overwhelmed Hepatic Decision System for Sorting Safe vs. Unsafe Compounds",
+      "Impaired Regenerative Precision in the Liver's Repair Cycles",
+      "Stagnation of Intrahepatic Blood Flow Creating Patchy Oxygen Zones",
+      "Transformation of Bile into a Reactive Chemical Reservoir",
+      "Bioelectric Drift in Hepatic Cellular Networks",
+      "Viral Residuals Embedding Into the Liver's Regulatory Circuits",
+      "Collapse of Liver-Lymph Communication",
+      "Distortion of Copper, Iron, and Metal-Handling Pathways",
+      "Loss of Hepatic Circadian Rhythmicity Governing Detox Cycles",
+    ],
+  },
+  lungs: {
+    title:
+      "What is the cause of Lungs Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Overload of Inhaled Particles Disrupting Airway Immune Calibration",
+      "Failure of Alveolar Self-Cleaning Microcycles",
+      "Structural Micro-Vibrational Disturbances From Chronic Cough, Irritation, or Airway Stress",
+      "Disrupted Air-Blood Interface Chemistry",
+      "Biofilm Formation Deep in the Bronchial Tree",
+      "Mitochondrial Exhaustion in Oxygen-Rich but Pollutant-Exposed Tissue",
+      "Impaired Lung-Diaphragm Lymphatic Pumping",
+      "Neurogenic Inflammation From Disturbed Pulmonary Nerve Signaling",
+      "Imbalanced Metal-Ion Chemistry From Inhaled or Internal Sources",
+    ],
+  },
+  oral: {
+    title:
+      "What is the cause of Oral Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Breakdown of Salivary Defense Chemistry",
+      "Chronic Micro-Abrasions Creating Repeated Repair Stress",
+      "Reactive Metabolites Formed Directly by Oral Bacteria",
+      "Electrical Disturbance From Multi-Metal Dental Materials",
+      "Disruption of the Oral-Nasal Breathing Ratio",
+      "Imbalance in Tongue-Mucosa Mechanical Signaling",
+      "Accumulation of Heat and Chemical Residue From Hot Foods and Drinks",
+      "Stagnation in the Oral Lymphatic Drainage Pathways",
+      "Loss of Oral Biofield Coherence From Chronic Chemical Exposure",
+    ],
+  },
+  pancreas: {
+    title:
+      "What is the cause of Pancreas Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Breakdown of Enzyme Secretion Rhythms Creating Internal Chemical Shock",
+      "Stagnation of Pancreatic Juices Increasing Ductal Pressure",
+      "Metabolic Overload Forcing the Pancreas Into Permanent Emergency Mode",
+      "Toxic Bile Refluxing Into the Pancreas",
+      "Bioelectric Disruption Around the Pancreatic Plexus",
+      "Hidden Microbial Signatures Reaching the Pancreas Through Back Migration",
+      "Pancreatic Fat Infiltration Altering Local Chemical Signaling",
+      "Lymphatic Flow Collapse in the Pancreatic Head and Duodenal Region",
+      "Loss of Pancreatic Circadian Coordination With Liver and Gut",
+    ],
+  },
+  prostate: {
+    title:
+      "What is the cause of Prostate Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Stagnant Prostatic Fluid Creating a Chemical Pressure Cooker",
+      "Disruption of the Prostate's Androgen-Detox Synchronization",
+      "Micro-Inflammatory Cycles Caused by Recurrent Pelvic Congestion",
+      "Biofilm Formation in Prostatic Ducts Altering Local Chemistry",
+      "Shifts in Seminal Zinc Concentration Disrupting Cellular Stability",
+      "Neuro-Endocrine Mis-Signaling From Pelvic Nerve Networks",
+      "Distortion of the Prostate-Lymphatic Interface",
+      "Chronic Chemical Exposure via the Lower Urinary Tract",
+      "Disrupted Circadian-Androgen Rhythm Affecting Prostate Renewal Cycles",
+    ],
+  },
+  skin: {
+    title:
+      "What is the cause of Skin Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Breakdown of the Skin's Surface Biofilm Shield",
+      "Ultraviolet Rhythm Disruption Rather Than UV Exposure Alone",
+      "Failure of the Skin's Electrical Conductivity Grid",
+      "Chemical Residue Accumulation From Topical Products",
+      "Melanin Mis-Loading and Pigment Exhaustion",
+      "Temperature Shock Cycles From Rapid Hot-Cold Exposure",
+      "Stagnation in Dermal Lymph Flow Around Hair Follicles",
+      "Photochemical Reactions Between Pollutants and Sunlight",
+      "Disruption of the Skin-Nerve-Immune Triad",
+    ],
+  },
+  stomach: {
+    title:
+      "What is the cause of Stomach Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Erosion of Gastric Acid Intelligence (Acid-Mucus Coordination Failure)",
+      "Distorted Gastric Stretch-Release Signaling (Mechanical Rhythm Breakdown)",
+      "Transformation of Food Residues Into Reactive Compounds in a Stressed Stomach",
+      "Micro-Pocket Stagnation in Gastric Folds",
+      "Thermal-Chemical Shock From Rapid Temperature Swings of Ingested Food",
+      "Breakdown of Gastric-Vagal Communication",
+      "Conversion of H. pylori From a Microbial Visitor Into a Terrain-Dependent Irritant",
+      "Impaired Mineral-Acid Regulation (Zinc, Selenium, and Iron Imbalance)",
+      "Bile Intrusion Into the Stomach Through a Weak Pyloric Valve",
+    ],
+  },
+  throat: {
+    title:
+      "What is the cause of Throat Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Collapse of the Throat's Mucosal Hydration Matrix",
+      "Vibration-Induced Micro-Trauma From Voice Overuse",
+      "Transformation of Inhaled Chemicals Into Reactive Vapors in the Warm Throat Cavity",
+      "Breakdown of the Saliva-Throat Immunity Exchange",
+      "Stomach-to-Throat Acid Vapor Micro-Reflux",
+      "Shift in Throat Temperature From Rapid Hot-Cold Alternation",
+      "Persistent Viral Imprinting That Alters Local Immune Patterns",
+      "Obstruction of Throat Lymphatic Drainage",
+      "Loss of Neuro-Sensory Coordination Between Throat and Breathing Reflexes",
+    ],
+  },
+  thyroid: {
+    title:
+      "What is the cause of Thyroid Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Disruption of the Thyroid's Iodine-Peroxide Coupling System",
+      "Stagnation of Colloid Flow Inside Thyroid Follicles",
+      "Distorted Feedback Loops Between Thyroid and Pituitary",
+      "Electromagnetic Noise Affecting Thyroid Surface Signaling",
+      "Chemically Reactive Neck Lymphatic Residues",
+      "Autoimmune Impressioning That Reshapes Cell Behavior",
+      "Microbial Toxins Reaching the Thyroid Through Oral-Neck Pathways",
+      "Distortion of Thyroid Fat Pad Signaling",
+      "Loss of Circadian-Thyroid Coherence",
+    ],
+  },
+  tongue: {
+    title:
+      "What is the cause of Tongue Cancer from the perspective of Natural Immunotherapy",
+    items: [
+      "Failure of the Tongue's Rapid-Healing Cycle",
+      "Chemical Fermentation on the Tongue Surface",
+      "Papillae Micro-Trauma From Mechanical Overuse",
+      "Breakdown of Saliva-Tastebud Immune Communication",
+      "Residual Heat Zones From Hot Food Trapping in Tongue Grooves",
+      "Neuro-Taste Mis-Signaling From Sensory Overstimulation",
+      "Biofilm Stratification on the Dorsal Tongue Surface",
+      "Metal Ion Exchange From Dental Devices Contacting the Tongue",
+      "Lymphatic Flow Interruption Beneath the Floor of the Mouth",
+    ],
+  },
 };
+
 
 const SYMPTOM_IMAGE_ALIASES = {
   "nausea-or-vomiting": {
