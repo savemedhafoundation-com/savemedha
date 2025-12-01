@@ -1,4 +1,4 @@
-import React, {
+import {
   useCallback,
   useEffect,
   useMemo,
@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { ArrowLeft, ArrowRight, Phone, Play, Star, X } from "lucide-react";
-import { MdAddCall } from "react-icons/md";
+
 import PatientStories from "./PatientStories";
 
 import DoctorImg from "../assets/Photo/doc.png";
@@ -297,6 +297,7 @@ export default function CancerTreatmentPage() {
   const [activeVideoId, setActiveVideoId] = useState(
     initialHealthVideos[0]?.id || null
   );
+  const [visibleCount, setVisibleCount] = useState(5);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -977,13 +978,12 @@ export default function CancerTreatmentPage() {
       <div className="bg-transparent rounded-t-[60px] pt-12 pb-16 px-8">
         {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
-          {healthVideos.slice(0, 20).map((video, index) => (
+          {healthVideos.slice(0, visibleCount).map((video) => (
             <button
               key={video.id}
               onClick={() => handleVideoSelect(video)}
               className="group flex flex-col items-center text-center transform transition-all duration-300 hover:scale-105"
             >
-              {/* Video Thumbnail */}
               <div className="relative w-full mb-0">
                 <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
                   <img
@@ -1004,13 +1004,12 @@ export default function CancerTreatmentPage() {
                 </div>
               </div>
 
-              {/* Title & Meta */}
               <div className="space-y-2 bg-gradient-to-br from-[#D6FFBB] to-[#FFFFFF] rounded-3xl p-4">
                 <h3 className="font-bold text-sm leading-tight line-clamp-2 text-gray-800 group-hover:text-[#74C425] transition-colors">
-                  
+                  {video.title}
                 </h3>
                 <p className="text-base text-[#155300]">
-                  Lorem ipsum is simply dummy text of the printing and typesetting industry.
+                  {video.publishedAt ? formatRelativeTime(video.publishedAt) : ""}
                 </p>
                 <span className="inline-block px-6 py-2 bg-[#74C425] text-white text-xs font-bold rounded-full hover:bg-[#1118A6] transition-colors">
                   WATCH NOW
@@ -1020,15 +1019,17 @@ export default function CancerTreatmentPage() {
           ))}
         </div>
 
-        {/* Watch More Button */}
-        <div className="text-center mt-12">
-          <button className="inline-flex items-center gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full shadow-2xl transition-all transform hover:scale-105">
-            WATCH MORE
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <Play className="text-red-600" size={28} fill="red" />
-            </div>
-          </button>
-        </div>
+        {/* LOAD MORE BUTTON */}
+        {visibleCount < healthVideos.length && (
+          <div className="text-center mt-10">
+            <button
+              onClick={() => setVisibleCount((prev) => prev + 5)}
+              className="px-10 py-4 bg-[#74C425] hover:bg-[#1118A6] text-white text-lg font-bold rounded-full shadow-lg transition-all"
+            >
+              LOAD MORE VIDEOS
+            </button>
+          </div>
+        )}
       </div>
     </div>
   </div>

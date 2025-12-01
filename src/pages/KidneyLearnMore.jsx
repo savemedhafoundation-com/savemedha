@@ -358,11 +358,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
                 type="button"
                 onClick={() => handleNavigateTo(prevKey)}
                 disabled={!prevKey}
-                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#5b1e13] bg-white tracking-wide transition  cursor-pointer hover:bg-[#5b1e13] hover:text-white"
-                style={{
-                  borderColor: "#5b1e13",
-                  backgroundColor: "white",
-                }}
+                className="inline-flex items-center gap-2 rounded-full border border-[#5b1e13] px-6 py-2 text-[15px] font-semibold text-[#5b1e13] bg-white tracking-wide transition cursor-pointer hover:bg-[#5b1e13] hover:text-white disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-[#5b1e13]"
               >
                 <IoIosArrowBack size={20} />
                 Prev.
@@ -374,11 +370,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
                 type="button"
                 onClick={() => handleNavigateTo(nextKey)}
                 disabled={!nextKey}
-                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#5b1e13] tracking-wide transition disabled:opacity-40 cursor-pointer hover:bg-[#5b1e13] hover:text-white disabled:hover:bg-white disabled:hover:text-[#5b1e13]"
-                style={{
-                  borderColor: "#5b1e13",
-                  backgroundColor: "white",
-                }}
+                className="inline-flex items-center gap-2 rounded-full border border-[#5b1e13] px-6 py-2 text-[15px] font-semibold text-[#5b1e13] tracking-wide transition disabled:opacity-40 cursor-pointer bg-white hover:bg-[#5b1e13] hover:text-white disabled:hover:bg-white disabled:hover:text-[#5b1e13]"
               >
                 Next
                 <IoIosArrowForward size={20} />

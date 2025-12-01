@@ -10,7 +10,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
 import nitVideo from "../assets/video/Cancer Recovery Animation.mp4";
 import treatmentIcon from "../assets/Photo/Treatment icon.png";
-import oilMassage from "../assets/Photo/Oil Massage.jpeg";
+
 
 // Load all hero images (1.png, 2.png, etc.)
 const heroModules = import.meta.glob(
@@ -286,15 +286,15 @@ export default function CancerLearnMore({
 
           {/* RIGHT CONTENT */}
           <div
-            className="self-start -mt-3 p-5"
+            className="self-start -mt-3 p-5 "
             style={{ color: theme.primaryText }}
           >
-            <h2 className="font-koho text-[32px] font-bold mb-4">
+            <h2 className="font-koho text-[32px] font-bold mb-4 ">
               {detail.descriptionTitle}
             </h2>
 
             <blockquote
-              className="italic text-lg mb-4 leading-relaxed font-bold"
+              className="italic text-lg mb-4   leading-relaxed font-bold"
               style={{ color: theme.quoteText }}
             >
               {detail.heroQuote}
@@ -520,16 +520,12 @@ export default function CancerLearnMore({
               </a>
               
             </div>
-            <div className="mt-6 w-full max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <div className="mt-6 w-full max-w-7xl mx-auto flex items-center justify-between gap-4 ">
               <button
                 type="button"
                 onClick={() => handleNavigateTo(prevKey)}
                 disabled={!prevKey}
-                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#C425B4] tracking-wide transition disabled:opacity-40"
-                style={{
-                  borderColor: theme.headerText,
-                  backgroundColor: "white",
-                }}
+                className="inline-flex items-center gap-2 rounded-full border border-[#C425B4] px-6 py-2 text-[15px] font-semibold text-[#C425B4] tracking-wide transition disabled:opacity-40 bg-white hover:bg-[#C425B4] hover:text-white disabled:hover:bg-white disabled:hover:text-[#C425B4]"
               >
                 <FaArrowCircleLeft size={20} />
                 Prev.
@@ -541,11 +537,7 @@ export default function CancerLearnMore({
                 type="button"
                 onClick={() => handleNavigateTo(nextKey)}
                 disabled={!nextKey}
-                className="inline-flex items-center gap-2 rounded-full border px-6 py-2 text-[15px] font-semibold text-[#C425B4] tracking-wide transition disabled:opacity-40"
-                style={{
-                  borderColor: theme.headerText,
-                  backgroundColor: "white",
-                }}
+                className="inline-flex items-center gap-2 rounded-full border border-[#C425B4] px-6 py-2 text-[15px] font-semibold text-[#C425B4]  tracking-wide transition disabled:opacity-40 bg-white hover:bg-[#C425B4] hover:text-white disabled:hover:bg-white disabled:hover:text-[#C425B4]"
               >
                 Next
                 <FaArrowCircleRight size={20} />

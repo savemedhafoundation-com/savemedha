@@ -8,6 +8,7 @@ const Contact = ({ onNavigate }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,6 +27,7 @@ const Contact = ({ onNavigate }) => {
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
+        phone: formData.phone,
         message: formData.message,
         timestamp: new Date().toLocaleString(),
         website_origin: typeof window !== "undefined" ? window.location.origin : "",
@@ -38,7 +40,7 @@ const Contact = ({ onNavigate }) => {
       await emailjs.send(serviceId, templateId, templateParams, publicKey);
 
       setStatus("✅ Thank you! A practitioner will reply within 1 business day.");
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
       console.error("EmailJS error:", error);
       setStatus("❌ Sorry, something went wrong. Please try again later.");
@@ -103,6 +105,21 @@ const Contact = ({ onNavigate }) => {
                   required
                   className="mt-2 w-full rounded-lg border border-slate-200 px-4 py-3 text-sm shadow-sm focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
                   placeholder="you@email.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-slate-700">
+                  Phone
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="mt-2 w-full rounded-lg border border-slate-200 px-4 py-3 text-sm shadow-sm focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200"
+                  placeholder="Enter you phone number"
                 />
               </div>
 
