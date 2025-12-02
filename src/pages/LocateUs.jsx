@@ -605,6 +605,7 @@ const sendOtp = async () => {
                 <div className="bg-gradient-to-b from-[#74C425] to-[#385E12] text-white rounded-2xl p-10 text-center space-y-8 shadow-xl h-full pt-10 relative">
                   <img
                     src={contactcall}
+                    alt="Contact"
                     className="absolute h-[180px] w-[200px] top-[-150px] right-[70px]"
                   ></img>
                   <div className="flex flex-col items-center gap-2">
