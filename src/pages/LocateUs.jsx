@@ -450,7 +450,6 @@ const sendOtp = async () => {
 
           {/* Query Form Section */}
           <div
-            // style={{ backgroundImage: `url(${contactimagebackdrop})` }}
             className="bg-cover rounded-2xl shadow-2xl p-8 md:p-12 max-w-8xl mx-auto bg-cover bg-center relative"
           >
             <div className="absolute rounded-2xl"></div>
