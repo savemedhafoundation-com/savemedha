@@ -10,7 +10,7 @@ import contact_call from "../assets/photo/contact_call.png";
 import { MdEmail } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
 import { FaLinkedin } from "react-icons/fa";
-// import { getRecaptchaVerifier, clearRecaptcha,auth} from "../Firebase/Setup";
+ import { getRecaptchaVerifier, clearRecaptcha,auth} from "../Firebase/Setup";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { createRecaptcha, clearRecaptcha,auth } from "../Firebase/Setup";
 import contactBanner from "../assets/Photo/Contact-us.png";
