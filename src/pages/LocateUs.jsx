@@ -5,15 +5,15 @@ import Navbar from "../components/Navbar";
 import { ImLocation } from "react-icons/im";
 import { GoPin } from "react-icons/go";
 import Footer from "../components/Footer";
-import contact_image from "../assets/photo/contact-image.png";
-import contact_call from "../assets/photo/contact_call.png";
+import contactimagebackdrop from "../assets/photo/contactimagebackdrop.png";
+import contactcall from "../assets/photo/contactcall.png";
 import { MdEmail } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
 import { FaLinkedin } from "react-icons/fa";
 // import { getRecaptchaVerifier, clearRecaptcha,auth} from "../Firebase/Setup";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { createRecaptcha, clearRecaptcha,auth } from "../Firebase/Setup";
-import contactBanner from "../assets/Photo/Contact-us.png";
+import contactusBanner from "../assets/Photo/Contactusbanner.png";
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {
@@ -360,7 +360,7 @@ const sendOtp = async () => {
     <>
       <Navbar currentPage="locateus" onNavigate={onNavigate} />
       <img
-        src={contactBanner}
+        src={contactusBanner}
         alt="Locate Us Banner"
         className="w-full h-[400px] object-cover"
       />
@@ -452,7 +452,7 @@ const sendOtp = async () => {
 
           {/* Query Form Section */}
           <div
-            style={{ backgroundImage: `url(${contact_image})` }}
+            style={{ backgroundImage: `url(${contactimagebackdrop})` }}
             className="bg-cover rounded-2xl shadow-2xl p-8 md:p-12 max-w-8xl mx-auto bg-cover bg-center relative"
           >
             <div className="absolute rounded-2xl"></div>
@@ -606,7 +606,7 @@ const sendOtp = async () => {
                 {/* Right */}
                 <div className="bg-gradient-to-b from-[#74C425] to-[#385E12] text-white rounded-2xl p-10 text-center space-y-8 shadow-xl h-full pt-10 relative">
                   <img
-                    src={contact_call}
+                    src={contactcall}
                     className="absolute h-[180px] w-[200px] top-[-150px] right-[70px]"
                   ></img>
                   <div className="flex flex-col items-center gap-2">
