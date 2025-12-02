@@ -31,7 +31,7 @@ const createDetail = ({
   descriptionTitle: `What is ${name}?`,
   heroQuote:
     heroQuote ??
-    `"${name} impacts how effectively your heart pumps, nourishes vital organs, and responds to stress—targeted habits keep it resilient."`,
+    `"${name} impacts how effectively your heart pumps, nourishes vital organs, and responds to stress -- targeted habits keep it resilient."`,
   quickFacts:
     quickFacts ?? [
       "Circulation and inflammation control are key levers for heart recovery.",
@@ -116,6 +116,64 @@ export const HEART_DETAILS = {
     ],
     relatedTypes: ["HFrEF", "HFpEF"],
   }),
+};
+
+/* --------------------------------------------------
+   NATURAL IMMUNOTHERAPY CAUSE LIBRARY (Heart)
+---------------------------------------------------*/
+export const HEART_NIT_CAUSES = {
+  "hypertension-control": {
+    title:
+      "What is the cause of Hypertension-Driven Heart Strain from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic vascular inflammation from pressure and sodium stress",
+      "Sympathetic overdrive and cortisol keeping vessels tense",
+      "Endothelial dysfunction reducing nitric oxide and blood flow",
+      "Kidney-heart signaling imbalance elevating fluid load and pressure",
+      "Micronutrient depletion (magnesium, potassium) destabilizing vessels",
+      "Sleep-disordered breathing provoking nightly pressure spikes",
+      "Sedentary circulation stagnation creating constant shear stress",
+    ],
+  },
+  "cholesterol-reset": {
+    title:
+      "What is the cause of Cholesterol Imbalance from the perspective of Natural Immunotherapy",
+    items: [
+      "Hepatic lipid metabolism strain from insulin resistance",
+      "Chronic inflammation oxidizing LDL and irritating vessel walls",
+      "Sluggish bile flow slowing cholesterol clearance",
+      "Gut microbiome imbalance disrupting bile acid and lipid signaling",
+      "Mitochondrial sluggishness in liver and vascular cells",
+      "Nutrient gaps (omega-3s, fiber, antioxidants) impairing lipid transport",
+      "Stress hormones increasing triglyceride production",
+    ],
+  },
+  "arrhythmia-care": {
+    title:
+      "What is the cause of Arrhythmia from the perspective of Natural Immunotherapy",
+    items: [
+      "Autonomic imbalance between sympathetic and vagal tone",
+      "Electrolyte depletion (magnesium, potassium) destabilizing conduction",
+      "Inflammation or fibrosis around electrical pathways",
+      "Blood sugar swings stressing cardiac conduction tissue",
+      "Thyroid and adrenal stress altering rhythm stability",
+      "Gut-heart-vagus nerve irritation triggering ectopic beats",
+      "Sleep apnea or hypoxia provoking nocturnal arrhythmias",
+    ],
+  },
+  "heart-failure-support": {
+    title:
+      "What is the cause of Heart Failure from the perspective of Natural Immunotherapy",
+    items: [
+      "Chronic pressure and volume overload exhausting the myocardium",
+      "Microvascular inflammation starving heart muscle of oxygen",
+      "Mitochondrial energy deficit weakening cardiac output",
+      "Fibrotic remodeling from unresolved inflammatory signals",
+      "Kidney-heart-lung fluid signaling dysregulation",
+      "Nutrient depletion (CoQ10, amino acids, minerals) reducing contractility",
+      "Chronic stress hormones raising heart workload and oxygen demand",
+    ],
+  },
 };
 
 export const getHeartDetail = (key, fallbackName = "Heart Care") => {

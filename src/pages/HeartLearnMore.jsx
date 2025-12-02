@@ -2,8 +2,9 @@ import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { getHeartDetail } from "../data/heartLearnMore";
+import { getHeartDetail, HEART_NIT_CAUSES } from "../data/heartLearnMore";
 import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
+import nitVideo from "../assets/video/Heart Recovery Animation.mp4";
 
 const HEART_KEY_ORDER = [
   "hypertension-control",
@@ -44,6 +45,7 @@ const TreatmentBadge = ({
 
 export default function HeartLearnMore({ heartKey, onNavigate, fallbackTitle }) {
   const detail = getHeartDetail(heartKey, fallbackTitle);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const handleBack = () => onNavigate?.("treatment-detail");
   const storeLink = detail?.storeUrl || "https://dantura.com/";
   const ctaLink = "https://dantura.com/";
@@ -61,6 +63,24 @@ export default function HeartLearnMore({ heartKey, onNavigate, fallbackTitle }) 
   if (!detail) return null;
 
   const themeColor = "#b6002c";
+  const nitCauses = normalizedKey ? HEART_NIT_CAUSES[normalizedKey] : null;
+  const faqs =
+    nitCauses && nitCauses.items?.length
+      ? [
+          {
+            q: nitCauses.title,
+            a: nitCauses.items.join(" | "),
+          },
+          {
+            q: "How does Natural Immunotherapy support heart recovery?",
+            a: "It aims to calm vascular inflammation, support mitochondrial energy, balance the gut-heart axis, and lower daily stress load alongside your cardiologist's plan.",
+          },
+          {
+            q: "Which daily habits protect my heart during care?",
+            a: "Steady hydration with minerals, anti-inflammatory meals, restorative sleep, gentle movement, breathwork, and avoiding smoking or toxin exposure help lower strain on the heart.",
+          },
+        ]
+      : [];
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -174,6 +194,7 @@ export default function HeartLearnMore({ heartKey, onNavigate, fallbackTitle }) 
         </div>
       </section>
 
+      
       {/* ===================== TYPES ===================== */}
       <section className="py-16 bg-gradient-to-b from-white to-[#f1ffe7]">
         <div className="px-6 text-center">
@@ -234,6 +255,177 @@ export default function HeartLearnMore({ heartKey, onNavigate, fallbackTitle }) 
           </div>
         </div>
       </section>
+      {/* NATURAL IMMUNOTHERAPY CAUSES */}
+      {nitCauses?.items?.length > 0 && (
+        <section
+          className="py-12 px-6"
+          style={{ backgroundColor: "#fff5f8" }}
+        >
+          <div className="mx-auto max-w-5xl space-y-8 text-center">
+            <div className="space-y-2">
+              <p
+                className="text-xs font-semibold uppercase tracking-[0.35em]"
+                style={{ color: themeColor }}
+              >
+                Natural Immunotherapy
+              </p>
+              <h2
+                className="text-2xl font-bold md:text-3xl"
+                style={{ color: "#2a1a1f" }}
+              >
+                What is the cause of {detail.name} from the perspective of
+              </h2>
+              <h3
+                className="text-2xl font-extrabold uppercase tracking-wide md:text-3xl"
+                style={{ color: themeColor }}
+              >
+                Natural Immunotherapy?
+              </h3>
+              <div
+                className="mx-auto mt-2 h-[2px] w-32"
+                style={{ backgroundColor: themeColor }}
+              />
+            </div>
+
+            <div className="mx-auto max-w-3xl">
+              <p className="text-lg font-semibold uppercase tracking-wide text-[#6b2b39]">
+                {nitCauses.title}
+              </p>
+              <ul className="mt-6 space-y-3 text-left text-lg leading-relaxed text-[#3d1f27]">
+                {nitCauses.items.map((item, idx) => (
+                  <li
+                    key={item}
+                    className="flex gap-3 rounded-lg bg-white/90 p-4 shadow-sm"
+                    style={{
+                      borderLeft: `4px solid ${themeColor}`,
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.05)",
+                    }}
+                  >
+                    <span
+                      className="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold text-white"
+                      style={{
+                        backgroundColor: themeColor,
+                        minWidth: "1.5rem",
+                      }}
+                    >
+                      {idx + 1}
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+          {/* HOW NIT WORKS? */}
+          <div className="mt-12 flex justify-center px-4">
+            <h3
+              className="text-center text-[42px] font-bold leading-[58px] text-[#1c0f13] md:text-[48px] md:leading-[65px]"
+              style={{ fontFamily: "'Old Standard TT', serif" }}
+            >
+              HOW <span style={{ color: themeColor }}>NIT</span> WORKS?
+            </h3>
+          </div>
+
+          <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 pt-6">
+            <div className="relative w-full overflow-hidden rounded-[28px] bg-black shadow-[0_30px_65px_rgba(182,0,44,0.25)]">
+              <video
+                className="h-full w-full object-cover"
+                src={nitVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={detail.heroImage}
+              />
+            </div>
+
+            <span
+              className="text-sm font-medium uppercase tracking-[0.18em]"
+              style={{ color: "#4a2833" }}
+            >
+              Click here to know more
+            </span>
+
+            <a
+              href={detail.ctaUrl ?? ctaLink}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-[64px] items-center justify-center rounded-full px-8 text-sm font-semibold uppercase tracking-[0.10em] text-white shadow-[0_25px_50px_rgba(182,0,44,0.25)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_60px_rgba(182,0,44,0.3)]"
+              style={{ backgroundColor: themeColor }}
+            >
+              Start your healthy journey with Natural Immunotherapy today!
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
+
+      {faqs.length > 0 && (
+        <section
+          className="pt-6 pb-16 px-6"
+          style={{ backgroundColor: "#fff5f8" }}
+        >
+          <div className="w-full pt-4">
+            <div className="mx-auto flex justify-center">
+              <div className="h-[210px] w-[210px] rounded-full bg-white shadow-[0_18px_40px_rgba(182,0,44,0.18)] flex items-center justify-center text-center text-base font-semibold text-[#5c2732] px-6">
+                Natural Immunotherapy FAQs
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center space-y-2 mb-10 mt-6">
+            <h5
+              className="text-center text-[42px] font-bold leading-[58px] md:text-[48px] md:leading-[65px]"
+              style={{ color: "#000000", fontFamily: "'Old Standard TT', serif" }}
+            >
+              Frequently Asked Questions
+            </h5>
+
+            <div
+              className="mx-auto h-[2px] w-32"
+              style={{ backgroundColor: themeColor }}
+            />
+          </div>
+
+          <div className="mx-auto w-full max-w-5xl space-y-6 rounded-[32px] bg-white p-6 shadow-[0_25px_60px_rgba(182,0,44,0.12)]">
+            {faqs.map((item, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <div
+                  key={index}
+                  className="overflow-hidden rounded-2xl border bg-white"
+                  style={{ borderColor: "#f2d3da" }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                    className={`flex w-full items-center justify-between px-4 py-3 text-left transition font-semibold ${
+                      isOpen
+                        ? "bg-[#b6002c] text-white"
+                        : "text-[#3f1b3d] bg-white"
+                    }`}
+                  >
+                    {item.q}
+                    <span
+                      className="text-xl font-bold"
+                      style={{ color: isOpen ? "#ffffff" : themeColor }}
+                    >
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-4 pb-4 text-sm text-[#3f1b3d]">
+                      {item.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
 
       <Footer onNavigate={onNavigate} />
     </div>

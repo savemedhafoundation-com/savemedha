@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import { ImLocation } from "react-icons/im";
 import { GoPin } from "react-icons/go";
 import Footer from "../components/Footer";
-import contact_image from "../assets/photo/contact image.png";
+import contact_image from "../assets/photo/contact-image.png";
 import contact_call from "../assets/photo/contact_call.png";
 import { MdEmail } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
@@ -13,7 +13,7 @@ import { FaLinkedin } from "react-icons/fa";
 // import { getRecaptchaVerifier, clearRecaptcha,auth} from "../Firebase/Setup";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { createRecaptcha, clearRecaptcha,auth } from "../Firebase/Setup";
-import {Contact_us} from "../assets/Photo/Contact_us.png";
+import contactBanner from "../assets/Photo/Contact-us.png";
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {
@@ -360,7 +360,7 @@ const sendOtp = async () => {
     <>
       <Navbar currentPage="locateus" onNavigate={onNavigate} />
       <img
-        src={Contact_us}
+        src={contactBanner}
         alt="Locate Us Banner"
         className="w-full h-[400px] object-cover"
       />
