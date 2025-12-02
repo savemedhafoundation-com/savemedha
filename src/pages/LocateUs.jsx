@@ -13,6 +13,7 @@ import { FaLinkedin } from "react-icons/fa";
 // import { getRecaptchaVerifier, clearRecaptcha,auth} from "../Firebase/Setup";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { createRecaptcha, clearRecaptcha,auth } from "../Firebase/Setup";
+import {Contact_us} from "../assets/Photo/Contact_us.png";
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {
@@ -359,7 +360,7 @@ const sendOtp = async () => {
     <>
       <Navbar currentPage="locateus" onNavigate={onNavigate} />
       <img
-        src="src\assets\Photo\Contact_us.png"
+        src={Contact_us}
         alt="Locate Us Banner"
         className="w-full h-[400px] object-cover"
       />
