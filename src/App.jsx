@@ -304,10 +304,10 @@ function App() {
         <Route path="/sma-learn-more" element={<SMARoute />} />
         <Route path="/other-learn-more" element={<OtherRoute />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
-        <Route
+        {/* <Route
           path="/locate-us"
           element={<LocateUs onNavigate={handleNavigate} />}
-        />
+        /> */}
       </Routes>
     </div>
   );
