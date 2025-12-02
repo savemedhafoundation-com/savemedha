@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import { ImLocation } from "react-icons/im";
 import { GoPin } from "react-icons/go";
 import Footer from "../components/Footer";
-import contactimagebackdrop from "../assets/photo/contactimagebackdrop.png";
+// import contactimagebackdrop from "../assets/photo/contactimagebackdrop.png";
 import contactcall from "../assets/photo/contactcall.png";
 import { MdEmail } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
@@ -452,7 +452,7 @@ const sendOtp = async () => {
 
           {/* Query Form Section */}
           <div
-            style={{ backgroundImage: `url(${contactimagebackdrop})` }}
+            // style={{ backgroundImage: `url(${contactimagebackdrop})` }}
             className="bg-cover rounded-2xl shadow-2xl p-8 md:p-12 max-w-8xl mx-auto bg-cover bg-center relative"
           >
             <div className="absolute rounded-2xl"></div>
