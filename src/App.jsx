@@ -23,7 +23,7 @@ import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import { TREATMENTS } from "./data/treatments";
 import { navigate } from "./store";
-import LocateUs from "./pages/LocateUs";
+// import LocateUs from "./pages/LocateUs";
 import BlogsDetails from "./pages/BlogsDetails";
 
 const resolveTreatmentFromId = (id) => {
@@ -304,10 +304,10 @@ function App() {
         <Route path="/sma-learn-more" element={<SMARoute />} />
         <Route path="/other-learn-more" element={<OtherRoute />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
-        <Route
+        {/* <Route
           path="/locate-us"
           element={<LocateUs onNavigate={handleNavigate} />}
-        />
+        /> */}
       </Routes>
     </div>
   );
