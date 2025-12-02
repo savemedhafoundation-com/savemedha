@@ -5,13 +5,13 @@ import Navbar from "../components/Navbar";
 import { ImLocation } from "react-icons/im";
 import { GoPin } from "react-icons/go";
 import Footer from "../components/Footer";
-import contactcall from "../assets/photo/contactcall.png";
+import {contactcall} from "../assets/photo/contactcall.png";
 import { MdEmail } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
 import { FaLinkedin } from "react-icons/fa";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { createRecaptcha, clearRecaptcha, auth } from "../Firebase/Setup";
-import contactusBanner from "../assets/Photo/Contactusbanner.png";
+import {contactusBanner} from "../assets/Photo/Contactusbanner.png";
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {
