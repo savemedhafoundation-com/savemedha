@@ -830,6 +830,7 @@ const createDetail = ({
 };
 
 export const CANCER_DETAILS = {
+  // demo commit
   blood: createDetail({
     key: "blood",
     name: "Blood Cancer",
