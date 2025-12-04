@@ -1,10 +1,10 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import KidneyBanner from "../components/KidneyBanner";
+import HeartBanner from "../components/HeartBanner";
 import cancerHeroVideo from "../assets/Photo/Sequence 01_1.mp4";
 import { CANCER_DETAILS } from "../data/cancerLearnMore";
 import { KIDNEY_DETAILS } from "../data/kidneyLearnMore";
-import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
 import naturalBg from "../assets/Photo/natural-bg.png.png";
 
 /* ----------------------------------------------
@@ -12,6 +12,22 @@ import naturalBg from "../assets/Photo/natural-bg.png.png";
 ------------------------------------------------*/
 const kidneyTreatmentImages = Object.entries(
   import.meta.glob("/src/assets/kidney/Kidney Treatments Images/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+  })
+)
+  .map(([path, mod]) => {
+    const src = typeof mod === "string" ? mod : mod?.default || path;
+    const order = parseInt(path.split("/").pop()?.match(/^(\d+)/)?.[1] || 9999, 10);
+    return { order, src };
+  })
+  .sort((a, b) => a.order - b.order)
+  .map((i) => i.src);
+
+/* ----------------------------------------------
+   IMAGE LOADING - AUTO MAP & SORT (Heart)
+------------------------------------------------*/
+const heartTreatmentImages = Object.entries(
+  import.meta.glob("/src/assets/heart/Heart Treatments Images/*.{png,jpg,jpeg,webp}", {
     eager: true,
   })
 )
@@ -40,17 +56,20 @@ const SUB_TREATMENT_LIBRARY = {
   })),
 
   heart: [
-    "Hypertension Control",
-    "Cholesterol Reset",
-    "Arrhythmia Care",
-    "Heart Failure Support",
-    "Post-Bypass Rehab",
-    "Valve Disorder Care",
-    "Cardiac Fitness",
-    "Stress Cardiology",
-  ].map((name) => ({
+    "Coronary Artery Disease",
+    "Heart Attack",
+    "Heart Failure",
+    "Arrhythmia",
+    "Valvular Heart Disease",
+    "Congenital Heart Disease",
+    "Hypertensive Heart Disease",
+    "Cardiomyopathy",
+    "Pericardial Disease",
+    "Rheumatic Heart Disease",
+  ].map((name, index) => ({
     key: name.toLowerCase().replace(/\s+/g, "-"),
     name,
+    image: heartTreatmentImages[index],
   })),
 
   nerve: [
@@ -124,9 +143,9 @@ const TREATMENT_THEME = {
     textHover: "#FFFFFF",
   },
   heart: {
-    bubbleBg: "#FFE8E8",
-    bubbleHover: "#E11D48",
-    text: "#B91C1C",
+    bubbleBg: "#FFC5D3E0",
+    bubbleHover: "#A80129E0",
+    text: "#A40027",
     textHover: "#FFFFFF",
   },
   nerve: {
@@ -176,12 +195,13 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
   const subTreatments =
     SUB_TREATMENT_LIBRARY[treatment.key] || DEFAULT_SUB_TREATMENTS;
 
-  const heroKeyword = treatment.title?.split(" ")[0]?.toUpperCase() || "TREATMENT";
+  const heroKeyword =
+    treatment.title?.split(" ")[0]?.toUpperCase() || "TREATMENT";
 
   const isKidneyTreatment = treatment.key === "kidney";
-   const ctaLink = "https://dantura.com/";
-  const theme =
-    TREATMENT_THEME[treatment.key] || TREATMENT_THEME.default;
+  const isHeartTreatment = treatment.key === "heart";
+  const ctaLink = "https://dantura.com/";
+  const theme = TREATMENT_THEME[treatment.key] || TREATMENT_THEME.default;
 
   /* ----------------------------------------------
      CLEAN: SUB-TREATMENT CARD CLICK HANDLER
@@ -205,7 +225,7 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
 
       <main className="pb-16">
         {/* ---------- HERO SECTION ---------- */}
-        <section className="relative h-[340px] w-full overflow-hidden">
+        <section className="relative h-[380px] sm:h-[420px] lg:h-[460px] w-full overflow-hidden">
           <div className="absolute inset-0">
             {treatment.key === "cancer" ? (
               <video
@@ -218,19 +238,24 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
               >
                 <source src={cancerHeroVideo} type="video/mp4" />
               </video>
-            ) : (
+            ) : !isHeartTreatment ? (
               <img
                 src={treatment.image}
                 alt={treatment.title}
                 className="absolute h-full w-full object-cover"
                 loading="lazy"
               />
-            )}
+            ) : null}
           </div>
 
           {isKidneyTreatment && (
             <div className="absolute inset-0 flex items-center justify-center text-white">
               <KidneyBanner isKidneyTreatment={isKidneyTreatment} />
+            </div>
+          )}
+          {isHeartTreatment && (
+            <div className="absolute inset-0 flex items-center justify-center text-white">
+              <HeartBanner isHeartTreatment={isHeartTreatment} />
             </div>
           )}
         </section>
@@ -246,10 +271,10 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
             </button>
           </div>
 
-          <div className="text-center space-y-3">
+          <div className="space-y-3 text-center">
             <h2 className="font-koho text-4xl font-semibold uppercase">
               {heroKeyword}{" "}
-              <span style={{ color: theme. bubbleHover }}>TREATMENTS</span>:
+              <span style={{ color: theme.bubbleHover }}>TREATMENTS</span>:
             </h2>
             <div
               className="mx-auto h-1 w-32 rounded-full"
@@ -258,29 +283,24 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
           </div>
 
           {/* ---------- GRID ---------- */}
-          <div className="mt-12 grid grid-cols-4 gap-8">
-            {subTreatments.map((item, index) => (
-              <div
-                key={index}
-                className="group relative flex flex-col h-full rounded-tl-[28px] bg-white shadow-[0_25px_50px_rgba(15,23,42,0.12)] overflow-hidden hover:-translate-y-1.5 transition-transform"
-                style={{
-                  "--bubble-bg": theme.bubbleBg,
-                  "--bubble-hover": theme.bubbleHover,
-                  "--text-color": theme.text,
-                  "--text-hover": theme.textHover,
-                }}
-              >
-                <div className="relative h-60 overflow-hidden">
+          {isHeartTreatment ? (
+            <div className="mt-12 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
+              {subTreatments.map((item) => (
+                <div
+                  key={item.key}
+                  className="group relative h-64 overflow-hidden rounded-2xl bg-white shadow-[0_22px_46px_rgba(15,23,42,0.12)] transition-transform duration-300 hover:-translate-y-2"
+                >
                   <img
                     src={item.image ?? treatment.image}
                     alt={item.name}
-                    className="w-full h-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#7f0c2a]/35 via-[#7f0c2a]/35 to-transparent" />
 
-                  <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[var(--bubble-bg)] transition-colors duration-300 group-hover:bg-[var(--bubble-hover)]" />
-                  <div className="absolute left-2 top-10 pr-4">
-                    <p className="font-koho text-xl font-semibold uppercase text-[var(--text-color)] drop-shadow-md leading-5 transition-colors duration-300 group-hover:text-[var(--text-hover)]">
+                  <div className="absolute -left-15 -right-5 -top-12 h-40 w-70 rounded-full bg-[#ffc8d6]/90 transition-colors duration-300 group-hover:bg-[#c2183b]/90" />
+                  <div className="absolute left-2 top-6 w-32 pr-4">
+                    <p className="font-koho text-xl font-semibold uppercase leading-6 text-[#b1122f] drop-shadow transition-colors duration-300 group-hover:text-white">
                       {item.name.split(" ").map((word) => (
                         <span key={word} className="block">
                           {word}
@@ -288,60 +308,102 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
                       ))}
                     </p>
                   </div>
-                </div>
 
-                <div className="mt-auto px-6 py-5">
-                  <button
-                    onClick={() => handleSubTreatmentSelect(item)}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#74C425] px-5 py-2 text-xs uppercase text-[#0b2fa1] group-hover:bg-[#74C425] group-hover:text-white"
-                  >
-                    Learn More →
-                  </button>
+                  <div className="absolute bottom-4 left-4">
+                    <button
+                      onClick={() => handleSubTreatmentSelect(item)}
+                      className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-semibold uppercase text-[#b1122f] shadow transition-colors duration-200 hover:bg-[#b1122f] hover:text-white"
+                    >
+                      Learn More
+                      <span aria-hidden="true" className="text-base leading-none">
+                        →
+                      </span>
+                    </button>
+                  </div>
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-12 grid grid-cols-4 gap-8">
+              {subTreatments.map((item, index) => (
+                <div
+                  key={index}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-tl-[28px] bg-white shadow-[0_25px_50px_rgba(15,23,42,0.12)] transition-transform hover:-translate-y-1.5"
+                  style={{
+                    "--bubble-bg": theme.bubbleBg,
+                    "--bubble-hover": theme.bubbleHover,
+                    "--text-color": theme.text,
+                    "--text-hover": theme.textHover,
+                  }}
+                >
+                  <div className="relative h-60 overflow-hidden">
+                    <img
+                      src={item.image ?? treatment.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+
+                    <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[var(--bubble-bg)] transition-colors duration-300 group-hover:bg-[var(--bubble-hover)]" />
+                    <div className="absolute left-2 top-10 pr-4">
+                      <p className="font-koho text-xl font-semibold uppercase leading-5 text-[var(--text-color)] drop-shadow-md transition-colors duration-300 group-hover:text-[var(--text-hover)]">
+                        {item.name.split(" ").map((word) => (
+                          <span key={word} className="block">
+                            {word}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-auto px-6 py-5">
+                    <button
+                      onClick={() => handleSubTreatmentSelect(item)}
+                      className="inline-flex items-center gap-2 rounded-full border border-[#74C425] px-5 py-2 text-xs uppercase text-[#0b2fa1] transition-colors group-hover:bg-[#74C425] group-hover:text-white"
+                    >
+                      Learn More →
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className="relative w-full px-4 md:px-10 lg:px-16">
+          <div className="relative mx-auto overflow-hidden rounded-3xl bg-white shadow-lg">
+            <div className="absolute inset-0">
+              <img
+                src={naturalBg}
+                alt="background"
+                className="h-full w-full object-cover opacity-95"
+              />
+            </div>
+
+            <div className="relative z-10 grid items-center gap-6 py-12 px-10 md:grid-cols-2 md:px-16">
+              <div>
+                <h2 className="text-4xl font-bold leading-tight text-black md:text-5xl">
+                  Get Complete Recovery By
+                </h2>
+
+                <h3 className="mt-3 text-4xl font-bold text-[#74C425] md:text-5xl">
+                  Natural Immunotherapy
+                </h3>
+
+                <a
+                  href={ctaLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-8 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#498D05] via-[#76C528] to-[#448602] px-10 py-4 text-xl font-semibold text-white shadow-md transition-transform hover:scale-105"
+                >
+                  <span className="text-2xl">➜</span> START NOW
+                </a>
               </div>
-            ))}
+
+              <div />
+            </div>
           </div>
         </section>
-       <section className="relative w-full px-4 md:px-10 lg:px-16">
-  <div className="relative mx-auto  rounded-3xl overflow-hidden shadow-lg bg-white">
-    {/* Background Shapes */}
-    <div className="absolute inset-0">
-      <img
-        src={naturalBg}
-        alt="background"
-        className="w-full h-full object-cover opacity-95"
-      />
-    </div>
-
-    {/* Content */}
-    <div className="relative z-10 grid md:grid-cols-2 gap-6 py-12 px-10 md:px-16 items-center">
-      
-      {/* Left Text */}
-      <div>
-        <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight">
-          Get Complete Recovery By
-        </h2>
-
-        <h3 className="text-4xl md:text-5xl font-bold text-[#74C425] mt-3">
-          Natural Immunotherapy
-        </h3>
-
-        <a
-          href={ctaLink}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-flex items-center gap-3 bg-gradient-to-r from-[#498D05] via-[#76C528] to-[#448602] text-white text-xl font-semibold px-10 py-4 rounded-full hover:scale-105 transition-transform shadow-md"
-        >
-          <span className="text-2xl">➜</span> START NOW
-        </a>
-      </div>
-
-      {/* Right Decorative Graphics */}
-      
-    </div>
-  </div>
-</section>
-
       </main>
 
       <Footer onNavigate={onNavigate} />
