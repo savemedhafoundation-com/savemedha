@@ -167,17 +167,17 @@ export default function AboutUs({ onNavigate }) {
       <Navbar currentPage="about" onNavigate={onNavigate} />
       <main className="w-full px-4 md:px-10 lg:px-20">
         <section className="relative h-[320px] md:h-[380px] lg:h-[420px] flex items-center justify-center text-white overflow-hidden">
-          <img
-            src={HeroBackground}
-            alt="Cancer research abstract background"
-            className="absolute inset-0 w-full h-full object-cover"
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-fixed scale-105"
+            style={{ backgroundImage: `linear-gradient(120deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url(${HeroBackground})` }}
+            aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="relative text-center space-y-4 px-4">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/35 to-black/60" />
+          <div className="relative text-center space-y-4 px-4 backdrop-blur-[1px]">
             <p className="text-sm tracking-[0.3em] uppercase text-gray-200">
               Save Medha Foundation
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide drop-shadow-lg">
               ABOUT US
             </h1>
             <div className="w-20 h-1 bg-[#74C425] mx-auto" />
