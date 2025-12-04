@@ -179,7 +179,7 @@ export default function HeartLearnMore({ heartKey, onNavigate, fallbackTitle }) 
             a: "Steady hydration, balanced meals, restorative sleep, gentle movement, and stress regulation all reduce burden on the heart.",
           },
         ];
-
+ 
   const handleBack = () => {
     if (!onNavigate) return;
     if (HEART_TREATMENT) {
