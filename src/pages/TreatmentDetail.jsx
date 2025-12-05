@@ -1,7 +1,9 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import KidneyBanner from "../components/KidneyBanner";
+import NerveBanner from "../components/NerveBanner";
 import cancerHeroVideo from "../assets/Photo/Sequence 01_1.mp4";
+import ComingSoonVideo from "../assets/video/BANNER (1).mp4";
 import { CANCER_DETAILS } from "../data/cancerLearnMore";
 import { KIDNEY_DETAILS } from "../data/kidneyLearnMore";
 import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
@@ -12,6 +14,19 @@ import naturalBg from "../assets/Photo/natural-bg.png.png";
 ------------------------------------------------*/
 const kidneyTreatmentImages = Object.entries(
   import.meta.glob("/src/assets/kidney/Kidney Treatments Images/*.{png,jpg,jpeg,webp}", {
+    eager: true,
+  })
+)
+  .map(([path, mod]) => {
+    const src = typeof mod === "string" ? mod : mod?.default || path;
+    const order = parseInt(path.split("/").pop()?.match(/^(\d+)/)?.[1] || 9999, 10);
+    return { order, src };
+  })
+  .sort((a, b) => a.order - b.order)
+  .map((i) => i.src);
+
+const nerveTreatmentImages = Object.entries(
+  import.meta.glob("/src/assets/nerve/nerve image/*.{png,jpg,jpeg,webp}", {
     eager: true,
   })
 )
@@ -54,17 +69,25 @@ const SUB_TREATMENT_LIBRARY = {
   })),
 
   nerve: [
-    "Peripheral Neuropathy",
-    "Sciatica Relief",
-    "Parkinson's Support",
-    "Multiple Sclerosis Care",
-    "Migraine Therapy",
-    "Stroke Recovery",
-    "Carpal Tunnel",
-    "Autonomic Balance",
-  ].map((name) => ({
+    "Alzheimer’s Disease & Dementia",
+    "Amyotrophic Lateral Sclerosis",
+    "Brain Tumor",
+    "Brain Aneurysm",
+    "Cerebral Palsy",
+    "Epilepsy (Seizure Disorders)",
+    "Guillain-Barré Syndrome (GBS)",
+    "Multiple Sclerosis (MS)",
+    "Migraine & Chronic Headaches",
+    "Myasthenia Gravis",
+    "Neuropathy",
+    "Parkinson’s Disease",
+    "Stroke",
+    "Spinal Cord Disorders",
+    "Trigeminal Neuralgia",
+  ].map((name, index) => ({
     key: name.toLowerCase().replace(/\s+/g, "-"),
     name,
+    image: nerveTreatmentImages[index],
   })),
 
   sma: [
@@ -80,31 +103,10 @@ const SUB_TREATMENT_LIBRARY = {
     key: name.toLowerCase().replace(/\s+/g, "-"),
     name,
   })),
-
-  other: [
-    "Autoimmune Reset",
-    "Metabolic Syndrome",
-    "Chronic Fatigue",
-    "PCOS & Hormone Care",
-    "Gut & Microbiome",
-    "Detox Intensives",
-    "Pain Management",
-    "Sleep Restoration",
-  ].map((name) => ({
-    key: name.toLowerCase().replace(/\s+/g, "-"),
-    name,
-  })),
 };
 
 const DEFAULT_SUB_TREATMENTS = [
-  "Personalised Detox",
-  "Immune Balancing",
-  "Nutrition Mapping",
-  "Mind-Body Reset",
-  "Pain Relief",
-  "Stress Recovery",
-  "Sleep Repair",
-  "Metabolic Fitness",
+  
 ].map((name) => ({ key: name.toLowerCase(), name }));
 
 /* ----------------------------------------------
@@ -141,12 +143,6 @@ const TREATMENT_THEME = {
     text: "#EA580C",
     textHover: "#FFFFFF",
   },
-  other: {
-    bubbleBg: "#F4F4F5",
-    bubbleHover: "#111827",
-    text: "#111827",
-    textHover: "#FFFFFF",
-  },
   default: {
     bubbleBg: "#FCEBFF",
     bubbleHover: "#C425B4",
@@ -164,7 +160,6 @@ const NAVIGATION_MAP = {
   heart: "heart-detail",
   nerve: "nerve-detail",
   sma: "sma-detail",
-  other: "other-detail",
 };
 
 /* --------------------------------------------------
@@ -179,7 +174,8 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
   const heroKeyword = treatment.title?.split(" ")[0]?.toUpperCase() || "TREATMENT";
 
   const isKidneyTreatment = treatment.key === "kidney";
-   const ctaLink = "https://dantura.com/";
+  const isNerveTreatment = treatment.key === "nerve";
+  const ctaLink = "https://dantura.com/";
   const theme =
     TREATMENT_THEME[treatment.key] || TREATMENT_THEME.default;
 
@@ -218,6 +214,17 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
               >
                 <source src={cancerHeroVideo} type="video/mp4" />
               </video>
+            ) : treatment.key === "defult" ? (
+              <video
+                className="absolute h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={treatment.image}
+              >
+                <source src={ComingSoonVideo} type="video/mp4" />
+              </video>
             ) : (
               <img
                 src={treatment.image}
@@ -231,6 +238,12 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
           {isKidneyTreatment && (
             <div className="absolute inset-0 flex items-center justify-center text-white">
               <KidneyBanner isKidneyTreatment={isKidneyTreatment} />
+            </div>
+          )}
+
+          {isNerveTreatment && (
+            <div className="absolute inset-0 flex items-center justify-center text-white">
+              <NerveBanner isNerveTreatment={isNerveTreatment} />
             </div>
           )}
         </section>
@@ -278,7 +291,15 @@ export default function TreatmentDetail({ treatment, onNavigate }) {
                     loading="lazy"
                   />
 
-                  <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-[var(--bubble-bg)] transition-colors duration-300 group-hover:bg-[var(--bubble-hover)]" />
+                  <div className="absolute -left-16 -top-16 h-60 w-60 rounded-full bg-[var(--bubble-bg)] transition-colors duration-300 group-hover:bg-[var(--bubble-hover)]" />
+
+
+
+
+
+
+
+                  
                   <div className="absolute left-2 top-10 pr-4">
                     <p className="font-koho text-xl font-semibold uppercase text-[var(--text-color)] drop-shadow-md leading-5 transition-colors duration-300 group-hover:text-[var(--text-hover)]">
                       {item.name.split(" ").map((word) => (

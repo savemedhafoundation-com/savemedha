@@ -18,7 +18,6 @@ import KidneyLearnMore from "./pages/KidneyLearnMore";
 import HeartLearnMore from "./pages/HeartLearnMore";
 import NerveLearnMore from "./pages/NerveLearnMore";
 import SMALearnMore from "./pages/SMALearnMore";
-import OtherLearnMore from "./pages/OtherLearnMore";
 import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import { TREATMENTS } from "./data/treatments";
@@ -43,7 +42,6 @@ function App() {
     selectedHeart,
     selectedNerve,
     selectedSMA,
-    selectedOther,
   } = useSelector((state) => state.selections);
 
   const handleNavigate = useCallback(
@@ -135,12 +133,6 @@ function App() {
           targetPath = `/sma-learn-more${search}`;
           break;
         }
-        case "other-detail": {
-          const otherKey = options?.otherKey || selectedOther?.key;
-          const search = otherKey ? `?key=${encodeURIComponent(otherKey)}` : "";
-          targetPath = `/other-learn-more${search}`;
-          break;
-        }
 
         case "home":
         default:
@@ -156,7 +148,6 @@ function App() {
       selectedHeart?.key,
       selectedKidney?.key,
       selectedNerve?.key,
-      selectedOther?.key,
       selectedSMA?.key,
       selectedTreatment?.key,
     ]
@@ -255,22 +246,6 @@ function App() {
     );
   };
 
-  const OtherRoute = () => {
-    const [searchParams] = useSearchParams();
-    const otherKey =
-      searchParams.get("key") || location.state?.otherKey || selectedOther?.key;
-    const fallbackTitle =
-      location.state?.title || selectedOther?.title || "Other";
-
-    return (
-      <OtherLearnMore
-        otherKey={otherKey}
-        fallbackTitle={fallbackTitle}
-        onNavigate={handleNavigate}
-      />
-    );
-  };
-
   return (
     <div className="app-scale-wrapper">
       <Routes>
@@ -302,7 +277,6 @@ function App() {
         <Route path="/heart-learn-more" element={<HeartRoute />} />
         <Route path="/nerve-learn-more" element={<NerveRoute />} />
         <Route path="/sma-learn-more" element={<SMARoute />} />
-        <Route path="/other-learn-more" element={<OtherRoute />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
         {/* <Route
           path="/locate-us"

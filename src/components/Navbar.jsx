@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
-import { FiPhone } from "react-icons/fi";
 import { IoLocationSharp } from "react-icons/io5";
 
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
@@ -46,6 +45,152 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
 
   return (
     <header className="font-sans w-full">
+      {/* Mobile layout */}
+      <div className="lg:hidden">
+        <div className="flex items-center justify-between gap-4 px-4 py-4 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-12">
+          <button
+            type="button"
+            onClick={() => onNavigate?.("home")}
+            className="focus:outline-none flex-shrink-0"
+          >
+            <img
+              src={savemedhaLogo}
+              alt="Save Medha Foundation"
+              className="h-14 w-auto object-contain"
+            />
+          </button>
+          <button
+            className="shrink-0 rounded-2xl bg-[#e55e27] px-4 py-6 mr-5 text-white text-sm font-bold shadow-md"
+            onClick={() => onNavigate?.("contact")}
+          >
+            Book An Appointment
+          </button>
+        </div>
+
+        <div
+          className="flex items-center justify-between px-4 py-3  text-white shadow-md"
+          style={{ backgroundColor: COLORS.NAV_GREEN }}
+        >
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              aria-label="Toggle navigation menu"
+              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center ml-5"
+            >
+              <svg
+                className={`h-5 w-5 transition-transform ${
+                  isMobileMenuOpen ? "rotate-90" : ""
+                }`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
+            <div className="flex items-center gap-2">
+              <FaCalendarAlt className="w-5 h-5" />
+              <span className="text-sm font-semibold uppercase">
+                {new Intl.DateTimeFormat("en-US", {
+                  weekday: "long",
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                }).format(new Date())}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6 mr-5 ">
+            <button
+              type="button"
+              aria-label="Search"
+              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="11" cy="11" r="6" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Select language"
+              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="m5 8 6 6" />
+                <path d="m4 14 6-6 2-3" />
+                <path d="M2 5h12" />
+                <path d="M7 2h1" />
+                <path d="m22 22-5-10-5 10" />
+                <path d="M14 18h6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Locate us"
+              onClick={() => onNavigate?.("locateus")}
+              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+            >
+              <IoLocationSharp className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {isMobileMenuOpen && (
+          <div className="bg-white text-gray-900 shadow-2xl border-t border-gray-200">
+            {NAV_ITEMS.map((item) => {
+              const isActive = item.key && item.key === currentPage;
+              const hrefValue = item.key
+                ? "#"
+                : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
+              const clickHandler = item.key
+                ? (event) => handleNavClick(event, item.key)
+                : () => setIsMobileMenuOpen(false);
+
+              return (
+                <a
+                  key={item.name}
+                  href={hrefValue}
+                  onClick={clickHandler}
+                  className={`block px-4 py-3 text-sm font-semibold uppercase tracking-wide transition ${
+                    isActive
+                      ? "bg-[#003399] text-white"
+                      : "text-gray-800 hover:bg-gray-100"
+                  }`}
+                >
+                  {item.name}
+                </a>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Desktop / laptop layout */}
+      <div className="hidden lg:block">
       {/* ===============================
           TOP SECTION
       =============================== */}
@@ -126,7 +271,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             {/* === Row 2: Search, Language, Date, Location, Appointment === */}
             <div className="flex flex-wrap justify-end items-center gap-4">
               {/* Search */}
-              <div className="relative w-[170px] shadow-md">
+              <div className="relative w-[200px] shadow-md">
                 <input
                   type="text"
                   placeholder="Search"
@@ -246,7 +391,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
       >
         <div className="flex items-center justify-between">
           {/* Navigation */}
-          <nav className="hidden lg:flex items-center">
+          <nav className="flex items-center">
             {NAV_ITEMS.map((item) => {
               const isActive = item.key && item.key === currentPage;
               const hrefValue = item.key
@@ -286,75 +431,8 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               );
             })}
           </nav>
-
-          {/* Mobile menu trigger */}
-          <div className="lg:hidden relative pr-33">
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen((open) => !open)}
-              className="inline-flex items-center justify-center rounded-md bg-[#74C425] px-6 py-2 left-8 text-sm font-semibold text-white shadow hover:bg-[#5ca41f] focus:outline-none focus:ring-2 focus:ring-[#9bd853]"
-              aria-label="Toggle navigation menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? (
-                <svg
-                  className="h-5 w-5 transition-transform rotate-90"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg
-                  className="h-5 w-5 transition-transform"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-              )}
-            </button>
-
-            {isMobileMenuOpen && (
-              <div className="absolute right-0 mt-2 w-56 rounded-lg bg-white text-gray-900 shadow-xl ring-1 ring-black/5 overflow-hidden z-50">
-                {NAV_ITEMS.map((item) => {
-                  const isActive = item.key && item.key === currentPage;
-                  const hrefValue = item.key
-                    ? "#"
-                    : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
-                  const clickHandler = item.key
-                    ? (event) => handleNavClick(event, item.key)
-                    : () => setIsMobileMenuOpen(false);
-
-                  return (
-                    <a
-                      key={item.name}
-                      href={hrefValue}
-                      onClick={clickHandler}
-                      className={`block px-4 py-3 text-sm font-semibold uppercase tracking-wide transition ${
-                        isActive
-                          ? "bg-[#003399] text-white"
-                          : "text-gray-800 hover:bg-gray-100"
-                      }`}
-                    >
-                      {item.name}
-                    </a>
-                  );
-                })}
-              </div>
-            )}
-          </div>
         </div>
+      </div>
       </div>
     </header>
   );

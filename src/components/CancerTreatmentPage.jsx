@@ -763,12 +763,14 @@ export default function CancerTreatmentPage() {
             </div>
 
             {/* Center */}
-            <div className="flex flex-col items-left gap-2 mb-18 text-left">
-              <h1 className="text-3xl font-bold text-gray-900">
+            <div className="flex flex-col gap-2 mb-18 text-left sm:items-start sm:ml-35">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center sm:text-left">
                 "OUR GOAL" - CANCER FREE WORLD
               </h1>
-              <p className="text-gray-600 mt-1 font-semibold pl-3">Subhankar Sarkar</p>
-              <button className="ml-2 mt-2 bg-[#74C425] hover:bg-[#1118A6] text-white px-6 py-4 rounded-lg flex items-center gap-2 mx-auto transition-colors font-sans cursor-pointer">
+              <p className="text-gray-600 font-semibold text-center sm:text-left pl-0 sm:pl-3">
+                Subhankar Sarkar
+              </p>
+              <button className="mt-2  bg-[#74C425] hover:bg-[#1118A6] text-white px-6 py-4 rounded-lg flex items-center gap-2 mx-auto sm:mx-0 transition-colors font-sans cursor-pointer">
                 <MdPhoneInTalk size={20} />
                 CONTACT US
               </button>

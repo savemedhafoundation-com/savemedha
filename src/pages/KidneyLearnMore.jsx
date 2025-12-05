@@ -23,7 +23,7 @@ import {
 import { TREATMENTS } from "../data/treatments";
 import nitVideo from "../assets/video/Kidney Recovery Animation.mp4";
 import NaturalImmunotherapyButton from "../components/NaturalImmunotherapyButton";
-import oilMassage from "../assets/Photo/Oil Massage.jpeg";
+
 import treatmentIcon from "../assets/Photo/Treatment icon.png";
 
 const kidneyHeroModules = import.meta.glob(
@@ -149,26 +149,42 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
     <div className="min-h-screen bg-white text-[#40120b]">
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
 
-      <header className="bg-[#7c2f22] text-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-6">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="inline-flex items-center gap-3 self-start rounded-full border border-white bg-[#ffffff] px-5 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-[#7c2f22] transition cursor-pointer"
-          >
-             <span><FaArrowCircleLeft size={20}/></span> 
-            Back
-          </button>
-        </div>
+      <div className="w-full px-15 bg-[#7c2f22] py-2 flex flex-row items-center">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="inline-flex items-center gap-3 self-start rounded-full border border-white bg-[#ffffff] px-5 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-[#7c2f22] transition cursor-pointer"
+        >
+          <span>
+            <FaArrowCircleLeft size={20} />
+          </span>{" "}
+          Back
+        </button>
+      </div>
 
-        <div className="w-full bg-gradient-to-r from-[#f7d0cc] via-[#fde5df] to-[#f7d0cc]">
-          <div className="mx-auto flex h-12 w-full max-w-6xl flex-wrap items-center gap-3 px-6 text-xs font-semibold uppercase tracking-[0.6em] text-black">
-            <span className="text-black/80">Treatment</span>
-            <IoIosArrowForward className="text-base" />
-            <span className="text-black">{detail.name}</span>
+      <div
+        className="w-full py-3"
+        style={{ backgroundColor: "#f7d0cc", color: "#7c2f22" }}
+      >
+        <div className="mx-auto px-16">
+          <div className="flex items-center gap-2">
+            <p className="text-base font-semibold uppercase tracking-[0.20em] text-[#050505]">
+              TREATMENT
+            </p>
+            <IoIosArrowForward className="text-lg" />
+            <p
+              className="text-base font-semibold uppercase tracking-[0.20em]"
+              style={{ color: "#7c2f22" }}
+            >
+              {detail.name}
+            </p>
+            <IoIosArrowForward className="text-lg" />
+            <p className="text-base font-semibold uppercase tracking-[0.20em]">
+              Learn More
+            </p>
           </div>
         </div>
-      </header>
+      </div>
 
       <section className="bg-[#7c2f22] text-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 pb-16 pt-4 lg:flex-row lg:items-start">
@@ -292,7 +308,7 @@ export default function KidneyLearnMore({ kidneyKey, onNavigate, fallbackTitle }
         </div>
       </section>
 
-      {nitCauses && (
+      0{nitCauses && (
         <section className="bg-gradient-to-b from-white via-[#fde5e7] to-white py-16 text-[#5b1e13]">
           <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 text-center">
             <div className="space-y-4">
