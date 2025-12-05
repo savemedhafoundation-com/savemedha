@@ -47,7 +47,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     <header className="font-sans w-full">
       {/* Mobile layout */}
       <div className="lg:hidden">
-        <div className="flex items-center justify-between gap-4 px-4 py-4 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-12">
+        <div className="flex items-center justify-between gap-4 px-4 py-6 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-12">
           <button
             type="button"
             onClick={() => onNavigate?.("home")}
@@ -68,7 +68,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
         </div>
 
         <div
-          className="flex items-center justify-between px-4 py-3  text-white shadow-md"
+          className="flex items-center justify-between px-4 py-10  text-white shadow-md"
           style={{ backgroundColor: COLORS.NAV_GREEN }}
         >
           <div className="flex items-center gap-3">
@@ -76,10 +76,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               type="button"
               onClick={() => setIsMobileMenuOpen((open) => !open)}
               aria-label="Toggle navigation menu"
-              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center ml-5"
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center ml-5"
             >
               <svg
-                className={`h-5 w-5 transition-transform ${
+                className={`h-10 w-10 transition-transform ${
                   isMobileMenuOpen ? "rotate-90" : ""
                 }`}
                 viewBox="0 0 24 24"
@@ -95,8 +95,8 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               </svg>
             </button>
             <div className="flex items-center gap-2">
-              <FaCalendarAlt className="w-5 h-5" />
-              <span className="text-sm font-semibold uppercase">
+              <FaCalendarAlt className="w-10 h-10" />
+              <span className="text-[20px] font-semibold uppercase">
                 {new Intl.DateTimeFormat("en-US", {
                   weekday: "long",
                   month: "long",
@@ -111,10 +111,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <button
               type="button"
               aria-label="Search"
-              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
               <svg
-                className="w-5 h-5"
+                className="w-10 h-10"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -129,10 +129,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <button
               type="button"
               aria-label="Select language"
-              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
               <svg
-                className="w-5 h-5"
+                className="w-10 h-10"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -152,39 +152,73 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               type="button"
               aria-label="Locate us"
               onClick={() => onNavigate?.("locateus")}
-              className="h-10 w-10 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
-              <IoLocationSharp className="w-5 h-5" />
+              <IoLocationSharp className="w-10 h-10" />
             </button>
           </div>
         </div>
 
         {isMobileMenuOpen && (
-          <div className="bg-white text-gray-900 shadow-2xl border-t border-gray-200">
-            {NAV_ITEMS.map((item) => {
-              const isActive = item.key && item.key === currentPage;
-              const hrefValue = item.key
-                ? "#"
-                : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
-              const clickHandler = item.key
-                ? (event) => handleNavClick(event, item.key)
-                : () => setIsMobileMenuOpen(false);
-
-              return (
-                <a
-                  key={item.name}
-                  href={hrefValue}
-                  onClick={clickHandler}
-                  className={`block px-4 py-3 text-sm font-semibold uppercase tracking-wide transition ${
-                    isActive
-                      ? "bg-[#003399] text-white"
-                      : "text-gray-800 hover:bg-gray-100"
-                  }`}
+          <div
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <div
+              className="absolute left-0 top-0 h-full w-150 bg-white shadow-2xl overflow-y-auto animate-slideLeft"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="bg-[#0275ff] text-white px-5 py-4 font-semibold text-lg flex items-center gap-2 justify-between">
+                
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  className="text-white/90 hover:text-white"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item.name}
-                </a>
-              );
-            })}
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="flex flex-col">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = item.key && item.key === currentPage;
+
+                  const hrefValue = item.key
+                    ? "#"
+                    : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
+
+                  const clickHandler = item.key
+                    ? (event) => handleNavClick(event, item.key)
+                    : () => setIsMobileMenuOpen(false);
+
+                  return (
+                    <a
+                      key={item.name}
+                      href={hrefValue}
+                      onClick={clickHandler}
+                      className={`flex items-center gap-3 px-5 py-3 text-[15px] border-b border-gray-100 transition-all duration-200 ${
+                        isActive
+                          ? "bg-gray-100 font-semibold text-gray-900"
+                          : "text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
       </div>
