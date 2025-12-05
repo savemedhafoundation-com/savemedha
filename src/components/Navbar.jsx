@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { ImWhatsapp } from "react-icons/im";
 
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
+import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
 import { MdPhoneInTalk } from "react-icons/md";
 import { MdAttachEmail } from "react-icons/md";
 
@@ -56,11 +59,11 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <img
               src={savemedhaLogo}
               alt="Save Medha Foundation"
-              className="h-14 w-auto object-contain"
+              className="h-25 w-auto object-contain"
             />
           </button>
           <button
-            className="shrink-0 rounded-2xl bg-[#e55e27] px-4 py-6 mr-5 text-white text-sm font-bold shadow-md"
+            className="shrink-0 rounded-2xl bg-[#e55e27] px-4 py-6 mr-5 text-white text-[25px] font-bold shadow-md"
             onClick={() => onNavigate?.("contact")}
           >
             Book An Appointment
@@ -68,7 +71,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
         </div>
 
         <div
-          className="flex items-center justify-between px-4 py-10  text-white shadow-md"
+          className="flex items-center justify-between px-4 py-6  text-white shadow-md"
           style={{ backgroundColor: COLORS.NAV_GREEN }}
         >
           <div className="flex items-center gap-3">
@@ -168,7 +171,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               className="absolute left-0 top-0 h-full w-150 bg-white shadow-2xl overflow-y-auto animate-slideLeft"
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="bg-[#0275ff] text-white px-5 py-4 font-semibold text-lg flex items-center gap-2 justify-between">
+              <div className="bg-[#66b300] text-white px-5 py-4 font-semibold text-lg flex items-center gap-2 justify-between">
                 
                 <button
                   type="button"
@@ -190,7 +193,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                 </button>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col ">
                 {NAV_ITEMS.map((item) => {
                   const isActive = item.key && item.key === currentPage;
 
@@ -207,16 +210,83 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                       key={item.name}
                       href={hrefValue}
                       onClick={clickHandler}
-                      className={`flex items-center gap-3 px-5 py-3 text-[15px] border-b border-gray-100 transition-all duration-200 ${
+                      className={`flex items-center gap-6 px-10 py-10 text-[15px] border-b border-gray-100 transition-all duration-200 ${
                         isActive
                           ? "bg-gray-100 font-semibold text-gray-900"
-                          : "text-gray-700 hover:bg-gray-100"
+                          : "text-gray-700 hover:bg-[#d7f3b3]"
                       }`}
                     >
                       {item.name}
                     </a>
                   );
                 })}
+
+                <div className="px-12  py-20 mt-4 bg-[#427402] text-white rounded-t-2xl">
+                  <div className="max-w-[260px] w-full mb-6">
+                    <img
+                      src={SmfLogoWhite}
+                      alt="Save Medha Foundation logo"
+                      className="w-full max-h-28 object-contain"
+                    />
+                  </div>
+
+                  <p className="text-gray-200 italic text-lg leading-relaxed mb-6">
+                    &ldquo;Transforming cancer care through Natural Immunotherapy
+                    &mdash; where healing begins with your own immune power.&rdquo;
+                  </p>
+
+                  <div className="flex items-center gap-6 text-white">
+                    <a
+                      href="https://www.facebook.com/savemedhafoundation"
+                      aria-label="Facebook"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Facebook className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://www.instagram.com/savemedhafoundation/"
+                      aria-label="Instagram"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Instagram className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/company/save-medha-foundation/"
+                      aria-label="LinkedIn"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Linkedin className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://wa.me/9800808595"
+                      aria-label="WhatsApp"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <ImWhatsapp className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://www.youtube.com/@savemedhafoundation7959"
+                      aria-label="YouTube"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Youtube className="w-7 h-7" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
