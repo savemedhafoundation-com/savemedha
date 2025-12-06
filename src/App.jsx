@@ -23,7 +23,7 @@ import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import { TREATMENTS } from "./data/treatments";
 import { navigate } from "./store";
-// import LocateUs from "./pages/LocateUs";
+import LocateUs from "./pages/LocateUs";
 import BlogsDetails from "./pages/BlogsDetails";
 
 const resolveTreatmentFromId = (id) => {
@@ -72,16 +72,16 @@ function App() {
           targetPath = "/blogs";
           break;
 
-        //           case "blogs-detail": {
-        //   const blogId = options?.id;
-        //   console.log("id", blogId);
-        //   if (!blogId) {
-        //     console.warn("blog-detail navigation requires id");
-        //     return;
-        //   }
-        //   targetPath = `/blogs/${blogId}`;
-        //   break;
-        // }
+                  case "blogs-detail": {
+          const blogId = options?.id;
+          console.log("id", blogId);
+          if (!blogId) {
+            console.warn("blog-detail navigation requires id");
+            return;
+          }
+          targetPath = `/blogs/${blogId}`;
+          break;
+        }
         case "blogs-detail": {
           const blogId = options?.id;
           if (!blogId) {
@@ -304,10 +304,10 @@ function App() {
         <Route path="/sma-learn-more" element={<SMARoute />} />
         <Route path="/other-learn-more" element={<OtherRoute />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
-        {/* <Route
+        <Route
           path="/locate-us"
           element={<LocateUs onNavigate={handleNavigate} />}
-        /> */}
+        /> 
       </Routes>
     </div>
   );
