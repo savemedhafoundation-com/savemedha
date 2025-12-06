@@ -7,7 +7,6 @@ const initialState = {
   selectedHeart: null,
   selectedNerve: null,
   selectedSMA: null,
-  selectedOther: null,
 };
 
 const selectionSlice = createSlice({
@@ -50,12 +49,6 @@ const selectionSlice = createSlice({
     clearSelectedSMA: (state) => {
       state.selectedSMA = null;
     },
-    setSelectedOther: (state, action) => {
-      state.selectedOther = action.payload ?? null;
-    },
-    clearSelectedOther: (state) => {
-      state.selectedOther = null;
-    },
   },
 });
 
@@ -72,8 +65,6 @@ export const {
   clearSelectedNerve,
   setSelectedSMA,
   clearSelectedSMA,
-  setSelectedOther,
-  clearSelectedOther,
 } = selectionSlice.actions;
 
 export default selectionSlice.reducer;

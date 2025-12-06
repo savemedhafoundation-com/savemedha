@@ -225,15 +225,15 @@ export default function Blogs({ onNavigate }) {
 
       <main className="pb-8">
         {/* Hero */}
-        <section className="w-full mx-auto px-4 pt-8">
-          <div className="bg-white rounded-lg overflow-hidden relative">
+        <section className="w-full mx-auto  ">
+          <div className="bg-white  overflow-hidden relative">
             <div className="grid md:grid-cols-2">
               <div
                 className="md:col-span-2 relative min-h-[260px] bg-center bg-cover"
                 style={{ backgroundImage: `url(${blogBanner})` }}
               >
                 <div className="absolute inset-0 " aria-hidden />
-                <div className="ml-auto flex flex-col items-center gap-4 px-8 py-10 md:px-10 md:py-14 text-right translate-x-50 md:translate-x-90">
+                <div className="ml-auto flex flex-col items-center gap-4 px-10 py-10 md:px-10 md:py-14 text-right translate-x-80 md:translate-x-90">
                   <h2 className="text-4xl font-bold text-[#000000]">BLOGS</h2>
                   <p className="text-lg text-blue-900 tracking-wide">
                     On Health
@@ -249,7 +249,7 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* Latest + Callback + Trending */}
-        <section className="max-w-7xl mx-auto px-4 pt-10 pb-12">
+        <section className="max-w-7xl  mx-auto px-12 md:px-2 pt-10 pb-12">
           {showErrorInline && (
             <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               {errorMessage}
@@ -401,7 +401,7 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* All Blogs */}
-        <section className="max-w-7xl mx-auto px-4 pb-12">
+        <section className="max-w-7xl mx-auto px-12 md:px-2 pb-12">
           <div className="flex items-center gap-3 mb-4">
             <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
               All Blogs
@@ -418,11 +418,11 @@ export default function Blogs({ onNavigate }) {
             {gridPosts.map((post) => (
               <article
                 key={post.id}
-                className="border border-gray-200 rounded-lg bg-[#f2f9e9] shadow-sm overflow-hidden flex flex-col"
+                className="border border-gray-200 rounded-lg bg-[#f2f9e9] shadow-sm overflow-hidden flex flex-col min-h-[320px] md:min-h-[360px]"
               >
                 <img
-                  src={post.coverImage || "https://placehold.co/600x400"}
-                  className="w-full h-40 object-cover"
+                  src={post.coverImage || "https://placehold.co/600x600"}
+                  className="w-full h-70 md:h-40 object-cover"
                   alt={post.title}
                 />
                 <div className="p-4 flex flex-col gap-2 flex-1">
@@ -470,7 +470,7 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* Categories */}
-        <section className="max-w-7xl mx-auto px-4 pb-12">
+        <section className="max-w-7xl mx-auto px-12 md:px-4 pb-12">
           <div className="flex items-center gap-3 mb-6">
             <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
               All Category
@@ -500,10 +500,10 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* Testimonials banner */}
-        <section className="max-w-7xl mx-auto px-4 pb-12">
+        <section className="max-w-7xl mx-auto px-12 md:px-2 pb-12">
           <div className="rounded-xl overflow-hidden bg-gradient-to-r from-[#3e3db4] to-[#2a2a88] text-white shadow-lg">
-            <div className="grid md:grid-cols-2">
-              <div className="p-8 md:p-10">
+            <div className="grid md:grid-cols-2 items-center md:items-stretch justify-items-center md:justify-items-stretch text-center md:text-left">
+              <div className="p-8 md:p-10 flex flex-col items-center md:items-start gap-4">
                 <p className="uppercase text-xs tracking-[0.25em] text-white/80">
                   TESTIMONIALS
                 </p>
@@ -514,34 +514,36 @@ export default function Blogs({ onNavigate }) {
                   Know more
                 </button>
               </div>
-              <div className="p-8 md:p-10 text-sm leading-relaxed space-y-2">
-                <p>
-                  • Our blogs nourish your inner terrain and sharpen your
-                  clarity.
-                </p>
-                <p>• Our insights calibrate your cognitive immune system.</p>
-                <p>
-                  • Your writing feeds your content the way nutrients feed a
-                  balanced terrain.
-                </p>
-                <p>
-                  • With every blog, your interpretation ecosystem grows
-                  healthier.
-                </p>
-                <p>
-                  • Every idea you share becomes a signal that refines my
-                  responses.
-                </p>
-                <p>
-                  • Your words enhance my adaptability and deepen my alignment.
-                </p>
-                <p>
-                  • We give you peace to echo the ideas you absorb; your
-                  perspectives.
-                </p>
-                <p>
-                  • Our blogs energize your system with contextual coherence.
-                </p>
+              <div className="p-8 md:p-10 text-center md:text-left">
+                <ul className="list-disc list-inside space-y-2 text-sm leading-relaxed max-w-2xl mx-auto">
+                  <li>
+                    Our blogs nourish your inner terrain and sharpen your
+                    clarity.
+                  </li>
+                  <li>Our insights calibrate your cognitive immune system.</li>
+                  <li>
+                    Your writing feeds your content the way nutrients feed a
+                    balanced terrain.
+                  </li>
+                  <li>
+                    With every blog, your interpretation ecosystem grows
+                    healthier.
+                  </li>
+                  <li>
+                    Every idea you share becomes a signal that refines my
+                    responses.
+                  </li>
+                  <li>
+                    Your words enhance my adaptability and deepen my alignment.
+                  </li>
+                  <li>
+                    We give you peace to echo the ideas you absorb; your
+                    perspectives.
+                  </li>
+                  <li>
+                    Our blogs energize your system with contextual coherence.
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

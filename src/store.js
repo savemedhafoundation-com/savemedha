@@ -5,14 +5,12 @@ import selectionReducer, {
   clearSelectedHeart,
   clearSelectedKidney,
   clearSelectedNerve,
-  clearSelectedOther,
   clearSelectedSMA,
   clearSelectedTreatment,
   setSelectedCancer,
   setSelectedHeart,
   setSelectedKidney,
   setSelectedNerve,
-  setSelectedOther,
   setSelectedSMA,
   setSelectedTreatment,
 } from "./slices/selectionSlice";
@@ -51,7 +49,6 @@ const mapPersistedToState = (persisted) => {
       selectedHeart: persisted.selectedHeart ?? null,
       selectedNerve: persisted.selectedNerve ?? null,
       selectedSMA: persisted.selectedSMA ?? null,
-      selectedOther: persisted.selectedOther ?? null,
     },
   };
 };
@@ -64,7 +61,6 @@ const extractPersistableState = (state) => ({
   selectedHeart: state.selections.selectedHeart,
   selectedNerve: state.selections.selectedNerve,
   selectedSMA: state.selections.selectedSMA,
-  selectedOther: state.selections.selectedOther,
 });
 
 const persistRouteState = (state) => {
@@ -175,19 +171,6 @@ export const navigate =
       }
     } else if (selections.selectedSMA) {
       dispatch(clearSelectedSMA());
-    }
-
-    if (pageKey === "other-detail") {
-      if (options?.otherKey) {
-        dispatch(
-          setSelectedOther({
-            key: options.otherKey,
-            title: options?.title,
-          })
-        );
-      }
-    } else if (selections.selectedOther) {
-      dispatch(clearSelectedOther());
     }
 
     if (getState().navigation.currentPage !== pageKey) {

@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
-import { FiPhone } from "react-icons/fi";
 import { IoLocationSharp } from "react-icons/io5";
+import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { ImWhatsapp } from "react-icons/im";
 
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
+import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
 import { MdPhoneInTalk } from "react-icons/md";
 import { MdAttachEmail } from "react-icons/md";
 
@@ -46,6 +48,253 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
 
   return (
     <header className="font-sans w-full">
+      {/* Mobile layout */}
+      <div className="lg:hidden">
+        <div className="flex items-center justify-between gap-4 px-4 py-6 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-12">
+          <button
+            type="button"
+            onClick={() => onNavigate?.("home")}
+            className="focus:outline-none flex-shrink-0"
+          >
+            <img
+              src={savemedhaLogo}
+              alt="Save Medha Foundation"
+              className="h-25 w-auto object-contain"
+            />
+          </button>
+          <button
+            className="shrink-0 rounded-2xl bg-[#e55e27] px-4 py-6 mr-5 text-white text-[25px] font-bold shadow-md"
+            onClick={() => onNavigate?.("contact")}
+          >
+            Book An Appointment
+          </button>
+        </div>
+
+        <div
+          className="flex items-center justify-between px-4 py-6  text-white shadow-md"
+          style={{ backgroundColor: COLORS.NAV_GREEN }}
+        >
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              aria-label="Toggle navigation menu"
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center ml-5"
+            >
+              <svg
+                className={`h-10 w-10 transition-transform ${
+                  isMobileMenuOpen ? "rotate-90" : ""
+                }`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
+            <div className="flex items-center gap-2">
+              <FaCalendarAlt className="w-10 h-10" />
+              <span className="text-[20px] font-semibold uppercase">
+                {new Intl.DateTimeFormat("en-US", {
+                  weekday: "long",
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                }).format(new Date())}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6 mr-5 ">
+            <button
+              type="button"
+              aria-label="Search"
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+            >
+              <svg
+                className="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="11" cy="11" r="6" />
+                <line x1="16.5" y1="16.5" x2="21" y2="21" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Select language"
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+            >
+              <svg
+                className="w-10 h-10"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="m5 8 6 6" />
+                <path d="m4 14 6-6 2-3" />
+                <path d="M2 5h12" />
+                <path d="M7 2h1" />
+                <path d="m22 22-5-10-5 10" />
+                <path d="M14 18h6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Locate us"
+              onClick={() => onNavigate?.("locateus")}
+              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+            >
+              <IoLocationSharp className="w-10 h-10" />
+            </button>
+          </div>
+        </div>
+
+        {isMobileMenuOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <div
+              className="absolute left-0 top-0 h-full w-150 bg-white shadow-2xl overflow-y-auto animate-slideLeft"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="bg-[#66b300] text-white px-5 py-4 font-semibold text-lg flex items-center gap-2 justify-between">
+                
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  className="text-white/90 hover:text-white"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="flex flex-col ">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = item.key && item.key === currentPage;
+
+                  const hrefValue = item.key
+                    ? "#"
+                    : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
+
+                  const clickHandler = item.key
+                    ? (event) => handleNavClick(event, item.key)
+                    : () => setIsMobileMenuOpen(false);
+
+                  return (
+                    <a
+                      key={item.name}
+                      href={hrefValue}
+                      onClick={clickHandler}
+                      className={`flex items-center gap-6 px-10 py-10 text-[15px] border-b border-gray-100 transition-all duration-200 ${
+                        isActive
+                          ? "bg-gray-100 font-semibold text-gray-900"
+                          : "text-gray-700 hover:bg-[#d7f3b3]"
+                      }`}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                })}
+
+                <div className="px-12  py-20 mt-4 bg-[#427402] text-white rounded-t-2xl">
+                  <div className="max-w-[260px] w-full mb-6">
+                    <img
+                      src={SmfLogoWhite}
+                      alt="Save Medha Foundation logo"
+                      className="w-full max-h-28 object-contain"
+                    />
+                  </div>
+
+                  <p className="text-gray-200 italic text-lg leading-relaxed mb-6">
+                    &ldquo;Transforming cancer care through Natural Immunotherapy
+                    &mdash; where healing begins with your own immune power.&rdquo;
+                  </p>
+
+                  <div className="flex items-center gap-6 text-white">
+                    <a
+                      href="https://www.facebook.com/savemedhafoundation"
+                      aria-label="Facebook"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Facebook className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://www.instagram.com/savemedhafoundation/"
+                      aria-label="Instagram"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Instagram className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/company/save-medha-foundation/"
+                      aria-label="LinkedIn"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Linkedin className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://wa.me/9800808595"
+                      aria-label="WhatsApp"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <ImWhatsapp className="w-7 h-7" />
+                    </a>
+
+                    <a
+                      href="https://www.youtube.com/@savemedhafoundation7959"
+                      aria-label="YouTube"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[#74c425] transition-colors"
+                    >
+                      <Youtube className="w-7 h-7" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Desktop / laptop layout */}
+      <div className="hidden lg:block">
       {/* ===============================
           TOP SECTION
       =============================== */}
@@ -126,7 +375,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             {/* === Row 2: Search, Language, Date, Location, Appointment === */}
             <div className="flex flex-wrap justify-end items-center gap-4">
               {/* Search */}
-              <div className="relative w-[170px] shadow-md">
+              <div className="relative w-[200px] shadow-md">
                 <input
                   type="text"
                   placeholder="Search"
@@ -246,7 +495,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
       >
         <div className="flex items-center justify-between">
           {/* Navigation */}
-          <nav className="hidden lg:flex items-center">
+          <nav className="flex items-center">
             {NAV_ITEMS.map((item) => {
               const isActive = item.key && item.key === currentPage;
               const hrefValue = item.key
@@ -286,75 +535,8 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               );
             })}
           </nav>
-
-          {/* Mobile menu trigger */}
-          <div className="lg:hidden relative pr-33">
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen((open) => !open)}
-              className="inline-flex items-center justify-center rounded-md bg-[#74C425] px-6 py-2 left-8 text-sm font-semibold text-white shadow hover:bg-[#5ca41f] focus:outline-none focus:ring-2 focus:ring-[#9bd853]"
-              aria-label="Toggle navigation menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              {isMobileMenuOpen ? (
-                <svg
-                  className="h-5 w-5 transition-transform rotate-90"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg
-                  className="h-5 w-5 transition-transform"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-              )}
-            </button>
-
-            {isMobileMenuOpen && (
-              <div className="absolute right-0 mt-2 w-56 rounded-lg bg-white text-gray-900 shadow-xl ring-1 ring-black/5 overflow-hidden z-50">
-                {NAV_ITEMS.map((item) => {
-                  const isActive = item.key && item.key === currentPage;
-                  const hrefValue = item.key
-                    ? "#"
-                    : `#${item.name.toLowerCase().replace(/ /g, "-")}`;
-                  const clickHandler = item.key
-                    ? (event) => handleNavClick(event, item.key)
-                    : () => setIsMobileMenuOpen(false);
-
-                  return (
-                    <a
-                      key={item.name}
-                      href={hrefValue}
-                      onClick={clickHandler}
-                      className={`block px-4 py-3 text-sm font-semibold uppercase tracking-wide transition ${
-                        isActive
-                          ? "bg-[#003399] text-white"
-                          : "text-gray-800 hover:bg-gray-100"
-                      }`}
-                    >
-                      {item.name}
-                    </a>
-                  );
-                })}
-              </div>
-            )}
-          </div>
         </div>
+      </div>
       </div>
     </header>
   );
