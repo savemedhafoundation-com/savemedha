@@ -5,6 +5,8 @@ import imageCancerCare from "../assets/Photo/5.jpg";
 import imageHeartHealth from "../assets/Photo/3.jpg";
 import imageKidneyRevival from "../assets/Photo/2.jpg";
 import imageOtherHealth from "../assets/Photo/6.jpg";
+import BodyMap from "./BodyMap";
+import OrganModal from "./OrganModal";
 
 // ✅ Small decorative 3x3 dot grid
 const DotPattern = () => (
@@ -184,10 +186,26 @@ const ServicesSection = () => {
 
 // ✅ Combined Page
 export default function HomePage() {
+  const [selectedOrgan, setSelectedOrgan] = useState(null);
+
   return (
     <>
       <HeroBanner />
       <ServicesSection />
+      <section className="py-16">
+        <div className="w-full max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900">Explore the Body Map</h2>
+            <p className="text-gray-600 mt-3">
+              Hover to see focus and click an organ to learn how Natural Immunotherapy supports it.
+            </p>
+          </div>
+          <div className="w-full max-w-6xl mx-auto flex justify-center items-center bg-[#12213ed9] border border-gray-200 rounded-2xl">
+            <BodyMap onOrganSelect={setSelectedOrgan} />
+          </div>
+        </div>
+      </section>
+      <OrganModal organ={selectedOrgan} onClose={() => setSelectedOrgan(null)} />
     </>
   );
 }
