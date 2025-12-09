@@ -8,7 +8,7 @@ import Blogs from "./pages/Blogs";
 import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import { navigate } from "./store";
-// import LocateUs from "./pages/LocateUs";
+import LocateUs from "./pages/LocateUs";
 import BlogsDetails from "./pages/BlogsDetails";
 // demo commit
 
@@ -33,16 +33,16 @@ function App() {
           targetPath = "/blogs";
           break;
 
-        //           case "blogs-detail": {
-        //   const blogId = options?.id;
-        //   console.log("id", blogId);
-        //   if (!blogId) {
-        //     console.warn("blog-detail navigation requires id");
-        //     return;
-        //   }
-        //   targetPath = `/blogs/${blogId}`;
-        //   break;
-        // }
+                  case "blogs-detail": {
+          const blogId = options?.id;
+          console.log("id", blogId);
+          if (!blogId) {
+            console.warn("blog-detail navigation requires id");
+            return;
+          }
+          targetPath = `/blogs/${blogId}`;
+          break;
+        }
         case "blogs-detail": {
           const blogId = options?.id;
           if (!blogId) {
@@ -108,10 +108,10 @@ function App() {
           element={<Contact onNavigate={handleNavigate} />}
         />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
-        {/* <Route
+        <Route
           path="/locate-us"
           element={<LocateUs onNavigate={handleNavigate} />}
-        /> */}
+        /> 
       </Routes>
     </div>
   );
