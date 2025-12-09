@@ -4,9 +4,9 @@
 
 .body-card {
   width: 100%;
-  /* background: #12213ed9;
+  background: #3D6613;
   border: 1px solid rgba(127, 198, 226, 0.15);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35); */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   border-radius: 28px;
   padding: 1.5rem 1.5rem 2rem;
   backdrop-filter: blur(10px);
@@ -44,15 +44,14 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 1.2rem 0;
+  padding: 2rem 0;
 }
 
 .body-map-svg {
-  width: 100%;
-  max-width: 100%;
+  width: 150%;
+  max-width: 150%;
   height: auto;
   filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35));
-  padding-top: 20px;
 }
 
 .organ {

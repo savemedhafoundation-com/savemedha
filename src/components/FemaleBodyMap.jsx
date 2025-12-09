@@ -2,7 +2,7 @@ import React from 'react'
 
 const FemaleBodyMap = () => {
   return (
-    <div>FemaleBodyMap</div>
+    <div>Female Body Map</div>
   )
 }
 
