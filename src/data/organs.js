@@ -1,4 +1,4 @@
-import { Bone } from "lucide-react"
+
 
 const organs = {
   brain: {
@@ -7,6 +7,7 @@ const organs = {
     function: 'Controls the nervous system, cognition, coordination, and vital regulation.',
     nit_reason: 'Supports detox and nutrient flow that fuel neural pathways and protect against oxidative stress.',
     nit_support: 'Hydrate well, prioritize sleep, and include omega-rich foods to stabilize neural recovery.',
+    image: '/Brain.png',
   },
   eye: {
     key: 'eye',
@@ -14,6 +15,7 @@ const organs = {
     function: 'Responsible for vision and light perception.',
     nit_reason: 'Adequate micronutrients and circulation protect delicate retinal tissues.',
     nit_support: 'Rest your eyes, manage screen time, and eat leafy greens for carotenoids.',
+    image: '/11.png',
   },
   oral: {
     key: 'oral',
@@ -21,6 +23,7 @@ const organs = {
     function: 'Supports breathing, speaking, and the first phase of digestion.',
     nit_reason: 'Balanced flora and tissue integrity reduce toxin load entering the body.',
     nit_support: 'Maintain oral hygiene, stay hydrated, and include fibrous foods to support saliva flow.',
+    image: '/10.png',
   },
   throat: {
     key: 'throat',
@@ -28,6 +31,7 @@ const organs = {
     function: 'Connects mouth and nasal passages to the esophagus and larynx.',
     nit_reason: 'Healthy mucosa and lymphatic drainage keep pathogens in check.',
     nit_support: 'Warm liquids, gentle steam inhalation, and avoiding irritants aid recovery.',
+    image: '/13.png',
   },
   thyroid: {
     key: 'thyroid',
@@ -35,6 +39,7 @@ const organs = {
     function: 'Regulates metabolism, temperature, and hormone balance.',
     nit_reason: 'Trace minerals and low-toxin load help normalize hormone signaling.',
     nit_support: 'Ensure iodine and selenium intake, manage stress, and avoid excessive goitrogens.',
+    image: '/thyroid-glowing.png',
   },
   lungs: {
     key: 'lungs',
@@ -42,6 +47,7 @@ const organs = {
     function: 'Exchange oxygen and carbon dioxide to power the body.',
     nit_reason: 'Clear airways and balanced inflammation optimize gas exchange.',
     nit_support: 'Practice deep breathing, keep air clean, and stay mobile to aid clearance.',
+    image: '/4.png',
   },
   heart: {
     key: 'heart',
@@ -49,6 +55,7 @@ const organs = {
     function: 'Pumps blood to supply oxygen and nutrients throughout the body.',
     nit_reason: 'Circulatory efficiency improves immune delivery and toxin removal.',
     nit_support: 'Prioritize moderate movement, balanced electrolytes, and stress reduction.',
+    image: '/7.png',
   },
   liver: {
     key: 'liver',
@@ -56,6 +63,7 @@ const organs = {
     function: 'Filters blood, supports digestion, and balances nutrients.',
     nit_reason: 'Primary detox organ; lowering toxin burden boosts systemic resilience.',
     nit_support: 'Stay hydrated, limit alcohol, and include bitters and cruciferous vegetables.',
+    image: '/6.png',
   },
   stomach: {
     key: 'stomach',
@@ -63,6 +71,7 @@ const organs = {
     function: 'Breaks down food with acids and enzymes.',
     nit_reason: 'Healthy digestion reduces systemic inflammation and nutrient deficits.',
     nit_support: 'Eat slowly, manage stress while eating, and favor simple, whole foods.',
+    image: '/9.png',
   },
   gallbladder: {
     key: 'gallbladder',
@@ -70,6 +79,7 @@ const organs = {
     function: 'Stores and concentrates bile to aid digestion.',
     nit_reason: 'Effective bile flow supports fat digestion and toxin excretion.',
     nit_support: 'Include healthy fats in moderation and consider gentle movement after meals.',
+    image: '/GALLBLADDER.png',
   },
   pancreas: {
     key: 'pancreas',
@@ -77,6 +87,7 @@ const organs = {
     function: 'Produces digestive enzymes and insulin to regulate blood sugar.',
     nit_reason: 'Stable glucose and enzyme balance reduce metabolic stress on immunity.',
     nit_support: 'Favor balanced meals with fiber, protein, and healthy fats to steady glucose.',
+    image: '/2.png',
   },
   kidney: {
     key: 'kidney',
@@ -84,6 +95,7 @@ const organs = {
     function: 'Filter waste, balance fluids, and support urinary function.',
     nit_reason: 'Efficient filtration removes metabolic byproducts that burden immunity.',
     nit_support: 'Hydrate consistently, limit excess sodium, and include potassium-rich foods.',
+    image: '/12.png',
   },
   smallIntestine: {
     key: 'smallIntestine',
@@ -91,6 +103,7 @@ const organs = {
     function: 'Absorbs nutrients from digested food.',
     nit_reason: 'A healthy gut lining supports immune signaling and nutrient uptake.',
     nit_support: 'Prioritize probiotics and fiber, and avoid known food irritants.',
+    image: '/5.png',
   },
   largeIntestine: {
     key: 'largeIntestine',
@@ -98,6 +111,7 @@ const organs = {
     function: 'Absorbs water and forms stool for elimination.',
     nit_reason: 'Regular elimination lowers toxin recirculation and supports immunity.',
     nit_support: 'Stay hydrated, move regularly, and increase soluble fiber gradually.',
+    image: '/3.png',
   },
   skinHands: {
     key: 'skinHands',
@@ -105,6 +119,7 @@ const organs = {
     function: 'Protective barrier and sensory interface for touch.',
     nit_reason: 'Intact skin limits pathogen entry and supports immune vigilance.',
     nit_support: 'Moisturize, protect from harsh chemicals, and maintain gentle cleansing.',
+    image: '/SKIN.png',
   },
   spleen: {
     key: 'spleen',
@@ -112,20 +127,23 @@ const organs = {
     function: 'Regulates blood flow and immune response.',
     nit_reason: 'Healthy spleen supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
+    image: '/SPLEEN.png',
   },
-  Bladder: {
+  bladder: {
     key: 'bladder',
     name: 'Bladder',
     function: 'Regulates urine production and elimination.',
     nit_reason: 'Healthy bladder supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
+    image: '/1.png',
   },
-  Nerve: {
+  nerve: {
     key: 'nerve',
     name: 'Nerve',
     function: 'Regulates blood flow and immune response.',
     nit_reason: 'Healthy nerve supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
+    image: '/NEURONE.png',
   },
   blood: {
     key: 'blood',
@@ -133,6 +151,7 @@ const organs = {
     function: 'Transports nutrients, hormones, and toxins to and from the body.',
     nit_reason: 'Healthy circulation supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
+    image: '/BLOODCANCER.png',
   },
   tumer: {
     key: 'tumer',
@@ -140,6 +159,7 @@ const organs = {
     function: 'Regulates blood flow and immune response.',
     nit_reason: 'Healthy tumer supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
+    image: '/TUMOR.png',
   },
   bone:{
     key: 'bone',
@@ -147,6 +167,7 @@ const organs = {
     function: 'Regulates blood flow and immune response.',
     nit_reason: 'Healthy bone supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
+    image: '/14.png',
   }
 }
 

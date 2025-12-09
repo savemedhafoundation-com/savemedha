@@ -187,20 +187,20 @@ const ServicesSection = () => {
 // ✅ Combined Page
 export default function HomePage() {
   const [selectedOrgan, setSelectedOrgan] = useState(null);
-
+  console.log("selected organ", selectedOrgan);
   return (
     <>
       <HeroBanner />
       <ServicesSection />
       <section className="py-16">
-        <div className="w-full max-w-6xl mx-auto px-4">
+        <div className="w-full px-0 sm:px-4">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-gray-900">Explore the Body Map</h2>
             <p className="text-gray-600 mt-3">
               Hover to see focus and click an organ to learn how Natural Immunotherapy supports it.
             </p>
           </div>
-          <div className="w-full max-w-6xl mx-auto flex justify-center items-center bg-[#12213ed9] border border-gray-200 rounded-2xl">
+          <div className="w-full flex justify-center items-center bg-[#12213ed9] border border-gray-200 rounded-2xl">
             <BodyMap onOrganSelect={setSelectedOrgan} />
           </div>
         </div>

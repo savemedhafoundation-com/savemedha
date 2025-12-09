@@ -1,102 +1,147 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(6, 12, 24, 0.78);
+  /* background: rgba(39, 92, 29, 0.9); */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.25rem;
+  padding: 1.5rem;
   backdrop-filter: blur(4px);
   z-index: 20;
 }
 
 .modal-card {
-  width: min(720px, 100%);
-  background: linear-gradient(135deg, #10243d 0%, #122b4b 80%);
-  border-radius: 20px;
-  border: 1px solid rgba(127, 198, 226, 0.25);
-  padding: 1.5rem 1.5rem 1.25rem;
-  color: #f0f6ff;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4);
-}
-
-.modal-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.modal-label {
-  margin: 0;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  color: #8bc7ff;
-  text-transform: uppercase;
-}
-
-.modal-card h3 {
-  margin: 0.2rem 0 0;
-  font-size: 1.8rem;
+  position: relative;
+  width: min(760px, 100%);
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 3.5rem 2.25rem 2rem;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+  color: #172126;
 }
 
 .close-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
   border: none;
-  background: rgba(255, 255, 255, 0.08);
-  color: #f9fbff;
+  background: #f2f4f7;
+  color: #0f1b07;
   width: 38px;
   height: 38px;
-  border-radius: 10px;
+  border-radius: 50%;
   font-size: 1.4rem;
   cursor: pointer;
-  transition: background 0.25s ease, transform 0.2s ease;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .close-button:hover,
 .close-button:focus-visible {
-  background: rgba(255, 255, 255, 0.16);
   transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
   outline: none;
 }
 
-.modal-body {
-  margin-top: 1.25rem;
+.organ-image-wrapper {
+  position: absolute;
+  top: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  /* background: #eaf4e3; */
   display: grid;
-  gap: 1rem;
+  place-items: center;
+  padding: 14px;
+  /* box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28); */
 }
 
-.info-block {
-  background: rgba(12, 26, 51, 0.6);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 1rem 1.25rem;
+.organ-image-wrapper img,
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.block-label {
-  margin: 0 0 0.4rem;
-  font-size: 0.9rem;
-  color: #8bc7ff;
-  letter-spacing: 0.03em;
+.image-placeholder {
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2b5f1f;
 }
 
-.block-text {
+.modal-body {
+  display: grid;
+  gap: 1.6rem;
+  margin-top: 2.5rem;
+}
+
+.modal-title {
   margin: 0;
-  color: #d5e6ff;
+  text-align: center;
+  font-size: 1.9rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.highlight-block {
+  background: #8ed747;
+  color: #0a1305;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.info-column {
+  background: #f5f8f1;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  border: 1px solid #e1ead6;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.column-label {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1f3616;
+}
+
+.column-text {
+  margin: 0;
+  color: #344332;
   line-height: 1.6;
 }
 
-.two-col {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.8rem 1.2rem;
-}
-
-@media (max-width: 540px) {
+@media (max-width: 640px) {
   .modal-card {
-    padding: 1.25rem 1rem 1rem;
+    padding: 3rem 1.25rem 1.5rem;
   }
 
-  .modal-card h3 {
-    font-size: 1.5rem;
+  .organ-image-wrapper {
+    width: 120px;
+    height: 120px;
+    top: -54px;
+  }
+
+  .modal-title {
+    font-size: 1.6rem;
+  }
+
+  .highlight-block {
+    font-size: 0.95rem;
   }
 }

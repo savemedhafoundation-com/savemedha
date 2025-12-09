@@ -1,11 +1,9 @@
 .body-map-wrapper {
-  display: flex;
-  justify-content: center;
+  width: 100%;
 }
 
 .body-card {
   width: 100%;
-  max-width: 780px;
   /* background: #12213ed9;
   border: 1px solid rgba(127, 198, 226, 0.15);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35); */
@@ -45,11 +43,13 @@
 .body-canvas {
   display: flex;
   justify-content: center;
+  width: 100%;
   padding: 1.2rem 0;
 }
 
 .body-map-svg {
-  width: min(520px, 100%);
+  width: 100%;
+  max-width: 100%;
   height: auto;
   filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35));
   padding-top: 20px;
@@ -197,5 +197,14 @@ transform: scale(1.15);
 
   .body-card h2 {
     font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .body-map-svg {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 78vh;
   }
 }
