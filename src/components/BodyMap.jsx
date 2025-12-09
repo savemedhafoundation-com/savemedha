@@ -20,13 +20,13 @@ const BodyMap = ({ onOrganSelect }) => {
     // this div will take full width of the screen
     <div className="body-map-wrapper w-full">
       <div className="body-card">
-        <div className="body-card-header">
+        {/* <div className="body-card-header">
           <div>
             <p className="label">Organs</p>
             <h2>Hover &amp; Click to Explore</h2>
           </div>
           <p className="hint">Hover to see glow · Click to open details</p>
-        </div>
+        </div> */}
 
         <div className="body-canvas">
           <svg
@@ -54,6 +54,7 @@ const BodyMap = ({ onOrganSelect }) => {
               preserveAspectRatio="xMidYMid meet"
             />
 
+{/* brain points */}
             <g
               className="organ brain"
               role="button"
@@ -81,7 +82,9 @@ const BodyMap = ({ onOrganSelect }) => {
                 fill="transparent"
               />
             </g>
+            
 
+             {/* Eye points */}
             <g
               className="organ eye"
               role="button"
@@ -119,6 +122,7 @@ const BodyMap = ({ onOrganSelect }) => {
               />
             </g>
 
+          {/* oral points */}
             <g
               className="organ oral"
               role="button"
@@ -147,6 +151,8 @@ const BodyMap = ({ onOrganSelect }) => {
               />
             </g>
 
+
+           {/* thyroid points */}
             <g
               className="organ throat"
               role="button"

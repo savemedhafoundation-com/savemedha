@@ -228,7 +228,7 @@ export default function HomePage() {
               {sex === "male" ? (
                 <BodyMap onOrganSelect={setSelectedOrgan} />
               ) : (
-                <FemaleBodyMap />
+                <FemaleBodyMap onOrganSelect={setSelectedOrgan} />
               )}
             </div>
           </div>
