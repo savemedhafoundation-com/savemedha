@@ -32,17 +32,6 @@ function App() {
         case "blogs":
           targetPath = "/blogs";
           break;
-
-                  case "blogs-detail": {
-          const blogId = options?.id;
-          console.log("id", blogId);
-          if (!blogId) {
-            console.warn("blog-detail navigation requires id");
-            return;
-          }
-          targetPath = `/blogs/${blogId}`;
-          break;
-        }
         case "blogs-detail": {
           const blogId = options?.id;
           if (!blogId) {
