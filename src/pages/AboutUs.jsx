@@ -7,7 +7,7 @@ import IsoLogo from '../assets/Photo/Logo ISO_9001.png';
 import HalalLogo from '../assets/Photo/Halal logo.png';
 import AiaoBarLogo from '../assets/Photo/AIAO BAR.jpg';
 import CertifiedLogo from '../assets/Photo/certified.png';
-import { IoPeopleSharp } from "react-icons/io5";
+import { IoPeopleSharp } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
 
 const highlightText = [
@@ -72,12 +72,9 @@ const certificationBadges = [
   },
 ];
 
-const 
-skylineHeights = [28, 52, 36, 64, 44, 58, 32, 48, 40, 54];
+const skylineHeights = [28, 52, 36, 64, 44, 58, 32, 48, 40, 54];
 
-
-
-const Counter = () => {
+const Counter = ({ compact = false }) => {
   const [count, setCount] = useState(0);
   const [cityCount, setCityCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -104,7 +101,7 @@ const Counter = () => {
     if (isVisible && count < 300) {
       const interval = setInterval(() => {
         setCount((prev) => prev + 1);
-      }, 25); // speed of counting
+      }, 25);
       return () => clearInterval(interval);
     }
   }, [isVisible, count]);
@@ -113,224 +110,490 @@ const Counter = () => {
     if (isVisible && cityCount < 6) {
       const interval = setInterval(() => {
         setCityCount((prev) => prev + 1);
-      }, 1400); // speed of counting
+      }, 1400);
       return () => clearInterval(interval);
     }
   }, [isVisible, cityCount]);
 
-  return (
-    <div ref={countRef} className="flex flex-row gap-25 items-start justify-center">
-      {/* Cities */}
-       <div className="text-center space-y-4">
-                      <p className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-600">
-                        Present In
-                      </p>
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-5xl md:text-6xl font-bold text-[#74C425]">{cityCount}+</span>
-                        <span className="text-lg font-semibold text-gray-600">Cities</span>
-                      </div>
-                      <div className="mt-6 flex items-end justify-center gap-1 text-[#74C425]">
-                        {skylineHeights.map((height, idx) => (
-                          <span
-                            key={idx}
-                            className="w-4 rounded-t-md bg-gradient-to-t from-[#74C425] via-[#6ab020] to-[#e8f6e0]"
-                            style={{ height }}
-                          />
-                        ))}
-                      </div>
-                    </div>
+  const containerClasses = compact
+    ? 'flex flex-row h-[400px]  items-center justify-between gap-8 rounded-3xl bg-gradient-to-br from-[#f4faf3] via-white to-[#f2f9ed] p-15 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-[#e1eddb]'
+    : 'flex flex-col items-center justify-between gap-10 rounded-[28px] bg-gradient-to-br from-[#f5fbf4] via-white to-[#f0f8ec] p-8 shadow-inner md:flex-row md:gap-14';
 
-      {/* Members */}
-       <div className="text-center space-y-4 max-w-[200px]">
-                      <p className="text-lg font-semibold uppercase tracking-[0.2em] text-gray-600">
-                        We Are
-                      </p>
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-5xl md:text-6xl font-bold text-[#74C425]">{count}+</span>
-                        <span className="text-lg font-semibold text-gray-600">Members</span>
-                      </div>
-                      <div className="mt-12 flex items-center justify-center gap-[-0.5rem] text-gray-300">
-                       <IoPeopleSharp  size={40}/>
-                       <IoPeopleSharp  size={40}/>
-                       <IoPeopleSharp  size={40}/>
-                      </div>
-                    </div>
+  const labelClass = compact
+    ? 'text-3xl font-semibold uppercase tracking-[0.3em] text-gray-600'
+    : 'text-sm font-semibold uppercase tracking-[0.35em] text-gray-600';
+
+  const numberClass = compact
+    ? 'text-6xl font-black text-[#6ab12f]'
+    : 'text-5xl md:text-6xl font-black text-[#6ab12f] drop-shadow-sm';
+
+  const subLabelClass = compact
+    ? 'text-3xl font-semibold text-gray-600 mt-4'
+    : 'text-lg font-semibold text-gray-600';
+
+  const skylineClass = compact
+    ? 'mt-4 flex items-end justify-center gap-1 text-[#6ab12f]'
+    : 'mt-6 flex items-end justify-center gap-1 text-[#6ab12f]';
+
+  const peopleRowClass = compact
+    ? 'mt-6 flex items-center justify-center gap-3 text-[#6ab12f]'
+    : 'mt-8 flex items-center justify-center gap-2 text-[#6ab12f]';
+
+  const iconSize = compact ? 55 : 40;
+  const skylineBarWidth = compact ? 'w-4' : 'w-4';
+
+  return (
+    <div
+      ref={countRef}
+      className={containerClasses}
+    >
+      <div className="text-center space-y-3">
+        <p className={labelClass}>
+          Present In
+        </p>
+        <div className="flex flex-col items-center justify-center">
+          <span className={numberClass}>
+            {cityCount}+
+          </span>
+          <span className={subLabelClass}>Cities</span>
+        </div>
+        <div className={skylineClass}>
+          {skylineHeights.map((height, idx) => (
+            <span
+              key={idx}
+              className={`${skylineBarWidth} rounded-t-md bg-gradient-to-t from-[#6ab12f] via-[#5f9f29] to-[#eaf6e2]`}
+              style={{ height }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {!compact && (
+        <div className="h-20 w-px bg-gradient-to-b from-transparent via-[#dbe7d5] to-transparent hidden md:block" />
+      )}
+
+      <div className="text-center space-y-3 max-w-[220px]">
+        <p className={labelClass}>
+          We Are
+        </p>
+        <div className="flex flex-col items-center justify-center">
+          <span className={numberClass}>
+            {count}+
+          </span>
+          <span className={subLabelClass}>Members</span>
+        </div>
+        <div className={peopleRowClass}>
+          <IoPeopleSharp size={iconSize} />
+          <IoPeopleSharp size={iconSize} className="opacity-80" />
+          <IoPeopleSharp size={iconSize} className="opacity-60" />
+        </div>
+      </div>
     </div>
   );
 };
 
-
-
 export default function AboutUs({ onNavigate }) {
-  return (
-    <div className="min-h-screen bg-white">
-      <Navbar currentPage="about" onNavigate={onNavigate} />
-      <main className="w-full px-4 md:px-10 lg:px-20">
-        <section className="relative h-[320px] md:h-[380px] lg:h-[420px] flex items-center justify-center text-white overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-fixed scale-105"
-            style={{ backgroundImage: `linear-gradient(120deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url(${HeroBackground})` }}
-            aria-hidden="true"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/35 to-black/60" />
-          <div className="relative text-center space-y-4 px-4 backdrop-blur-[1px]">
-            <p className="text-sm tracking-[0.3em] uppercase text-gray-200">
-              Save Medha Foundation
-            </p>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide drop-shadow-lg">
-              ABOUT US
-            </h1>
-            <div className="w-20 h-1 bg-[#74C425] mx-auto" />
-          </div>
-        </section>
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-        <section className="relative bg-white">
-          <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#f7f7f7] to-transparent rounded-br-[60px]" />
-          <div className="absolute top-6 right-8 w-16 h-16 border-4 border-[#74C425] rounded-full opacity-40" />
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobileMenuOpen(window.matchMedia('(max-width: 767px)').matches);
+      }
+    };
 
-          <div className="relative max-w-6xl mx-auto px-6 lg:px-12 py-16 lg:py-20">
-            <div className="text-center space-y-4 mb-10">
-              <p className="text-lg font-semibold text-gray-700 tracking-wider">
-                <span className="uppercase text-gray-900">A Death</span>
-                <span className="text-gray-700"> That Inspired To Change The World:</span>
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const renderDesktopTabletLayout = () => (
+    <>
+      <section className="relative h-[360px] md:h-[460px] lg:h-[520px] flex items-center justify-center overflow-hidden text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${HeroBackground})`,
+          }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0b2910]/85 via-[#1b3c1a]/70 to-[#0b2910]/85" />
+        <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#6ab12f]/25 blur-3xl" />
+        <div className="absolute -left-20 bottom-10 h-72 w-72 rounded-full bg-[#f08a1d]/25 blur-3xl" />
+
+        <div className="relative max-w-5xl text-center space-y-5 px-4">
+          <p className="text-xs md:text-sm uppercase tracking-[0.4em] text-[#dff4d5]">
+            Save Medha Foundation
+          </p>
+          <h1 className="text-4xl md:text-6xl font-black tracking-[0.08em] drop-shadow-xl">
+            ABOUT US
+          </h1>
+          <p className="mx-auto max-w-3xl text-base md:text-lg text-[#eaf6e2]">
+            A foundation born from courage, compassion, and the promise to rewrite every story.
+          </p>
+          <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-[#f08a1d] via-[#f6c04c] to-[#6ab12f]" />
+        </div>
+      </section>
+
+      <section className="relative -mt-16 px-4 md:px-10 lg:px-20 pb-14">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative z-10 rounded-[38px] bg-white shadow-[0_25px_90px_rgba(0,0,0,0.08)] border border-[#e8f0e3] px-6 py-10 md:px-12 md:py-12">
+            <div className="absolute -left-10 -top-12 h-24 w-24 rounded-full bg-gradient-to-br from-[#f7e1c7] via-white to-white rotate-12 shadow-xl opacity-80" aria-hidden="true" />
+            <div className="absolute -right-12 -bottom-12 h-28 w-28 rounded-full bg-gradient-to-tl from-[#f4d091] via-white to-white -rotate-6 shadow-xl opacity-80" aria-hidden="true" />
+            <div className="absolute right-6 -top-10 flex items-center gap-4 text-[#f08a1d] opacity-70 rotate-[-35deg]" aria-hidden="true">
+              <span className="h-16 w-16 rounded-full border-2 border-[#6ab12f]" />
+              <span className="h-16 w-16 -ml-10 rounded-full border-2 border-[#e95f2a]" />
+            </div>
+
+            <div className="text-center mb-8 space-y-3">
+              <p className="text-lg md:text-xl font-semibold uppercase tracking-wide font-shippori">
+                <span className="text-gray-900 inline-block border-b-2 border-[#74C425] pb-0.5">
+                  A Death
+                </span>{' '}
+                <span className="text-[#6ab12f]">That Inspired To Change The World:</span>
               </p>
-              <p className="text-3xl md:text-4xl font-bold text-[#74C425]">
+              <p className="text-2xl md:text-3xl font-black text-[#E7581F] font-kalam">
                 Save Medha Foundation
               </p>
             </div>
 
-            <div className="bg-white shadow-xl rounded-[30px] border border-[#f2f2f2] p-8 md:p-12 space-y-6 leading-relaxed text-gray-700">
+            <div className="space-y-4 sm:space-y-5 text-sm sm:text-base font-poppins leading-relaxed text-gray-700">
               {highlightText.map((paragraph, idx) => (
-                <p key={idx} className="text-justify text-base md:text-lg">
+                <p key={idx} className="text-justify">
                   {paragraph}
                 </p>
               ))}
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="relative bg-white py-16 lg:py-24 overflow-hidden">
-          <div className="absolute -top-10 left-6 w-32 h-32 bg-gradient-to-br from-gray-100/90 to-transparent rounded-br-[70px]" />
-          <div className="absolute top-16 right-12 w-20 h-20 border-4 border-[#F26921] rounded-full opacity-40" />
+      <section className="relative px-4 md:px-10 lg:px-20 pb-16 lg:pb-20">
+        <div className="absolute top-6 left-50 flex items-center gap-4 opacity-70 rotate-[35deg]" aria-hidden="true">
+          <span className="h-16 w-16 rounded-full border-2 border-[#6ab12f]" />
+          <span className="h-16 w-16 -ml-10 rounded-full border-2 border-[#e95f2a]" />
+        </div>
+        <div className="absolute -right-10 bottom-6 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-30" aria-hidden="true" />
 
-          <div className="relative max-w-5xl mx-auto px-6 lg:px-12">
-            <div className="text-center space-y-6">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wide uppercase text-gray-900">
-                <span className="text-gray-900">WE FIGHT</span>{' '}
-                <span className="text-[#74C425]">AGAINST CANCER</span>
-              </h2>
-              <p className="text-lg md:text-2xl font-semibold text-[#F26921] italic leading-relaxed">
-                " Our goals are to fight for a cancer free world, empower lives, and save futures. "
-              </p>
-            </div>
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-4xl font-black tracking-wide font-shippori">
+              <span className="text-gray-900 ">WE FIGHT</span>{' '}
+              <span className="text-[#6ab12f]">AGAINST CANCER</span>
+            </h2>
+            <p className="text-lg md:text-2xl font-semibold text-[#f08a1d] italic">
+              " Our goals are to fight for a cancer free world, empower lives, and save futures. "
+            </p>
+          </div>
 
-            <div className="mt-12 space-y-6 bg-white text-gray-700 text-base md:text-lg leading-relaxed">
+          <div className="relative rounded-[32px] bg-white shadow-[0_25px_90px_rgba(0,0,0,0.07)] border border-[#e8f0e3] p-8 md:p-12">
+            <div className="absolute -left-8 top-1/2 h-14 w-14 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#dff0d6] to-white shadow-md" aria-hidden="true" />
+            <div className="absolute -right-6 bottom-4 h-10 w-10 rounded-full border-2 border-[#f08a1d] opacity-60" aria-hidden="true" />
+            <div className="space-y-5 text-base md:text-m leading-relaxed text-gray-700">
               {fightAgainstCancerText.map((paragraph, idx) => (
                 <p key={idx} className="text-justify">
                   {paragraph}
                 </p>
               ))}
             </div>
+          </div>
 
-            <div className="mt-16 space-y-10">
-              {missionSections.map((section) => (
-                <div key={section.title} className="space-y-4">
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-wide uppercase text-gray-900 text-center">
-                    {section.title}
-                  </h3>
-                  <p className="text-base md:text-lg leading-relaxed text-gray-700">
-                    {section.content}
-                  </p>
-                </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {missionSections.map((section) => (
+              <div
+                key={section.title}
+                className="relative rounded-[28px] bg-white border border-[#e7f1e1] shadow-[0_18px_60px_rgba(0,0,0,0.06)] p-8 space-y-4"
+              >
+                <div className="absolute -top-4 right-6 h-10 w-10 rounded-full bg-gradient-to-br from-[#f5d9a5] to-white shadow-md" aria-hidden="true" />
+                <h3 className="text-2xl font-black text-center text-[#6ab12f] tracking-wide">
+                  {section.title}
+                </h3>
+                <p className="text-base md:text-m leading-relaxed text-gray-700 text-justify">
+                  {section.content}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative px-4 md:px-10 lg:px-20 pb-16 lg:pb-24">
+        <div className="max-w-6xl mx-auto space-y-10">
+          <div className="text-center space-y-2">
+            <h3 className="text-2xl md:text-3xl font-black uppercase tracking-[0.25em] text-[#f08a1d]">
+              OVERVIEW
+            </h3>
+            <p className="text-gray-600">Our impact grows with every city, member, and trusted certification.</p>
+          </div>
+
+          <div className="relative rounded-[46px] bg-white border border-dashed border-[#dfe8da] shadow-[0_22px_80px_rgba(0,0,0,0.07)] overflow-hidden">
+            <div className="absolute -left-12 top-6 h-28 w-28 rounded-full bg-[#f5f1e5] blur-xl" aria-hidden="true" />
+            <div className="absolute -right-10 bottom-6 h-28 w-28 rounded-full bg-[#e7f4de] blur-xl" aria-hidden="true" />
+
+            <div className="px-6 py-10 md:px-12">
+              <Counter />
+            </div>
+
+            <div className="border-t border-dashed border-[#dfe8da] bg-[#f7faf6] px-6 py-10 md:px-12">
+              <div className="flex flex-wrap items-center justify-center gap-5 md:gap-8">
+                {certificationBadges.map((badge) => (
+                  <div
+                    key={badge.id}
+                    className="flex h-28 w-28 flex-col items-center justify-center rounded-full border border-[#d0e6c9] bg-white text-center shadow-sm"
+                  >
+                    <img
+                      src={badge.src}
+                      alt={badge.alt}
+                      className="h-14 w-14 object-contain"
+                    />
+                    <span className="mt-2 px-2 text-[10px] font-semibold leading-tight text-gray-600">
+                      {badge.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative px-4 md:px-10 lg:px-20 pb-20">
+        <div className="max-w-6xl mx-auto grid gap-12 md:grid-cols-2 items-center rounded-[32px] bg-white shadow-[0_22px_80px_rgba(0,0,0,0.07)] border border-[#e8f0e3] p-8 md:p-12">
+          <div className="relative">
+            <div className="absolute -top-6 -left-6 h-20 w-20 rounded-full border-2 border-[#6ab12f] opacity-30" aria-hidden="true" />
+            <div className="absolute -bottom-10 -right-10 h-24 w-24 rounded-3xl bg-[#6ab12f] opacity-10 rotate-6" aria-hidden="true" />
+            <img
+              src={DoctorImage}
+              alt="Save Medha Foundation care"
+              className="relative rounded-3xl shadow-2xl border-4 border-white object-cover w-full"
+            />
+          </div>
+
+          <div className="space-y-6 text-gray-700">
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight">
+              Carrying Medha&apos;s Light Forward
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed">
+              Every patient who walks through our doors carries a story, a dream, and the same unwavering hope that Medha held onto.
+              Our team blends compassion with pioneering science, empowering the immune system to lead the healing journey. From counseling
+              and diagnostics to holistic natural therapies, we support families with the care and dignity they deserve.
+            </p>
+            <p className="text-base md:text-lg leading-relaxed">
+              Save Medha Foundation is more than an organization - it is a promise that no family will have to face cancer alone.
+              Together, we are building a future where love, science, and community rewrite what it means to survive and thrive.
+            </p>
+            <div className="flex flex-wrap gap-4 pt-2">
+              <button
+                type="button"
+                onClick={() => onNavigate && onNavigate('home')}
+                className="bg-[#6ab12f] hover:bg-[#5a9c27] text-white font-semibold px-6 py-3 rounded-md transition-colors cursor-pointer shadow-sm"
+              >
+                Back To Home
+              </button>
+              <button
+                type="button"
+                className="border-2 border-[#6ab12f] text-[#6ab12f] hover:bg-[#0c3b1c] hover:border-[#0c3b1c] hover:text-white font-semibold px-6 py-3 rounded-md transition-colors cursor-pointer shadow-sm"
+              >
+                Support The Mission
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+
+  const renderMobileLayout = () => (
+    <>
+      <section className="relative h-[400px] w-full overflow-hidden rounded-b-[32px] bg-gradient-to-b from-[#e7f2db] via-[#d7ecc7] to-[#c8e6b8] shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
+        <div className="absolute inset-0">
+          <img
+            src={HeroBackground}
+            alt="Save Medha Foundation background"
+            className="h-full w-full object-cover opacity-85"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/55" />
+        </div>
+        <div className="relative flex h-full flex-col justify-end gap-2 px-40 pb-30 text-white">
+          <span className="text-[25px] font-semibold uppercase tracking-[0.25em] text-[#d9f3cb]">
+            Save Medha Foundation
+          </span>
+          <h1 className="text-5xl font-black leading-tight">About Us</h1>
+          <p className="max-w-[450px] text-[20px] leading-7 text-[#eef8e9]">
+            A foundation born from courage, compassion, and the promise to rewrite every story.
+          </p>
+          <div className="mt-2 h-1 w-50 rounded-full bg-gradient-to-r from-[#f08a1d] via-[#f6c04c] to-[#6ab12f]" />
+        </div>
+      </section>
+
+      <section className=" px-3 pb-10">
+        <div className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-[#74C4250D] shadow-md p-6 md:p-8">
+          <div className="absolute -left-8 -top-8 h-20 w-20 rounded-full bg-[#f7ecdb] blur-2xl" aria-hidden="true" />
+          <div className="absolute -right-10 bottom-4 h-24 w-24 rounded-full bg-[#e8f5de] blur-2xl" aria-hidden="true" />
+          <div className="relative px-4 pt-15 pb-15 text-center space-y-10">
+            <p className="text-4xl font-semibold uppercase tracking-wide font-shippori">
+              <span className="text-gray-900 inline-block border-b-2 border-[#74C425] pb-0.5">
+                A Death
+              </span>{' '}
+              <span className="text-[#6ab12f]">That Inspired To Change The World:</span>
+            </p>
+            <p className="text-5xl font-black text-[#E7581F] font-kalam">
+              Save Medha Foundation
+            </p>
+          </div>
+          <div className="relative space-y-10 px-10 pb-8 text-[30px] leading-10 text-gray-700 font-poppins">
+            {highlightText.map((paragraph, idx) => (
+              <p key={idx} className="text-justify">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-3 pb-10 pt-10">
+        <div className="relative mx-auto max-w-[1200px] space-y-4">
+          <div className="absolute top-6 left-2 flex items-center gap-4 opacity-70 rotate-[35deg]" aria-hidden="true">
+          <span className="h-20 w-20 rounded-full border-2 border-[#6ab12f]" />
+          <span className="h-20 w-20 -ml-10 rounded-full border-2 border-[#e95f2a]" />
+          </div>
+          <div className="absolute -right-2 Top-6 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-30" aria-hidden="true" />
+
+          <div className="text-center space-y-10 pb-5 ">
+            <h2 className="text-5xl font-black tracking-wide font-shippori">
+              <span className="text-gray-900 inline-block border-b-2 border-[#74C425]">WE FIGHT</span>{' '}
+              <span className="text-[#6ab12f]">AGAINST CANCER</span>
+            </h2>
+            <p className="text-[35px] text-left mx-auto max-w-[600px] font-bold text-[#E7581F] font-poppins italic leading-1.6">
+              " Our goals are to fight for a cancer free world, empower lives, and save futures. "
+            </p>
+          </div>
+          
+          <div className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-[#74C4250D] shadow-md p-6 md:p-8">
+            <div className="absolute -left-8 top-1/2 h-12 w-12 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#dff0d6] to-white shadow-sm" aria-hidden="true" />
+            <div className="absolute -right-6 bottom-4 h-10 w-10 rounded-full border-2 border-[#f08a1d] opacity-60" aria-hidden="true" />
+            <div className="relative space-y-10 px-10 pb-8 pt-10 font-semibold text-[30px] leading-10 text-gray-700 font-poppins">
+              {fightAgainstCancerText.map((paragraph, idx) => (
+                <p key={idx}>
+                  {paragraph}
+                </p>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="mt-16">
-              <h3 className="text-2xl md:text-3xl font-bold uppercase text-center text-[#F26921] tracking-[0.2em]">
-                OVERVIEW
+      <section className="px-3 pt-10 pb-10">
+        <div className="mx-auto max-w-[1200px] space-y-10">
+          {missionSections.map((section) => (
+            <div
+              key={section.title}
+              className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[26px]  border-[#e8f0e3] bg-[#74C4250D] shadow-md p-6 md:p-8"
+            >
+              <div className="absolute -top-3 right-5 h-9 w-9 rounded-full bg-gradient-to-br from-[#f5d9a5] to-white shadow-sm" aria-hidden="true" />
+              <h3 className="text-5xl font-black text-center text-[#6ab12f] tracking-wide pb-10">
+                {section.title}
               </h3>
-              <div className="relative mt-10 flex justify-center">
-                <div className="relative w-full max-w-5xl rounded-[45px] bg-white border border-dashed border-gray-200 shadow-2xl overflow-hidden">
-                  
-                   
-                    <Counter/>
-                  
-                  
+              <p className="text-[30px] px-10 pb-8 leading-10 font-semibold font-poppins text-gray-700 text-justify ">
+                {section.content}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-                  <div className="border-t border-dashed border-gray-200 bg-[#f7faf6] px-8 py-8">
-                    <div className="flex flex-wrap items-center justify-center gap-6">
-                      {certificationBadges.map((badge) => (
-                        <div
-                          key={badge.id}
-                          className="flex h-28 w-28 flex-col items-center justify-center rounded-full border border-[#d0e6c9] bg-white text-center shadow-sm"
-                        >
-                          <img
-                            src={badge.src}
-                            alt={badge.alt}
-                            className="h-14 w-14 object-contain"
-                          />
-                          <span className="mt-2 px-2 text-[10px] font-semibold leading-tight text-gray-600">
-                            {badge.name}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
+      <section className="px-3 pb-12">
+        <div className="mx-auto max-w-[1500px] space-y-4">
+          <div className="text-center space-y-1 mx-auto max-w-[1000px] ">
+            <h3 className="text-5xl font-black uppercase tracking-[0.25em] text-[#E7581F]">
+              OVERVIEW
+            </h3>
+            <p className="text-[28px] text-gray-600">
+              Our impact grows with every city, member, and trusted certification.
+            </p>
+          </div>
+
+          <div className="overflow-hidden mx-auto max-w-[1000px] h-[700px] rounded-[24px] border border border-[#dfe8da] bg-white shadow-[0_12px_45px_rgba(0,0,0,0.07)]">
+            <div className="px-4 py-6 h-[]">
+              <Counter compact />
+            </div>
+
+            <div className="border-t border border-[#dfe8da] bg-[#f7faf6] px-3 py-6">
+              <div className="flex flex-wrap items-center justify-center gap-10">
+                {certificationBadges.map((badge) => (
+                  <div
+                    key={badge.id}
+                    className="flex h-34 w-34 flex-col items-center justify-center rounded-full border border-[#d0e6c9] bg-white text-center shadow-sm"
+                  >
+                    <img
+                      src={badge.src}
+                      alt={badge.alt}
+                      className="h-15 w-15 object-contain"
+                    />
+                    <span className="mt-2 px-2 text-[13px] font-semibold  leading-tight text-gray-600">
+                      {badge.name}
+                    </span>
                   </div>
-                </div>
-                <div className="absolute -bottom-6 right-6 w-20 h-20">
-                  <div className="relative w-full h-full">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f5c06f] to-[#c1801f] rounded-full rotate-[32deg] opacity-70" />
-                    <div className="absolute inset-3 bg-white rounded-full" />
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="bg-[#f5fbf4] py-16 lg:py-24">
-          <div className="max-w-6xl mx-auto px-6 lg:px-12 grid gap-12 md:grid-cols-2 items-center">
-            <div className="relative">
-              <div className="absolute -top-6 -left-6 w-24 h-24 border-2 border-[#74C425] rounded-full opacity-30" />
-              <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-[#74C425] opacity-10 rounded-3xl rotate-6" />
-              <img
-                src={DoctorImage}
-                alt="Save Medha Foundation care"
-                className="relative rounded-3xl shadow-2xl border-4 border-white object-cover w-full"
-              />
-            </div>
-            <div className="space-y-6 text-gray-700">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
-                Carrying Medha's Light Forward
-              </h2>
-              <p className="text-base md:text-lg leading-relaxed">
-                Every patient who walks through our doors carries a story, a dream, and the same unwavering hope that Medha held onto.
-                Our team blends compassion with pioneering science, empowering the immune system to lead the healing journey. From counseling
-                and diagnostics to holistic natural therapies, we support families with the care and dignity they deserve.
-              </p>
-              <p className="text-base md:text-lg leading-relaxed">
-                Save Medha Foundation is more than an organization - it is a promise that no family will have to face cancer alone.
-                Together, we are building a future where love, science, and community rewrite what it means to survive and thrive.
-              </p>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <button
-                  type="button"
-                  onClick={() => onNavigate && onNavigate('home')}
-                  className="bg-[#74C425] hover:bg-[#5a9c1c] text-white font-semibold px-6 py-3 rounded-md transition-colors cursor-pointer"
-                >
-                  Back To Home
-                </button>
-                <button
-                  type="button"
-                  className="border-2 border-[#74C425] text-[#74C425] hover:bg-blue-800 hover:border-none hover:text-white font-semibold px-6 py-3 rounded-md transition-colors cursor-pointer"
-                >
-                  Support The Mission
-                </button>
-              </div>
-            </div>
+      <section className="px-3 pb-16">
+        <div className="mx-auto max-w-[800px] h-[] space-y-5 overflow-hidden rounded-[24px] border border-[#e8f0e3] bg-white shadow-[0_12px_45px_rgba(0,0,0,0.07)] p-4">
+          <div className="relative mx-auto w-full max-w-[360px]">
+            <div className="absolute -left-4 -top-4 h-14 w-14 rounded-full border-2 border-[#6ab12f] opacity-30" aria-hidden="true" />
+            <div className="absolute -right-6 -bottom-6 h-16 w-16 rounded-3xl bg-[#6ab12f] opacity-10 rotate-6" aria-hidden="true" />
+            <img
+              src={DoctorImage}
+              alt="Save Medha Foundation care"
+              className="relative w-full rounded-2xl border-4 border-white object-cover shadow-lg"
+            />
           </div>
-        </section>
 
+          <div className="space-y-5 pt-5 text-[26px] leading-10 px-8 font-poppins text-gray-700">
+            <h2 className="text-[30px] font-black text-gray-900">
+              Carrying Medha&apos;s Light Forward
+            </h2>
+            <p className="text-justify font-semibold" >
+              Every patient who walks through our doors carries a story, a dream, and the same unwavering hope that Medha held onto.
+              Our team blends compassion with pioneering science, empowering the immune system to lead the healing journey. From counseling
+              and diagnostics to holistic natural therapies, we support families with the care and dignity they deserve.
+            </p>
+            <p className="text-justify font-semibold">
+              Save Medha Foundation is more than an organization - it is a promise that no family will have to face cancer alone.
+              Together, we are building a future where love, science, and community rewrite what it means to survive and thrive.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3 pt-1">
+            <button
+              type="button"
+              onClick={() => onNavigate && onNavigate('home')}
+              className="flex-1 min-w-[140px] bg-[#6ab12f] hover:bg-[#5a9c27] text-2xl font-poppings text-white font-semibold px-4 py-3 rounded-md transition-colors cursor-pointer shadow-sm"
+            >
+              Back To Home
+            </button>
+            <button
+              type="button"
+              className="flex-1 min-w-[140px] border-2 text-2xl font-poppings border-[#6ab12f] text-[#6ab12f] hover:bg-[#0c3b1c] hover:border-[#0c3b1c] hover:text-white font-semibold px-4 py-3 rounded-md transition-colors cursor-pointer shadow-sm"
+            >
+              Support The Mission
+            </button>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+
+  return (
+    <div className="min-h-screen bg-[#f5faf6] text-gray-900">
+      <Navbar currentPage="about" onNavigate={onNavigate} />
+      <main className="w-full">
+        {isMobileMenuOpen ? renderMobileLayout() : renderDesktopTabletLayout()}
       </main>
       <Footer onNavigate={onNavigate} />
     </div>

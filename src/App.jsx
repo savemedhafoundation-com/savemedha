@@ -4,11 +4,13 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import TreatmentPage from "./pages/TreatmentPage";
+import Treatmentquestion from "./pages/Treatmentquestion";
+
 import Blogs from "./pages/Blogs";
 import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import { navigate } from "./store";
-import LocateUs from "./pages/LocateUs";
+// import LocateUs from "./pages/LocateUs";
 import BlogsDetails from "./pages/BlogsDetails";
 // demo commit
 
@@ -32,6 +34,17 @@ function App() {
         case "blogs":
           targetPath = "/blogs";
           break;
+
+        //           case "blogs-detail": {
+        //   const blogId = options?.id;
+        //   console.log("id", blogId);
+        //   if (!blogId) {
+        //     console.warn("blog-detail navigation requires id");
+        //     return;
+        //   }
+        //   targetPath = `/blogs/${blogId}`;
+        //   break;
+        // }
         case "blogs-detail": {
           const blogId = options?.id;
           if (!blogId) {
@@ -83,6 +96,10 @@ function App() {
           path="/treatment"
           element={<TreatmentPage onNavigate={handleNavigate} />}
         />
+        <Route
+          path="/treatment-questions"
+          element={<Treatmentquestion onNavigate={handleNavigate} />}
+        />
         <Route path="/blogs" element={<Blogs onNavigate={handleNavigate} />} />
         <Route
           path="/blogs/:id"
@@ -97,10 +114,10 @@ function App() {
           element={<Contact onNavigate={handleNavigate} />}
         />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
-        <Route
+        {/* <Route
           path="/locate-us"
           element={<LocateUs onNavigate={handleNavigate} />}
-        /> 
+        /> */}
       </Routes>
     </div>
   );
