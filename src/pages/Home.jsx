@@ -11,8 +11,6 @@ export default function Home({ onNavigate }) {
       <main className="w-full px-20">
         <HomePage />
         <VolunteerAndSupportSection />
-        <AboutSection onNavigate={onNavigate} />
-       
       </main>
       <Footer onNavigate={onNavigate} />
     </div>
