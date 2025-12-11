@@ -31,7 +31,7 @@ const BodyMap = ({ onOrganSelect }) => {
         <div className="body-canvas">
           <svg
             className="body-map-svg"
-            viewBox="0 -175 800 1090"
+            viewBox="0 -175 800 1290"
             role="img"
             aria-label="Human body with selectable organs"
           >
