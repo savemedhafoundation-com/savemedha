@@ -206,7 +206,7 @@ const PatientStories = () => {
           </button>
 
           <div
-            className="relative h-[250px] w-full max-w-[540px]"
+            className="relative h-[260px] w-full max-w-[540px]"
             style={{ perspective: "1200px" }}
           >
             <div
@@ -237,7 +237,7 @@ const PatientStories = () => {
                     }
                   }}
                 >
-                  <div className="relative right-42 bottom-8 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
+                  <div className="relative right-26 bottom-10 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
                     <img
                       src={toThumbnailUrl(story.youtubeUrl)}
                       alt={story.title}
@@ -257,7 +257,7 @@ const PatientStories = () => {
                     </div>
                     <button
                       type="button"
-                      className="pointer-events-auto absolute left-1/2 bottom-[-90px] z-30 inline-flex items-center gap-2 -translate-x-1/2 rounded-full bg-[#74C425] px-4 py-2 text-[25px] font-semibold uppercase tracking-wide text-white shadow-[0_10px_25px_rgba(33,92,7,0.35)] border border-white/40 transition hover:bg-[#5ea01d]"
+                      className="pointer-events-auto absolute left-1/2 bottom-[-90px] z-30 inline-flex items-center gap-2 -translate-x-1/2 rounded-full bg-[#74C425] px-4 py-2 text-[25px] font-semibold uppercase tracking-wide text-white shadow-[0_10px_25px_rgba(33,92,7,0.35)]  transition hover:bg-[#5ea01d]"
                       onClick={(e) => {
                         e.stopPropagation();
                         setOpenIndex(index);
