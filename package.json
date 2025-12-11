@@ -19,6 +19,7 @@
     "axios": "^1.13.2",
     "firebase": "^12.6.0",
     "framer-motion": "^12.23.25",
+    "gsap": "^3.14.1",
     "lucide-react": "^0.546.0",
     "react": "^19.1.1",
     "react-analog-clock-akash": "^1.0.0",

@@ -68,7 +68,7 @@ export default function AboutSection({ onNavigate }) {
           <button
             type="button"
             onClick={handleReadMore}
-            className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded font-bold transition-colors cursor-pointer"
+            className="bg-[#6bc12f] hover:bg-blue-800 text-white px-6 py-3 rounded font-bold transition-colors cursor-pointer"
           >
             READ MORE
           </button>

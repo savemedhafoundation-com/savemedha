@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
 const patientStories = [
@@ -55,172 +56,226 @@ const toThumbnailUrl = (input = "") => {
     : "https://img.youtube.com/vi/default/hqdefault.jpg";
 };
 
-const StoryVisual = ({ story }) => (
-  <div
-    className="absolute left-0 top-1/2 w-[45%] h-[90%] rounded-2xl shadow-2xl overflow-hidden bg-gray-900 border-2 border-white"
-    style={{
-      transform:
-        "translateX(-5%) translateY(-50%) translateZ(120px) rotateY(-14deg)",
-      transformStyle: "preserve-3d",
-      zIndex: 20,
-    }}
-  >
-    <img
-      src={toThumbnailUrl(story.youtubeUrl)}
-      alt={story.title}
-      className="h-full w-full object-cover"
-      style={{
-        transform: "translateZ(40px) scale(1.05)",
-        transformStyle: "preserve-3d",
-      }}
-    />
-
-    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
-
-    <div
-      className="pointer-events-none absolute bottom-6 left-6 text-white"
-      style={{ transform: "translateZ(80px)" }}
-    >
-      <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-        Featured Story
-      </p>
-      <h3 className="text-xl font-bold leading-tight mt-1">{story.title}</h3>
-    </div>
-  </div>
-);
-
 const PatientStories = () => {
-  const scrollerRef = useRef(null);
-  const [activeStoryId, setActiveStoryId] = useState(patientStories[0].id);
-  const [openVideo, setOpenVideo] = useState(null);
+  const ringRef = useRef(null);
+  const itemRefs = useRef([]);
+  const [openIndex, setOpenIndex] = useState(null);
 
-  const activeIndex = patientStories.findIndex(
-    (story) => story.id === activeStoryId
-  );
+  const currentVideoUrl =
+    openIndex !== null ? toEmbedUrl(patientStories[openIndex].youtubeUrl) : null;
 
-  const scrollToStory = (storyId) => {
-    setActiveStoryId(storyId);
-    const node = scrollerRef.current?.querySelector(
-      `[data-story-id="${storyId}"]`
-    );
-    node?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
+  const rotateRing = (direction = 1) => {
+    const ringEl = ringRef.current;
+    const items = itemRefs.current.filter(Boolean);
+    if (!ringEl || !items.length) return;
+    const angle = 360 / items.length;
+    gsap.to(ringEl, {
+      rotationY: `+=${direction * angle}`,
+      duration: 0.7,
+      ease: "power3.out",
     });
   };
 
-  const handleArrow = (direction) => {
-    const currentIndex = activeIndex === -1 ? 0 : activeIndex;
-    const nextIndex = Math.min(
-      Math.max(currentIndex + direction, 0),
-      patientStories.length - 1
-    );
-    scrollToStory(patientStories[nextIndex].id);
-  };
+  useEffect(() => {
+    const ringEl = ringRef.current;
+    const items = itemRefs.current.filter(Boolean);
+    if (!ringEl || !items.length) return;
 
-  const openStoryModal = (story) => {
-    scrollToStory(story.id);
-    setOpenVideo(toEmbedUrl(story.youtubeUrl));
-  };
+    const angle = 360 / items.length;
+    const radius = 420;
+    let xPos = 0;
 
-  const closeModal = () => setOpenVideo(null);
+    gsap.set(ringEl, {
+      rotationY: 180,
+      cursor: "grab",
+      transformStyle: "preserve-3d",
+    });
+
+    gsap.set(items, {
+      rotateY: (i) => i * -angle,
+      transformOrigin: `50% 50% ${radius}px`,
+      z: -radius,
+      transformStyle: "preserve-3d",
+      backfaceVisibility: "hidden",
+    });
+
+    const intro = gsap.from(items, {
+      duration: 1.1,
+      y: 140,
+      opacity: 0,
+      stagger: 0.08,
+      ease: "expo.out",
+    });
+
+    const handleEnter = (event) => {
+      const current = event.currentTarget;
+      gsap.to(items, {
+        opacity: (i, target) => (target === current ? 1 : 0.55),
+        ease: "power3",
+      });
+    };
+
+    const handleLeave = () => {
+      gsap.to(items, { opacity: 1, ease: "power2.inOut" });
+    };
+
+    items.forEach((el) => {
+      el.addEventListener("mouseenter", handleEnter);
+      el.addEventListener("mouseleave", handleLeave);
+    });
+
+    const drag = (event) => {
+      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+      if (clientX == null) return;
+
+      gsap.to(ringEl, {
+        rotationY: `-=${(Math.round(clientX) - xPos) % 360}`,
+      });
+
+      xPos = Math.round(clientX);
+    };
+
+    const dragStart = (event) => {
+      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+      if (clientX == null) return;
+      xPos = Math.round(clientX);
+      gsap.set(ringEl, { cursor: "grabbing" });
+      window.addEventListener("mousemove", drag);
+      window.addEventListener("touchmove", drag);
+    };
+
+    const dragEnd = () => {
+      window.removeEventListener("mousemove", drag);
+      window.removeEventListener("touchmove", drag);
+      gsap.set(ringEl, { cursor: "grab" });
+    };
+
+    window.addEventListener("mousedown", dragStart);
+    window.addEventListener("touchstart", dragStart);
+    window.addEventListener("mouseup", dragEnd);
+    window.addEventListener("touchend", dragEnd);
+
+    return () => {
+      intro.kill();
+      window.removeEventListener("mousedown", dragStart);
+      window.removeEventListener("touchstart", dragStart);
+      window.removeEventListener("mouseup", dragEnd);
+      window.removeEventListener("touchend", dragEnd);
+      window.removeEventListener("mousemove", drag);
+      window.removeEventListener("touchmove", drag);
+      items.forEach((el) => {
+        el.removeEventListener("mouseenter", handleEnter);
+        el.removeEventListener("mouseleave", handleLeave);
+      });
+    };
+  }, []);
 
   return (
     <>
       <section
         id="patient-stories"
-        className="relative w-full bg-[#FBFFF9] border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] py-16 text-center rounded-3xl overflow-hidden"
+        className="relative w-full bg-[#FBFFF9] shadow-[5px_4px_4px_0px_#215C0740] py-16 text-center rounded-3xl overflow-hidden"
       >
-        <div className="mb-12 text-center">
+        <div className="mb-10 text-center">
           <h2 className="relative inline-block text-4xl font-bold text-slate-900">
             <span className="relative">PATIENT </span>
             <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
             <span className="text-[#74C425]">SUCCESS STORY</span>
           </h2>
+          <p className="mt-3 text-sm text-slate-600">
+            Drag the carousel to explore stories in 3D, then tap to watch.
+          </p>
         </div>
 
-        {/* ARROWS */}
-        <button
-          type="button"
-          onClick={() => handleArrow(-1)}
-          className="hidden md:flex absolute left-8 lg:left-12 top-1/2 h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#74C425] bg-white text-[#74C425] shadow-lg hover:bg-[#edfce0] z-20"
-        >
-          <ArrowLeft size={26} />
-        </button>
-        <button
-          type="button"
-          onClick={() => handleArrow(1)}
-          className="hidden md:flex absolute right-8 lg:right-12 top-1/2 h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#74C425] bg-white text-[#74C425] shadow-lg hover:bg-[#edfce0] z-20"
-        >
-          <ArrowRight size={26} />
-        </button>
+        <div className="relative mx-auto flex items-center justify-center px-4 pb-20">
+          <button
+            type="button"
+            aria-label="Previous story"
+            className="absolute left-2 md:left-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec]"
+            onClick={() => rotateRing(1)}
+          >
+            <ArrowLeft size={22} />
+          </button>
+          <button
+            type="button"
+            aria-label="Next story"
+            className="absolute right-2 md:right-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec]"
+            onClick={() => rotateRing(-1)}
+          >
+            <ArrowRight size={22} />
+          </button>
 
-        {/* SCROLLER */}
-        <div
-          ref={scrollerRef}
-          className="relative mx-auto flex max-w-[1500px] justify-center gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory px-4 pb-12 pt-4"
-          style={{ perspective: "2500px" }}
-        >
-          {patientStories.map((story, index) => {
-            const isActive = story.id === activeStoryId;
-            const offset = index - activeIndex;
-
-            const rotationY = Math.max(Math.min(offset * -30, 45), -45);
-            const translateX = offset * -70;
-            const scale = isActive ? 1 : 0.9;
-            const zIndex = isActive ? 10 : 10 - Math.abs(offset);
-
-            return (
-              <button
-                key={story.id}
-                type="button"
-                data-story-id={story.id}
-                onClick={() => openStoryModal(story)}
-                className="group relative flex w-[340px] sm:w-[480px] lg:w-[580px] h-[320px] flex-shrink-0 snap-center items-center cursor-pointer"
-                style={{
-                  transform: `translateX(${translateX}px) rotateY(${rotationY}deg) scale(${scale})`,
-                  transformStyle: "preserve-3d",
-                  zIndex: zIndex,
-                }}
-              >
-                <StoryVisual story={story} />
-
+          <div
+            className="relative h-[250px] w-full max-w-[540px]"
+            style={{ perspective: "1200px" }}
+          >
+            <div
+              ref={ringRef}
+              className="ring relative h-full w-full"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              {patientStories.map((story, index) => (
                 <div
-                  className="relative ml-[15%] w-[99%] h-[70%] bg-[#74C425] rounded-[30px] shadow-[0_15px_30px_rgba(33,92,7,0.3)] flex flex-col justify-center text-left text-white pl-[35%] pr-6 z-10"
+                  key={story.id}
+                  ref={(el) => {
+                    itemRefs.current[index] = el;
+                  }}
+                  className="absolute left-1/2 top-1/2 h-[220px] w-[360px] md:h-[280px] md:w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-2xl"
                   style={{
-                    transform: "translateZ(30px) rotateY(12deg)",
                     transformStyle: "preserve-3d",
                   }}
+                  role="button"
+                  tabIndex={0}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpenIndex(index);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setOpenIndex(index);
+                    }
+                  }}
                 >
-                  <h3 className="text-3xl font-bold mb-1">
-                    Video {index + 1}
-                  </h3>
-
-                  <p className="text-sm sm:text-base leading-tight opacity-95 mb-4 line-clamp-3 font-medium">
-                    {story.description}
-                  </p>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openStoryModal(story);
-                    }}
-                    className="inline-block bg-white text-[#74C425] text-[10px] sm:text-xs font-bold px-4 py-2 rounded-md uppercase tracking-wide shadow-md hover:bg-gray-100 transition w-max"
-                  >
-                    Watch Now
-                  </button>
+                  <div className="relative right-42 bottom-8 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
+                    <img
+                      src={toThumbnailUrl(story.youtubeUrl)}
+                      alt={story.title}
+                      className="h-full w-full object-contain bg-white"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+                    <div className="pointer-events-none absolute bottom-4 left-4 right-4 text-left text-white">
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-white/70">
+                        Featured Story
+                      </p>
+                      <h3 className="mt-1 text-lg font-semibold leading-tight line-clamp-2">
+                        {story.title}
+                      </h3>
+                      <p className="mt-1 text-xs text-white/80 line-clamp-2">
+                        {story.description}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className="pointer-events-auto absolute left-1/2 bottom-[-90px] z-30 inline-flex items-center gap-2 -translate-x-1/2 rounded-full bg-[#74C425] px-4 py-2 text-[25px] font-semibold uppercase tracking-wide text-white shadow-[0_10px_25px_rgba(33,92,7,0.35)] border border-white/40 transition hover:bg-[#5ea01d]"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenIndex(index);
+                      }}
+                    >
+                      Watch Now
+                    </button>
+                  </div>
                 </div>
-              </button>
-            );
-          })}
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* MODAL */}
-        {openVideo && (
+        {currentVideoUrl && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
-            onClick={closeModal}
+            onClick={() => setOpenIndex(null)}
           >
             <div
               className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-black shadow-2xl"
@@ -229,14 +284,14 @@ const PatientStories = () => {
               <button
                 type="button"
                 className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md hover:bg-white/40 transition"
-                onClick={closeModal}
+                onClick={() => setOpenIndex(null)}
               >
                 <X size={24} />
               </button>
-
               <div className="relative w-full aspect-video">
                 <iframe
-                  src={openVideo}
+                  key={currentVideoUrl}
+                  src={currentVideoUrl}
                   title="Patient Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
