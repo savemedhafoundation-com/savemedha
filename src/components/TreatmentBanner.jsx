@@ -83,12 +83,12 @@ export default function TreatmentBanner({
           {showText && (
             <>
               <h1
-                className="text-2xl sm:text-3xl md:text-4xl font-extrabold drop-shadow-lg mb-3 uppercase tracking-tight"
+                className="text-6xl w-[850px] sm:text-3xl md:text-4xl font-extrabold drop-shadow-lg mb-3 uppercase tracking-tight"
                 style={{ color: titleColor, WebkitTextStrokeColor: "transparent" }}
               >
                 {typedTitle || title}
               </h1>
-              <p className="text-sm sm:text-base text-gray-100 max-w-3xl leading-relaxed">
+              <p className="text-sm w-[700px] sm:text-base text-gray-100 max-w-3xl leading-relaxed">
                 {typedSubtitle || subtitle}
               </p>
             </>
