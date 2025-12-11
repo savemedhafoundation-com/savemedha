@@ -168,7 +168,59 @@ const organs = {
     nit_reason: 'Healthy bone supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
     image: '/14.png',
-  }
+  },
+  breast: {
+    key: 'breast',
+    name: 'Breast Tissue',
+    function: 'Supports lactation and protects muscles of the upper chest.',
+    nit_reason:
+      'Balanced lymphatic flow and lower toxin load reduce tenderness and inflammation.',
+    nit_support:
+      'Prioritize sleep, manage stress, and include colorful produce to support hormone balance.',
+    image: "/FEMALEBREAST.png",
+  },
 }
+
+export const treatmentCategories = [
+  {
+    id: "cancer",
+    label: "Cancer",
+    items: [
+      "Blood Cancer",
+      "Bone Cancer",
+      "Brain Cancer",
+      "Breast Cancer",
+      "Cervix Cancer",
+      "Colon Cancer",
+      "Eye Cancer",
+      "Gall Bladder",
+      "Kidney Cancer",
+      "Liver Cancer",
+      "Lungs Cancer",
+      "Oral Cancer",
+      "Pancreas",
+      "Prostate Cancer",
+      "Skin Cancer",
+      "Stomach Cancer",
+      "Throat Cancer",
+      "Thyroid Cancer",
+      "Tongue Cancer",
+    ],
+  },
+  {
+    id: "thalassemia",
+    label: "Thalassemia",
+    items: ["Thalassemia Major", "Thalassemia Minor"],
+  },
+  { id: "stone", label: "Stone", items: ["Kidney Stone", "Gall Stone"] },
+  { id: "general", label: "General", items: ["Diabetes", "Hypertension"] },
+  { id: "tumor", label: "Tumor", items: ["Benign Tumor", "Malignant Tumor"] },
+  {
+    id: "infertility",
+    label: "Infertility",
+    items: ["Male Infertility", "Female Infertility"],
+  },
+  { id: "nerve", label: "Nerve", items: ["Neural Disorders", "Spine Care"] },
+];
 
 export default organs
