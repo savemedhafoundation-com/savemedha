@@ -19,6 +19,7 @@ export default {
         montagu: ['"Montagu Slab"', 'serif'],
         oldstandard: ['"Old Standard TT"', 'serif'],
         opensans: ['"Open Sans"', 'sans-serif'],
+        robotocondensed: ['"Roboto Condensed"', 'sans-serif'],
       },
     },
   },
