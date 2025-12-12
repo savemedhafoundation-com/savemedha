@@ -969,13 +969,13 @@ export default function CancerTreatmentPage() {
     </div>
   </div>
             
-           <div className="w-[1730px] py-16 sm:pl-40 relative">
+           <div className="w-[1730px] py-16 sm:pl-30 relative">
 
   {/* GREEN CURVED BACK SHAPE */}
   <div
-    className="absolute left-[120px] top-1/2  -translate-y-1/2 h-[350px] w-[380px] bg-gradient-to-b from-[#7bcf2a] to-[#4a8f1c] z-0"
+    className="absolute left-[25px] top-1/2  -translate-y-1/2 h-[350px] w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
     style={{
-      borderRadius: "56% 50% 60% 56% / 45% 100% 0% 55%",
+      borderRadius: "56% 60% 60% 56% / 45% 100% 0% 55%",
     }}
   />
 
@@ -1018,13 +1018,18 @@ export default function CancerTreatmentPage() {
     />
 
     {/* RIGHT IMAGE — ONLY PLACE BACKGROUND IMAGE HERE */}
-    <div className="h-full  ml-64 left-20 w-[600px] ">
-       <img
-        src={BackgroundImg}
-        alt="Hope"
-        className="h-full w-full object-fill"
-      />
-    </div>
+    <div className="relative h-full w-[600px] transform translate-x-24 overflow-hidden">
+  {/* Image */}
+  <img
+    src={BackgroundImg}
+    alt="Hope"
+    className="h-full w-full object-cover"
+  />
+
+  {/* White → Transparent Gradient */}
+  <div className="absolute inset-0 bg-gradient-to-r from-white via-white/40 to-transparent" />
+</div>
+
 
   </div>
 </div>
@@ -1035,23 +1040,7 @@ export default function CancerTreatmentPage() {
 
 
       {/* ===================== TESTIMONIALS ===================== */}
-      <section className="bg-[#F5FFEA] py-10 px-10 mb-10  border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-3xl ">
-        <div className="w-full">
-          {/* <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold">
-              <span className="relative">
-                TESTI
-              </span>
-                <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
-              <span className="text-[#74C425]">MONIALS</span>
-            </h2>
-
-            <p className="text-gray-600 mt-2 font-medium">
-              Turning Vision into Reality
-            </p>
-          </div> */}
-
- <div className="mb-12 text-center mb-6">
+      <div className="mb-12 text-center mb-6">
         <h2 className="relative inline-block text-4xl font-bold text-slate-900">
           <span className="relative">TESTI </span>
           <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
@@ -1061,6 +1050,14 @@ export default function CancerTreatmentPage() {
               Turning Vision into Reality
             </p>
       </div>
+      <section
+        className="py-10 px-10 mb-10 border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-3xl"
+        style={{ background: "linear-gradient(90deg, #74C425 0%, #3A6212 100%)" }}
+      >
+        <div className="w-full">
+         
+
+ 
           <div className="relative w-full">
             {/* Arrows */}
             <button
