@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@400;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
 
 
 @import "tailwindcss";
@@ -11,6 +12,10 @@
 /* Custom styles */
 body {
   font-family: 'Open Sans', 'Inter', sans-serif;
+}
+
+.font-roboto-condensed {
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 .font-oldstandard {
