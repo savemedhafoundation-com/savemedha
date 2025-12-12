@@ -237,7 +237,7 @@ const PatientStories = () => {
                     }
                   }}
                 >
-                  <div className="relative right-26 bottom-10 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
+                  <div className="relative right-26 bottom-45 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
                     <img
                       src={toThumbnailUrl(story.youtubeUrl)}
                       alt={story.title}

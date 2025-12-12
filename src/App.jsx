@@ -60,6 +60,9 @@ function App() {
         case "contact":
           targetPath = "/contact";
           break;
+        case "treatment-questions":
+          targetPath = "/treatment-questions";
+          break;
         case "locateus":
           targetPath = "/locate-us";
           break;

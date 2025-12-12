@@ -5,6 +5,7 @@ import HeroBanner from "./HomePageBanner";
 import AboutSection from "./AboutSection";
 import ServicesSection from "./ServicesSection";
 import PatientStories from "./PatientStories";
+import CancerTreatmentPage from "./CancerTreatmentPage";
 import { FaMale, FaFemale } from "react-icons/fa";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import FemaleBodyMap from "../components/FemaleBodyMap";
@@ -236,6 +237,9 @@ export default function HomePage({ onNavigate }) {
       </section>
       <div className="mt-16">
         <PatientStories />
+      </div>
+      <div className="mt-16">
+        <CancerTreatmentPage />
       </div>
       <OrganModal
         organ={selectedOrgan}

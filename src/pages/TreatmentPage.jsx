@@ -120,7 +120,7 @@ export default function TreatmentPage({ onNavigate }) {
       <div className=" absolute flex items-center pt-25 gap-4">
         <button
           type="button"
-          onClick={() => onNavigate?.("contact")}
+          onClick={() => onNavigate?.("treatment-questions")}
           className="bg-white text-[#6AB12F] font-semibold text-sm sm:text-base px-6 py-2 rounded-[7px] cursor-pointer shadow-md transition-all duration-100 ease-out transform hover:scale-105 hover:shadow-lg"
         >
           Learn More
