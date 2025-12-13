@@ -47,7 +47,7 @@ const HeroBanner = () => {
         </div>
 
         <div className="w-full px-25">
-          <div className="inline-block bg-[#74C425] px-[25px] py-[5px] text-white rounded-sm mb-6 font-bold-200px italic uppercase tracking-wide text-[18px] ">
+          <div className="inline-block bg-[#74C425] px-[25px] py-[5px] text-white rounded-sm mb-6 font-bold-250px italic uppercase tracking-wide text-[25px] ">
             Natural Immunotherapy
           </div>
 
