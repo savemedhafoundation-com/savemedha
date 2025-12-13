@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import TreatmentBanner from "../components/TreatmentBanner";
 import TreatmentCards from "../components/Treatment_Cards";
 import { getDefaultQuestions } from "../components/Questions";
+import Search from "../components/Search";
 import recoveryVideo from "../assets/video/Recovery Animation.mp4";
 import ImmunotherapyLabel from "../assets/treatmentpageasset/Group9199.png";
 import GroupPeople from "../assets/treatmentpageasset/Grouppeople.png";
@@ -11,6 +12,7 @@ import Guypointing from "../assets/treatmentpageasset/guypointing.png";
 import Faq from "../assets/treatmentpageasset/faq.png";
 import frame from "../assets/treatmentpageasset/frame.png";
 import GreenCapsules from "../assets/treatmentpageasset/greencapsules.png";
+import CTAbanner from "../assets/treatmentpageasset/CTAbanner.png";
 
 export default function TreatmentPage({ onNavigate }) {
   const questions = getDefaultQuestions();
@@ -48,10 +50,11 @@ export default function TreatmentPage({ onNavigate }) {
 
                 <button
                   type="button"
-                  onClick={() => onNavigate?.("treatment")}
                   className="bg-white text-[#6AB12F] font-semibold text-sm sm:text-base px-6 py-2 rounded-[7px] cursor-pointer shadow-md transition-all duration-100 ease-out transform hover:scale-105 hover:shadow-lg"
                 >
+                  <a href="https://dantura.com/" target="_blank" rel="noopener noreferrer">
                   Get Therapy
+                  </a>
                 </button>
               </div>
             </div>
@@ -143,7 +146,7 @@ export default function TreatmentPage({ onNavigate }) {
         </section>
 
         {/* Treatment cards */}
-        <section className="relative isolate py-5 overflow-hidden">
+        <section className="relative isolate py-6 overflow-hidden">
           <div
             className="absolute inset-0 -z-10 h-[750px]"
             style={{
@@ -196,7 +199,17 @@ export default function TreatmentPage({ onNavigate }) {
             <div className="relative flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-10">
               <ol className="flex-1 list-decimal list-inside space-y-2 text-sm sm:text-base text-gray-800 leading-relaxed">
                 {questions.map((item) => (
-                  <li key={item.id}>{item.questionTitle}</li>
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onNavigate?.("treatment-questions", { id: item.id })
+                      }
+                      className="text-left cursor-pointer hover:text-green-700 hover:underline underline-offset-2"
+                    >
+                      {item.questionTitle}
+                    </button>
+                  </li>
                 ))}
               </ol>
 
@@ -212,32 +225,47 @@ export default function TreatmentPage({ onNavigate }) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 pb-8 px-6">
               <button
                 type="button"
-                onClick={() => onNavigate?.("contact")}
+                onClick={() => onNavigate?.("treatment-questions")}
                 className="bg-[#7BC043] w-[300px] hover:bg-green-600 transition cursor-pointer text-white font-bold font-opensans py-3 px-8 rounded-[4px] shadow-md uppercase tracking-wider transition-colors text-base md:text-lg  "
               >
                 CLICK HERE TO KNOW MORE
               </button>
               <button
                 type="button"
-                onClick={() => onNavigate?.("treatment")}
                 className="bg-[#7BC043] w-[300px] hover:bg-green-600 transition cursor-pointer text-white font-bold font-opensans py-3 px-8 rounded-[4px] shadow-md uppercase tracking-wider transition-colors text-base md:text-lg  "
               >
-                START NATURAL IMMUNOTHERAPY
+                <a href="https://dantura.com/" target="_blank" rel="noopener noreferrer">
+                      START NATURAL IMMUNOTHERAPY
+                </a>
               </button>
             </div>
           </div>
         </section>
 
         {/* Yellow marquee banner */}
-        <section className="bg-yellow-400 py-3 text-center sm:text-lg font-semibold text-blue-900 uppercase">
+        <section className="bg-yellow-400 py-3 text-center justify-items-center sm:text-lg font-semibold text-blue-900 uppercase">
           <marquee
             behavior="scroll"
             direction="left"
             scrollAmount="15"
-            scrolldelay="0"
           >
             We don’t fight the body, we empower it. Natural Immunotherapy helps the body defeat cancer from within. KNOW MORE.
           </marquee>
+        </section>
+
+        <section
+          className=" mt-10 h-[690px] py-35 px-4"
+          style={{
+            backgroundImage: `url(${CTAbanner})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="max-w-6xl mx-auto  flex justify-start">
+            <div className="absolute w-full sm:w-[420px] md:w-[575px]">
+              <Search onNavigate={onNavigate} />
+            </div>
+          </div>
         </section>
       </main>
 
