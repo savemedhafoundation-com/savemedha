@@ -12,11 +12,27 @@ const patientStories = [
       "Hear how Natural Immunotherapy helped Tanjila recover and regain strength.",
   },
   {
-    id: 4,
+    id: 2,
     title:
       "After defeating cancer, Mainul is now healthy and living a normal life",
     youtubeUrl: "https://youtu.be/ld62F0ZhwY0?si=H3PqIt922Bx1pmAT",
     duration: "02:58",
+    description:
+      "Mainul shares his journey to wellness and a return to everyday life.",
+  },
+   {id: 3,
+    title:
+      "Prostate & Rectum Cancer Recovery at 65",
+    youtubeUrl: "https://youtu.be/ekq3OG9gWGc?si=QJcLxc1Psx36qFl0",
+    duration: "13:25",
+    description:
+      "Mainul shares his journey to wellness and a return to everyday life.",
+  },
+   {id: 4,
+    title:
+      "Natural Immunotherapy Saved My Life | Gallbladder Cancer Patient Testimonial | Fully Recovered",
+    youtubeUrl: "https://youtu.be/i16mOr1a4ic?si=tDMFJivcbidmjjcF",
+    duration: "13:25",
     description:
       "Mainul shares his journey to wellness and a return to everyday life.",
   },
@@ -174,15 +190,15 @@ const PatientStories = () => {
     <>
       <section
         id="patient-stories"
-        className="relative w-full bg-[#FBFFF9] shadow-[5px_4px_4px_0px_#215C0740] py-16 text-center rounded-3xl overflow-hidden"
+        className="relative w-full bg-[#FBFFF9] shadow-[5px_4px_4px_0px_#215C0740] py-16 text-center rounded-3xl  overflow-hidden"
       >
-        <div className="mb-10 text-center">
-          <h2 className="relative inline-block text-4xl font-bold text-slate-900">
+        <div className="mb-10 text-center ">
+          <h2 className="relative inline-block text-4xl mb-25  font-bold text-slate-900">
             <span className="relative">PATIENT </span>
             <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
             <span className="text-[#74C425]">SUCCESS STORY</span>
           </h2>
-          <p className="mt-3 text-sm text-slate-600">
+          <p className=" text-sm -translate-y-20 text-slate-600">
             Drag the carousel to explore stories in 3D, then tap to watch.
           </p>
         </div>
@@ -211,7 +227,7 @@ const PatientStories = () => {
           >
             <div
               ref={ringRef}
-              className="ring relative h-full w-full"
+              className="mt-30"
               style={{ transformStyle: "preserve-3d" }}
             >
               {patientStories.map((story, index) => (
