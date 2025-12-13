@@ -270,7 +270,7 @@ export default function AboutUs({ onNavigate }) {
       </section>
 
       <section className="relative px-4 md:px-10 lg:px-20 pb-16 lg:pb-20">
-        <div className="absolute top-6 left-50 flex items-center gap-4 opacity-70 rotate-[35deg]" aria-hidden="true">
+        <div className="absolute top-6 left-50 sm:left-10 flex items-center gap-4 opacity-70 rotate-[35deg]" aria-hidden="true">
           <span className="h-16 w-16 rounded-full border-2 border-[#6ab12f]" />
           <span className="h-16 w-16 -ml-10 rounded-full border-2 border-[#e95f2a]" />
         </div>
@@ -465,7 +465,7 @@ export default function AboutUs({ onNavigate }) {
               <span className="text-gray-900 inline-block border-b-2 border-[#74C425]">WE FIGHT</span>{' '}
               <span className="text-[#6ab12f]">AGAINST CANCER</span>
             </h2>
-            <p className="text-[35px] text-left mx-auto max-w-[600px] font-bold text-[#E7581F] font-poppins italic leading-1.6">
+            <p className="text-[45px] text-left mx-auto max-w-[700px] left-50 font-semibold text-[#E7581F] font-poppins italic leading-1.6">
               " Our goals are to fight for a cancer free world, empower lives, and save futures. "
             </p>
           </div>

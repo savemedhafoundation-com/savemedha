@@ -1,7 +1,7 @@
 import Header from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const QUESTIONS = [
+export const QUESTIONS = [
   {
     id: 1,
     questionHeading: "Question 1:",

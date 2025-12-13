@@ -62,7 +62,7 @@ export default function TreatmentCards({ onNavigate }) {
   return (
     <div className="relative max-w-screen-2xl mx-auto px-4 sm:px-6">
       <div className="text-center">
-        <h3 className="text-2xl sm:text-3xl lg:text-[32px] font-bold text-[#1b3610] tracking-tight">
+        <h3 className="text-2xl sm:text-3xl lg:text-[35px] font-robotocondensed font-bold text-[#1b3610] tracking-tight">
           Explore Treatment Paths
         </h3>
       </div>
@@ -74,7 +74,7 @@ export default function TreatmentCards({ onNavigate }) {
             className="bg-white rounded-2xl shadow-[0_6px_12px_rgba(0,0,0,0.08)] overflow-hidden border border-[#e6e6e6] flex flex-col"
           >
             <div
-              className="h-16 sm:h-30 bg-cover bg-center"
+              className="h-16 md:h-16 sm:h-16 lg:h-28 bg-cover bg-center"
               style={{ backgroundImage: `url('${card.image || CARD_IMAGE}')` }}
             />
             <div className="p-2 sm:p-2.5 text-center space-y-2 flex-1 flex flex-col">
