@@ -973,9 +973,9 @@ export default function CancerTreatmentPage() {
 
   {/* GREEN CURVED BACK SHAPE */}
   <div
-    className="absolute left-[25px] top-1/2  -translate-y-1/2 h-[350px] w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
+    className="absolute left-[10px] top-1/2 mt-4 -translate-y-1/2 h-[400px] w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
     style={{
-      borderRadius: "56% 60% 60% 56% / 45% 100% 0% 55%",
+      borderRadius: "50% 50% 0% 100% / 46% 43% 57% 54%",
     }}
   />
 
