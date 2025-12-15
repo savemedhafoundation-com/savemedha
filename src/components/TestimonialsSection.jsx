@@ -1,7 +1,7 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
+import axios from "axios";
 
-import Review1 from "../assets/Photo/review1.png";
 import LicenceLogo from "../assets/Photo/licenceLogo.png";
 
 const getInitial = (name) => {
@@ -12,6 +12,9 @@ const getInitial = (name) => {
 
 export default function TestimonialsSection() {
   const testimonialsRef = useRef(null);
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const scrollTestimonials = useCallback((dir) => {
     const el = testimonialsRef.current;
@@ -19,56 +22,74 @@ export default function TestimonialsSection() {
     el.scrollBy({ left: dir * 360, behavior: "smooth" });
   }, []);
 
-  const testimonials = [
-    {
-      name: "Bidhan Kumar Halder",
-      rating: 5,
-      text: "I am from Bangladesh, I came here and I am fine now.",
-      image: "https://i.pravatar.cc/150?img=63",
-    },
-    {
-      name: "Soumitra Gayen",
-      rating: 5,
-      text: "I am a rectal cancer patient and I am fine now. Best treatment here.",
-      image: "https://i.pravatar.cc/150?img=32",
-    },
-    {
-      name: "Anowarul Hossain",
-      rating: 5,
-      text: "Save Medha Foundation is a new horizon in medical science. It is a real example of easy access to cure for all complex diseases including cancer, thalassemia, and other terminal diseases for the people of West Bengal, Orissa, Assam, Nepal, India and Bangladesh. May Save Medha move forward quickly, best wishes.",
-      image: "https://i.pravatar.cc/150?img=12",
-    },
-    {
-      name: "Sadekul SK",
-      rating: 5,
-      text: "Best and affordable treatment for lower middle class family.",
-      image: "https://i.pravatar.cc/150?img=58",
-    },
-    {
-      name: "Ilias Islam Mondal",
-      rating: 5,
-      text: "I started therapy here and feel healthier and more energetic now.",
-      image: Review1,
-    },
-    {
-      name: "Sandip Mudi",
-      rating: 5,
-      text: "Best and affordable treatment",
-      image: "https://i.pravatar.cc/150?img=28",
-    },
-    {
-      name: "Aparna Mandal",
-      rating: 5,
-      text: "khub sundor byabobher oder .",
-      image: "https://i.pravatar.cc/150?img=47",
-    },
-    {
-      name: "Sohel Rana",
-      rating: 5,
-      text: "Affordable, compassionate, and focused on natural healing that works.",
-      image: "https://i.pravatar.cc/150?img=56",
-    },
-  ];
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchTestimonials = async () => {
+      setLoading(true);
+      setHasError(false);
+
+      try {
+        const response = await axios.get(
+          "https://savemedhabackend.vercel.app/api/testimonials/"
+        );
+        if (!isActive) return;
+
+        const payload = response?.data;
+        const list = Array.isArray(payload)
+          ? payload
+          : Array.isArray(payload?.data)
+            ? payload.data
+            : Array.isArray(payload?.testimonials)
+              ? payload.testimonials
+              : [];
+
+        const normalized = list
+          .map((item, index) => {
+            const name = item?.name || item?.fullName || item?.patientName || "";
+            const text =
+              item?.text || item?.message || item?.review || item?.description || "";
+            const rawRating = Number(item?.rating ?? item?.stars ?? item?.star ?? 0);
+            const rating = Number.isFinite(rawRating)
+              ? Math.max(0, Math.min(5, Math.round(rawRating)))
+              : 0;
+            const image =
+              item?.image ||
+              item?.photo ||
+              item?.avatar ||
+              item?.imageUrl ||
+              item?.profileImage ||
+              null;
+
+            if (!name && !text) return null;
+
+            return {
+              id: item?._id || item?.id || `${index + 1}`,
+              name,
+              rating,
+              text,
+              image,
+            };
+          })
+          .filter(Boolean);
+
+        setTestimonials(normalized);
+      } catch (error) {
+        if (!isActive) return;
+        setHasError(true);
+        setTestimonials([]);
+      } finally {
+        if (!isActive) return;
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <>
@@ -112,9 +133,22 @@ export default function TestimonialsSection() {
               ref={testimonialsRef}
               className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 hide-scrollbar"
             >
-              {testimonials.map((t, idx) => (
+              {loading ? (
+                <div className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]">
+                  Loading testimonials...
+                </div>
+              ) : hasError ? (
+                <div className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]">
+                  Unable to load testimonials
+                </div>
+              ) : testimonials.length === 0 ? (
+                <div className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]">
+                  No testimonials available
+                </div>
+              ) : (
+                testimonials.map((t, idx) => (
                 <div
-                  key={idx}
+                  key={t.id ?? idx}
                   className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]"
                 >
                   <div className="absolute top-4 left-1 w-4 h-4 rounded-full bg-[#74C425] mt-4 ml-2" />
@@ -155,7 +189,8 @@ export default function TestimonialsSection() {
                     </div>
                   </div>
                 </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
