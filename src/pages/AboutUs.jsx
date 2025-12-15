@@ -415,15 +415,15 @@ export default function AboutUs({ onNavigate }) {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/55" />
         </div>
-        <div className="relative flex h-full flex-col justify-end gap-2 px-40 pb-30 text-white">
-          <span className="text-[25px] font-semibold uppercase tracking-[0.25em] text-[#d9f3cb]">
+        <div className="relative flex h-full flex-col justify-end gap-2 px-40 pb-20 text-white">
+          <span className="text-[30px] font-semibold uppercase tracking-[0.25em] text-[#d9f3cb]">
             Save Medha Foundation
           </span>
-          <h1 className="text-5xl font-black leading-tight">About Us</h1>
-          <p className="max-w-[450px] text-[20px] leading-7 text-[#eef8e9]">
+          <h1 className="text-6xl font-black leading-tight">About Us</h1>
+          <p className="max-w-[500px] text-[26px] leading-7 text-[#eef8e9]">
             A foundation born from courage, compassion, and the promise to rewrite every story.
           </p>
-          <div className="mt-2 h-1 w-50 rounded-full bg-gradient-to-r from-[#f08a1d] via-[#f6c04c] to-[#6ab12f]" />
+          <div className="mt-2 h-1 w-60 rounded-full bg-gradient-to-r from-[#f08a1d] via-[#f6c04c] to-[#6ab12f]" />
         </div>
       </section>
 
@@ -432,17 +432,17 @@ export default function AboutUs({ onNavigate }) {
           <div className="absolute -left-8 -top-8 h-20 w-20 rounded-full bg-[#f7ecdb] blur-2xl" aria-hidden="true" />
           <div className="absolute -right-10 bottom-4 h-24 w-24 rounded-full bg-[#e8f5de] blur-2xl" aria-hidden="true" />
           <div className="relative px-4 pt-15 pb-15 text-center space-y-10">
-            <p className="text-4xl font-semibold uppercase tracking-wide font-shippori">
+            <p className="text-[40px] font-semibold uppercase tracking-wide font-shippori">
               <span className="text-gray-900 inline-block border-b-2 border-[#74C425] pb-0.5">
                 A Death
               </span>{' '}
               <span className="text-[#6ab12f]">That Inspired To Change The World:</span>
             </p>
-            <p className="text-5xl font-black text-[#E7581F] font-kalam">
+            <p className="text-6xl font-black text-[#E7581F] font-kalam">
               Save Medha Foundation
             </p>
           </div>
-          <div className="relative space-y-10 px-10 pb-8 text-[30px] leading-10 text-gray-700 font-poppins">
+          <div className="relative space-y-10 px-10 pb-8 text-[35px] leading-12 text-gray-700 font-poppins">
             {highlightText.map((paragraph, idx) => (
               <p key={idx} className="text-justify">
                 {paragraph}
@@ -454,18 +454,18 @@ export default function AboutUs({ onNavigate }) {
 
       <section className="px-3 pb-10 pt-10">
         <div className="relative mx-auto max-w-[1200px] space-y-4">
-          <div className="absolute top-6 left-2 flex items-center gap-4 opacity-70 rotate-[35deg]" aria-hidden="true">
+          <div className="absolute top-1 right-275 flex items-center gap-4 opacity-70 rotate-[60deg]" aria-hidden="true">
           <span className="h-20 w-20 rounded-full border-2 border-[#6ab12f]" />
           <span className="h-20 w-20 -ml-10 rounded-full border-2 border-[#e95f2a]" />
           </div>
-          <div className="absolute -right-2 Top-6 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-30" aria-hidden="true" />
+          <div className="absolute -right-2 top-6 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-30" aria-hidden="true" />
 
           <div className="text-center space-y-10 pb-5 ">
-            <h2 className="text-5xl font-black tracking-wide font-shippori">
+            <h2 className="text-6xl font-black font-light text-center tracking-wide font-shippori">
               <span className="text-gray-900 inline-block border-b-2 border-[#74C425]">WE FIGHT</span>{' '}
               <span className="text-[#6ab12f]">AGAINST CANCER</span>
             </h2>
-            <p className="text-[45px] text-left mx-auto max-w-[700px] left-50 font-semibold text-[#E7581F] font-poppins italic leading-1.6">
+            <p className="text-[55px] text-left mx-auto max-w-[800px] left-50 font-semibold text-[#E7581F] font-poppins italic leading-1.6">
               " Our goals are to fight for a cancer free world, empower lives, and save futures. "
             </p>
           </div>
@@ -473,7 +473,7 @@ export default function AboutUs({ onNavigate }) {
           <div className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-[#74C4250D] shadow-md p-6 md:p-8">
             <div className="absolute -left-8 top-1/2 h-12 w-12 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#dff0d6] to-white shadow-sm" aria-hidden="true" />
             <div className="absolute -right-6 bottom-4 h-10 w-10 rounded-full border-2 border-[#f08a1d] opacity-60" aria-hidden="true" />
-            <div className="relative space-y-10 px-10 pb-8 pt-10 font-semibold text-[30px] leading-10 text-gray-700 font-poppins">
+            <div className="relative space-y-10 px-10 pb-8 pt-10 font-semibold text-[35px] leading-12 text-gray-700 font-poppins">
               {fightAgainstCancerText.map((paragraph, idx) => (
                 <p key={idx}>
                   {paragraph}
@@ -495,7 +495,7 @@ export default function AboutUs({ onNavigate }) {
               <h3 className="text-5xl font-black text-center text-[#6ab12f] tracking-wide pb-10">
                 {section.title}
               </h3>
-              <p className="text-[30px] px-10 pb-8 leading-10 font-semibold font-poppins text-gray-700 text-justify ">
+              <p className="text-[35px] px-10 pb-8 leading-12 font-semibold font-poppins text-gray-700 text-justify ">
                 {section.content}
               </p>
             </div>
@@ -509,7 +509,7 @@ export default function AboutUs({ onNavigate }) {
             <h3 className="text-5xl font-black uppercase tracking-[0.25em] text-[#E7581F]">
               OVERVIEW
             </h3>
-            <p className="text-[28px] text-gray-600">
+            <p className="text-[31px] text-gray-600">
               Our impact grows with every city, member, and trusted certification.
             </p>
           </div>
@@ -554,10 +554,10 @@ export default function AboutUs({ onNavigate }) {
             />
           </div>
 
-          <div className="space-y-5 pt-5 text-[26px] leading-10 px-8 font-poppins text-gray-700">
-            <h2 className="text-[30px] font-black text-gray-900">
+          <div className="space-y-5 pt-5 text-[30px] leading-11 px-8 font-poppins text-gray-700">
+            <h1 className="text-[35px] font-black text-gray-900">
               Carrying Medha&apos;s Light Forward
-            </h2>
+            </h1>
             <p className="text-justify font-semibold" >
               Every patient who walks through our doors carries a story, a dream, and the same unwavering hope that Medha held onto.
               Our team blends compassion with pioneering science, empowering the immune system to lead the healing journey. From counseling
