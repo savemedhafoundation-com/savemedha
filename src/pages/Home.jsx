@@ -1,8 +1,8 @@
-﻿import AboutSection from '../components/AboutSection';
-import Footer from '../components/Footer';
-import HomePage from '../components/HeroSection';
-import Navbar from '../components/Navbar';
-import VolunteerAndSupportSection from '../components/VolunteerAndSupportSection';
+import Footer from "../components/Footer";
+import HomePage from "../components/HeroSection";
+import Navbar from "../components/Navbar";
+import TestimonialsSection from "../components/TestimonialsSection";
+import VolunteerAndSupportSection from "../components/VolunteerAndSupportSection";
 
 export default function Home({ onNavigate }) {
   return (
@@ -11,8 +11,12 @@ export default function Home({ onNavigate }) {
       <main className="w-full px-20">
         <HomePage />
         <VolunteerAndSupportSection />
+        <div className="mt-16">
+          <TestimonialsSection />
+        </div>
       </main>
       <Footer onNavigate={onNavigate} />
     </div>
   );
 }
+

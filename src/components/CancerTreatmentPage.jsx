@@ -5,17 +5,16 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ArrowLeft, ArrowRight, Play, Star, X } from "lucide-react";
+import { Play, X } from "lucide-react";
 import { MdPhoneInTalk } from "react-icons/md";
 
 import DoctorImg from "../assets/Photo/doc.png";
 import RedRibbon from "../assets/Photo/redreben.png";
 import BackgroundImg from "../assets/Photo/backgroud.png";
 import Computerimg from "../assets/Photo/Remote work and video call with colleagues.png";
-import Review1 from "../assets/Photo/review1.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
-const MAX_VIDEOS_TO_FETCH = 100;
+const MAX_VIDEOS_TO_FETCH = 18;
 
 const parseJsonSafely = async (response, contextLabel = "response") => {
   const sourceLabel = contextLabel || "response";
@@ -43,12 +42,6 @@ const chunkArray = (input, size) => {
   }
 
   return chunks;
-};
-
-const getInitial = (name) => {
-  if (!name) return "?";
-  const firstChar = name.trim().charAt(0);
-  return firstChar ? firstChar.toUpperCase() : "?";
 };
 
 const formatISODuration = (isoDuration) => {
@@ -170,36 +163,9 @@ const extractYoutubeId = (video) => {
 
 export default function CancerTreatmentPage() {
   // Refs for each scrollable section
-  const testimonialsRef = useRef(null);
   const healthVideosRef = useRef(null);
 
   // Scroll handlers
-  const scrollTestimonials = (dir) => {
-    const el = testimonialsRef.current;
-    if (!el) return;
-
-    const scrollAmount = 320 * dir;
-    const tolerance = 10;
-    const maxScrollLeft = el.scrollWidth - el.clientWidth;
-
-    if (maxScrollLeft <= 0) return;
-
-    const atStart = el.scrollLeft <= tolerance;
-    const atEnd = el.scrollLeft >= maxScrollLeft - tolerance;
-
-    if (dir > 0 && atEnd) {
-      el.scrollTo({ left: 0, behavior: "smooth" });
-      return;
-    }
-
-    if (dir < 0 && atStart) {
-      el.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
-      return;
-    }
-
-    el.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  };
-
   const initialHealthVideos = useMemo(
     () => [
       {
@@ -667,57 +633,6 @@ export default function CancerTreatmentPage() {
     setSelectedVideo(video);
   }, []);
 
-  const testimonials = [
-    {
-      name: "Bidhan Kumar Halder",
-      rating: 5,
-      text: "I am from Bangladesh, I came here and I am fine now.",
-      image: "https://i.pravatar.cc/150?img=63",
-    },
-    {
-      name: "Soumitra Gayen",
-      rating: 5,
-      text: "I am a rectal cancer patient and I am fine now. Best treatment here.",
-      image: "https://i.pravatar.cc/150?img=32",
-    },
-    {
-      name: "Anowarul Hossain",
-      rating: 5,
-      text: "Save Medha Foundation is a new horizon in medical science. It is a real example of easy access to cure for all complex diseases including cancer, thalassemia, and other terminal diseases for the people of West Bengal, Orissa, Assam, Nepal, India and Bangladesh. May Save Medha move forward quickly, best wishes.",
-      image: "https://i.pravatar.cc/150?img=12",
-    },
-    {
-      name: "Sadekul SK",
-      rating: 5,
-      text: "Best and affordable treatment for lower middle class family.",
-      image: "https://i.pravatar.cc/150?img=58",
-    },
-    {
-      name: "Ilias Islam Mondal",
-      rating: 5,
-      text: "I started therapy here and feel healthier and more energetic now.",
-      image: Review1,
-    },
-    {
-      name: "Sandip Mudi",
-      rating: 5,
-      text: "Best and affordable treatment",
-      image: "https://i.pravatar.cc/150?img=28",
-    },
-    {
-      name: "Aparna Mandal",
-      rating: 5,
-      text: "khub sundor byabobher oder .",
-      image: "https://i.pravatar.cc/150?img=47",
-    },
-    {
-      name: "Sohel Rana",
-      rating: 5,
-      text: "Affordable, compassionate, and focused on natural healing that works.",
-      image: "https://i.pravatar.cc/150?img=56",
-    },
-  ];
-
   const activeVideoIndex = Math.max(
     healthVideos.findIndex((video) => video.id === activeVideoId),
     0
@@ -912,7 +827,7 @@ export default function CancerTreatmentPage() {
             {/* Video Grid - 5 columns, fixed card design like screenshot */}
             <div className="bg-transparent rounded-t-[60px] pt-12 pb-16 px-8">
         {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {healthVideos.slice(0, 20).map((video, index) => (
             <button
               key={video.id}
@@ -943,11 +858,9 @@ export default function CancerTreatmentPage() {
               {/* Title & Meta */}
               <div className="space-y-2 bg-gradient-to-br from-[#D6FFBB] to-[#FFFFFF] rounded-3xl p-4">
                 <h3 className="font-bold text-sm leading-tight line-clamp-2 text-gray-800 group-hover:text-[#74C425] transition-colors">
-                  {index % 2 === 0 ? "Video 1" : "Video 2"}
+                 
                 </h3>
-                <p className="text-base text-[#155300]">
-                  Lorem ipsum is simply dummy text of the printing and typesetting industry.
-                </p>
+               
                 <span className="inline-block px-6 py-2 bg-[#74C425] text-white text-xs font-bold rounded-full hover:bg-[#1118A6] transition-colors">
                   WATCH NOW
                 </span>
@@ -958,12 +871,17 @@ export default function CancerTreatmentPage() {
 
         {/* Watch More Button */}
         <div className="text-center mt-12">
-          <button className="inline-flex items-center gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full shadow-2xl transition-all transform hover:scale-105">
+          <a
+            href="https://youtube.com/@savemedhafoundation7959?si=y8vz2XCG11RgDmwg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full shadow-2xl transition-all transform hover:scale-105"
+          >
             WATCH MORE
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
               <Play className="text-red-600" size={28} fill="red" />
             </div>
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -1037,96 +955,6 @@ export default function CancerTreatmentPage() {
 
         </section>
 
-
-
-      {/* ===================== TESTIMONIALS ===================== */}
-      <div className="mb-12 text-center mb-6">
-        <h2 className="relative inline-block text-4xl font-bold text-slate-900">
-          <span className="relative">TESTI </span>
-          <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
-          <span className="text-[#74C425]">MONIALS</span>
-        </h2>
-          <p className="text-gray-600 mt-2 font-bold pt-3">
-              Turning Vision into Reality
-            </p>
-      </div>
-      <section
-        className="py-10 px-10 mb-10 border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-3xl"
-        style={{ background: "linear-gradient(90deg, #74C425 0%, #3A6212 100%)" }}
-      >
-        <div className="w-full">
-         
-
- 
-          <div className="relative w-full">
-            {/* Arrows */}
-            <button
-              onClick={() => scrollTestimonials(-1)}
-              className="flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center  shadow-lg transition hover:bg-[#edfce0]"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button
-              onClick={() => scrollTestimonials(1)}
-              className="flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center  shadow-lg transition hover:bg-[#edfce0]"
-            >
-              <ArrowRight size={18} />
-            </button>
-
-            {/* Scroll container */}
-            <div
-              ref={testimonialsRef}
-              className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 hide-scrollbar"
-            >
-              {testimonials.map((t, idx) => (
-                <div
-                  key={idx}
-                  className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]"
-                >
-                  <div className="absolute top-4 left-1 w-4 h-4   rounded-full bg-[#74C425] mt-4 ml-2 " />
-
-                  <div className="absolute top-3 left-3 w-12 h-12 rounded-full bg-[#74C425] opacity-70 mt-8 ml-2 " />
-
-                  <div className="relative z-10 flex items-start gap-4 mt-8 ml-4">
-                    <div className="relative shrink-0">
-                      {t.image ? (
-                        <img
-                          src={t.image}
-                          alt={t.name}
-                          className="w-16 h-16 rounded-full object-cover ring-4 ring-white shadow-md"
-                        />
-                      ) : (
-                        <div className="w-16 h-16 rounded-full ring-4 ring-white shadow-md bg-green-600 text-white font-semibold flex items-center justify-center text-lg">
-                          {getInitial(t.name)}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="flex-1">
-                      <h4 className="text-base font-semibold text-gray-900">
-                        {t.name}
-                      </h4>
-                      <div className="flex items-center gap-1 text-[#F7C948] my-2">
-                        {[...Array(t.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={18}
-                            fill="#F7C948"
-                            className="text-[#F7C948]"
-                          />
-                        ))}
-                      </div>
-                      <p className="text-sm text-gray-700 leading-relaxed">
-                        {t.text}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
       {selectedVideo && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-8"
