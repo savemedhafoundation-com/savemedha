@@ -207,7 +207,7 @@ const PatientStories = () => {
           <button
             type="button"
             aria-label="Previous story"
-            className="absolute left-2 md:left-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec]"
+            className="absolute left-2 md:left-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec] cursor-pointer"
             onClick={() => rotateRing(1)}
           >
             <ArrowLeft size={22} />
@@ -215,7 +215,7 @@ const PatientStories = () => {
           <button
             type="button"
             aria-label="Next story"
-            className="absolute right-2 md:right-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec]"
+            className="absolute right-2 md:right-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec]  cursor-pointer "
             onClick={() => rotateRing(-1)}
           >
             <ArrowRight size={22} />
@@ -253,7 +253,7 @@ const PatientStories = () => {
                     }
                   }}
                 >
-                  <div className="relative right-26 bottom-45 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
+                  <div className="relative right-26 bottom-20 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
                     <img
                       src={toThumbnailUrl(story.youtubeUrl)}
                       alt={story.title}

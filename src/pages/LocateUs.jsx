@@ -614,7 +614,7 @@ const sendOtp = async () => {
                     <p className="text-xl font-semibold">Let’s Call or Email</p>
                     <p className="text-lg font-normal">+91 9800808595</p>
                     <p className="text-lg font-normal">
-                      savemedhafoundation@gmail.com
+                      info@savemedha.com
                     </p>
                   </div>
 
@@ -629,7 +629,7 @@ const sendOtp = async () => {
                     </p>
                     <p className="text-lg font-normal">+91 9800808595</p>
                     <p className="text-lg font-normal">
-                      savemedhafoundation@gmail.com
+                      info@savemedha.com
                     </p>
                   </div>
 
