@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import { getDefaultQuestions } from "./Questions";
-import { QUESTIONS as treatmentQuestions } from "../pages/Treatmentquestion";
+import { TREATMENT_QUESTIONS_BY_CATEGORY } from "../data/treatmentQuestionsByCategory";
 
 const stripPrefix = (title = "") => title.replace(/^\d+\.?\s*/, "").trim();
 
@@ -10,18 +9,17 @@ const Search = ({ onNavigate }) => {
     const [submitted, setSubmitted] = useState(false);
 
     const combinedQuestions = useMemo(() => {
-        const defaults = getDefaultQuestions().map((item) => ({
-            id: item.id,
-            questionTitle: stripPrefix(item.questionTitle),
-        }));
-
-        const treatment = (treatmentQuestions || []).map((item) => ({
-            id: item.id,
-            questionTitle: stripPrefix(item.questionTitle),
-        }));
+        const allQuestions = Object.entries(TREATMENT_QUESTIONS_BY_CATEGORY).flatMap(
+            ([category, questions]) =>
+                (questions || []).map((item) => ({
+                    id: item.id,
+                    category,
+                    questionTitle: stripPrefix(item.questionTitle),
+                }))
+        );
 
         const seen = new Set();
-        return [...defaults, ...treatment].filter((item) => {
+        return allQuestions.filter((item) => {
             const key = (item.questionTitle || "").toLowerCase();
             if (seen.has(key)) return false;
             seen.add(key);
@@ -41,11 +39,14 @@ const Search = ({ onNavigate }) => {
         e.preventDefault();
         setSubmitted(true);
         if (!matches.length) return;
-        onNavigate?.("treatment-questions", { id: matches[0].id });
+        onNavigate?.("treatment-questions", {
+            category: matches[0].category,
+            id: matches[0].id,
+        });
     };
 
-    const handleResultClick = (id) => {
-        onNavigate?.("treatment-questions", { id });
+    const handleResultClick = (item) => {
+        onNavigate?.("treatment-questions", { category: item.category, id: item.id });
     };
 
     return (
@@ -90,7 +91,7 @@ const Search = ({ onNavigate }) => {
                             <li key={item.id}>
                                 <button
                                     type="button"
-                                    onClick={() => handleResultClick(item.id)}
+                                    onClick={() => handleResultClick(item)}
                                     className="w-full text-left text-sm sm:text-base cursor-pointer hover:text-yellow-200 underline-offset-2 hover:underline"
                                 >
                                     {item.questionTitle}

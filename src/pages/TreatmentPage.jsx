@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TreatmentBanner from "../components/TreatmentBanner";
 import TreatmentCards from "../components/Treatment_Cards";
-import { getDefaultQuestions } from "../components/Questions";
 import Search from "../components/Search";
 import recoveryVideo from "../assets/video/Recovery Animation.mp4";
 import ImmunotherapyLabel from "../assets/treatmentpageasset/Group9199.png";
@@ -13,9 +12,19 @@ import Faq from "../assets/treatmentpageasset/faq.png";
 import frame from "../assets/treatmentpageasset/frame.png";
 import GreenCapsules from "../assets/treatmentpageasset/greencapsules.png";
 import CTAbanner from "../assets/treatmentpageasset/CTAbanner.png";
+import { TREATMENT_QUESTIONS_BY_CATEGORY } from "../data/treatmentQuestionsByCategory";
 
 export default function TreatmentPage({ onNavigate }) {
-  const questions = getDefaultQuestions();
+  const questionLinks = useMemo(() => {
+    return Object.entries(TREATMENT_QUESTIONS_BY_CATEGORY).flatMap(
+      ([category, questions]) =>
+        (questions || []).map((question) => ({
+          category,
+          id: question.id,
+          questionTitle: question.questionTitle,
+        }))
+    );
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -198,12 +207,15 @@ export default function TreatmentPage({ onNavigate }) {
 
             <div className="relative flex flex-col md:flex-row gap-6 md:gap-10 p-6 md:p-10">
               <ol className="flex-1 list-decimal list-inside space-y-2 text-sm sm:text-base text-gray-800 leading-relaxed">
-                {questions.map((item) => (
-                  <li key={item.id}>
+                {questionLinks.map((item) => (
+                  <li key={`${item.category}-${item.id}`}>
                     <button
                       type="button"
                       onClick={() =>
-                        onNavigate?.("treatment-questions", { id: item.id })
+                        onNavigate?.("treatment-questions", {
+                          category: item.category,
+                          id: item.id,
+                        })
                       }
                       className="text-left cursor-pointer hover:text-green-700 hover:underline underline-offset-2"
                     >
@@ -225,7 +237,9 @@ export default function TreatmentPage({ onNavigate }) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 pb-8 px-6">
               <button
                 type="button"
-                onClick={() => onNavigate?.("treatment-questions")}
+                onClick={() =>
+                  onNavigate?.("treatment-questions", { category: "cancer" })
+                }
                 className="bg-[#7BC043] w-[300px] hover:bg-green-600 transition cursor-pointer text-white font-bold font-opensans py-3 px-8 rounded-[4px] shadow-md uppercase tracking-wider transition-colors text-base md:text-lg  "
               >
                 CLICK HERE TO KNOW MORE

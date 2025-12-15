@@ -40,25 +40,69 @@ const baseImages = {
 };
 
 const TREATMENT_CARDS = [
-  { id: 1, title: "CANCER TREATMENT", image: baseImages.cancer },
-  { id: 2, title: "KIDNEY TREATMENT", image: baseImages.kidney },
-  { id: 3, title: "LIVER TREATMENT", image: baseImages.liver },
-  { id: 4, title: "HEART TREATMENT", image: baseImages.heart },
-  { id: 5, title: "NERVE TREATMENT", image: baseImages.nerve },
-  { id: 6, title: "THYROID TREATMENT", image: baseImages.thyroid },
-  { id: 7, title: "GENITAL TREATMENT", image: baseImages.genital },
-  { id: 8, title: "SPINAL TREATMENT", image: baseImages.spinal },
-  { id: 9, title: "VITILIGO TREATMENT", image: baseImages.vitiligo },
-  { id: 10, title: "THALASSEMIA TREATMENT", image: baseImages.thalassemia },
-  { id: 11, title: "DIABETICS TREATMENT", image: baseImages.diabetics },
-  { id: 12, title: "SKIN TREATMENT", image: baseImages.skin },
-  { id: 13, title: "HAIR TREATMENT", image: baseImages.hair },
-  { id: 14, title: "CONSTIPATION TREATMENT", image: baseImages.constipation },
-  { id: 15, title: "INDIGESTION TREATMENT", image: baseImages.indigestion },
-  { id: 16, title: "OTHER TREATMENT", image: baseImages.other },
+  { id: 1, key: "cancer", title: "CANCER TREATMENT", image: baseImages.cancer },
+  { id: 2, key: "kidney", title: "KIDNEY TREATMENT", image: baseImages.kidney },
+  { id: 3, key: "liver", title: "LIVER TREATMENT", image: baseImages.liver },
+  { id: 4, key: "heart", title: "HEART TREATMENT", image: baseImages.heart },
+  { id: 5, key: "nerve", title: "NERVE TREATMENT", image: baseImages.nerve },
+  {
+    id: 6,
+    key: "thyroid",
+    title: "THYROID TREATMENT",
+    image: baseImages.thyroid,
+  },
+  {
+    id: 7,
+    key: "genital",
+    title: "GENITAL TREATMENT",
+    image: baseImages.genital,
+  },
+  {
+    id: 8,
+    key: "spinal",
+    title: "SPINAL TREATMENT",
+    image: baseImages.spinal,
+  },
+  {
+    id: 9,
+    key: "vitiligo",
+    title: "VITILIGO TREATMENT",
+    image: baseImages.vitiligo,
+  },
+  {
+    id: 10,
+    key: "thalassemia",
+    title: "THALASSEMIA TREATMENT",
+    image: baseImages.thalassemia,
+  },
+  {
+    id: 11,
+    key: "diabetics",
+    title: "DIABETICS TREATMENT",
+    image: baseImages.diabetics,
+  },
+  { id: 12, key: "skin", title: "SKIN TREATMENT", image: baseImages.skin },
+  { id: 13, key: "hair", title: "HAIR TREATMENT", image: baseImages.hair },
+  {
+    id: 14,
+    key: "constipation",
+    title: "CONSTIPATION TREATMENT",
+    image: baseImages.constipation,
+  },
+  {
+    id: 15,
+    key: "indigestion",
+    title: "INDIGESTION TREATMENT",
+    image: baseImages.indigestion,
+  },
+  { id: 16, key: "other", title: "OTHER TREATMENT", image: baseImages.other },
 ];
 
-export default function TreatmentCards({ onNavigate }) {
+export default function TreatmentCards({
+  onNavigate,
+  onSelectCategory,
+  selectedCategory,
+}) {
   return (
     <div className="relative max-w-screen-2xl mx-auto px-4 sm:px-6">
       <div className="text-center">
@@ -68,29 +112,49 @@ export default function TreatmentCards({ onNavigate }) {
       </div>
 
       <div className="relative mt-6 sm:mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 lg:grid-rows-2 gap-3 sm:gap-4">
-        {TREATMENT_CARDS.map((card) => (
-          <div
-            key={card.id}
-            className="bg-white rounded-2xl shadow-[0_6px_12px_rgba(0,0,0,0.08)] overflow-hidden border border-[#e6e6e6] flex flex-col"
-          >
+        {TREATMENT_CARDS.map((card) => {
+          const isSelected = selectedCategory === card.key;
+
+          return (
             <div
-              className="h-16 md:h-16 sm:h-16 lg:h-28 bg-cover bg-center"
-              style={{ backgroundImage: `url('${card.image || CARD_IMAGE}')` }}
-            />
-            <div className="p-2 sm:p-2.5 text-center space-y-2 flex-1 flex flex-col">
-              <p className="text-[10px] sm:text-[11px] font-semibold text-[#0f1c08] leading-tight uppercase">
-                {card.title}
-              </p>
-              <button
-                type="button"
-                onClick={() => onNavigate?.("cancer-detail")}
-                className="mt-auto inline-flex items-center justify-center cursor-pointer gap-2 bg-[#5cb624] text-white text-[10px] sm:text-[11px] font-semibold px-2 py-1 rounded-full shadow hover:bg-[#4b9c1f] transition-colors"
-              >
-                LEARN MORE <GiReturnArrow  />
-              </button>
+              key={card.id}
+              className={`bg-white rounded-2xl shadow-[0_6px_12px_rgba(0,0,0,0.08)] overflow-hidden border flex flex-col transition-colors ${
+                isSelected
+                  ? "border-[#5cb624] ring-2 ring-[#5cb624]/30"
+                  : "border-[#e6e6e6]"
+              }`}
+            >
+              <div
+                className="h-16 md:h-16 sm:h-16 lg:h-28 bg-cover bg-center"
+                style={{ backgroundImage: `url('${card.image || CARD_IMAGE}')` }}
+              />
+              <div className="p-2 sm:p-2.5 text-center space-y-2 flex-1 flex flex-col">
+                <p className="text-[10px] sm:text-[11px] font-semibold text-[#0f1c08] leading-tight uppercase">
+                  {card.title}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (card.key && typeof onSelectCategory === "function") {
+                      onSelectCategory(card.key);
+                      return;
+                    }
+
+                    onNavigate?.("treatment-questions", { category: card.key });
+                  }}
+                  className={`mt-auto inline-flex items-center justify-center cursor-pointer gap-2 text-white text-[10px] sm:text-[11px] font-semibold px-2 py-1 rounded-full shadow transition-colors ${
+                    isSelected
+                      ? "bg-[#1118A5] hover:bg-[#0d128f]"
+                      : "bg-[#5cb624] hover:bg-[#4b9c1f]"
+                  }`}
+                  aria-pressed={isSelected}
+                >
+                  LEARN MORE <GiReturnArrow />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

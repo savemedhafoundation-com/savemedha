@@ -9,7 +9,7 @@ export default function Home({ onNavigate }) {
     <div className="min-h-screen bg-white">
       <Navbar currentPage="home" onNavigate={onNavigate} />
       <main className="w-full px-20">
-        <HomePage />
+        <HomePage onNavigate={onNavigate} />
         <VolunteerAndSupportSection />
         <div className="mt-16">
           <TestimonialsSection />
@@ -19,4 +19,3 @@ export default function Home({ onNavigate }) {
     </div>
   );
 }
-
