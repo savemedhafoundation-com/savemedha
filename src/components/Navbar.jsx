@@ -358,7 +358,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
 
               <div className="flex items-center justify-center gap-2 text-[15px]">
                 <a
-                  href="mailto:savemedhafoundation@gmail.com"
+                  href="mailto:info@savemedha.com"
                   className="flex items-center gap-2 text-[15px] pl-2"
                 >
                   <MdAttachEmail
@@ -366,7 +366,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     size={18}
                   />
                   <span className="font-semibold text-[#0728CF] truncate max-w-none">
-                    savemedhafoundation@gmail.com
+                    info@savemedha.com
                   </span>
                 </a>
               </div>
