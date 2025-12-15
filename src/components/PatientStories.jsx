@@ -236,7 +236,7 @@ const PatientStories = () => {
                   ref={(el) => {
                     itemRefs.current[index] = el;
                   }}
-                  className="absolute left-1/2 bottom-[-5] h-[220px] w-[360px] md:h-[280px] md:w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-2xl"
+                  className="absolute left-1/2  h-[220px] w-[360px] md:h-[280px] md:w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-2xl"
                   style={{
                     transformStyle: "preserve-3d",
                   }}
