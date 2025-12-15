@@ -115,7 +115,7 @@ export default function TestimonialsSection() {
             <button
               type="button"
               onClick={() => scrollTestimonials(-1)}
-              className="flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center shadow-lg transition hover:bg-[#edfce0]"
+              className="flex absolute -left-20 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center shadow-lg transition hover:bg-[#edfce0] cursor-pointer"
               aria-label="Scroll testimonials left"
             >
               <ArrowLeft size={18} />
@@ -123,7 +123,7 @@ export default function TestimonialsSection() {
             <button
               type="button"
               onClick={() => scrollTestimonials(1)}
-              className="flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center shadow-lg transition hover:bg-[#edfce0]"
+              className="flex absolute -right-20 top-1/2 -translate-y-1/2  z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center shadow-lg transition hover:bg-[#d3f7b4] cursor-pointer"
               aria-label="Scroll testimonials right"
             >
               <ArrowRight size={18} />
