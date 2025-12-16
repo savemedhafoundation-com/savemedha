@@ -10,7 +10,7 @@ import Blogs from "./pages/Blogs";
 import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import { navigate } from "./store";
-// import LocateUs from "./pages/LocateUs";
+import LocateUs from "./pages/LocateUs";
 import BlogsDetails from "./pages/BlogsDetails";
 // demo commit
 
@@ -116,11 +116,11 @@ function App() {
           path="/contact"
           element={<Contact onNavigate={handleNavigate} />}
         />
-        <Route path="*" element={<Home onNavigate={handleNavigate} />} />
-        {/* <Route
+        <Route
           path="/locate-us"
           element={<LocateUs onNavigate={handleNavigate} />}
-        /> */}
+        />
+        <Route path="*" element={<Home onNavigate={handleNavigate} />} />
       </Routes>
     </div>
   );

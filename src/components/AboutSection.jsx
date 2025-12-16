@@ -10,12 +10,12 @@ export default function AboutSection({ onNavigate }) {
 
   return (
     <section className="py-16 bg-white">
-      <div className="w-full mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-20">
-        <div className="relative w-full lg:w-1/2 flex justify-center h-96 lg:h-[400px]">
+      <div className="w-full mx-auto  px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-20">
+        <div className="relative w-full lg:w-1/2 flex justify-center h-96 lg:h-[400px] ">
           <img
             src={AboutFrame}
             alt="Green circular frame"
-            className="absolute inset-0 w-full h-full object-contain"
+            className="absolute inset-0 w-full h-full object-contain  lg:left-4   "
           />
           <div className="relative z-10 m-6 right-9 bg-white rounded-tr-[200px] rounded-br-[200px] rounded-tl-[70px] overflow-hidden shadow-xl border border-white/50">
             <img

@@ -47,7 +47,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
   };
 
   return (
-    <header className="font-sans w-full">
+    <header className="font-sans w-full sticky top-0 z-50">
       {/* Mobile layout */}
       <div className="lg:hidden">
         <div className="flex items-center justify-between gap-4 px-4 py-6 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-12">
@@ -347,10 +347,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                   className="flex items-center gap-2 text-[15px] pr-2"
                 >
                   <MdPhoneInTalk
-                    className="text-gray-700 fill-current"
+                    className="text-gray-700 fill-current hover:text-blue-700"
                     size={18}
                   />
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 hover:text-blue-700">
                     9800808595
                   </span>
                 </a>
@@ -362,10 +362,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                   className="flex items-center gap-2 text-[15px] pl-2"
                 >
                   <MdAttachEmail
-                    className="text-blue-600 fill-current"
+                    className="text-black-600 hover:text-blue-700 fill-current"
                     size={18}
                   />
-                  <span className="font-semibold text-[#0728CF] truncate max-w-none">
+                  <span className="font-semibold text-[#000000] hover:text-blue-700 truncate max-w-none">
                     info@savemedha.com
                   </span>
                 </a>
@@ -387,7 +387,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                 >
                   <svg
-                    className="h-4 w-5"
+                    className="h-4 w-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -421,9 +421,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
   <option value="ur">Urdu</option>
 </select> */}
 
-              <select className="px-3 py-2 border-2 border-[#74C425] rounded bg-transparent text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none ">
+              <select className="px-4 py-2 border-2 border-[#74C425] rounded bg-transparent text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none ">
                 <option
-                  className="bg-[#ffffff] text-black font-semibold"
+                  className="bg-[#ffffff]  text-black font-semibold"
                   value=""
                 >
                   Select Language

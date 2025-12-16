@@ -99,8 +99,8 @@ export default function QuestionSection({
             );
           })
         ) : (
-          <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center text-slate-700">
-            Select a treatment category to see questions.
+          <div className="rounded-lg border border-dashed border-slate-300 bg-[#DDFFBA] px-6 py-10 text-center text-slate-700">
+            Select any treatment category from the above to get your queries..
           </div>
         )}
       </div>

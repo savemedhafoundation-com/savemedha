@@ -12,6 +12,7 @@ import DoctorImg from "../assets/Photo/doc.png";
 import RedRibbon from "../assets/Photo/redreben.png";
 import BackgroundImg from "../assets/Photo/backgroud.png";
 import Computerimg from "../assets/Photo/Remote work and video call with colleagues.png";
+import BgImgOfVideoSection from "../assets/Photo/bgimgofvideosection.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
 const MAX_VIDEOS_TO_FETCH = 18;
@@ -825,9 +826,31 @@ export default function CancerTreatmentPage() {
 
            
             {/* Video Grid - 5 columns, fixed card design like screenshot */}
-            <div className="bg-transparent rounded-t-[60px] pt-12 pb-16 px-8">
+            <div className="relative overflow-hidden rounded-t-[80px] pt-12 pb-16 px-8">
+              <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat "
+                style={{ backgroundImage: `url(${BgImgOfVideoSection})` }}
+                aria-hidden="true"
+              />
+
+              <div
+                className="absolute inset-0 bg-[#74C425]/35"
+                aria-hidden="true"
+              />
+
+              <div
+                className="absolute top-0 left-0 right-0 h-20 bg-white"
+                style={{
+                  borderBottomLeftRadius: "999px",
+                  borderBottomRightRadius: "999px",
+                  transform: "translateY(-55%)",
+                }}
+                aria-hidden="true"
+              />
+
+              <div className="relative">
         {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
           {healthVideos.slice(0, 20).map((video, index) => (
             <button
               key={video.id}
@@ -884,10 +907,11 @@ export default function CancerTreatmentPage() {
           </a>
         </div>
       </div>
+      </div>
     </div>
   </div>
             
-           <div className="w-[1730px] py-16 sm:pl-30 relative">
+ <div className="w-[1730px] mt-12 py-16 pl-4 sm:pl-[30px] relative">
 
   {/* GREEN CURVED BACK SHAPE */}
   <div

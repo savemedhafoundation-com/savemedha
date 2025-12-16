@@ -106,8 +106,8 @@ export default function TreatmentCards({
   return (
     <div className="relative max-w-screen-2xl mx-auto px-4 sm:px-6">
       <div className="text-center">
-        <h3 className="text-2xl sm:text-3xl lg:text-[35px] font-robotocondensed font-bold text-[#1b3610] tracking-tight">
-          Explore Treatment Paths
+        <h3 className="text-2xl sm:text-3xl lg:text-[35px] font-robotocondensed font-bold text-[#1b3610] tracking-tight uppercase">
+          OUR <span className="text-[#74C425]">SERVICES</span>
         </h3>
       </div>
 
