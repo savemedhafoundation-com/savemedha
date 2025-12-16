@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
 import SavemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
 import {
@@ -20,6 +21,34 @@ import { CgArrowLongUpL } from "react-icons/cg";
 
 const Footer = ({ onNavigate }) => {
   const [showTopButton, setShowTopButton] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState(null);
+  const [isSubmittingNewsletter, setIsSubmittingNewsletter] = useState(false);
+
+  const handleNewsletterSubmit = async (event) => {
+    event.preventDefault();
+    setNewsletterStatus(null);
+
+    const email = newsletterEmail.trim();
+    const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
+    if (!isValidEmail) {
+      setNewsletterStatus("Subscription failed. Please try again.");
+      return;
+    }
+
+    try {
+      setIsSubmittingNewsletter(true);
+      await axios.post("https://savemedhabackend.vercel.app/api/newsletter", {
+        email,
+      });
+      setNewsletterEmail("");
+      setNewsletterStatus("Subscribed successfully.");
+    } catch {
+      setNewsletterStatus("Subscription failed. Please try again.");
+    } finally {
+      setIsSubmittingNewsletter(false);
+    }
+  };
 
   const navLinks1 = [
     { name: "HOME", key: "home" },
@@ -119,33 +148,39 @@ const Footer = ({ onNavigate }) => {
               </div>
             </div>
 
-            <form
-              className="space-y-3"
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label htmlFor="newsletter-email-mobile" className="sr-only">
-                Email address
-              </label>
-              <div className="flex items-center gap-3 border border-gray-300 rounded-full px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-[#6dcf27] bg-white">
-                <AtSign className="w-5 h-5 text-gray-500" />
-                <input
-                  id="newsletter-email-mobile"
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-1 text-sm text-gray-800 placeholder:text-gray-500 bg-transparent outline-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full rounded-lg text-white font-bold text-base py-3 shadow-lg hover:shadow-xl transition-all duration-200"
-                style={{
-                  background:
-                    "linear-gradient(269.96deg, #498D05 0.03%, #76C528 50%, #448602 99.97%)",
-                }}
-              >
-                SUBSCRIBE
-              </button>
-            </form>
+	            <form
+	              className="space-y-3"
+	              onSubmit={handleNewsletterSubmit}
+	            >
+	              <label htmlFor="newsletter-email-mobile" className="sr-only">
+	                Email address
+	              </label>
+	              <div className="flex items-center gap-3 border border-gray-300 rounded-full px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-[#6dcf27] bg-white">
+	                <AtSign className="w-5 h-5 text-gray-500" />
+	                <input
+	                  id="newsletter-email-mobile"
+	                  type="email"
+	                  placeholder="Your email"
+	                  value={newsletterEmail}
+	                  onChange={(event) => setNewsletterEmail(event.target.value)}
+	                  className="flex-1 text-sm text-gray-800 placeholder:text-gray-500 bg-transparent outline-none"
+	                />
+	              </div>
+	              <button
+	                type="submit"
+	                disabled={isSubmittingNewsletter}
+	                className="w-full rounded-lg text-white font-bold text-base py-3 shadow-lg hover:shadow-xl transition-all duration-200"
+	                style={{
+	                  background:
+	                    "linear-gradient(269.96deg, #498D05 0.03%, #76C528 50%, #448602 99.97%)",
+	                }}
+	              >
+	                SUBSCRIBE
+	              </button>
+	              {newsletterStatus && (
+	                <div aria-live="polite">{newsletterStatus}</div>
+	              )}
+	            </form>
           </div>
 
           <div className="space-y-3">
@@ -299,34 +334,42 @@ const Footer = ({ onNavigate }) => {
                   <p className="text-base text-gray-600">
                     Subscribe to our newsletter and stay updated.
                   </p>
-                  <form
-                    className="space-y-4"
-                    onSubmit={(event) => event.preventDefault()}
-                  >
-                    <label htmlFor="newsletter-email" className="sr-only">
-                      Email address
-                    </label>
-                    <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-[#6dcf27] bg-white">
-                      <AtSign className="w-5 h-5 text-gray-500" />
-                      <input
-                        id="newsletter-email"
-                        type="email"
-                        placeholder="Your email"
-                        className="flex-1 text-lg text-gray-800 placeholder:text-gray-500 bg-transparent outline-none"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full rounded-xl text-white font-extrabold text-xl py-3 shadow-lg hover:shadow-xl transition-all duration-200"
-                      style={{
-                        background: "#FFFFFF",
-                        backgroundImage:
-                          "linear-gradient(269.96deg, #498D05 0.03%, #76C528 50%, #448602 99.97%)",
-                      }}
-                    >
-                      SUBSCRIBE
-                    </button>
-                  </form>
+	                  <form
+	                    className="space-y-4"
+	                    onSubmit={handleNewsletterSubmit}
+	                  >
+	                    <label htmlFor="newsletter-email" className="sr-only">
+	                      Email address
+	                    </label>
+	                    <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-[#6dcf27] bg-white">
+	                      <AtSign className="w-5 h-5 text-gray-500" />
+	                      <input
+	                        id="newsletter-email"
+	                        type="email"
+	                        placeholder="Your email"
+	                        value={newsletterEmail}
+	                        onChange={(event) =>
+	                          setNewsletterEmail(event.target.value)
+	                        }
+	                        className="flex-1 text-lg text-gray-800 placeholder:text-gray-500 bg-transparent outline-none"
+	                      />
+	                    </div>
+	                    <button
+	                      type="submit"
+	                      disabled={isSubmittingNewsletter}
+	                      className="w-full rounded-xl text-white font-extrabold text-xl py-3 shadow-lg hover:shadow-xl transition-all duration-200"
+	                      style={{
+	                        background: "#FFFFFF",
+	                        backgroundImage:
+	                          "linear-gradient(269.96deg, #498D05 0.03%, #76C528 50%, #448602 99.97%)",
+	                      }}
+	                    >
+	                      SUBSCRIBE
+	                    </button>
+	                    {newsletterStatus && (
+	                      <div aria-live="polite">{newsletterStatus}</div>
+	                    )}
+	                  </form>
                 </div>
               </div>
             </div>

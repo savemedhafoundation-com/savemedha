@@ -827,7 +827,7 @@ export default function CancerTreatmentPage() {
 
            
             {/* Video Grid - 5 columns, fixed card design like screenshot */}
-            <div className="relative overflow-hidden  pt-25 pb-16 px-2">
+            <div className="relative overflow-hidden  pt-50 pb-16 px-2">
 	              <div
 	                className="absolute inset-0  bg-cover bg-center bg-no-repeat opacity-30 "
 	                style={{
@@ -838,17 +838,7 @@ export default function CancerTreatmentPage() {
 	                aria-hidden="true"
 	              />
 
-	              <div
-	                className="absolute mt-80  inset-0"
-	                style={{
-	                  backgroundImage: `url(${Rectangle374})`,
-	                  backgroundRepeat: "no-repeat",
-	                  backgroundSize:"contain",
-	                  backgroundPosition: "center",
-                  
-	                }}
-	                aria-hidden="true"
-	              />
+	             
 
               
 
