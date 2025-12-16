@@ -239,7 +239,7 @@ export default function TreatmentPage({ onNavigate }) {
               <button
                 type="button"
                 onClick={() =>
-                  onNavigate?.("treatment-questions", { category: "cancer" })
+                  onNavigate?.("treatment-questions")
                 }
                 className="bg-[#7BC043] w-[300px] hover:bg-green-600 transition cursor-pointer text-white font-bold font-opensans py-3 px-8 rounded-[4px] shadow-md uppercase tracking-wider transition-colors text-base md:text-lg  "
               >
