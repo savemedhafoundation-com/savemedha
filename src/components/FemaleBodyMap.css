@@ -44,12 +44,13 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  /* padding: 2rem 0; */
+  overflow: hidden;
+  margin-bottom: -80px; /* pull up to remove excess whitespace under the map */
 }
 
 .body-map-svg {
-  width: 150%;
-  max-width: 150%;
+  width: 120%;
+  max-width: 800px;
   height: auto;
   filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35));
 }
@@ -196,6 +197,25 @@
 
   .body-card h2 {
     font-size: 1.4rem;
+  }
+
+  .body-map-svg {
+    width: 115%;
+    max-width: 520px;
+  }
+  .body-canvas {
+    margin-bottom: -40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .body-card {
+    padding: 1rem 0.85rem 1.25rem;
+    border-radius: 18px;
+  }
+  .body-map-svg {
+    width: 115%;
+    max-width: 420px;
   }
 }
 

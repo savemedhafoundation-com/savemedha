@@ -183,6 +183,11 @@ const organs = {
 
 export const treatmentCategories = [
   {
+    id: "thalassemia",
+    label: "Thalassemia",
+    items: ["Thalassemia Major", "Thalassemia Minor"],
+  },
+  {
     id: "cancer",
     label: "Cancer",
     items: [
@@ -194,23 +199,7 @@ export const treatmentCategories = [
       "Colon Cancer",
       "Eye Cancer",
       "Gall Bladder",
-      "Kidney Cancer",
-      "Liver Cancer",
-      "Lungs Cancer",
-      "Oral Cancer",
-      "Pancreas",
-      "Prostate Cancer",
-      "Skin Cancer",
-      "Stomach Cancer",
-      "Throat Cancer",
-      "Thyroid Cancer",
-      "Tongue Cancer",
     ],
-  },
-  {
-    id: "thalassemia",
-    label: "Thalassemia",
-    items: ["Thalassemia Major", "Thalassemia Minor"],
   },
   { id: "stone", label: "Stone", items: ["Kidney Stone", "Gall Stone"] },
   { id: "general", label: "General", items: ["Diabetes", "Hypertension"] },

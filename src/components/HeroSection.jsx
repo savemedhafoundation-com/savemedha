@@ -56,7 +56,7 @@ import { treatmentCategories } from "../data/organs";
 export default function HomePage({ onNavigate }) {
   const [selectedOrgan, setSelectedOrgan] = useState(null);
   const [sex, selectedSex] = useState("male");
-  const [openCategory, setOpenCategory] = useState("cancer");
+  const [openCategory, setOpenCategory] = useState("thalassemia");
 
   const toggleCategory = (id) => {
     setOpenCategory((prev) => (prev === id ? "" : id));
@@ -64,13 +64,13 @@ export default function HomePage({ onNavigate }) {
 
   return (
     <>
-      <div className="-mx-20">
+      <div className="mx-0 sm:-mx-6 lg:-mx-20">
         <HeroBanner />
       </div>
       <AboutSection onNavigate={onNavigate} />
       <ServicesSection onNavigate={onNavigate} />
       <section className="py-16">
-        <div className="w-full px-0 sm:px-4">
+        <div className="w-full px-4 sm:px-6">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold text-gray-900">
               Explore the Body Map
@@ -81,22 +81,22 @@ export default function HomePage({ onNavigate }) {
             </p>
           </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-start relative ">
+          <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-start relative overflow-hidden">
             {/* new design */}
             <div
-              class="absolute top-[-100px] left-[-10px] w-[180px] h-[180px] 
+              className="hidden md:block absolute top-[-100px] left-[-10px] w-[180px] h-[180px] 
                bg-gradient-to-br from-[#7bff63] to-[#47c82f]
               shadow-[0_8px_25px_8px_rgba(0,0,0,0.25)] rounded-[52%_48%_92%_8%_/_43%_47%_53%_57%] z-12"
             ></div>
 
             <div
-              class="absolute top-[-50px] left-[140px] w-[180px] h-[180px] 
+              className="hidden md:block absolute top-[-50px] left-[140px] w-[180px] h-[180px] 
              bg-gradient-to-br from-[#7bff63] to-[#47c82f]
               shadow-[0_8px_25px_8px_rgba(0,0,0,0.25)] rounded-[52%_48%_92%_8%_/_43%_47%_53%_57%] z-13"
             ></div>
 
             <div
-              class="absolute top-[0px] left-[-10px] w-[200px] h-[200px] 
+              className="hidden md:block absolute top-[0px] left-[-10px] w-[200px] h-[200px] 
                bg-gradient-to-br from-[#7bff63] to-[#47c82f]
               shadow-[0_8px_25px_8px_rgba(0,0,0,0.25)] rounded-[52%_48%_92%_8%_/_43%_47%_53%_57%] z-14"
             ></div>
@@ -155,14 +155,7 @@ export default function HomePage({ onNavigate }) {
               <div className="absolute top-2 left-1/2 -translate-x-1/2 flex gap-10 z-20">
                 {/* Male Selector */}
                 <div
-                  className={`
-      group p-4 rounded-md cursor-pointer flex flex-col justify-center items-center transition-all duration-100
-      ${
-        sex === "male"
-          ? "shadow-[0_0_15px_4px_#9AFF34] border-2 border-[#9AFF34] scale-110"
-          : "hover:shadow-[0_0_12px_3px_#9AFF34] border border-transparent"
-      }
-    `}
+                 
                   onClick={() => selectedSex("male")}
                 >
                   <FaMale
@@ -170,8 +163,8 @@ export default function HomePage({ onNavigate }) {
                     className={`transition-colors duration-300 
         ${
           sex === "male"
-            ? "text-[#74C425]"
-            : "text-[#9AFF34] group-hover:text-[#74C425]"
+            ? "text-[#ffff] "
+            : "text-[#9AFF34]"
         }
       `}
                   />
@@ -180,7 +173,7 @@ export default function HomePage({ onNavigate }) {
         ${
           sex === "male"
             ? "text-[#1f310d]"
-            : "text-[#1f310d]/60 group-hover:text-[#1f310d]"
+            : "text-[#1f310d]"
         }
       `}
                   >
@@ -190,14 +183,6 @@ export default function HomePage({ onNavigate }) {
 
                 {/* Female Selector */}
                 <div
-                  className={`
-      group pb-0 pt-0 pl-2 pr-2 rounded-md cursor-pointer flex flex-col justify-center items-center transition-all duration-100
-      ${
-        sex === "female"
-          ? "shadow-[0_0_15px_4px_#9AFF34] border-2 border-[#9AFF34] scale-110"
-          : "hover:shadow-[0_0_12px_3px_#9AFF34] border border-transparent"
-      }
-    `}
                   onClick={() => selectedSex("female")}
                 >
                   <FaFemale
@@ -205,7 +190,7 @@ export default function HomePage({ onNavigate }) {
                     className={`transition-colors duration-300 
         ${
           sex === "female"
-            ? "text-[#74C425]"
+            ? "text-[#ffff]"
             : "text-[#9AFF34] group-hover:text-[#74C425]"
         }
       `}
@@ -232,6 +217,10 @@ export default function HomePage({ onNavigate }) {
                 )}
               </div>
             </div>
+
+
+
+
           </div>
         </div>
       </section>
