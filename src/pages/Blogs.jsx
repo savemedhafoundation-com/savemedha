@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { fetchBlogPosts } from "../service/api";
 import blogBanner from "../assets/Photo/blog image.png";
 
 const extractArray = (candidate, seen = new Set()) => {
@@ -21,6 +21,8 @@ const extractArray = (candidate, seen = new Set()) => {
 
 const normalizeResponse = (payload) => extractArray(payload);
 
+const BLOGS_API_URL = "https://savemedhabackend.vercel.app/api/blogs";
+
 const formatDate = (value) => {
   if (!value) return "";
   const date = new Date(value);
@@ -31,95 +33,6 @@ const formatDate = (value) => {
     year: "numeric",
   }).format(date);
 };
-
-const fallbackPosts = [
-  {
-    id: "demo-1",
-    title: "Is Bone Cancer Curable With Natural Immunotherapy?",
-    category: "Health",
-    date: "November 13, 2025",
-    author: "Admin",
-    excerpt:
-      "Is Bone Cancer curable with immunotherapy? Today scientists are exploring how natural immunotherapy changes recovery trajectories.",
-    coverImage: "https://placehold.co/900x600",
-  },
-  {
-    id: "demo-2",
-    title:
-      "What Is Disease? Understanding Illness Through the Lens of Natural Science",
-    category: "Health",
-    date: "November 1, 2025",
-    author: "Admin",
-    excerpt:
-      "Rethinking disease as terrain imbalance and how natural immunotherapy reframes care.",
-    coverImage: "https://placehold.co/600x400",
-  },
-  {
-    id: "demo-3",
-    title:
-      "Lupus Can Be Fully Cured Naturally: The Science Behind Natural Immunotherapy",
-    category: "Health",
-    date: "October 4, 2025",
-    author: "Admin",
-    excerpt:
-      "Immune balance, terrain support, and remission stories with natural immunotherapy.",
-    coverImage: "https://placehold.co/600x400",
-  },
-  {
-    id: "demo-4",
-    title:
-      "The Immune System Explained: How Your Body Defends, Heals, and Stays Strong Naturally",
-    category: "Health",
-    date: "October 1, 2025",
-    author: "Admin",
-    excerpt:
-      "A friendly tour of your innate and adaptive defenders and how to support them.",
-    coverImage: "https://placehold.co/600x400",
-  },
-  {
-    id: "demo-5",
-    title:
-      "Fear & Fights in Childhood: How Parental Scare Tactics Shape Anxiety, Identity, and Early Belief",
-    category: "Health",
-    date: "October 1, 2025",
-    author: "Admin",
-    excerpt:
-      "How stress imprints in childhood and approaches to build calm resilience.",
-    coverImage: "https://placehold.co/600x400",
-  },
-  {
-    id: "demo-6",
-    title: "How to Keep Your Liver Healthy Naturally",
-    category: "Health",
-    date: "October 8, 2025",
-    author: "Admin",
-    excerpt:
-      "The science of detoxification and metabolic balance with daily habits.",
-    coverImage: "https://placehold.co/600x400",
-  },
-  {
-    id: "demo-7",
-    title:
-      "Why We Suffer from Chronic Cold, Cough, Allergy and Mild Breathing Trouble — and How to End it Naturally",
-    category: "Health",
-    date: "October 8, 2025",
-    author: "Admin",
-    excerpt:
-      "Root causes, immune modulation, and practical daily steps for relief.",
-    coverImage: "https://placehold.co/600x400",
-  },
-  {
-    id: "demo-8",
-    title:
-      "Irritable Bowel Syndrome (IBS) and Natural Immunotherapy: The Complete Gut-Healing Approach",
-    category: "Health",
-    date: "October 8, 2025",
-    author: "Admin",
-    excerpt:
-      "How terrain-first thinking soothes, rebuilds, and stabilizes the gut.",
-    coverImage: "https://placehold.co/600x400",
-  },
-];
 
 const categoryCards = [
   { label: "Natural Science", image: "https://placehold.co/120x120" },
@@ -133,27 +46,33 @@ const categoryCards = [
 export default function Blogs({ onNavigate }) {
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
-  const [errorMessage, setErrorMessage] = useState("");
   const [reloadToken, setReloadToken] = useState(0);
+
+  const normalizePost = useCallback((post, index) => {
+    return {
+      id: post?.id || post?._id || post?.slug || `blog-${index}`,
+      title: post?.title || "",
+      excerpt: post?.description || "",
+      coverImage: post?.imageUrl || post?.image || "",
+      category: post?.category || "",
+      author: post?.writtenBy || post?.author || post?.authorName || "",
+      date: formatDate(post?.publishedAt || post?.createdAt || post?.updatedAt),
+    };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
 
     const loadBlogs = async () => {
       setStatus("loading");
-      setErrorMessage("");
       try {
-        const response = await fetchBlogPosts();
+        const response = await axios.get(BLOGS_API_URL);
         if (!isMounted) return;
-        setPosts(normalizeResponse(response));
+        const rawPosts = normalizeResponse(response?.data);
+        setPosts(rawPosts.map(normalizePost));
         setStatus("success");
-      } catch (error) {
+      } catch {
         if (!isMounted) return;
-        const message =
-          error?.response?.data?.message ||
-          error?.message ||
-          "Unable to load blogs right now.";
-        setErrorMessage(message);
         setStatus("error");
       }
     };
@@ -163,53 +82,12 @@ export default function Blogs({ onNavigate }) {
     return () => {
       isMounted = false;
     };
-  }, [reloadToken]);
+  }, [normalizePost, reloadToken]);
 
-  const normalizedPosts = useMemo(() => {
-    if (!Array.isArray(posts)) return [];
-
-    return posts.map((post, index) => {
-      const author =
-        post?.author?.name ||
-        post?.authorName ||
-        post?.byline ||
-        post?.author ||
-        "Save Medha Editorial";
-
-      const coverImage =
-        post?.coverImage?.url ||
-        post?.coverImage ||
-        post?.heroImage?.url ||
-        post?.image?.url ||
-        post?.image ||
-        null;
-
-      const excerpt =
-        post?.excerpt ||
-        post?.summary ||
-        post?.description ||
-        post?.content ||
-        post?.body ||
-        "";
-
-      return {
-        id: post?.id || post?._id || post?.slug || `blog-${index}`,
-        title: post?.title || post?.heading || "Untitled Story",
-        author,
-        date: formatDate(
-          post?.publishedAt || post?.createdAt || post?.updatedAt
-        ),
-        excerpt,
-        coverImage,
-        category: post?.category || post?.tag || "Health",
-      };
-    });
-  }, [posts]);
-
-  const allPosts = normalizedPosts.length ? normalizedPosts : fallbackPosts;
-  const latestPost = allPosts[0] || fallbackPosts[0];
-  const trendingPosts = allPosts.slice(0, 2);
-  const gridPosts = allPosts;
+  const normalizedPosts = Array.isArray(posts) ? posts : [];
+  const latestPost = normalizedPosts[0];
+  const trendingPosts = normalizedPosts.slice(0, 2);
+  const gridPosts = normalizedPosts;
 
   const handleReadMore = (postId) => {
     if (onNavigate && postId) {
@@ -217,7 +95,9 @@ export default function Blogs({ onNavigate }) {
     }
   };
 
-  const showErrorInline = status === "error" && !normalizedPosts.length;
+  const showLoadingInline = status === "loading";
+  const showErrorInline = status === "error";
+  const showEmptyInline = status === "success" && !normalizedPosts.length;
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -250,9 +130,13 @@ export default function Blogs({ onNavigate }) {
 
         {/* Latest + Callback + Trending */}
         <section className="max-w-7xl  mx-auto px-12 md:px-2 pt-10 pb-12">
+          {showLoadingInline && (
+            <div>Loading blogs...</div>
+          )}
+
           {showErrorInline && (
             <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-              {errorMessage}
+              Unable to load blogs
               <button
                 type="button"
                 onClick={() => setReloadToken((token) => token + 1)}
@@ -263,11 +147,15 @@ export default function Blogs({ onNavigate }) {
             </div>
           )}
 
+          {showEmptyInline && (
+            <div>No blogs available</div>
+          )}
+
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Latest card */}
             <article className="lg:col-span-2 border border-gray-200 rounded-lg shadow-sm bg-white overflow-hidden">
               <img
-                src={latestPost?.coverImage || "https://placehold.co/900x600"}
+                src={latestPost?.coverImage || blogBanner}
                 alt={latestPost?.title || "Latest blog"}
                 className="w-full object-cover"
               />
@@ -421,7 +309,7 @@ export default function Blogs({ onNavigate }) {
                 className="border border-gray-200 rounded-lg bg-[#f2f9e9] shadow-sm overflow-hidden flex flex-col min-h-[320px] md:min-h-[360px]"
               >
                 <img
-                  src={post.coverImage || "https://placehold.co/600x600"}
+                  src={post.coverImage || blogBanner}
                   className="w-full h-70 md:h-40 object-cover"
                   alt={post.title}
                 />

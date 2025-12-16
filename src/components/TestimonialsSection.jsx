@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
     <>
       <div className="mb-6 text-center">
         <h2 className="relative inline-block text-4xl font-bold text-slate-900">
-          <span className="relative">TESTI </span>
+          <span className="relative">TESTI</span>
           <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
           <span className="text-[#74C425]">MONIALS</span>
         </h2>

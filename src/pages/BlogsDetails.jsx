@@ -49,15 +49,15 @@ export default function BlogsDetails({ onNavigate }) {
     const load = async () => {
       try {
         const res = await fetch(
-          `https://nit-backend-a16m.vercel.app/api/content/blog?id=${id}`
+          `https://savemedhabackend.vercel.app/api/blogs/${id}`
         );
         if (!res.ok) throw new Error("Not found");
         const data = await res.json();
         if (!cancelled) {
-          setBlog(data?.[0] || null);
+          setBlog(data || null);
           setStatus("success");
         }
-      } catch (error) {
+      } catch {
         if (!cancelled) {
           setStatus("error");
         }
@@ -71,7 +71,7 @@ export default function BlogsDetails({ onNavigate }) {
         if (!cancelled) {
           setRelated(normalized);
         }
-      } catch (error) {
+      } catch {
         if (!cancelled) {
           setRelated([]);
         }
@@ -90,14 +90,19 @@ export default function BlogsDetails({ onNavigate }) {
       blog?.title ||
       "Why Natural Immunotherapy is the Future of Healing";
     const banner =
+      blog?.imageUrl ||
       blog?.coverImage ||
       blog?.image ||
       blog?.heroImage ||
       blog?.thumbnail ||
       fallbackBanner;
     const category = blog?.category || blog?.tag || "Health";
-    const date = formatDate(blog?.publishedAt || blog?.createdAt) || "Nov 13, 2025";
-    const author = blog?.author?.name || blog?.author || "Admin";
+    const date = formatDate(blog?.publishedAt || blog?.createdAt || blog?.updatedAt) || "";
+    const author =
+      blog?.writtenBy ||
+      blog?.author?.name ||
+      blog?.author ||
+      "Admin";
     return { title, banner, category, date, author };
   }, [blog]);
 
@@ -113,12 +118,14 @@ export default function BlogsDetails({ onNavigate }) {
         id: item.id || item._id || `related-${index}`,
         title: item.title || "Untitled",
         author:
+          item.writtenBy ||
           item.author?.name ||
           item.authorName ||
           item.author ||
           "Admin",
         date: formatDate(item.publishedAt || item.createdAt) || "",
         image:
+          item.imageUrl ||
           item.coverImage?.url ||
           item.coverImage ||
           item.image ||
@@ -141,12 +148,12 @@ export default function BlogsDetails({ onNavigate }) {
   }, [related]);
 
   const contentHtml = useMemo(() => {
-    const raw = blog?.content || blog?.excerpt || "";
+    const raw = blog?.content || blog?.description || blog?.excerpt || "";
     if (!raw) return "";
 
     return raw
       .replace(
-        /^([A-Z][A-Za-z0-9\s\?']{8,})$/gm,
+        /^([A-Z][A-Za-z0-9\s?']{8,})$/gm,
         '<h2 class="text-2xl md:text-3xl font-bold text-[#155300] mt-10 mb-4">$1</h2>'
       )
       .replace(/^\s*[-•*]\s+/gm, '<span class="inline-block w-6 text-[#74C425]">✔</span>')
@@ -413,7 +420,6 @@ export default function BlogsDetails({ onNavigate }) {
           </div>
 
           <div className="space-y-6">
-            {false && <div />} {/* placeholder to avoid empty map */}
             {!related?.length && (
               <p className="text-sm text-slate-600">No comments yet.</p>
             )}

@@ -1,42 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { gsap } from "gsap";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
-const patientStories = [
-  {
-    id: 1,
-    title: "Discussion with Tanjila after full cure from Blood Cancer",
-    youtubeUrl: "https://youtu.be/BvBIVuhY3uc?si=s3gDfzzD42Qia1Vg",
-    duration: "05:12",
-    description:
-      "Hear how Natural Immunotherapy helped Tanjila recover and regain strength.",
-  },
-  {
-    id: 2,
-    title:
-      "After defeating cancer, Mainul is now healthy and living a normal life",
-    youtubeUrl: "https://youtu.be/ld62F0ZhwY0?si=H3PqIt922Bx1pmAT",
-    duration: "02:58",
-    description:
-      "Mainul shares his journey to wellness and a return to everyday life.",
-  },
-   {id: 3,
-    title:
-      "Prostate & Rectum Cancer Recovery at 65",
-    youtubeUrl: "https://youtu.be/ekq3OG9gWGc?si=QJcLxc1Psx36qFl0",
-    duration: "13:25",
-    description:
-      "Mainul shares his journey to wellness and a return to everyday life.",
-  },
-   {id: 4,
-    title:
-      "Natural Immunotherapy Saved My Life | Gallbladder Cancer Patient Testimonial | Fully Recovered",
-    youtubeUrl: "https://youtu.be/i16mOr1a4ic?si=tDMFJivcbidmjjcF",
-    duration: "13:25",
-    description:
-      "Mainul shares his journey to wellness and a return to everyday life.",
-  },
-];
+const PATIENT_STORIES_API_URL =
+  "https://savemedhabackend.vercel.app/api/patient-success-stories";
 
 const extractVideoId = (input = "") => {
   if (!input) return null;
@@ -75,10 +43,53 @@ const toThumbnailUrl = (input = "") => {
 const PatientStories = () => {
   const ringRef = useRef(null);
   const itemRefs = useRef([]);
+  const [stories, setStories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [openIndex, setOpenIndex] = useState(null);
 
   const currentVideoUrl =
-    openIndex !== null ? toEmbedUrl(patientStories[openIndex].youtubeUrl) : null;
+    openIndex !== null ? toEmbedUrl(stories[openIndex]?.youtubeUrl) : null;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    setIsLoading(true);
+    setHasError(false);
+
+    axios
+      .get(PATIENT_STORIES_API_URL)
+      .then((response) => {
+        if (!isMounted) return;
+        const payload = response?.data;
+        const list = Array.isArray(payload) ? payload : payload ? [payload] : [];
+        const normalized = list
+          .map((story, index) => ({
+            id: story?._id ?? story?.id ?? `${index}`,
+            title: story?.title ?? "",
+            youtubeUrl: story?.youtubeUrl ?? "",
+            description: story?.description ?? "",
+          }))
+          .filter((story) => story.youtubeUrl || story.title || story.description);
+
+        setOpenIndex(null);
+        setStories(normalized);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setHasError(true);
+        setOpenIndex(null);
+        setStories([]);
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const rotateRing = (direction = 1) => {
     const ringEl = ringRef.current;
@@ -184,7 +195,7 @@ const PatientStories = () => {
         el.removeEventListener("mouseleave", handleLeave);
       });
     };
-  }, []);
+  }, [stories.length]);
 
   return (
     <>
@@ -225,12 +236,17 @@ const PatientStories = () => {
             className="relative h-[260px] w-full max-w-[540px]"
             style={{ perspective: "1200px" }}
           >
+            {isLoading && <div>Loading patient stories...</div>}
+            {hasError && <div>Unable to load patient stories</div>}
+            {!isLoading && !hasError && stories.length === 0 && (
+              <div>No patient stories available</div>
+            )}
             <div
               ref={ringRef}
               className="mt-30"
               style={{ transformStyle: "preserve-3d" }}
             >
-              {patientStories.map((story, index) => (
+              {stories.map((story, index) => (
                 <div
                   key={story.id}
                   ref={(el) => {

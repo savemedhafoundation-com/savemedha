@@ -15,6 +15,9 @@ const COLORS = {
   ACTION_ORANGE: "#ff6633",
 };
 
+const LANGUAGE_SELECT_ARROW_DATA_URI =
+  "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23666%22 viewBox=%220 0 20 20%22%3E%3Cpath d=%22M5.5 7l4.5 4.5L14.5 7%22/%3E%3C/svg%3E";
+
 const NAV_ITEMS = [
   { name: "HOME", key: "home", hasDropdown: false },
   { name: "ABOUT US", key: "about", hasDropdown: false },
@@ -421,7 +424,15 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
   <option value="ur">Urdu</option>
 </select> */}
 
-              <select className="px-4 py-2 border-2 border-[#74C425] rounded bg-transparent text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none ">
+		              <select
+		                style={{
+		                  backgroundImage: `url("${LANGUAGE_SELECT_ARROW_DATA_URI}")`,
+		                  backgroundRepeat: "no-repeat",
+		                  backgroundPosition: "0.75rem center",
+		                  backgroundSize: "1.2rem 1.2rem",
+		                }}
+		                className="appearance-none px-8 py-2 border-2 border-[#74C425] rounded bg-transparent text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none"
+		              >
                 <option
                   className="bg-[#ffffff]  text-black font-semibold"
                   value=""

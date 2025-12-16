@@ -13,6 +13,7 @@ import RedRibbon from "../assets/Photo/redreben.png";
 import BackgroundImg from "../assets/Photo/backgroud.png";
 import Computerimg from "../assets/Photo/Remote work and video call with colleagues.png";
 import BgImgOfVideoSection from "../assets/Photo/bgimgofvideosection.png";
+import Rectangle374 from "../assets/Photo/Rectangle 374.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
 const MAX_VIDEOS_TO_FETCH = 18;
@@ -826,27 +827,30 @@ export default function CancerTreatmentPage() {
 
            
             {/* Video Grid - 5 columns, fixed card design like screenshot */}
-            <div className="relative overflow-hidden rounded-t-[80px] pt-12 pb-16 px-8">
-              <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat "
-                style={{ backgroundImage: `url(${BgImgOfVideoSection})` }}
-                aria-hidden="true"
-              />
+            <div className="relative overflow-hidden  pt-25 pb-16 px-2">
+	              <div
+	                className="absolute inset-0  bg-cover bg-center bg-no-repeat opacity-30 "
+	                style={{
+	                  backgroundImage: `url(${BgImgOfVideoSection})`,
+	                  backgroundSize: "contain", 
+	                }}
+	                
+	                aria-hidden="true"
+	              />
 
-              <div
-                className="absolute inset-0 bg-[#74C425]/35"
-                aria-hidden="true"
-              />
+	              <div
+	                className="absolute mt-80  inset-0"
+	                style={{
+	                  backgroundImage: `url(${Rectangle374})`,
+	                  backgroundRepeat: "no-repeat",
+	                  backgroundSize:"contain",
+	                  backgroundPosition: "center",
+                  
+	                }}
+	                aria-hidden="true"
+	              />
 
-              <div
-                className="absolute top-0 left-0 right-0 h-20 bg-white"
-                style={{
-                  borderBottomLeftRadius: "999px",
-                  borderBottomRightRadius: "999px",
-                  transform: "translateY(-55%)",
-                }}
-                aria-hidden="true"
-              />
+              
 
               <div className="relative">
         {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
@@ -866,7 +870,7 @@ export default function CancerTreatmentPage() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center rounded-2xl">
-                    <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
+                    <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
                       <Play className="text-white ml-1" size={32} />
                     </div>
                   </div>
@@ -901,7 +905,7 @@ export default function CancerTreatmentPage() {
             className="inline-flex items-center gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full shadow-2xl transition-all transform hover:scale-105"
           >
             WATCH MORE
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
               <Play className="text-red-600" size={28} fill="red" />
             </div>
           </a>
@@ -911,7 +915,7 @@ export default function CancerTreatmentPage() {
     </div>
   </div>
             
- <div className="w-[1730px] mt-12 py-16 pl-4 sm:pl-[30px] relative">
+ <div className="w-[1730px] mt-20 py-16 pl-4 sm:pl-[30px] relative">
 
   {/* GREEN CURVED BACK SHAPE */}
   <div

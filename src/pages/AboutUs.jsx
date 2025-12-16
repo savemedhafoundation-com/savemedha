@@ -9,6 +9,7 @@ import AiaoBarLogo from '../assets/Photo/AIAO BAR.jpg';
 import CertifiedLogo from '../assets/Photo/certified.png';
 import { IoPeopleSharp } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 const highlightText = [
   "Medha was a vibrant, spirited 14-year-old girl from Nator, Bangladesh, who had a rare gift, as she lit up every room she entered with her innocent smile and boundless curiosity. A dreamer with an artist's heart, her life was filled with joy, school, friends, and laughter until her world was abruptly changed by a diagnosis of blood cancer. What followed was a painful journey of hospital stays, rigorous chemotherapy, and unimaginable struggle. Despite the physical pain that weighed heavy in her deep, soulful eyes, Medha chose to smile - her light refusing to dim. Support for her battle came from near and far, touching hearts across the world. Renowned figures like Ratan Tata and Sonu Sood, Salman Khan, known for their generosity, extended their aid. But the disease took its toll, and Medha, despite all the love and efforts surrounding her, took her last breath, leaving behind a void that words could never fill.",
@@ -73,12 +74,45 @@ const certificationBadges = [
 ];
 
 const skylineHeights = [28, 52, 36, 64, 44, 58, 32, 48, 40, 54];
+const CITIES_API_URL = 'https://savemedhabackend.vercel.app/api/cities';
 
 const Counter = ({ compact = false }) => {
   const [count, setCount] = useState(0);
   const [cityCount, setCityCount] = useState(0);
+  const [maxMembers, setMaxMembers] = useState(null);
+  const [maxCities, setMaxCities] = useState(null);
+  const [canAnimate, setCanAnimate] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const countRef = useRef(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    axios
+      .get(CITIES_API_URL)
+      .then((response) => {
+        if (!isMounted) return;
+        const members = Number(response?.data?.members);
+        const cities = Number(response?.data?.cities);
+
+        if (!Number.isFinite(members) || !Number.isFinite(cities)) {
+          setCanAnimate(false);
+          return;
+        }
+
+        setMaxMembers(members);
+        setMaxCities(cities);
+        setCanAnimate(true);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setCanAnimate(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -98,22 +132,22 @@ const Counter = ({ compact = false }) => {
   }, [isVisible]);
 
   useEffect(() => {
-    if (isVisible && count < 300) {
+    if (canAnimate && isVisible && typeof maxMembers === 'number' && count < maxMembers) {
       const interval = setInterval(() => {
         setCount((prev) => prev + 1);
       }, 25);
       return () => clearInterval(interval);
     }
-  }, [isVisible, count]);
+  }, [canAnimate, isVisible, count, maxMembers]);
 
   useEffect(() => {
-    if (isVisible && cityCount < 6) {
+    if (canAnimate && isVisible && typeof maxCities === 'number' && cityCount < maxCities) {
       const interval = setInterval(() => {
         setCityCount((prev) => prev + 1);
       }, 1400);
       return () => clearInterval(interval);
     }
-  }, [isVisible, cityCount]);
+  }, [canAnimate, isVisible, cityCount, maxCities]);
 
   const containerClasses = compact
     ? 'flex flex-row h-[400px]  items-center justify-between gap-8 rounded-3xl bg-gradient-to-br from-[#f4faf3] via-white to-[#f2f9ed] p-15 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-[#e1eddb]'
