@@ -27,7 +27,7 @@ const NAV_ITEMS = [
   { name: "BLOGS", key: "blogs", hasDropdown: false },
   { name: "E-BOOK", key: null, hasDropdown: false },
   { name: "CAREERS", key: null, hasDropdown: false },
-  { name: "CONTACT US", key: "contact", hasDropdown: false },
+  { name: "CONTACT US", key: "locateus", hasDropdown: false },
 ];
 
 export default function Navbar({ currentPage = "home", onNavigate }) {
@@ -64,12 +64,6 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               alt="Save Medha Foundation"
               className="h-25 w-auto object-contain"
             />
-          </button>
-          <button
-            className="shrink-0 rounded-2xl bg-[#e55e27] px-4 py-6 mr-5 text-white text-[25px] font-bold shadow-md"
-            onClick={() => onNavigate?.("contact")}
-          >
-            Book An Appointment
           </button>
         </div>
 
@@ -468,28 +462,12 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               {/* Location */}
               <button
                 onClick={() => onNavigate("locateus")}
-                className="text-[15px] font-semibold flex items-center gap-2 px-3 py-2 bg-white border-2 border-[#74C425] rounded shadow-md hover:bg-gray-50 transition"
+                className="h-[42px] text-[15px] font-semibold flex items-center gap-2 px-8 py-2 bg-white border-2 border-[#74C425] rounded shadow-md hover:bg-gray-50 transition"
               >
                 <IoLocationSharp className="text-[#e05529]" size={18} />
-                <span className="text-sm font-semibold text-gray-900">
-                  Locate us
-                </span>
+                <span className="font-semibold text-gray-900">Locate us</span>
               </button>
 
-              {/* Appointment Button */}
-              <button
-                className="px-5 py-2 text-sm text-white font-bold font-koho rounded whitespace-nowrap transition-colors border-2 border-[
-#fffefb] px-4 py-2 rounded shadow-md"
-                style={{ backgroundColor: COLORS.ACTION_ORANGE }}
-                onMouseEnter={(e) =>
-                  (e.target.style.backgroundColor = "#e05529")
-                }
-                onMouseLeave={(e) =>
-                  (e.target.style.backgroundColor = COLORS.ACTION_ORANGE)
-                }
-              >
-                Book An Appointment
-              </button>
             </div>
           </div>
         </div>

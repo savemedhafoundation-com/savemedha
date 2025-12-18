@@ -16,7 +16,7 @@ import BgImgOfVideoSection from "../assets/Photo/bgimgofvideosection.png";
 import Rectangle374 from "../assets/Photo/Rectangle 374.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
-const MAX_VIDEOS_TO_FETCH = 18;
+const MAX_VIDEOS_TO_FETCH = 10;
 
 const parseJsonSafely = async (response, contextLabel = "response") => {
   const sourceLabel = contextLabel || "response";

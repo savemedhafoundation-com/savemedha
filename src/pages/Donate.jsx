@@ -1,90 +1,523 @@
+import { useMemo, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import donateHero from "../assets/Photo/DONATE ICON.png";
-import bloodBanner from "../assets/Photo/3 IMAGES COMBINED.jpg";
+import HomePageBanner from "../components/HomePageBanner";
+import donateBanner1 from "../assets/donateBannerImage/Donatebanner1.png";
+import donateBanner2 from "../assets/donateBannerImage/DonateBanner2.png";
+import donateBanner3 from "../assets/donateBannerImage/DonateBanner3.png";
+import donateBanner4 from "../assets/donateBannerImage/DonateBanner4.png";
+import charityImage from "../assets/Photo/Jar.png";
+import handHoldingHeartImage from "../assets/Photo/image1.png";
+import peopleImage from "../assets/Photo/kid.png";
+import donateIcon from "../assets/Photo/DONATE ICON.png";
+import supportCauseImage from "../assets/Photo/main.png";
+import naturalBg from "../assets/Photo/natural-bg.png.png";
 
-const DONATE_URL = "https://dantura.com/";
-const BLOOD_BANK_URL = "https://www.google.com/search?q=nearest+blood+bank";
-const BE_DONOR_URL = "https://www.google.com/search?q=become+a+blood+donor";
-const FIND_DONOR_URL = "https://www.google.com/search?q=find+blood+donor+near+me";
+const loadRazorpayCheckout = () =>
+  new Promise((resolve, reject) => {
+    if (window.Razorpay) return resolve(true);
+
+    const existing = document.querySelector(
+      'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+    );
+    if (existing) {
+      existing.addEventListener("load", () => resolve(true));
+      existing.addEventListener("error", () => reject(new Error("Failed to load Razorpay")));
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => resolve(true);
+    script.onerror = () => reject(new Error("Failed to load Razorpay"));
+    document.body.appendChild(script);
+  });
 
 export default function Donate({ onNavigate }) {
+  const donateBanners = [donateBanner1, donateBanner2, donateBanner3, donateBanner4];
+  const [currency, setCurrency] = useState("INR");
+  const [selectedAmount, setSelectedAmount] = useState(200);
+  const [customAmount, setCustomAmount] = useState("");
+  const [isPaying, setIsPaying] = useState(false);
+  const [paymentMessage, setPaymentMessage] = useState("");
+  const [donor, setDonor] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+  });
+
+  const presetAmounts = [100, 200, 300, 400, 500, 1000];
+  const donationAmount = useMemo(() => {
+    const normalized = customAmount.trim();
+    if (!normalized) return selectedAmount;
+    const parsed = Number.parseInt(normalized.replace(/[^\d]/g, ""), 10);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }, [customAmount, selectedAmount]);
+
+  const startRazorpay = async () => {
+    setPaymentMessage("");
+
+    if (!donationAmount || donationAmount <= 0) {
+      setPaymentMessage("Please select a valid donation amount.");
+      return;
+    }
+
+    setIsPaying(true);
+    try {
+      await loadRazorpayCheckout();
+
+      const orderRes = await fetch("/api/razorpay/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: donationAmount,
+          currency,
+          notes: {
+            firstName: donor.firstName || undefined,
+            lastName: donor.lastName || undefined,
+            phone: donor.phone || undefined,
+            email: donor.email || undefined,
+          },
+        }),
+      });
+
+      const orderData = await orderRes.json().catch(() => ({}));
+      if (!orderRes.ok) {
+        throw new Error(orderData?.error || "Unable to create donation order.");
+      }
+
+      const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || orderData?.keyId;
+      if (!keyId) {
+        throw new Error(
+          "Missing Razorpay key id (set VITE_RAZORPAY_KEY_ID or RAZORPAY_KEY_ID)."
+        );
+      }
+
+      const donorName = [donor.firstName, donor.lastName].filter(Boolean).join(" ");
+
+      const options = {
+        key: keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Save Medha Foundation",
+        description: "Donation",
+        order_id: orderData.orderId,
+        prefill: {
+          name: donorName || undefined,
+          email: donor.email || undefined,
+          contact: donor.phone || undefined,
+        },
+        theme: { color: "#74C425" },
+        modal: {
+          ondismiss: () => setIsPaying(false),
+        },
+        handler: async (response) => {
+          try {
+            const verifyRes = await fetch("/api/razorpay/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                orderId: response.razorpay_order_id,
+                paymentId: response.razorpay_payment_id,
+                signature: response.razorpay_signature,
+              }),
+            });
+
+            const verifyData = await verifyRes.json().catch(() => ({}));
+            if (!verifyRes.ok || !verifyData?.ok) {
+              throw new Error("Payment verification failed.");
+            }
+
+            setPaymentMessage("Thank you! Your donation was successful.");
+          } catch (error) {
+            setPaymentMessage(error?.message || "Payment completed, but verification failed.");
+          } finally {
+            setIsPaying(false);
+          }
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.on("payment.failed", () => {
+        setPaymentMessage("Payment failed. Please try again.");
+        setIsPaying(false);
+      });
+      rzp.open();
+    } catch (error) {
+      setPaymentMessage(error?.message || "Unable to start Razorpay checkout.");
+      setIsPaying(false);
+    }
+  };
+  const donateBannerImageMap = useMemo(
+    () => ({
+      fit: "cover",
+      areasByIndex: [
+        [
+          {
+            href: "#donate-form",
+            alt: "Donate now",
+            title: "Donate now",
+            rect: [0.57, 0.54, 0.83, 0.67],
+          },
+        ],
+        [
+          {
+            href: "#donate-form",
+            alt: "Donate now",
+            title: "Donate now",
+            rect: [0.06, 0.6, 0.3, 0.75],
+          },
+        ],
+        [
+          {
+            href: "#donate-form",
+            alt: "Donate now",
+            title: "Donate now",
+            rect: [0.44, 0.46, 0.72, 0.6],
+          },
+        ],
+        [
+          {
+            href: "#donate-form",
+            alt: "Donate now",
+            title: "Donate now",
+            rect: [0.05, 0.1, 0.22, 0.32],
+          },
+        ],
+      ],
+    }),
+    []
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f7f9fb] to-white text-slate-900">
       <Navbar currentPage="donate" onNavigate={onNavigate} />
+      <HomePageBanner
+        backgroundImages={donateBanners}
+        imageAlt="Donate banner"
+        showDefaultContent={false}
+        imageMap={donateBannerImageMap}
+      />
 
       <main className="flex flex-col items-center px-4 py-12">
-        {/* Top Illustration + Heading */}
-        <div className="w-full max-w-4xl bg-white rounded-3xl shadow-lg shadow-slate-200/60 p-8 text-center">
-          <div className="flex justify-center mb-8">
-            <img
-              src={donateHero}
-              alt="Donate illustration"
-              className="w-full max-w-xl object-contain"
-              loading="lazy"
-            />
+        {/* Section under banner (placeholders) */}
+        <section className="w-full">
+          <div className="mx-auto max-w-5xl text-center">
+            <h2 className="text-[#7dc553] font-extrabold text-3xl sm:text-4xl font-poppins [-webkit-text-stroke:1px_#ffffff] sm:[-webkit-text-stroke:2px_#ffffff]">
+              Saving Lives Naturally!
+            </h2>
+          </div>
+          <div
+            className="mt-3 w-full px-5 py-2 text-white text-sm sm:text-base font-semibold text-center font-shippori"
+            style={{
+              background:
+                "linear-gradient(90deg, #FFFFFF 0%, #E7581F 17.79%, #E7581F 81.73%, #FFFFFF 100%)",
+            }}
+          >
+            Supporting Cancer Recovery with Nutrition &amp; Care.
           </div>
 
-          <h1 className="font-koho text-4xl font-bold text-[#3c6513]">
-            Donate For a Good Cause <span className="text-red-500">♥</span>
-          </h1>
-          <p className="mt-3 text-lg italic text-slate-700">
-            "Every contribution counts, every life matters."
-          </p>
+          <div className="mx-auto mt-8 max-w-5xl">
+            <div className="grid gap-6 lg:grid-cols-2">
+              <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                <img
+                  src={peopleImage}
+                  alt="People supporting each other"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
 
-          <div className="mt-6 flex justify-center">
-            <a
-              href={DONATE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-[#1a73e8] px-6 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-[#1558ad]"
-            >
-              Donate Now
-              <span className="text-[10px] font-semibold uppercase tracking-wide">
-                Secured by Razorpay
-              </span>
-            </a>
+              <div className="rounded-xl border border-slate-200 bg-white p-6 sm:p-8">
+                <p className="text-sm sm:text-base leading-relaxed text-slate-700 font-shippori">
+                  Join us in donating for a good cause. Your contribution can make a world of
+                  difference. In someone&apos;s life, every donation, no matter how small, helps
+                  support critical medical treatments, emergency responses, and community health
+                  initiatives. Together, let&apos;s make a positive impact and spread hope and healing
+                  to those in need. Donate now and be a part of something truly meaningful!
+                </p>
+
+               
+                {paymentMessage ? (
+                  <div className="mt-4 text-sm font-semibold font-shippori text-slate-800">
+                    {paymentMessage}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
+              <div className="rounded-xl border border-slate-200 bg-white p-6 sm:p-8">
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 font-poppins">
+                  Donate For a Good Cause <span className="text-red-600">♥</span>
+                </h3>
+                <p className="mt-2 text-sm sm:text-base text-slate-700 font-shippori">
+                  Your help fuels nutrition support and compassionate care for recovery journeys.
+                </p>
+                <button
+                  type="button"
+                  onClick={startRazorpay}
+                  disabled={isPaying}
+                  className="mt-5 inline-flex items-center justify-center rounded-md bg-[#2563eb] px-6 py-3 text-white font-semibold hover:bg-[#1d4ed8] transition-colors"
+                >
+                  {isPaying ? "Opening..." : "Donate Now"}
+                </button>
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <img
+                    src={handHoldingHeartImage}
+                    alt="Support cancer care"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <img
+                    src={charityImage}
+                    alt="Charity donation"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+              <div className="px-6 py-10 sm:px-10">
+                <h3 className="text-center text-2xl sm:text-3xl font-extrabold text-slate-900 font-poppins">
+                  Support Our Cause
+                </h3>
+                <p className="mt-2 text-center text-sm sm:text-base text-slate-600 font-shippori">
+                  Help our organization by donating today! Donations go to making a difference for
+                  our cause.
+                </p>
+                </div>
+
+            {/* Support our cause + donation form */}
+            <div className="mt-14 overflow-hidden  border border-slate-200 bg-[#fff6f3]">
+            
+
+                <div className=" overflow-hidden  border border-slate-200 bg-white">
+                  <div className="relative">
+	                    <img
+	                      src={supportCauseImage}
+	                      alt="Support our cause"
+	                      className="h-[480px] w-full object-cover sm:h-[560px]"
+	                      loading="lazy"
+	                    />
+                    
+                  </div>
+                
+
+                <div className="mt-10">
+                  <h4 className="text-lg sm:text-xl font-extrabold text-slate-900 font-poppins">
+                    Impact So Far
+                  </h4>
+                  <ul className="mt-3 space-y-2 text-sm sm:text-base text-slate-700 font-shippori list-disc pl-5">
+                    <li>
+                      Supported individuals through nutrition-based immune support programs and
+                      holistic care guidance.
+                    </li>
+                    <li>
+                      Provided community awareness initiatives to improve early recognition and
+                      timely support.
+                    </li>
+                    <li>
+                      Raised resources and hope for families navigating long-term treatment and
+                      recovery.
+                    </li>
+                  </ul>
+                </div>
+
+                <div
+                  id="donate-form"
+                  className="mt-10 overflow-hidden  border border-slate-200 bg-white"
+                >
+                  <div className="relative">
+                    <img
+                      src={naturalBg}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 h-full w-full object-cover opacity-25"
+                      loading="lazy"
+                    />
+                    <div className="relative px-6 py-8 sm:px-10">
+                      <div className="flex items-center justify-between gap-3">
+                        <h4 className="text-base sm:text-lg font-extrabold text-slate-900 font-poppins">
+                          Donation Amount <span className="text-red-600">*</span>
+                        </h4>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs sm:text-sm text-slate-600 font-shippori">
+                            Currency
+                          </span>
+                          <select
+                            value={currency}
+                            onChange={(e) => setCurrency(e.target.value)}
+                            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800"
+                          >
+                            <option value="INR">INR ₹</option>
+                            <option value="USD">USD $</option>
+                            <option value="EUR">EUR €</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="mt-5 grid grid-cols-3 gap-3 sm:gap-4">
+                        {presetAmounts.map((amount) => {
+                          const isSelected =
+                            customAmount.trim() === "" && selectedAmount === amount;
+                          return (
+                            <button
+                              key={amount}
+                              type="button"
+                              onClick={() => {
+                                setSelectedAmount(amount);
+                                setCustomAmount("");
+                              }}
+                              className={`rounded-md border px-4 py-3 text-sm sm:text-base font-bold font-poppins transition-colors ${
+                                isSelected
+                                  ? "border-[#74c425] bg-[#e9f7d5] text-slate-900"
+                                  : "border-slate-300 bg-white text-slate-800 hover:bg-slate-50"
+                              }`}
+                            >
+                              {amount}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <div className="mt-5">
+                        <label className="block text-xs sm:text-sm text-slate-600 font-shippori">
+                          Enter custom amount
+                        </label>
+                        <input
+                          value={customAmount}
+                          onChange={(e) => setCustomAmount(e.target.value)}
+                          inputMode="numeric"
+                          placeholder="Enter custom amount"
+                          className="mt-2 w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-sm sm:text-base text-slate-900"
+                        />
+                      </div>
+
+                      <div className="mt-8">
+                        <h4 className="text-base sm:text-lg font-extrabold text-slate-900 font-poppins">
+                          Who&apos;s Giving Today?
+                        </h4>
+                        <p className="mt-1 text-xs sm:text-sm text-slate-600 font-shippori">
+                          This is confidential; we won&apos;t share it.
+                        </p>
+
+                        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                          <input
+                            value={donor.firstName}
+                            onChange={(e) =>
+                              setDonor((d) => ({ ...d, firstName: e.target.value }))
+                            }
+                            placeholder="First name *"
+                            className="w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-sm sm:text-base"
+                          />
+                          <input
+                            value={donor.lastName}
+                            onChange={(e) =>
+                              setDonor((d) => ({ ...d, lastName: e.target.value }))
+                            }
+                            placeholder="Last name"
+                            className="w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-sm sm:text-base"
+                          />
+                          <input
+                            value={donor.phone}
+                            onChange={(e) => setDonor((d) => ({ ...d, phone: e.target.value }))}
+                            placeholder="Phone number"
+                            className="w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-sm sm:text-base"
+                          />
+                          <input
+                            value={donor.email}
+                            onChange={(e) => setDonor((d) => ({ ...d, email: e.target.value }))}
+                            placeholder="Email address *"
+                            className="w-full rounded-md border border-slate-300 bg-white px-4 py-3 text-sm sm:text-base"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="mt-8">
+                        <h4 className="text-base sm:text-lg font-extrabold text-slate-900 font-poppins">
+                          Payment Details
+                        </h4>
+                        <p className="mt-1 text-xs sm:text-sm text-slate-600 font-shippori">
+                          How would you like to pay for your donation?
+                        </p>
+
+                        <div className="mt-4 rounded-xl border border-slate-200 bg-[#e9f7d5] p-5">
+                          <h5 className="text-sm sm:text-base font-extrabold text-slate-900 font-poppins">
+                            Donation Summary
+                          </h5>
+                          <div className="mt-3 space-y-2 text-sm text-slate-800 font-shippori">
+                            <div className="flex items-center justify-between gap-4">
+                              <span>Donation Amount</span>
+                              <span className="font-bold">
+                                {currency} {donationAmount || 0}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                              <span>Giving Frequency</span>
+                              <span className="font-bold">One-time</span>
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                              <span>Donation Total</span>
+                              <span className="font-bold">
+                                {currency} {donationAmount || 0}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={startRazorpay}
+                          disabled={isPaying}
+                          className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-[#1118A6] px-6 py-3 text-white font-extrabold tracking-wide font-poppins hover:bg-[#0b128a] transition-colors disabled:opacity-70"
+                        >
+                          {isPaying ? "OPENING..." : "DONATE NOW"}
+                        </button>
+                        {paymentMessage ? (
+                          <div className="mt-4 text-sm font-semibold font-shippori text-slate-800">
+                            {paymentMessage}
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <p className="mt-6 text-base leading-7 text-slate-700 text-left">
-            Join us in donating for a good cause! Your contribution can make a world of
-            difference in someone's life. Every donation, no matter how small, helps support
-            critical medical treatments, emergency responses, and community health initiatives.
-            Together, let's make a positive impact and spread hope and healing to those in need.
-            Donate now and be a part of something truly meaningful.
-          </p>
-        </div>
-
-       
-
-        {/* CTA buttons */}
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3 w-full max-w-4xl">
-          <a
-            href={BLOOD_BANK_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center justify-center rounded-md bg-[#3a8b9c] px-6 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-[#2f6f7b]"
-          >
-            Find Blood bank
-          </a>
-          <a
-            href={BE_DONOR_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center justify-center rounded-md bg-[#3a8b9c] px-6 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-[#2f6f7b]"
-          >
-            Be a Blood Donor
-          </a>
-          <a
-            href={FIND_DONOR_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center justify-center rounded-md bg-[#3a8b9c] px-6 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-[#2f6f7b]"
-          >
-            Find Blood Donor
-          </a>
-        </div>
+        </section>
       </main>
+
+      {/* Get in touch */}
+      <section className="w-full bg-[#e7581f] py-14">
+        <div className="mx-auto max-w-5xl px-4 text-center text-white">
+          <div className="text-sm sm:text-base font-semibold tracking-wide font-shippori">
+            Get in Touch
+          </div>
+          <div className="mt-2 text-3xl sm:text-5xl font-extrabold font-poppins">
+            We&apos;d Love to Hear from You
+          </div>
+          <p className="mx-auto mt-4 max-w-3xl text-sm sm:text-base text-white/90 font-shippori">
+            Whether you have questions, want to volunteer, or would like to support our mission,
+            we&apos;re here to help. Reach out and we&apos;ll get back to you.
+          </p>
+          <button
+            type="button"
+            onClick={() => onNavigate?.("locateus")}
+            className="mt-7 inline-flex items-center justify-center rounded-md bg-white px-7 py-3 text-slate-900 font-extrabold tracking-wide font-poppins hover:bg-slate-100 transition-colors"
+          >
+            CONTACT WITH US
+          </button>
+        </div>
+      </section>
 
       <Footer onNavigate={onNavigate} />
     </div>

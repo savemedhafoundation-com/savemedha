@@ -58,7 +58,7 @@ function App() {
           targetPath = "/donate";
           break;
         case "contact":
-          targetPath = "/contact";
+          targetPath = "/locate-us";
           break;
         case "treatment-questions":
           targetPath = "/treatment-questions";

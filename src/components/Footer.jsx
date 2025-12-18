@@ -62,7 +62,7 @@ const Footer = ({ onNavigate }) => {
     { name: "BLOGS", key: "blogs" },
     { name: "E-BOOK", href: "#" },
     { name: "CAREERS", href: "#" },
-    { name: "CONTACT", href: "#" },
+    { name: "CONTACT", key: "locateus" },
   ];
   const mobileLinks = [...navLinks1, ...navLinks2];
 
