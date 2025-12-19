@@ -378,7 +378,7 @@ button, .btn {
 }
 
 /* Small screens: prevent horizontal scroll/whitespace */
-@media (max-width: 640px) {
+@media (max-width: 1368px) {
   html {
     overflow-x: hidden;
   }
