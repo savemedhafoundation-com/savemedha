@@ -33,6 +33,8 @@ const NAV_ITEMS = [
 export default function Navbar({ currentPage = "home", onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -41,19 +43,102 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!isSearchOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setIsSearchOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isSearchOpen]);
+
   const handleNavClick = (event, key) => {
     if (key && typeof onNavigate === "function") {
       event.preventDefault();
       onNavigate(key);
     }
     setIsMobileMenuOpen(false);
+    setIsSearchOpen(false);
+  };
+
+  const handleSearchToggle = () => {
+    setIsSearchOpen((open) => !open);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleSearchClose = () => setIsSearchOpen(false);
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    const query = searchQuery.trim();
+    if (query && typeof onNavigate === "function") {
+      onNavigate("blogs", { query });
+    }
+    setIsSearchOpen(false);
   };
 
   return (
     <header className="font-sans w-full sticky top-0 z-50">
+      {isSearchOpen && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm lg:hidden"
+          onClick={handleSearchClose}
+        >
+          <div
+            className="mx-auto mt-24 w-[92%] max-w-md rounded-2xl bg-white p-4 shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <label htmlFor="mobile-site-search" className="sr-only">
+                Search
+              </label>
+              <input
+                id="mobile-site-search"
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search..."
+                autoFocus
+                className="w-full rounded-full border border-gray-200 bg-white px-4 py-3 pr-14 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#74C425]/50"
+              />
+              <button
+                type="submit"
+                aria-label="Submit search"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#74C425] p-2 text-white shadow hover:bg-[#155300] transition"
+              >
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="6" />
+                  <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                </svg>
+              </button>
+            </form>
+
+            <div className="mt-3 flex justify-end">
+              <button
+                type="button"
+                onClick={handleSearchClose}
+                className="text-sm font-semibold text-gray-700 hover:text-gray-900"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Mobile layout */}
       <div className="lg:hidden">
-        <div className="flex items-center justify-between gap-4 px-4 py-6 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-12">
+        <div className="flex items-center justify-between gap-4 px-4 py-3 sm:py-4 md:py-6 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-0 md:ml-12">
           <button
             type="button"
             onClick={() => onNavigate?.("home")}
@@ -62,24 +147,27 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <img
               src={savemedhaLogo}
               alt="Save Medha Foundation"
-              className="h-25 w-auto object-contain"
+              className="h-12 sm:h-14 md:h-25 w-auto object-contain"
             />
           </button>
         </div>
 
         <div
-          className="flex items-center justify-between px-4 py-6  text-white shadow-md"
+          className="flex items-center justify-between px-4 py-3 sm:py-4 md:py-6 text-white shadow-md"
           style={{ backgroundColor: COLORS.NAV_GREEN }}
         >
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              onClick={() => {
+                setIsMobileMenuOpen((open) => !open);
+                setIsSearchOpen(false);
+              }}
               aria-label="Toggle navigation menu"
-              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center ml-5"
+              className="h-12 w-12 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center ml-0 md:ml-5"
             >
               <svg
-                className={`h-10 w-10 transition-transform ${
+                className={`h-6 w-6 sm:h-7 sm:w-7 md:h-10 md:w-10 transition-transform ${
                   isMobileMenuOpen ? "rotate-90" : ""
                 }`}
                 viewBox="0 0 24 24"
@@ -94,9 +182,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                 <line x1="3" y1="18" x2="21" y2="18" />
               </svg>
             </button>
-            <div className="flex items-center gap-2">
-              <FaCalendarAlt className="w-10 h-10" />
-              <span className="text-[20px] font-semibold uppercase">
+            <div className="flex items-center gap-2 min-w-0">
+              <FaCalendarAlt className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10" />
+              <span className="hidden sm:inline text-[13px] md:text-[20px] font-semibold uppercase leading-tight">
                 {new Intl.DateTimeFormat("en-US", {
                   weekday: "long",
                   month: "long",
@@ -107,14 +195,16 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-6 mr-5 ">
+          <div className="flex items-center gap-3 sm:gap-4 md:gap-6 mr-0 md:mr-5">
             <button
               type="button"
               aria-label="Search"
-              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+              aria-expanded={isSearchOpen}
+              onClick={handleSearchToggle}
+              className="h-12 w-12 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
               <svg
-                className="w-10 h-10"
+                className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -129,10 +219,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <button
               type="button"
               aria-label="Select language"
-              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+              className="h-12 w-12 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
               <svg
-                className="w-10 h-10"
+                className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -152,9 +242,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               type="button"
               aria-label="Locate us"
               onClick={() => onNavigate?.("locateus")}
-              className="h-20 w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
+              className="h-12 w-12 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
-              <IoLocationSharp className="w-10 h-10" />
+              <IoLocationSharp className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10" />
             </button>
           </div>
         </div>
@@ -165,7 +255,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <div
-              className="absolute left-0 top-0 h-full w-150 bg-white shadow-2xl overflow-y-auto animate-slideLeft"
+              className="absolute left-0 top-0 h-full w-[85vw] max-w-[360px] bg-white shadow-2xl overflow-y-auto animate-slideLeft"
               onClick={(event) => event.stopPropagation()}
             >
               <div className="bg-[#66b300] text-white px-5 py-4 font-semibold text-lg flex items-center gap-2 justify-between">
@@ -207,7 +297,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                       key={item.name}
                       href={hrefValue}
                       onClick={clickHandler}
-                      className={`flex items-center gap-6 px-10 py-10 text-[15px] border-b border-gray-100 transition-all duration-200 ${
+                      className={`flex items-center gap-4 px-6 py-5 text-[15px] border-b border-gray-100 transition-all duration-200 ${
                         isActive
                           ? "bg-gray-100 font-semibold text-gray-900"
                           : "text-gray-700 hover:bg-[#d7f3b3]"
@@ -370,12 +460,17 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             </div>
 
             {/* === Row 2: Search, Language, Date, Location, Appointment === */}
-            <div className="flex flex-wrap justify-end items-center gap-4">
+      		    <div className="flex flex-wrap justify-end items-center gap-4">
               {/* Search */}
-              <div className="relative w-[200px] shadow-md">
+              <form
+                onSubmit={handleSearchSubmit}
+                className="relative w-[200px] shadow-md"
+              >
                 <input
                   type="text"
                   placeholder="Search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
                   className="w-full px-2 py-2 text-[15px] bg-white font-semibold text-gray-700 border-2 border-[#74C425] rounded focus:outline-none "
                 />
                 {/* focus:ring-2       focus:ring-green-500 */}
@@ -397,7 +492,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     />
                   </svg>
                 </button>
-              </div>
+              </form>
 
               {/* Language */}
               {/* <select className="px-3 py-2 border border-gray-300 rounded bg-white text-sm text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md">

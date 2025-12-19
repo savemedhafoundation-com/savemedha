@@ -304,7 +304,7 @@ export default function Donate({ onNavigate }) {
 	                    <img
 	                      src={supportCauseImage}
 	                      alt="Support our cause"
-	                      className="h-[480px] w-full object-cover sm:h-[560px]"
+	                      className="h-[500px] w-full object-cover sm:h-[560px]"
 	                      loading="lazy"
 	                    />
                     

@@ -352,3 +352,34 @@ button, .btn {
     }
   }
 }
+
+/* Mobile: disable desktop zoom scaling and use responsive layout */
+@media (max-width: 767px) {
+  :root {
+    --app-scale: 1;
+  }
+
+  #root {
+    min-height: auto;
+    display: block;
+  }
+
+  .app-scale-wrapper {
+    width: 100%;
+    zoom: 1;
+    transform: none;
+  }
+
+  @supports not (zoom: 1) {
+    .app-scale-wrapper {
+      transform: none;
+    }
+  }
+}
+
+/* Small screens: prevent horizontal scroll/whitespace */
+@media (max-width: 640px) {
+  html {
+    overflow-x: hidden;
+  }
+}

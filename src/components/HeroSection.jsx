@@ -64,7 +64,7 @@ export default function HomePage({ onNavigate }) {
 
   return (
     <>
-      <div className="mx-0 sm:-mx-6 lg:-mx-20">
+      <div className="-mx-4 sm:-mx-6 lg:-mx-20">
         <HeroBanner />
       </div>
       <AboutSection onNavigate={onNavigate} />

@@ -153,11 +153,11 @@ const organs = {
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
     image: '/BLOODCANCER.png',
   },
-  tumer: {
-    key: 'tumer',
-    name: 'Tumer',
+  tumor: {
+    key: 'tumor',
+    name: 'TUMOR',
     function: 'Regulates blood flow and immune response.',
-    nit_reason: 'Healthy tumer supports immune function and toxin excretion.',
+    nit_reason: 'Healthy tumor supports immune function and toxin excretion.',
     nit_support: 'Include healthy fats and fiber, limit alcohol, and practice deep breathing.',
     image: '/TUMOR.png',
   },

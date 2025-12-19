@@ -35,32 +35,34 @@ const DefaultHeroContent = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative z-10 w-full pt-16 text-left flex flex-col justify-start">
-      <div className="absolute top-4 left-25 opacity-60">
+    <div className="relative z-10 w-full pt-10 sm:pt-12 md:pt-16 text-center md:text-left flex flex-col justify-start">
+      <div className="hidden md:block absolute top-4 left-25 opacity-60">
         <DotPattern />
       </div>
 
-      <div className="w-full px-25">
-        <div className="inline-block bg-[#74C425] px-[25px] py-[5px] text-white rounded-sm mb-6 font-bold-250px italic uppercase tracking-wide text-[25px] ">
+      <div className="w-full px-4 sm:px-6 md:px-25">
+        <div className="inline-block bg-[#74C425] px-4 py-1.5 sm:px-6 sm:py-2 md:px-[25px] md:py-[5px] text-white rounded-sm mb-4 sm:mb-6 font-bold-250px italic uppercase tracking-wide text-base sm:text-lg md:text-[25px] ">
           Natural Immunotherapy
         </div>
 
-        <h1 className="font-serif font-extrabold text-black leading-tight text-[57px]">
+        <h1 className="font-serif font-extrabold text-black leading-tight text-[32px] sm:text-[42px] md:text-[57px]">
           Empowering lives,
         </h1>
-        <h2 className="font-serif font-extrabold text-[#74C425] leading-tight text-[55px] mb-4">
+        <h2 className="font-serif font-extrabold text-[#74C425] leading-tight text-[28px] sm:text-[40px] md:text-[55px] mb-3 sm:mb-4">
           Saving futures
         </h2>
 
-        <p className="font-sans text-[20px] font-semibold mb-6">
+        <p className="font-sans text-[14px] sm:text-[16px] md:text-[20px] font-semibold mb-4 sm:mb-6">
           Fighting to make a{" "}
-          <span className="text-blue-600 font-bold text-[20px]">CANCER FREE WORLD</span>
+          <span className="text-blue-600 font-bold text-[14px] sm:text-[16px] md:text-[20px]">
+            CANCER FREE WORLD
+          </span>
         </p>
 
         <button
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-10 py-3 font-medium OpenSans text-xl tracking-wide rounded-sm transition-transform duration-500 ${
+          className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 font-medium OpenSans text-base sm:text-lg md:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
             isHovered ? "shadow-lg" : "shadow-md"
           }`}
         >
@@ -213,7 +215,9 @@ export default function HeroBanner({
   };
 
   return (
-    <div className={`relative flex flex-row w-full min-h-[620px] h-full ${className}`}>
+    <div
+      className={`relative flex flex-row w-full min-h-[420px] sm:min-h-[520px] md:min-h-[620px] h-full ${className}`}
+    >
       <img
         src={images[activeIndex]}
         alt={`${imageAlt} ${activeIndex + 1}`}

@@ -32,7 +32,9 @@ function App() {
           targetPath = "/treatment";
           break;
         case "blogs":
-          targetPath = "/blogs";
+          targetPath = options?.query
+            ? `/blogs?q=${encodeURIComponent(options.query)}`
+            : "/blogs";
           break;
 
         //           case "blogs-detail": {

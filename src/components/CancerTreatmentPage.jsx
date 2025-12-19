@@ -905,41 +905,41 @@ export default function CancerTreatmentPage() {
     </div>
   </div>
             
- <div className="w-[1730px] mt-20 py-16 pl-4 sm:pl-[30px] relative">
+ <div className="w-full sm:w-[1730px] mt-20 py-10 sm:py-16 px-4 sm:pl-[30px] sm:pr-0 relative overflow-x-hidden sm:overflow-x-visible">
 
   {/* GREEN CURVED BACK SHAPE */}
   <div
-    className="absolute left-[10px] top-1/2 mt-4 -translate-y-1/2 h-[400px] w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
+    className="absolute left-[10px] top-1/2 mt-4 -translate-y-1/2 h-[260px] w-[260px] sm:h-[400px] sm:w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
     style={{
       borderRadius: "50% 50% 0% 100% / 46% 43% 57% 54%",
     }}
   />
 
   {/* MAIN WHITE PILL CARD */}
-  <div className="relative z-10 flex items-center justify-between bg-white rounded-[30px] shadow-[5px_4px_4px_0px_#215C0740] overflow-hidden h-[260px] px-14">
+  <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between bg-white rounded-[30px] shadow-[5px_4px_4px_0px_#215C0740] overflow-hidden h-auto sm:h-[260px] px-4 sm:px-14 py-6 sm:py-0 gap-6 sm:gap-0">
 
     {/* LEFT CONTENT */}
-    <div className="flex items-center  gap-8">
+    <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 w-full sm:w-auto">
       {/* DOCTOR IMAGE */}
-      <div className="h-[230px] w-[230px] rounded-full bg-[#e9f5dd] flex items-center justify-center overflow-hidden">
+      <div className="h-[140px] w-[140px] sm:h-[230px] sm:w-[230px] rounded-full bg-[#e9f5dd] flex items-center justify-center overflow-hidden">
         <img
           src={DoctorImg}
           alt="Subhankar Sarkar"
-          className="h-[210px] w-[210px] rounded-full object-cover grayscale"
+          className="h-[128px] w-[128px] sm:h-[210px] sm:w-[210px] rounded-full object-cover grayscale"
         />
       </div>
 
       {/* TEXT + CTA */}
-      <div className="flex flex-col   mb-8 ml-8 gap-4">
-        <h3 className="text-[30px] font-bold text-black uppercase leading-tight">
+      <div className="flex flex-col mb-0 sm:mb-8 ml-0 sm:ml-8 gap-3 sm:gap-4 text-center sm:text-left">
+        <h3 className="text-[18px] sm:text-[30px] font-bold text-black uppercase leading-tight">
           "OUR GOAL" – CANCER FREE WORLD <br /> 
         </h3>
 
-        <p className="text-[22px] text-gray-700 font-medium">
+        <p className="text-[16px] sm:text-[22px] text-gray-700 font-medium">
           Subhankar Sarkar
         </p>
 
-                    <button className="mt-2 inline-flex items-center justify-center gap-2 rounded-[6px] bg-[#74C425] w-[188px] h-[45px] text-[15px] font-semibold text-white shadow hover:bg-[#5ea01d] transition">
+                    <button className="mt-2 inline-flex items-center justify-center gap-2 rounded-[6px] bg-[#74C425] w-full sm:w-[188px] h-[45px] text-[15px] font-semibold text-white shadow hover:bg-[#5ea01d] transition mx-auto sm:mx-0">
                       <MdPhoneInTalk size={16} />
                       CONTACT US
                     </button>
@@ -950,11 +950,11 @@ export default function CancerTreatmentPage() {
     <img
       src={RedRibbon}
       alt="Cancer Ribbon"
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px]"
+      className="hidden sm:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px]"
     />
 
     {/* RIGHT IMAGE — ONLY PLACE BACKGROUND IMAGE HERE */}
-    <div className="relative h-full w-[600px] transform translate-x-24 overflow-hidden">
+    <div className="relative h-[180px] sm:h-full w-full sm:w-[600px] transform translate-x-0 sm:translate-x-24 overflow-hidden rounded-2xl sm:rounded-none">
   {/* Image */}
   <img
     src={BackgroundImg}

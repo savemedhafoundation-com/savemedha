@@ -27,16 +27,16 @@ const VolunteerAndSupportSection = () => {
               className="w-full h-auto rounded-2xl "
             />
 
-            <div className="absolute inset-x-0 bottom-1 left-20 h-[80px] flex justify-center">
+            <div className="absolute inset-x-0 bottom-1 sm:left-20 h-[80px] flex justify-center">
               <button
                 type="button"
-                className="cursor-pointer bg-[#74C425] hover:bg-[#1118A6] text-white font-bold text-[25px] px-10 py-4 rounded-[5px] shadow-xl transition-all inline-flex items-center justify-center gap-3"
+                className="cursor-pointer bg-[#74C425] hover:bg-[#1118A6] text-white font-bold text-[18px] sm:text-[25px] px-5 sm:px-10 py-3 sm:py-4 rounded-[5px] shadow-xl transition-all inline-flex items-center justify-center gap-2 sm:gap-3 max-w-[calc(100vw-2rem)] sm:max-w-none"
               >
                 <img
                   src={HandHoldingHeart}
                   alt=""
                   aria-hidden="true"
-                  className="h-15 w-15 object-center"
+                  className="h-8 w-8 sm:h-auto sm:w-auto object-contain sm:object-fill object-center"
                 />
                 <span>DONATE NOW</span>
               </button>

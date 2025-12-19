@@ -722,14 +722,14 @@ const FemaleBodyMap = ({ onOrganSelect }) => {
               />
             </g>
 
-            {/* tumer points */}
+            {/* tumor points */}
             <g
               className="organ skin-hand"
               role="button"
               tabIndex="0"
-              aria-label="tumer"
-              onClick={() => handleSelect("tumer")}
-              onKeyDown={(event) => handleKeyDown(event, "tumer")}
+              aria-label="tumor"
+              onClick={() => handleSelect("tumor")}
+              onKeyDown={(event) => handleKeyDown(event, "tumor")}
             >
               <image
                 className="organ-sprite glow"

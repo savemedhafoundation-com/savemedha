@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import blogBanner from "../assets/Photo/blog image.png";
@@ -44,6 +45,7 @@ const categoryCards = [
 ];
 
 export default function Blogs({ onNavigate }) {
+  const location = useLocation();
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [reloadToken, setReloadToken] = useState(0);
@@ -85,9 +87,28 @@ export default function Blogs({ onNavigate }) {
   }, [normalizePost, reloadToken]);
 
   const normalizedPosts = Array.isArray(posts) ? posts : [];
-  const latestPost = normalizedPosts[0];
-  const trendingPosts = normalizedPosts.slice(0, 2);
-  const gridPosts = normalizedPosts;
+  const searchQuery = new URLSearchParams(location.search).get("q")?.trim() || "";
+  const normalizedSearchQuery = searchQuery.toLowerCase();
+
+  const visiblePosts = normalizedSearchQuery
+    ? normalizedPosts.filter((post) => {
+        const haystack = [
+          post.title,
+          post.excerpt,
+          post.category,
+          post.author,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+        return haystack.includes(normalizedSearchQuery);
+      })
+    : normalizedPosts;
+
+  const latestPost = visiblePosts[0];
+  const trendingPosts = visiblePosts.slice(0, 2);
+  const gridPosts = visiblePosts;
 
   const handleReadMore = (postId) => {
     if (onNavigate && postId) {
@@ -98,6 +119,12 @@ export default function Blogs({ onNavigate }) {
   const showLoadingInline = status === "loading";
   const showErrorInline = status === "error";
   const showEmptyInline = status === "success" && !normalizedPosts.length;
+  const showNoMatchesInline =
+    status === "success" &&
+    normalizedPosts.length > 0 &&
+    Boolean(normalizedSearchQuery) &&
+    visiblePosts.length === 0;
+  const showPostsInline = status === "success" && visiblePosts.length > 0;
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -151,7 +178,21 @@ export default function Blogs({ onNavigate }) {
             <div>No blogs available</div>
           )}
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          {showNoMatchesInline && (
+            <div className="mb-6 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+              No blogs found for &quot;{searchQuery}&quot;.
+              <button
+                type="button"
+                onClick={() => onNavigate?.("blogs")}
+                className="ml-3 rounded-full bg-[#74C425] px-3 py-1 text-white text-xs font-semibold hover:bg-[#155300]"
+              >
+                Clear
+              </button>
+            </div>
+          )}
+
+          {showPostsInline && (
+            <div className="grid lg:grid-cols-3 gap-8">
             {/* Latest card */}
             <article className="lg:col-span-2 border border-gray-200 rounded-lg shadow-sm bg-white overflow-hidden">
               <img
@@ -286,6 +327,7 @@ export default function Blogs({ onNavigate }) {
               </div>
             </div>
           </div>
+          )}
         </section>
 
         {/* All Blogs */}
