@@ -814,10 +814,10 @@ export default function CancerTreatmentPage() {
                   </div>
                 </div>
                 <div className="text-left">
-                  <h2 className="text-4xl md:text-4xl font-bold text-slate-900 mb-2 tracking-wide [word-spacing:6px]">
+                  <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-slate-900 mb-2 tracking-wide [word-spacing:2px] sm:[word-spacing:4px] md:[word-spacing:6px]">
                     BROWSE OUR LATEST VIDEOS ON
                   </h2>
-                  <p className="text-4xl md:text-4xl font-bold text-[#74C425] mt-2 text-center relative">
+                  <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#74C425] mt-2 text-center relative">
                     HEALTHCARE & WELLNESS
                     <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-1 w-49 bg-[#74C425]" />
                   </p>

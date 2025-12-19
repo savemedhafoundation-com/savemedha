@@ -27,11 +27,11 @@ export default function AboutSection({ onNavigate }) {
         </div>
 
         <div className="w-full ">
-          <div className="flex items-baseline gap-3 mb-4 whitespace-nowrap sm:whitespace-normal">
-            <p className="text-[#020202] text-2xl sm:text-4xl font-bold tracking-[0.12em] uppercase">
+          <div className="flex items-baseline gap-2 sm:gap-3 mb-4">
+            <p className="text-[#020202] text-2xl sm:text-4xl font-bold tracking-[0.08em] sm:tracking-[0.12em] uppercase">
               About
             </p>
-            <h2 className="text-2xl sm:text-4xl font-bold">
+            <h2 className="text-2xl sm:text-4xl font-bold whitespace-nowrap">
               <span className="text-[#6bc12f]">Our Foundation</span>
             </h2>
           </div>

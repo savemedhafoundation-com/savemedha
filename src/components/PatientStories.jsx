@@ -109,7 +109,8 @@ const PatientStories = () => {
     if (!ringEl || !items.length) return;
 
     const angle = 360 / items.length;
-    const radius = 420;
+    const radius =
+      typeof window !== "undefined" && window.innerWidth < 640 ? 260 : 420;
     let xPos = 0;
 
     gsap.set(ringEl, {
@@ -233,7 +234,7 @@ const PatientStories = () => {
           </button>
 
           <div
-            className="relative h-[260px] w-full max-w-[540px]"
+            className="relative h-[220px] sm:h-[250px] md:h-[260px] w-full max-w-[540px]"
             style={{ perspective: "1200px" }}
           >
             {isLoading && <div>Loading patient stories...</div>}
@@ -252,7 +253,7 @@ const PatientStories = () => {
                   ref={(el) => {
                     itemRefs.current[index] = el;
                   }}
-                  className="absolute left-1/2 top-1/2 h-[220px] w-[360px] md:h-[280px] md:w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-2xl"
+                  className="absolute left-1/2 top-1/2 h-[180px] w-[260px] sm:h-[200px] sm:w-[300px] md:h-[280px] md:w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-visible rounded-2xl"
                   style={{
                     transformStyle: "preserve-3d",
                   }}
