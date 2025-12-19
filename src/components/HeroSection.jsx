@@ -102,7 +102,7 @@ export default function HomePage({ onNavigate }) {
             ></div>
 
             {/* Treatment Categories */}
-            <div className="w-full lg:max-w-[10px] xl:max-w-[280px] absolute top-40 left-40 z-10">
+            <div className="hidden md:block w-full lg:max-w-[10px] xl:max-w-[280px] absolute top-40 left-40 z-10">
               <div className="bg-[#fcfcfc] border-1 border-[#2f520c] p-2 shadow-lg rounded-sm">
                 <div className="bg-[#f1f6e6] border-2 border-[#7bb338] px-4 py-1 rounded-sm">
                   <h3 className="text-xl font-semibold text-[#30590d] uppercase tracking-wide">

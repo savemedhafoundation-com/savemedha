@@ -182,17 +182,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                 <line x1="3" y1="18" x2="21" y2="18" />
               </svg>
             </button>
-            <div className="flex items-center gap-2 min-w-0">
-              <FaCalendarAlt className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10" />
-              <span className="hidden sm:inline text-[13px] md:text-[20px] font-semibold uppercase leading-tight">
-                {new Intl.DateTimeFormat("en-US", {
-                  weekday: "long",
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                }).format(new Date())}
-              </span>
-            </div>
+           
           </div>
 
           <div className="flex items-center gap-3 sm:gap-4 md:gap-6 mr-0 md:mr-5">
