@@ -133,7 +133,7 @@ const Footer = ({ onNavigate }) => {
             ))}
           </div>
 
-          <div className="bg-white text-gray-800 rounded-3xl shadow-xl p-6 mx-25 space-y-4">
+          <div className="bg-white text-gray-800 rounded-3xl shadow-xl p-6 -mx-6 sm:mx-0 space-y-4">
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
                 <h3 className="text-xl font-semibold italic text-gray-900">

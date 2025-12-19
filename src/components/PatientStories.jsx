@@ -110,7 +110,7 @@ const PatientStories = () => {
 
     const angle = 360 / items.length;
     const radius =
-      typeof window !== "undefined" && window.innerWidth < 640 ? 260 : 420;
+      typeof window !== "undefined" && window.innerWidth < 640 ? 200 : 420;
     let xPos = 0;
 
     gsap.set(ringEl, {
@@ -234,7 +234,7 @@ const PatientStories = () => {
           </button>
 
           <div
-            className="relative h-[220px] sm:h-[250px] md:h-[260px] w-full max-w-[540px]"
+            className="relative h-[220px] sm:h-[240px] md:h-[260px] w-full max-w-[540px]"
             style={{ perspective: "1200px" }}
           >
             {isLoading && <div>Loading patient stories...</div>}
@@ -270,7 +270,7 @@ const PatientStories = () => {
                     }
                   }}
                 >
-                  <div className="relative right-26 bottom-20 h-[350px] w-[700px] overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl">
+                  <div className="relative h-[220px] w-full overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl md:right-26 md:bottom-20 md:h-[350px] md:w-[700px]">
                     <img
                       src={toThumbnailUrl(story.youtubeUrl)}
                       alt={story.title}
@@ -290,7 +290,7 @@ const PatientStories = () => {
                     </div>
                     <button
                       type="button"
-                      className="pointer-events-auto absolute left-1/2 bottom-[-90px] z-30 inline-flex items-center gap-2 -translate-x-1/2 rounded-full bg-[#74C425] px-4 py-2 text-[25px] font-semibold uppercase tracking-wide text-white shadow-[0_10px_25px_rgba(33,92,7,0.35)]  transition hover:bg-[#5ea01d]"
+                      className="pointer-events-auto absolute left-1/2 bottom-[-48px] sm:bottom-[-56px] md:bottom-[-90px] z-30 inline-flex items-center gap-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#74C425] px-4 py-2 text-sm sm:text-base md:text-[25px] font-semibold uppercase tracking-wide text-white shadow-[0_10px_25px_rgba(33,92,7,0.35)] transition hover:bg-[#5ea01d]"
                       onClick={(e) => {
                         e.stopPropagation();
                         setOpenIndex(index);
