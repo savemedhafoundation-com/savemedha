@@ -36,7 +36,7 @@ const VolunteerAndSupportSection = () => {
                   src={HandHoldingHeart}
                   alt=""
                   aria-hidden="true"
-                  className="h-8 w-8 sm:h-auto sm:w-auto object-contain sm:object-fill object-center"
+                  className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 shrink-0 object-contain object-center"
                 />
                 <span>DONATE NOW</span>
               </button>

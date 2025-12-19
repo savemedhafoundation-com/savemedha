@@ -15,7 +15,7 @@ export default function AboutSection({ onNavigate }) {
           <img
             src={AboutFrame}
             alt="Green circular frame"
-            className="absolute inset-0 w-full h-full object-contain scale-y-110 scale-x-125 sm:scale-x-125 lg:left-4"
+            className="absolute inset-0 w-full h-full object-contain  lg:left-4"
           />
           <div className="relative z-10 bg-white overflow-hidden shadow-xl border border-white/50 w-[85%] sm:w-[75%] md:w-[65%] lg:w-[80%] h-[85%] sm:h-[80%] md:h-[75%] lg:h-[85%] mt-6 sm:mt-8 lg:mt-6 right-0 sm:right-4 lg:right-9 rounded-tr-[160px] rounded-br-[160px] sm:rounded-tr-[180px] sm:rounded-br-[180px] lg:rounded-tr-[200px] lg:rounded-br-[200px] rounded-tl-[60px]">
             <img
