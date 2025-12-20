@@ -150,31 +150,31 @@ const Counter = ({ compact = false }) => {
   }, [canAnimate, isVisible, cityCount, maxCities]);
 
   const containerClasses = compact
-    ? 'flex flex-row h-[400px]  items-center justify-between gap-8 rounded-3xl bg-gradient-to-br from-[#f4faf3] via-white to-[#f2f9ed] p-15 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-[#e1eddb]'
+    ? 'flex flex-col items-center justify-between gap-6 rounded-3xl bg-gradient-to-br from-[#f4faf3] via-white to-[#f2f9ed] p-6 shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-[#e1eddb] sm:flex-row sm:gap-8 sm:p-10'
     : 'flex flex-col items-center justify-between gap-10 rounded-[28px] bg-gradient-to-br from-[#f5fbf4] via-white to-[#f0f8ec] p-8 shadow-inner md:flex-row md:gap-14';
 
   const labelClass = compact
-    ? 'text-3xl font-semibold uppercase tracking-[0.3em] text-gray-600'
+    ? 'text-xs font-semibold uppercase tracking-[0.35em] text-gray-600 sm:text-sm'
     : 'text-sm font-semibold uppercase tracking-[0.35em] text-gray-600';
 
   const numberClass = compact
-    ? 'text-6xl font-black text-[#6ab12f]'
+    ? 'text-4xl font-black text-[#6ab12f] sm:text-5xl'
     : 'text-5xl md:text-6xl font-black text-[#6ab12f] drop-shadow-sm';
 
   const subLabelClass = compact
-    ? 'text-3xl font-semibold text-gray-600 mt-4'
+    ? 'mt-1 text-sm font-semibold text-gray-600 sm:mt-2 sm:text-lg'
     : 'text-lg font-semibold text-gray-600';
 
   const skylineClass = compact
-    ? 'mt-4 flex items-end justify-center gap-1 text-[#6ab12f]'
+    ? 'mt-3 flex items-end justify-center gap-1 text-[#6ab12f]'
     : 'mt-6 flex items-end justify-center gap-1 text-[#6ab12f]';
 
   const peopleRowClass = compact
-    ? 'mt-6 flex items-center justify-center gap-3 text-[#6ab12f]'
+    ? 'mt-4 flex items-center justify-center gap-2 text-[#6ab12f]'
     : 'mt-8 flex items-center justify-center gap-2 text-[#6ab12f]';
 
-  const iconSize = compact ? 55 : 40;
-  const skylineBarWidth = compact ? 'w-4' : 'w-4';
+  const iconSize = compact ? 32 : 40;
+  const skylineBarWidth = compact ? 'w-2 sm:w-3' : 'w-4';
 
   return (
     <div
@@ -440,7 +440,7 @@ export default function AboutUs({ onNavigate }) {
 
   const renderMobileLayout = () => (
     <>
-      <section className="relative h-[400px] w-full overflow-hidden rounded-b-[32px] bg-gradient-to-b from-[#e7f2db] via-[#d7ecc7] to-[#c8e6b8] shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
+      <section className="relative h-[260px] w-full overflow-hidden rounded-b-[32px] bg-gradient-to-b from-[#e7f2db] via-[#d7ecc7] to-[#c8e6b8] shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
         <div className="absolute inset-0">
           <img
             src={HeroBackground}
@@ -449,67 +449,41 @@ export default function AboutUs({ onNavigate }) {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/55" />
         </div>
-        <div className="relative flex h-full flex-col justify-end gap-2 px-40 pb-20 text-white">
-          <span className="text-[30px] font-semibold uppercase tracking-[0.25em] text-[#d9f3cb]">
-            Save Medha Foundation
-          </span>
-          <h1 className="text-6xl font-black leading-tight">About Us</h1>
-          <p className="max-w-[500px] text-[26px] leading-7 text-[#eef8e9]">
-            A foundation born from courage, compassion, and the promise to rewrite every story.
-          </p>
-          <div className="mt-2 h-1 w-60 rounded-full bg-gradient-to-r from-[#f08a1d] via-[#f6c04c] to-[#6ab12f]" />
+
+        <div className="relative flex h-full flex-col justify-end px-4 pb-8 text-white">
+          <div className="max-w-[22rem]">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#d9f3cb]">
+              Save Medha Foundation
+            </span>
+            <h1 className="mt-1 text-3xl font-black leading-tight">About Us</h1>
+            <p className="mt-2 text-sm leading-relaxed text-[#eef8e9]">
+              A foundation born from courage, compassion, and the promise to rewrite every story.
+            </p>
+            <div className="mt-3 h-1 w-24 rounded-full bg-gradient-to-r from-[#f08a1d] via-[#f6c04c] to-[#6ab12f]" />
+          </div>
         </div>
       </section>
 
-      <section className=" px-3 pb-10">
-        <div className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-[#74C4250D] shadow-md p-6 md:p-8">
-          <div className="absolute -left-8 -top-8 h-20 w-20 rounded-full bg-[#f7ecdb] blur-2xl" aria-hidden="true" />
-          <div className="absolute -right-10 bottom-4 h-24 w-24 rounded-full bg-[#e8f5de] blur-2xl" aria-hidden="true" />
-          <div className="relative px-4 pt-15 pb-15 text-center space-y-10">
-            <p className="text-[40px] font-semibold uppercase tracking-wide font-shippori">
+      <section className="px-4 pt-8 pb-10">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="mx-auto max-w-[32rem] text-center space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-wide font-shippori">
               <span className="text-gray-900 inline-block border-b-2 border-[#74C425] pb-0.5">
                 A Death
               </span>{' '}
               <span className="text-[#6ab12f]">That Inspired To Change The World:</span>
             </p>
-            <p className="text-6xl font-black text-[#E7581F] font-kalam">
+            <p className="text-2xl font-black text-[#E7581F] font-kalam">
               Save Medha Foundation
             </p>
           </div>
-          <div className="relative space-y-10 px-10 pb-8 text-[35px] leading-12 text-gray-700 font-poppins">
-            {highlightText.map((paragraph, idx) => (
-              <p key={idx} className="text-justify">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="px-3 pb-10 pt-10">
-        <div className="relative mx-auto max-w-[1200px] space-y-4">
-          <div className="absolute top-1 right-275 flex items-center gap-4 opacity-70 rotate-[60deg]" aria-hidden="true">
-          <span className="h-20 w-20 rounded-full border-2 border-[#6ab12f]" />
-          <span className="h-20 w-20 -ml-10 rounded-full border-2 border-[#e95f2a]" />
-          </div>
-          <div className="absolute -right-2 top-6 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-30" aria-hidden="true" />
-
-          <div className="text-center space-y-10 pb-5 ">
-            <h2 className="text-6xl font-black font-light text-center tracking-wide font-shippori">
-              <span className="text-gray-900 inline-block border-b-2 border-[#74C425]">WE FIGHT</span>{' '}
-              <span className="text-[#6ab12f]">AGAINST CANCER</span>
-            </h2>
-            <p className="text-[55px] text-left mx-auto max-w-[800px] left-50 font-semibold text-[#E7581F] font-poppins italic leading-1.6">
-              " Our goals are to fight for a cancer free world, empower lives, and save futures. "
-            </p>
-          </div>
-          
-          <div className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-[#74C4250D] shadow-md p-6 md:p-8">
-            <div className="absolute -left-8 top-1/2 h-12 w-12 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#dff0d6] to-white shadow-sm" aria-hidden="true" />
-            <div className="absolute -right-6 bottom-4 h-10 w-10 rounded-full border-2 border-[#f08a1d] opacity-60" aria-hidden="true" />
-            <div className="relative space-y-10 px-10 pb-8 pt-10 font-semibold text-[35px] leading-12 text-gray-700 font-poppins">
-              {fightAgainstCancerText.map((paragraph, idx) => (
-                <p key={idx}>
+          <div className="relative mt-4 overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-white shadow-md">
+            <div className="absolute -left-8 -top-8 h-20 w-20 rounded-full bg-[#f7ecdb] blur-2xl" aria-hidden="true" />
+            <div className="absolute -right-10 bottom-4 h-24 w-24 rounded-full bg-[#e8f5de] blur-2xl" aria-hidden="true" />
+            <div className="relative space-y-4 p-4 text-sm leading-relaxed text-gray-700 font-poppins sm:p-6">
+              {highlightText.map((paragraph, idx) => (
+                <p key={idx} className="text-justify">
                   {paragraph}
                 </p>
               ))}
@@ -518,54 +492,80 @@ export default function AboutUs({ onNavigate }) {
         </div>
       </section>
 
-      <section className="px-3 pt-10 pb-10">
-        <div className="mx-auto max-w-[1200px] space-y-10">
+      <section className="px-4 pb-10">
+        <div className="relative mx-auto max-w-[1200px]">
+          <div className="absolute -right-2 top-2 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-25" aria-hidden="true" />
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl font-black text-center tracking-wide font-shippori">
+              <span className="text-gray-900 inline-block border-b-2 border-[#74C425]">WE FIGHT</span>{' '}
+              <span className="text-[#6ab12f]">AGAINST CANCER</span>
+            </h2>
+            <p className="mx-auto max-w-[26rem] text-sm font-semibold text-[#E7581F] font-poppins italic leading-relaxed">
+              " Our goals are to fight for a cancer free world, empower lives, and save futures. "
+            </p>
+          </div>
+
+          <div className="relative mt-4 overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-white shadow-md">
+            <div className="absolute -left-8 top-1/2 h-12 w-12 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#dff0d6] to-white shadow-sm" aria-hidden="true" />
+            <div className="absolute -right-6 bottom-4 h-10 w-10 rounded-full border-2 border-[#f08a1d] opacity-60" aria-hidden="true" />
+            <div className="relative space-y-4 p-4 text-sm font-semibold leading-relaxed text-gray-700 font-poppins sm:p-6">
+              {fightAgainstCancerText.map((paragraph, idx) => (
+                <p key={idx} className="text-justify">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-4 pb-10">
+        <div className="mx-auto max-w-[1200px] space-y-7">
           {missionSections.map((section) => (
-            <div
-              key={section.title}
-              className="relative mx-auto max-w-[1200px] overflow-hidden rounded-[26px]  border-[#e8f0e3] bg-[#74C4250D] shadow-md p-6 md:p-8"
-            >
-              <div className="absolute -top-3 right-5 h-9 w-9 rounded-full bg-gradient-to-br from-[#f5d9a5] to-white shadow-sm" aria-hidden="true" />
-              <h3 className="text-5xl font-black text-center text-[#6ab12f] tracking-wide pb-10">
+            <div key={section.title} className="space-y-3">
+              <h3 className="text-lg font-black text-center tracking-[0.18em] font-shippori text-gray-900">
                 {section.title}
               </h3>
-              <p className="text-[35px] px-10 pb-8 leading-12 font-semibold font-poppins text-gray-700 text-justify ">
-                {section.content}
-              </p>
+              <div className="relative overflow-hidden rounded-[26px] border border-[#e8f0e3] bg-white shadow-md">
+                <div className="absolute -top-3 right-5 h-9 w-9 rounded-full bg-gradient-to-br from-[#f5d9a5] to-white shadow-sm" aria-hidden="true" />
+                <p className="relative p-4 text-sm leading-relaxed font-semibold font-poppins text-gray-700 text-justify sm:p-6">
+                  {section.content}
+                </p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="px-3 pb-12">
-        <div className="mx-auto max-w-[1500px] space-y-4">
-          <div className="text-center space-y-1 mx-auto max-w-[1000px] ">
-            <h3 className="text-5xl font-black uppercase tracking-[0.25em] text-[#E7581F]">
+      <section className="px-4 pb-12">
+        <div className="mx-auto max-w-[1200px] space-y-4">
+          <div className="text-center space-y-1">
+            <h3 className="text-2xl font-black uppercase tracking-[0.2em] text-[#E7581F]">
               OVERVIEW
             </h3>
-            <p className="text-[31px] text-gray-600">
+            <p className="text-sm text-gray-600">
               Our impact grows with every city, member, and trusted certification.
             </p>
           </div>
 
-          <div className="overflow-hidden mx-auto max-w-[1000px] h-[700px] rounded-[24px] border border border-[#dfe8da] bg-white shadow-[0_12px_45px_rgba(0,0,0,0.07)]">
-            <div className="px-4 py-6 h-[]">
+          <div className="overflow-hidden rounded-[24px] border border-[#dfe8da] bg-white shadow-[0_12px_45px_rgba(0,0,0,0.07)]">
+            <div className="px-3 py-4">
               <Counter compact />
             </div>
 
-            <div className="border-t border border-[#dfe8da] bg-[#f7faf6] px-3 py-6">
-              <div className="flex flex-wrap items-center justify-center gap-10">
+            <div className="border-t border-[#dfe8da] bg-[#f7faf6] px-3 py-4">
+              <div className="flex flex-wrap items-center justify-center gap-4">
                 {certificationBadges.map((badge) => (
                   <div
                     key={badge.id}
-                    className="flex h-34 w-34 flex-col items-center justify-center rounded-full border border-[#d0e6c9] bg-white text-center shadow-sm"
+                    className="flex h-24 w-24 flex-col items-center justify-center rounded-full border border-[#d0e6c9] bg-white text-center shadow-sm"
                   >
                     <img
                       src={badge.src}
                       alt={badge.alt}
-                      className="h-15 w-15 object-contain"
+                      className="h-12 w-12 object-contain"
                     />
-                    <span className="mt-2 px-2 text-[13px] font-semibold  leading-tight text-gray-600">
+                    <span className="mt-2 px-2 text-[11px] font-semibold leading-tight text-gray-600">
                       {badge.name}
                     </span>
                   </div>
@@ -576,47 +576,51 @@ export default function AboutUs({ onNavigate }) {
         </div>
       </section>
 
-      <section className="px-3 pb-16">
-        <div className="mx-auto max-w-[800px] h-[] space-y-5 overflow-hidden rounded-[24px] border border-[#e8f0e3] bg-white shadow-[0_12px_45px_rgba(0,0,0,0.07)] p-4">
-          <div className="relative mx-auto w-full max-w-[360px]">
-            <div className="absolute -left-4 -top-4 h-14 w-14 rounded-full border-2 border-[#6ab12f] opacity-30" aria-hidden="true" />
-            <div className="absolute -right-6 -bottom-6 h-16 w-16 rounded-3xl bg-[#6ab12f] opacity-10 rotate-6" aria-hidden="true" />
-            <img
-              src={DoctorImage}
-              alt="Save Medha Foundation care"
-              className="relative w-full rounded-2xl border-4 border-white object-cover shadow-lg"
-            />
-          </div>
+      <section className="px-4 pb-16">
+        <div className="mx-auto max-w-[800px] overflow-hidden rounded-[24px] border border-[#e8f0e3] bg-white shadow-[0_12px_45px_rgba(0,0,0,0.07)]">
+          <div className="p-4 sm:p-6 space-y-5">
+            <div className="mx-auto w-full max-w-[260px]">
+              <div className="relative rounded-full bg-[#e7f4de] p-3 shadow-inner">
+                <div className="absolute -left-3 -top-3 h-12 w-12 rounded-full border-2 border-[#6ab12f] opacity-25" aria-hidden="true" />
+                <div className="absolute -right-5 -bottom-5 h-14 w-14 rounded-3xl bg-[#6ab12f] opacity-10 rotate-6" aria-hidden="true" />
+                <img
+                  src={DoctorImage}
+                  alt="Save Medha Foundation care"
+                  className="relative aspect-square w-full rounded-full border-4 border-white object-cover shadow-lg"
+                />
+              </div>
+            </div>
 
-          <div className="space-y-5 pt-5 text-[30px] leading-11 px-8 font-poppins text-gray-700">
-            <h1 className="text-[35px] font-black text-gray-900">
-              Carrying Medha&apos;s Light Forward
-            </h1>
-            <p className="text-justify font-semibold" >
-              Every patient who walks through our doors carries a story, a dream, and the same unwavering hope that Medha held onto.
-              Our team blends compassion with pioneering science, empowering the immune system to lead the healing journey. From counseling
-              and diagnostics to holistic natural therapies, we support families with the care and dignity they deserve.
-            </p>
-            <p className="text-justify font-semibold">
-              Save Medha Foundation is more than an organization - it is a promise that no family will have to face cancer alone.
-              Together, we are building a future where love, science, and community rewrite what it means to survive and thrive.
-            </p>
-          </div>
+            <div className="space-y-3 font-poppins text-gray-700 text-sm leading-relaxed">
+              <h1 className="text-xl font-black text-gray-900">
+                Carrying Medha&apos;s Light Forward
+              </h1>
+              <p className="text-justify font-semibold">
+                Every patient who walks through our doors carries a story, a dream, and the same unwavering hope that Medha held onto.
+                Our team blends compassion with pioneering science, empowering the immune system to lead the healing journey. From counseling
+                and diagnostics to holistic natural therapies, we support families with the care and dignity they deserve.
+              </p>
+              <p className="text-justify font-semibold">
+                Save Medha Foundation is more than an organization - it is a promise that no family will have to face cancer alone.
+                Together, we are building a future where love, science, and community rewrite what it means to survive and thrive.
+              </p>
+            </div>
 
-          <div className="flex flex-wrap gap-3 pt-1">
-            <button
-              type="button"
-              onClick={() => onNavigate && onNavigate('home')}
-              className="flex-1 min-w-[140px] bg-[#6ab12f] hover:bg-[#5a9c27] text-2xl font-poppings text-white font-semibold px-4 py-3 rounded-md transition-colors cursor-pointer shadow-sm"
-            >
-              Back To Home
-            </button>
-            <button
-              type="button"
-              className="flex-1 min-w-[140px] border-2 text-2xl font-poppings border-[#6ab12f] text-[#6ab12f] hover:bg-[#0c3b1c] hover:border-[#0c3b1c] hover:text-white font-semibold px-4 py-3 rounded-md transition-colors cursor-pointer shadow-sm"
-            >
-              Support The Mission
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => onNavigate && onNavigate('home')}
+                className="flex-1 min-w-[140px] bg-[#6ab12f] hover:bg-[#5a9c27] text-sm font-poppins text-white font-semibold px-4 py-2.5 rounded-md transition-colors cursor-pointer shadow-sm"
+              >
+                Back To Home
+              </button>
+              <button
+                type="button"
+                className="flex-1 min-w-[140px] border-2 text-sm font-poppins border-[#6ab12f] text-[#6ab12f] hover:bg-[#0c3b1c] hover:border-[#0c3b1c] hover:text-white font-semibold px-4 py-2.5 rounded-md transition-colors cursor-pointer shadow-sm"
+              >
+                Support The Mission
+              </button>
+            </div>
           </div>
         </div>
       </section>

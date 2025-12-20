@@ -844,44 +844,49 @@ export default function CancerTreatmentPage() {
 
               <div className="relative">
         {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
           {healthVideos.slice(0, 20).map((video, index) => (
             <button
               key={video.id}
               onClick={() => handleVideoSelect(video)}
-              className="group flex flex-col items-center text-center transform transition-all duration-300 hover:scale-105"
+              title={video.title}
+              className="group w-full rounded-[22px] bg-white p-3 text-left shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(0,0,0,0.22)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]"
             >
-              {/* Video Thumbnail */}
-              <div className="relative w-full mb-0">
-                <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative overflow-hidden rounded-xl bg-slate-100 ring-1 ring-black/10">
+                <div className="aspect-video w-full">
                   <img
                     src={video.thumbnail || DEFAULT_THUMBNAIL}
                     alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="h-full w-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors flex items-center justify-center rounded-2xl">
-                    <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center shadow-2xl">
-                      <Play className="text-white ml-1" size={32} />
-                    </div>
-                  </div>
-                  {video.duration && (
-                    <div className="absolute bottom-3 right-3 bg-black/80 text-white text-xs font-bold px-3 py-1.5 rounded-full">
-                      {video.duration}
-                    </div>
-                  )}
                 </div>
+
+                <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 shadow-lg ring-2 ring-white/90">
+                    <Play className="ml-0.5 text-white" size={22} fill="white" />
+                  </div>
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 bg-black/20 px-2 py-1">
+                  <div className="h-1 flex-1 rounded-full bg-white/40">
+                    <div className="h-1 w-2/3 rounded-full bg-[#74C425]" />
+                  </div>
+                  <div
+                    className="h-2 w-3 rounded-sm border border-white/70"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                {video.duration && (
+                  <div className="absolute top-2 right-2 rounded-md bg-black/70 px-2 py-1 text-[10px] font-bold text-white">
+                    {video.duration}
+                  </div>
+                )}
               </div>
 
-              {/* Title & Meta */}
-              <div className="space-y-2 bg-gradient-to-br from-[#D6FFBB] to-[#FFFFFF] rounded-3xl p-4">
-                <h3 className="font-bold text-sm leading-tight line-clamp-2 text-gray-800 group-hover:text-[#74C425] transition-colors">
-                 
-                </h3>
-               
-                <span className="inline-block px-6 py-2 bg-[#74C425] text-white text-xs font-bold rounded-full hover:bg-[#1118A6] transition-colors">
-                  WATCH NOW
-                </span>
-              </div>
+              <span className="mt-3 block w-full rounded-md bg-[#74C425] px-2 py-2 text-center text-[11px] font-bold uppercase tracking-wide text-white shadow-sm transition-colors group-hover:bg-[#1118A6]">
+                {`FEEDBACK ${index + 1}`}
+              </span>
             </button>
           ))}
         </div>

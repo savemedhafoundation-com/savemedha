@@ -32,7 +32,10 @@ export function JoinUsText({ className = "" }) {
       {text.split("").map((char, i) => (
         <span
           key={i}
-          style={{ animationDelay: `${i * 120}ms` }}
+          style={{
+            animationDelay: `${i * 120}ms`,
+            textShadow: "6px 0px 0px #080808",
+          }}
           className="inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight cursor-pointer select-none hover:-translate-y-3 hover:scale-110 hover:text-[#7CB342] transition-all duration-300 drop-shadow-[0_6px_12px_rgba(0,0,0,0.45)] [-webkit-text-stroke:1px_black] md:[-webkit-text-stroke:2px_black]"
         >
           {char === " " ? "\u00A0" : char}

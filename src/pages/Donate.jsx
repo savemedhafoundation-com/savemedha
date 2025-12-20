@@ -477,7 +477,7 @@ export default function Donate({ onNavigate }) {
                           type="button"
                           onClick={startRazorpay}
                           disabled={isPaying}
-                          className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-[#1118A6] px-6 py-3 text-white font-extrabold tracking-wide font-poppins hover:bg-[#0b128a] transition-colors disabled:opacity-70"
+                          className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-[#1118A6] px-6 py-2 sm:py-3 text-white font-extrabold tracking-wide font-poppins hover:bg-[#0b128a] transition-colors disabled:opacity-70"
                         >
                           {isPaying ? "OPENING..." : "DONATE NOW"}
                         </button>
