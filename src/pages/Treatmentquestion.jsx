@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../components/Navbar";
 import Footer from "../components/Footer";
 import TreatmentCards from "../components/Treatment_Cards";
 import QuestionSection from "../components/QuestionSection";
 import useTreatmentCategoryQuestions from "../hooks/useTreatmentCategoryQuestions";
+
 
 export default function Treatmentquestion({ onNavigate }) {
   const location = useLocation();
@@ -16,6 +17,39 @@ export default function Treatmentquestion({ onNavigate }) {
     selectedQuestions,
     selectedLabel,
   } = useTreatmentCategoryQuestions(initialCategory);
+
+const questionSectionRef = useRef(null);
+
+  useEffect(() => {
+  if (selectedLabel && questionSectionRef.current) {
+  const yOffset = -110; // header height
+  const y =
+    questionSectionRef.current.getBoundingClientRect().top +
+    window.pageYOffset +
+    yOffset;
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth",
+  });
+  }
+}, [selectedLabel]);
+
+const scrollToQuestionSection = () => {
+  if (!questionSectionRef.current) return;
+
+  const yOffset = -110; // header height
+  const y =
+    questionSectionRef.current.getBoundingClientRect().top +
+    window.pageYOffset +
+    yOffset;
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth",
+  });
+};
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -30,14 +64,20 @@ export default function Treatmentquestion({ onNavigate }) {
         </p>
       </section>
 
-      <main className="mx-auto max-w-6xl px-4 py-12 space-y-10">
-        <TreatmentCards
+      <main className="mx-auto max-w-8xl px-4 py-12 space-y-10">
+        <TreatmentCards 
           onNavigate={onNavigate}
-          onSelectCategory={setSelectedCategory}
+          onSelectCategory={(category) => {
+            setSelectedCategory(category);
+            scrollToQuestionSection(); // 👈 THIS fixes everything
+            }}
+
           selectedCategory={selectedCategory}
         />
 
-        <section className="relative py-10 px-4">
+        <section
+        ref={questionSectionRef} 
+        className="relative py-10 px-4">
           <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
             <div className="text-white text-center py-4 px-4 bg-[linear-gradient(to_right,#74C425_75%,#defcc0_100%)]">
               <h4 className="text-2xl sm:text-3xl font-semibold font-robotocondensed">

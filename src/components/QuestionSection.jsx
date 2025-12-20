@@ -52,7 +52,7 @@ export default function QuestionSection({
                 }`}
               >
                 <div className="px-6 py-5">
-                  <p className="text-xl font-semibold font-poppins text-gray-900">
+                  <p className="text-3xl font-light font-poppins text-gray-900">
                     {q.questionHeading}
                   </p>
                 </div>
@@ -89,7 +89,7 @@ export default function QuestionSection({
                       href={ctaHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex w-full sm:w-auto items-center justify-center bg-[#6AB12F] hover:bg-green-600 text-white font-semibold px-6 py-3 rounded shadow transition-colors"
+                      className="bg-[#7BC043] w-[300px] h-[80px] flex items-center text-center justify-center hover:bg-green-600 transition cursor-pointer text-white font-bold font-opensans rounded-[4px] shadow-md uppercase tracking-wider text-base md:text-lg"
                     >
                       {q.ctaText}
                     </a>
