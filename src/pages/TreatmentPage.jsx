@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import TreatmentBanner from "../components/TreatmentBanner";
 import TreatmentCards from "../components/Treatment_Cards";
 import Search from "../components/Search";
-import recoveryVideo from "../assets/video/Recovery Animation.mp4";
 import ImmunotherapyLabel from "../assets/treatmentpageasset/Group9199.png";
 import GroupPeople from "../assets/treatmentpageasset/Grouppeople.png";
 import Guypointing from "../assets/treatmentpageasset/guypointing.png";
@@ -34,7 +33,7 @@ export default function TreatmentPage({ onNavigate }) {
       <main className="flex flex-col">
         <TreatmentBanner
           mediaType="video"
-          mediaSrc={recoveryVideo}
+          mediaSrc="https://youtu.be/CXAnc1qbAsY?si=Yu_UT7Dvw9Ehu5PK"
           title="How natural immunotherapy method works on your body"
           subtitle="Understand how toxic load, chronic inflammation, and weak immunity can block recovery and how natural immunotherapy can support your body's own defense."
           onCtaClick={() => onNavigate?.("contact")}

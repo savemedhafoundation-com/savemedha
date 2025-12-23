@@ -127,7 +127,7 @@ export default function TreatmentBanner({
           />
         ) : (
           <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-            {youtubeEmbedUrl ? (
+            {youtubeEmbedUrl && (
               <iframe
                 title="Treatment banner video"
                 src={youtubeEmbedUrl}
@@ -139,15 +139,6 @@ export default function TreatmentBanner({
                 }}
                 allow="autoplay; encrypted-media; picture-in-picture"
                 referrerPolicy="strict-origin-when-cross-origin"
-              />
-            ) : (
-              <video
-                className="h-full w-full object-cover"
-                src={mediaSrc}
-                autoPlay
-                loop
-                muted
-                playsInline
               />
             )}
           </div>
