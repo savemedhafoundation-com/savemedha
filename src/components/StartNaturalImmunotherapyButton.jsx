@@ -27,6 +27,7 @@ export default function StartNaturalImmunotherapyButton({
     "text-base",
     "md:text-lg",
     "inline-flex",
+    "text-center",
     "items-center",
     "justify-center",
     px,
