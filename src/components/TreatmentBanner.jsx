@@ -1,5 +1,59 @@
 import React, { useEffect, useState } from "react";
 
+const YOUTUBE_VIDEO_ASPECT_RATIO = 16 / 9;
+
+const getYouTubeVideoId = (url) => {
+  if (!url) return null;
+
+  try {
+    const parsed = new URL(url);
+    const hostname = parsed.hostname.replace(/^www\./, "");
+
+    if (hostname === "youtu.be") {
+      return parsed.pathname.split("/").filter(Boolean)[0] || null;
+    }
+
+    if (
+      hostname.endsWith("youtube.com") ||
+      hostname.endsWith("youtube-nocookie.com")
+    ) {
+      if (parsed.pathname === "/watch") return parsed.searchParams.get("v");
+
+      const match = parsed.pathname.match(
+        /^\/(?:embed|v|shorts)\/([a-zA-Z0-9_-]{6,})/
+      );
+      if (match) return match[1];
+    }
+  } catch {
+    // Ignore URL parsing errors and fall back to regex parsing.
+  }
+
+  const fallback = String(url).match(
+    /(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([a-zA-Z0-9_-]{6,})/
+  );
+  return fallback?.[1] ?? null;
+};
+
+const getYouTubeEmbedUrl = (videoId) => {
+  if (!videoId) return null;
+
+  const params = new URLSearchParams({
+    autoplay: "1",
+    mute: "1",
+    controls: "0",
+    playsinline: "1",
+    loop: "1",
+    playlist: videoId,
+    modestbranding: "1",
+    rel: "0",
+    iv_load_policy: "3",
+    disablekb: "1",
+    fs: "0",
+  });
+
+  return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+};
+
 /**
  * TreatmentBanner renders a hero-style banner with either an image or video background.
  * Use mediaType="video" for videos; defaults to image. Call-to-action is optional.
@@ -18,6 +72,10 @@ export default function TreatmentBanner({
   const [typedTitle, setTypedTitle] = useState("");
   const [typedSubtitle, setTypedSubtitle] = useState("");
   const [showText, setShowText] = useState(true);
+  const youtubeVideoId = isVideo ? getYouTubeVideoId(mediaSrc) : null;
+  const youtubeEmbedUrl = youtubeVideoId
+    ? getYouTubeEmbedUrl(youtubeVideoId)
+    : null;
 
   useEffect(() => {
     setTypedTitle("");
@@ -68,14 +126,31 @@ export default function TreatmentBanner({
             aria-hidden="true"
           />
         ) : (
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            src={mediaSrc}
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
+          <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+            {youtubeEmbedUrl ? (
+              <iframe
+                title="Treatment banner video"
+                src={youtubeEmbedUrl}
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] w-[100vw] -translate-x-1/2 -translate-y-1/2"
+                style={{
+                  minWidth: "100%",
+                  minHeight: "100%",
+                  aspectRatio: String(YOUTUBE_VIDEO_ASPECT_RATIO),
+                }}
+                allow="autoplay; encrypted-media; picture-in-picture"
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+            ) : (
+              <video
+                className="h-full w-full object-cover"
+                src={mediaSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            )}
+          </div>
         )}
 
         <div className="absolute inset-0 bg-gradient-to-r from-[#5ad638]/40 via-black/35 to-[#3bb7ff]/30" />
@@ -84,7 +159,10 @@ export default function TreatmentBanner({
             <>
               <h1
                 className="text-6xl w-[850px] sm:text-3xl md:text-4xl font-extrabold drop-shadow-lg mb-3 uppercase tracking-tight"
-                style={{ color: titleColor, WebkitTextStrokeColor: "transparent" }}
+                style={{
+                  color: titleColor,
+                  WebkitTextStrokeColor: "transparent",
+                }}
               >
                 {typedTitle || title}
               </h1>
