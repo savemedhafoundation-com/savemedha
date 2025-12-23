@@ -108,9 +108,7 @@ export default function TreatmentPage({ onNavigate }) {
 
                 <div className="mt-8 ">
                   <StartNaturalImmunotherapyButton
-                    className="w-[300px]"
-                    px="px-2"
-                    py="py-3"
+                    className="w-[300px] px-2 py-3"
                   />
                 </div>
               </div>
@@ -246,7 +244,7 @@ export default function TreatmentPage({ onNavigate }) {
                 CLICK HERE TO KNOW MORE
               </button>
               <StartNaturalImmunotherapyButton
-                className="w-[300px] h-[80px]"
+                className="w-[300px] "
                 px="px-8"
                 py="py-3"
               />
