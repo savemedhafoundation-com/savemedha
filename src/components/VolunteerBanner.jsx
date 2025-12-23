@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Hand1 from "../assets/Photo/hand1.png";
 import Hand2 from "../assets/Photo/Hand2.png";
 import People3 from "../assets/Photo/pepole3.png";
@@ -50,6 +50,37 @@ export default function VolunteerBanner() {
     "mx-auto w-full max-w-[560px] items-center text-center lg:mx-0 lg:ml-auto lg:max-w-[960px] lg:items-end lg:text-right lg:pr-10";
   const bodyTextClassName = "mx-auto lg:ml-auto";
   const taglineClassName = "whitespace-nowrap mx-auto lg:ml-auto";
+
+  const [isVolunteerModalOpen, setIsVolunteerModalOpen] = useState(false);
+  const [volunteerForm, setVolunteerForm] = useState({ name: "", phone: "" });
+  const [status, setStatus] = useState("");
+  const nameInputRef = useRef(null);
+
+  useEffect(() => {
+    if (!isVolunteerModalOpen) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setIsVolunteerModalOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    nameInputRef.current?.focus();
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isVolunteerModalOpen]);
+
+  const closeModal = () => setIsVolunteerModalOpen(false);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setVolunteerForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setStatus("Thank you! We will contact you soon.");
+    setVolunteerForm({ name: "", phone: "" });
+  };
 
   return (
     <section
@@ -138,14 +169,119 @@ export default function VolunteerBanner() {
         </div>
 
         {/* CTA BUTTON */}
-        <div className="mt-6 flex justify-center lg:mt-0 lg:absolute lg:top-[520px] lg:right-1 lg:-translate-x-1/2">
+        <div className="relative z-20 mt-6 flex justify-center lg:mt-0 lg:absolute lg:top-[520px] lg:right-1 lg:-translate-x-1/2">
           <button
             type="button"
-            className="cursor-pointer bg-[#F26522] hover:bg-[#e0561f] transition text-white text-lg sm:text-xl lg:text-2xl font-semibold px-10 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 rounded-[20px] shadow-2xl"
+            onClick={() => {
+              setStatus("");
+              setIsVolunteerModalOpen(true);
+            }}
+            className="cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-lg sm:text-xl lg:text-2xl font-semibold px-10 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 rounded-[20px] shadow-2xl"
           >
             BECOME OUR VOLUNTEER
           </button>
         </div>
+
+        {isVolunteerModalOpen && (
+          <div
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4 py-8"
+            onClick={closeModal}
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="volunteer-modal-title"
+              className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={closeModal}
+                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/10 text-slate-900 transition hover:bg-slate-900/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1118A6]"
+              >
+                <span className="sr-only">Close</span>
+                <span aria-hidden="true" className="text-2xl leading-none">
+                  ×
+                </span>
+              </button>
+
+              <div className="p-6 sm:p-8">
+                <h3
+                  id="volunteer-modal-title"
+                  className="text-xl sm:text-2xl font-extrabold text-slate-900"
+                >
+                  Become Our Volunteer
+                </h3>
+                <p className="mt-2 text-sm text-slate-600">
+                  Share your details and our team will reach out.
+                </p>
+
+                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                  <div>
+                    <label
+                      htmlFor="volunteer-name"
+                      className="block text-sm font-medium text-slate-700"
+                    >
+                      Full name
+                    </label>
+                    <input
+                      ref={nameInputRef}
+                      id="volunteer-name"
+                      name="name"
+                      value={volunteerForm.name}
+                      onChange={handleChange}
+                      required
+                      className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm shadow-sm focus:border-[#1118A6] focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="volunteer-phone"
+                      className="block text-sm font-medium text-slate-700"
+                    >
+                      Phone number
+                    </label>
+                    <input
+                      id="volunteer-phone"
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
+                      value={volunteerForm.phone}
+                      onChange={handleChange}
+                      required
+                      className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm shadow-sm focus:border-[#1118A6] focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
+                      placeholder="Enter your phone number"
+                    />
+                  </div>
+
+                  <div className="pt-2 flex flex-col gap-3 sm:flex-row">
+                    <button
+                      type="submit"
+                      className="w-full rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#1118A6]"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={closeModal}
+                      className="w-full rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+
+                  {status && (
+                    <p className="pt-2 text-center text-sm font-medium text-green-700">
+                      {status}
+                    </p>
+                  )}
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
