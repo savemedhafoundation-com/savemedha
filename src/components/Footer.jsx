@@ -54,7 +54,7 @@ const Footer = ({ onNavigate }) => {
     { name: "HOME", key: "home" },
     { name: "ABOUT US", key: "about" },
     { name: "TREATMENT", key: "treatment" },
-    { name: "DONATE", href: "#" },
+    { name: "DONATE", key: "donate", href: "/donate" },
     { name: "EVENTS & PROJECTS", href: "#" },
   ];
 
@@ -216,8 +216,8 @@ const Footer = ({ onNavigate }) => {
                 <Linkedin className="w-7 h-7" />
               </a>
               <a
-                href="https://wa.me/9800808595"
-                aria-label="WhatsApp"
+                href="https://wa.me/919800808595"
+                aria-label="WhatsApp 9800808595"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-[#9bd853] transition-colors"
@@ -261,8 +261,8 @@ const Footer = ({ onNavigate }) => {
                 </div>
 
                 <p className="text-gray-200 italic text-lg leading-relaxed">
-                  &ldquo;Transforming cancer care through Natural Immunotherapy
-                  &mdash; where healing begins with your own immune power.&rdquo;
+                  &ldquo;Transforming cancer care through Natural Immunotherapy;
+                   where healing begins with your own immune power.&rdquo;
                 </p>
 
                 <div className="flex items-center gap-5 text-white">
@@ -294,8 +294,8 @@ const Footer = ({ onNavigate }) => {
                     <Linkedin className="w-7 h-7" />
                   </a>
                   <a
-                    href="https://wa.me/9800808595"
-                    aria-label="WhatsApp"
+                    href="https://wa.me/919800808595"
+                    aria-label="WhatsApp 9800808595"
                     target="_blank"
                     rel="noreferrer"
                     className="hover:text-[#74c425] transition-colors"
@@ -402,10 +402,10 @@ const Footer = ({ onNavigate }) => {
           </button>
         )}
         <a
-          href="https://wa.me/9800808595"
+          href="https://wa.me/919800808595"
           target="_blank"
           rel="noreferrer"
-          aria-label="Chat with us on WhatsApp"
+          aria-label="Chat with us on WhatsApp: 9800808595"
           className="inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40 hover:scale-105 transition-transform duration-200"
         >
           <ImWhatsapp className="w-6 h-6 md:w-7 md:h-7" />

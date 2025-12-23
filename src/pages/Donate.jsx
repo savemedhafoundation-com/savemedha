@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HomePageBanner from "../components/HomePageBanner";
@@ -35,6 +36,7 @@ const loadRazorpayCheckout = () =>
   });
 
 export default function Donate({ onNavigate }) {
+  const location = useLocation();
   const donateBanners = [donateBanner1, donateBanner2, donateBanner3, donateBanner4];
   const [currency, setCurrency] = useState("INR");
   const [selectedAmount, setSelectedAmount] = useState(200);
@@ -55,6 +57,27 @@ export default function Donate({ onNavigate }) {
     const parsed = Number.parseInt(normalized.replace(/[^\d]/g, ""), 10);
     return Number.isFinite(parsed) ? parsed : 0;
   }, [customAmount, selectedAmount]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const stateTarget =
+      location?.state && typeof location.state === "object"
+        ? location.state.scrollTo
+        : null;
+    const hashTarget = location?.hash ? location.hash.replace(/^#/, "") : null;
+    const targetId = stateTarget || hashTarget;
+
+    if (!targetId) return;
+
+    const el = document.getElementById(targetId);
+    if (!el) return;
+
+    const yOffset = -110;
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }, [location.key, location.hash]);
 
   const startRazorpay = async () => {
     setPaymentMessage("");
@@ -441,7 +464,7 @@ export default function Donate({ onNavigate }) {
                         </div>
                       </div>
 
-                      <div className="mt-8">
+                      <div className="mt-8" id="payment-details">
                         <h4 className="text-base sm:text-lg font-extrabold text-slate-900 font-poppins">
                           Payment Details
                         </h4>

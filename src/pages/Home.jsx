@@ -10,7 +10,7 @@ export default function Home({ onNavigate }) {
       <Navbar currentPage="home" onNavigate={onNavigate} />
       <main className="w-full px-4 sm:px-6 md:px-20">
         <HomePage onNavigate={onNavigate} />
-        <VolunteerAndSupportSection />
+        <VolunteerAndSupportSection onNavigate={onNavigate} />
         <div className="mt-16">
           <TestimonialsSection />
         </div>

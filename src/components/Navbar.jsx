@@ -344,8 +344,8 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     </a>
 
                     <a
-                      href="https://wa.me/9800808595"
-                      aria-label="WhatsApp"
+                      href="https://wa.me/919800808595"
+                      aria-label="WhatsApp 9800808595"
                       target="_blank"
                       rel="noreferrer"
                       className="hover:text-[#74c425] transition-colors"

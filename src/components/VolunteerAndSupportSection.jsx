@@ -3,7 +3,7 @@ import VolunteerBanner from "./VolunteerBanner";
 import SupportCauseImg from "../assets/Photo/BANNER (26).png";
 import HandHoldingHeart from "../assets/Photo/Hand Holding Heart.png";
 
-const VolunteerAndSupportSection = () => {
+const VolunteerAndSupportSection = ({ onNavigate }) => {
   return (
     <div className="w-full ">
       {/* Volunteer Section (unchanged) */}
@@ -30,6 +30,7 @@ const VolunteerAndSupportSection = () => {
             <div className="absolute inset-x-0 bottom-0  sm:left-20 h-[80px] flex justify-center  mt-4 sm:mt-0">
               <button
                 type="button"
+                onClick={() => onNavigate?.("donate", { scrollTo: "donate-form" })}
                 className="cursor-pointer bg-[#74C425] hover:bg-[#1118A6] text-white font-bold text-[14px] sm:text-[25px] px-4 sm:px-10 py-1.5 sm:py-4 rounded-[5px] shadow-xl transition-all inline-flex items-center justify-center gap-2 sm:gap-3 max-w-[calc(100vw-2rem)] sm:max-w-none"
               >
                 <img

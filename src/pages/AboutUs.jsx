@@ -428,6 +428,7 @@ export default function AboutUs({ onNavigate }) {
               <button
                 type="button"
                 className="border-2 border-[#6ab12f] text-[#6ab12f] hover:bg-[#0c3b1c] hover:border-[#0c3b1c] hover:text-white font-semibold px-6 py-3 rounded-md transition-colors cursor-pointer shadow-sm"
+                onClick={() => onNavigate && onNavigate("donate")}
               >
                 Support The Mission
               </button>
@@ -617,6 +618,7 @@ export default function AboutUs({ onNavigate }) {
               <button
                 type="button"
                 className="flex-1 min-w-[140px] border-2 text-sm font-poppins border-[#6ab12f] text-[#6ab12f] hover:bg-[#0c3b1c] hover:border-[#0c3b1c] hover:text-white font-semibold px-4 py-2.5 rounded-md transition-colors cursor-pointer shadow-sm"
+                onClick={() => onNavigate && onNavigate("donate")}
               >
                 Support The Mission
               </button>

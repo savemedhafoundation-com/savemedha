@@ -850,7 +850,7 @@ export default function CancerTreatmentPage() {
               key={video.id}
               onClick={() => handleVideoSelect(video)}
               title={video.title}
-              className="group w-full rounded-[22px] bg-white p-3 text-left shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(0,0,0,0.22)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]"
+              className="group w-full cursor-pointer rounded-[22px] bg-white p-3 text-left shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(0,0,0,0.22)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]"
             >
               <div className="relative overflow-hidden rounded-xl bg-slate-100 ring-1 ring-black/10">
                 <div className="aspect-video w-full">
@@ -884,8 +884,8 @@ export default function CancerTreatmentPage() {
                 )}
               </div>
 
-              <span className="mt-3 block w-full rounded-md bg-[#74C425] px-2 py-2 text-center text-[11px] font-bold uppercase tracking-wide text-white shadow-sm transition-colors group-hover:bg-[#1118A6]">
-                {`FEEDBACK ${index + 1}`}
+              <span className="mt-3 block w-full cursor-pointer rounded-md bg-[#74C425] px-2 py-2 text-center text-[11px] font-bold uppercase tracking-wide text-white shadow-sm transition-colors group-hover:bg-[#1118A6]">
+                {`Watch `}
               </span>
             </button>
           ))}

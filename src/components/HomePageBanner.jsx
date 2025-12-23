@@ -59,7 +59,10 @@ const DefaultHeroContent = () => {
           </span>
         </p>
 
-        <button
+        <a
+          href="https://nit.care/"
+          target="_blank"
+          rel="noopener noreferrer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 font-medium OpenSans text-base sm:text-lg md:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
@@ -67,7 +70,7 @@ const DefaultHeroContent = () => {
           }`}
         >
           DISCOVER
-        </button>
+        </a>
       </div>
     </div>
   );
