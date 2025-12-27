@@ -1,7 +1,7 @@
 import React from "react";
 import { AtSign, Mail, Phone } from "lucide-react";
 import HeroBanner from "./HomePageBanner";
-import contactBackdrop from "../assets/Photo/contactUsBanner.png";
+import contactBackdrop from "../assets/Photo/Contactusbanner.png";
 
 export default function ContactUsBanner() {
   return (
