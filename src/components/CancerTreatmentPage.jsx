@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { Play, X } from "lucide-react";
 import { MdPhoneInTalk } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 import DoctorImg from "../assets/Photo/doc.png";
 import RedRibbon from "../assets/Photo/redreben.png";
@@ -163,7 +164,20 @@ const extractYoutubeId = (video) => {
   return null;
 };
 
-export default function CancerTreatmentPage() {
+export default function CancerTreatmentPage({ onNavigate }) {
+  const navigate = useNavigate();
+  const handleContactUsClick = useCallback(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+
+    if (typeof onNavigate === "function") {
+      onNavigate("locateus");
+      return;
+    }
+
+    navigate("/contact-us");
+  }, [navigate, onNavigate]);
   // Refs for each scrollable section
   const healthVideosRef = useRef(null);
 
@@ -885,7 +899,7 @@ export default function CancerTreatmentPage() {
               </div>
 
               <span className="mt-3 block w-full cursor-pointer rounded-md bg-[#74C425] px-2 py-2 text-center text-[11px] font-bold uppercase tracking-wide text-white shadow-sm transition-colors group-hover:bg-[#1118A6]">
-                {`Watch `}
+                {`Watch now `}
               </span>
             </button>
           ))}
@@ -944,7 +958,11 @@ export default function CancerTreatmentPage() {
           Subhankar Sarkar
         </p>
 
-                    <button className="mt-2 inline-flex items-center justify-center gap-2 rounded-[6px] bg-[#74C425] w-full sm:w-[188px] h-[45px] text-[15px] font-semibold text-white shadow hover:bg-[#5ea01d] transition mx-auto sm:mx-0">
+                    <button
+                      type="button"
+                      onClick={handleContactUsClick}
+                      className="mt-2 inline-flex items-center justify-center gap-2 rounded-[6px] bg-[#74C425] w-full sm:w-[188px] h-[45px] text-[15px] font-semibold text-white shadow hover:bg-[#1118A6] transition mx-auto sm:mx-0"
+                    >
                       <MdPhoneInTalk size={16} />
                       CONTACT US
                     </button>

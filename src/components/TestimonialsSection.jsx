@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import axios from "axios";
 
-import LicenceLogo from "../assets/Photo/licenceLogo.png";
+import LicenceLogo from "../assets/Photo/licenceLogo (2).png";
 
 const getInitial = (name) => {
   if (!name) return "?";
@@ -197,13 +197,18 @@ export default function TestimonialsSection() {
       </section>
 
       <div className="flex justify-center">
-        <div className="w-full max-w-[780px] bg-white border -translate-y-4 border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-md px-6 py-6">
-          <img
-            src={LicenceLogo}
-            alt="License logos"
-            className="w-full h-auto object-contain"
-            loading="lazy"
-          />
+        <div className="w-full max-w-[780px] -translate-y-4">
+          <p className="mb-4 text-center text-lg font-bold text-gray-900">
+            CERTIFIED BY
+          </p>
+          <div className="w-full bg-white border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-md px-6 py-6">
+            <img
+              src={LicenceLogo}
+              alt="License logos"
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </>

@@ -228,7 +228,7 @@ export default function HomePage({ onNavigate }) {
         <PatientStories />
       </div>
       <div className="mt-16">
-        <CancerTreatmentPage />
+        <CancerTreatmentPage onNavigate={onNavigate} />
       </div>
       <OrganModal
         organ={selectedOrgan}

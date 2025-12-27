@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
@@ -21,12 +21,12 @@ const LANGUAGE_SELECT_ARROW_DATA_URI =
 const NAV_ITEMS = [
   { name: "HOME", key: "home", hasDropdown: false },
   { name: "ABOUT US", key: "about", hasDropdown: false },
-  { name: "TREATMENT", key: "treatment", hasDropdown: true },
+  { name: "TREATMENT", key: "treatment", hasDropdown: false },
   { name: "DONATE", key: "donate", hasDropdown: false },
-  { name: "EVENTS & PROJECTS", key: null, hasDropdown: true },
+  { name: "EVENTS & PROJECTS", key: null, hasDropdown: false },
   { name: "BLOGS", key: "blogs", hasDropdown: false },
-  { name: "E-BOOK", key: null, hasDropdown: false },
-  { name: "CAREERS", key: null, hasDropdown: false },
+  { name: "E-BOOK", key: "ebook", hasDropdown: false },
+  { name: "CAREERS", key: "careers", hasDropdown: false },
   { name: "CONTACT US", key: "locateus", hasDropdown: false },
 ];
 
@@ -34,6 +34,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -42,6 +43,85 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useLayoutEffect(() => {
+    const mount = document.getElementById("google_translate_mount");
+    const STASH_ID = "google_translate_stash";
+    const ELEMENT_ID = "google_translate_element";
+
+    let stash = document.getElementById(STASH_ID);
+
+    if (!stash) {
+      stash = document.createElement("div");
+      stash.id = STASH_ID;
+      stash.setAttribute("aria-hidden", "true");
+      stash.className = "notranslate";
+      stash.style.position = "absolute";
+      stash.style.left = "-9999px";
+      stash.style.top = "0";
+      stash.style.width = "0";
+      stash.style.height = "0";
+      stash.style.overflow = "hidden";
+      document.body.appendChild(stash);
+    }
+
+    let element = document.getElementById(ELEMENT_ID);
+
+    if (!element) {
+      element = document.createElement("div");
+      element.id = ELEMENT_ID;
+      stash.appendChild(element);
+    }
+
+    if (mount) {
+      mount.appendChild(element);
+    }
+
+    const applyComboStyling = () => {
+      const combo = element?.querySelector(".goog-te-combo");
+      if (!combo) return false;
+
+      combo.style.backgroundImage = `url("${LANGUAGE_SELECT_ARROW_DATA_URI}")`;
+      combo.style.backgroundRepeat = "no-repeat";
+      combo.style.backgroundPosition = "0.75rem center";
+      combo.style.backgroundSize = "1.2rem 1.2rem";
+      return true;
+    };
+
+    if (!applyComboStyling()) {
+      const observer = new MutationObserver(() => {
+        if (applyComboStyling()) observer.disconnect();
+      });
+
+      observer.observe(element, { childList: true, subtree: true });
+
+      return () => {
+        observer.disconnect();
+        const stash = document.getElementById("google_translate_stash");
+        const translateElement = document.getElementById(
+          "google_translate_element"
+        );
+        if (stash && translateElement) stash.appendChild(translateElement);
+      };
+    }
+
+    return () => {
+      const stash = document.getElementById("google_translate_stash");
+      const translateElement = document.getElementById("google_translate_element");
+      if (stash && translateElement) stash.appendChild(translateElement);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const translateElement = document.getElementById("google_translate_element");
+    if (!translateElement) return;
+
+    const targetMount = document.getElementById(
+      isLanguageMenuOpen ? "google_translate_mount_mobile" : "google_translate_mount"
+    );
+
+    if (targetMount) targetMount.appendChild(translateElement);
+  }, [isLanguageMenuOpen]);
 
   useEffect(() => {
     if (!isSearchOpen) return;
@@ -54,6 +134,17 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isSearchOpen]);
 
+  useEffect(() => {
+    if (!isLanguageMenuOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setIsLanguageMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isLanguageMenuOpen]);
+
   const handleNavClick = (event, key) => {
     if (key && typeof onNavigate === "function") {
       event.preventDefault();
@@ -61,14 +152,24 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     }
     setIsMobileMenuOpen(false);
     setIsSearchOpen(false);
+    setIsLanguageMenuOpen(false);
   };
 
   const handleSearchToggle = () => {
     setIsSearchOpen((open) => !open);
     setIsMobileMenuOpen(false);
+    setIsLanguageMenuOpen(false);
   };
 
   const handleSearchClose = () => setIsSearchOpen(false);
+
+  const handleLanguageToggle = () => {
+    setIsLanguageMenuOpen((open) => !open);
+    setIsSearchOpen(false);
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleLanguageClose = () => setIsLanguageMenuOpen(false);
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -136,6 +237,42 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
         </div>
       )}
 
+      <div
+        className={`fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm lg:hidden ${
+          isLanguageMenuOpen ? "" : "hidden"
+        }`}
+        onClick={handleLanguageClose}
+      >
+        <div
+          id="mobile-language-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="mobile-language-dialog-title"
+          className="mx-auto mt-24 w-[92%] max-w-md rounded-2xl bg-white p-4 shadow-2xl"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="flex items-center justify-between gap-4">
+            <h2
+              id="mobile-language-dialog-title"
+              className="text-base font-semibold text-gray-900"
+            >
+              Select language
+            </h2>
+            <button
+              type="button"
+              onClick={handleLanguageClose}
+              className="text-sm font-semibold text-gray-700 hover:text-gray-900"
+            >
+              Close
+            </button>
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            <div id="google_translate_mount_mobile" className="google-translate-mount" />
+          </div>
+        </div>
+      </div>
+
       {/* Mobile layout */}
       <div className="lg:hidden">
         <div className="flex items-center justify-between gap-4 px-4 py-3 sm:py-4 md:py-6 bg-gradient-to-r from-white via-white to-[#b7de4e] ml-0 md:ml-12">
@@ -162,6 +299,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               onClick={() => {
                 setIsMobileMenuOpen((open) => !open);
                 setIsSearchOpen(false);
+                setIsLanguageMenuOpen(false);
               }}
               aria-label="Toggle navigation menu"
               className="h-12 w-12 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center ml-0 md:ml-5"
@@ -209,6 +347,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <button
               type="button"
               aria-label="Select language"
+              aria-expanded={isLanguageMenuOpen}
+              aria-controls="mobile-language-dialog"
+              onClick={handleLanguageToggle}
               className="h-12 w-12 sm:h-14 sm:w-14 md:h-20 md:w-20 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
               <svg
@@ -485,64 +626,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               </form>
 
               {/* Language */}
-              {/* <select className="px-3 py-2 border border-gray-300 rounded bg-white text-sm text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md">
-                <option>Select Language</option>
-                <option>English</option>
-                <option>Bangla</option>
-                <option>Hindi</option>
-                <option>Urdu</option>
-              </select> */}
-              {/* <select
-  className="px-3 py-2 border-2 border-[#74C425] rounded bg-white text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none"
-> */}
-              {/* focus:outline-none focus:ring-2 focus:ring-green-500 */}
-              {/* <option value="">Select Language</option>
-  <option value="eng">English</option>
-  <option value="bn">Bangla</option>
-  <option value="hi">Hindi</option>
-  <option value="ur">Urdu</option>
-</select> */}
-
-		              <select
-		                style={{
-		                  backgroundImage: `url("${LANGUAGE_SELECT_ARROW_DATA_URI}")`,
-		                  backgroundRepeat: "no-repeat",
-		                  backgroundPosition: "0.75rem center",
-		                  backgroundSize: "1.2rem 1.2rem",
-		                }}
-		                className="appearance-none px-8 py-2 border-2 border-[#74C425] rounded bg-transparent text-[15px] font-semibold text-gray-700 cursor-pointer shadow-md focus:outline-none"
-		              >
-                <option
-                  className="bg-[#ffffff]  text-black font-semibold"
-                  value=""
-                >
-                  Select Language
-                </option>
-                <option
-                  className="bg-[#ebf6cd] text-black font-semibold"
-                  value="eng"
-                >
-                  English
-                </option>
-                <option
-                  className="bg-[#d5eb98] text-black font-semibold"
-                  value="bn"
-                >
-                  Bangla
-                </option>
-                <option
-                  className="bg-[#c8e676] text-black font-semibold"
-                  value="hi"
-                >
-                  Hindi
-                </option>
-                <option
-                  className="bg-[#badf55] text-black font-semibold "
-                  value="ur"
-                >
-                  Urdu
-                </option>
-              </select>
+              <div id="google_translate_mount" className="google-translate-mount" />
 
               {/* Location */}
               <button

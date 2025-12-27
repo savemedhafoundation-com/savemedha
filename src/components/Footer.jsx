@@ -60,8 +60,8 @@ const Footer = ({ onNavigate }) => {
 
   const navLinks2 = [
     { name: "BLOGS", key: "blogs" },
-    { name: "E-BOOK", href: "#" },
-    { name: "CAREERS", href: "#" },
+    { name: "E-BOOK", key: "ebook" },
+    { name: "CAREERS", key: "careers" },
     { name: "CONTACT", key: "locateus" },
   ];
   const mobileLinks = [...navLinks1, ...navLinks2];
@@ -119,13 +119,13 @@ const Footer = ({ onNavigate }) => {
             healing begins with your own immune power.”
           </p>
 
-          <div className="grid grid-cols-2 ml-25  gap-y-4 text-sm font-semibold tracking-wide">
+          <div className="grid grid-cols-2 ml-10  gap-y-4 gap-x-12 text-sm font-semibold tracking-wide">
             {mobileLinks.map((link, idx) => (
               <a
                 key={`${link.name}-${idx}-mobile`}
                 href={link.href ?? "#"}
                 onClick={(event) => handleLinkClick(event, link)}
-                className="flex items-center gap-2 text-white hover:text-[#9bd853] transition-colors"
+                className="flex items-center gap-4 text-white hover:text-[#9bd853] transition-colors"
               >
                 <ChevronsRight className="w-3.5 h-3.5 text-white/80" />
                 <span>{link.name}</span>

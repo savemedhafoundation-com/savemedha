@@ -10,7 +10,7 @@ import donateBanner4 from "../assets/donateBannerImage/DonateBanner4.png";
 import charityImage from "../assets/Photo/Jar.png";
 import handHoldingHeartImage from "../assets/Photo/image1.png";
 import peopleImage from "../assets/Photo/kid.png";
-import donateIcon from "../assets/Photo/DONATE ICON.png";
+
 import supportCauseImage from "../assets/Photo/main.png";
 import naturalBg from "../assets/Photo/natural-bg.png.png";
 
@@ -221,6 +221,7 @@ export default function Donate({ onNavigate }) {
         backgroundImages={donateBanners}
         imageAlt="Donate banner"
         showDefaultContent={false}
+        className="min-h-[140px] sm:min-h-[220px] md:min-h-[260px] lg:min-h-[620px]"
         imageMap={donateBannerImageMap}
       />
 
@@ -327,7 +328,7 @@ export default function Donate({ onNavigate }) {
 	                    <img
 	                      src={supportCauseImage}
 	                      alt="Support our cause"
-	                      className="h-[500px] w-full object-cover sm:h-[560px]"
+	                      className="h-[240px] w-full object-cover sm:h-[560px]"
 	                      loading="lazy"
 	                    />
                     

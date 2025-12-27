@@ -383,3 +383,61 @@ button, .btn {
     overflow-x: hidden;
   }
 }
+
+/* ===============================
+   Google Translate (Website Widget)
+   =============================== */
+
+/* Keep the Google Translate dropdown aligned with the existing navbar controls. */
+.google-translate-mount {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+}
+
+.google-translate-mount .goog-te-gadget {
+  font-size: 0 !important;
+  white-space: nowrap;
+}
+
+.google-translate-mount .goog-logo-link,
+.google-translate-mount .goog-te-gadget span {
+  display: none !important;
+}
+
+.google-translate-mount .goog-te-combo {
+  appearance: none;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0 2rem;
+  border: 2px solid #74c425;
+  border-radius: 0.25rem;
+  background-color: #ffffff;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: background-color 150ms ease;
+}
+
+.google-translate-mount .goog-te-combo:hover {
+  background-color: #f9fafb;
+}
+
+.google-translate-mount .goog-te-combo:focus {
+  outline: none;
+}
+
+/* Prevent the Google top banner from shifting layout (CSS-only, keeps scripts intact). */
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}

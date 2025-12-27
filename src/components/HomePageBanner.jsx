@@ -82,7 +82,10 @@ export default function HeroBanner({
   showDefaultContent = true,
   showArrows = true,
   imageMap,
+  containerClassName,
   className = "",
+  overlayStyle,
+  overlayClassName = "",
   children,
 }) {
   const images = useMemo(() => {
@@ -217,9 +220,12 @@ export default function HeroBanner({
     setActiveIndex((current) => (current + 1) % images.length);
   };
 
+  const heightClassName =
+    containerClassName ?? "min-h-[420px] sm:min-h-[520px] md:min-h-[620px]";
+
   return (
     <div
-      className={`relative flex flex-row w-full min-h-[420px] sm:min-h-[520px] md:min-h-[620px] h-full ${className}`}
+      className={`relative flex flex-row w-full h-full ${heightClassName} ${className}`}
     >
       <img
         src={images[activeIndex]}
@@ -270,7 +276,11 @@ export default function HeroBanner({
         </div>
       ) : null}
 
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" />
+      <div
+        className={`absolute inset-0 pointer-events-none ${overlayClassName}`}
+        style={overlayStyle}
+        aria-hidden="true"
+      />
 
       {shouldShowArrows ? (
         <>
