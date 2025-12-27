@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import People from "../assets/homepageassets/homepagebannner.png";
+import People from "../assets/Photo/bannerHomepage.png";
 
 const DotPattern = () => (
   <div

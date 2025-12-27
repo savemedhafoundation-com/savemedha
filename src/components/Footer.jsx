@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
-import SavemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
 import {
   Facebook,
   Instagram,
@@ -64,7 +63,6 @@ const Footer = ({ onNavigate }) => {
     { name: "CAREERS", key: "careers" },
     { name: "CONTACT", key: "locateus" },
   ];
-  const mobileLinks = [...navLinks1, ...navLinks2];
 
   const handleLinkClick = (event, link) => {
     if (link.key && typeof onNavigate === "function") {
@@ -101,42 +99,40 @@ const Footer = ({ onNavigate }) => {
     </a>
   );
 
+  const renderMobileLink = (link, idx) => (
+    <a
+      key={`${link.name}-${idx}-mobile`}
+      href={link.href ?? "#"}
+      onClick={(event) => handleLinkClick(event, link)}
+      className="group flex items-center gap-3 text-white/95 text-base font-semibold tracking-wide hover:text-[#9bd853] transition-colors"
+    >
+      <ChevronsRight className="w-4 h-4 text-white/70 group-hover:text-[#9bd853] transition-colors" />
+      <span>{link.name}</span>
+    </a>
+  );
+
   return (
-    <footer className="bg-[#2d332e] text-white">
+    <footer className="bg-[#181414] text-white">
       {/* Mobile layout */}
       <div className="lg:hidden">
-        <div className="px-6 py-10 space-y-8">
+        <div className="px-6 pt-12 pb-10">
           <div className="flex justify-center">
             <img
-              src={SavemedhaLogo}
+              src={SmfLogoWhite}
               alt="Save Medha Foundation logo"
               className="h-16 w-auto object-contain"
             />
           </div>
 
-          <p className="text-center text-gray-100 italic text-lg leading-relaxed">
+          <p className="mt-6 text-center text-gray-100 italic text-lg leading-relaxed">
             “Transforming cancer care through Natural Immunotherapy — where
             healing begins with your own immune power.”
           </p>
 
-          <div className="grid grid-cols-2 ml-10  gap-y-4 gap-x-12 text-sm font-semibold tracking-wide">
-            {mobileLinks.map((link, idx) => (
-              <a
-                key={`${link.name}-${idx}-mobile`}
-                href={link.href ?? "#"}
-                onClick={(event) => handleLinkClick(event, link)}
-                className="flex items-center gap-4 text-white hover:text-[#9bd853] transition-colors"
-              >
-                <ChevronsRight className="w-3.5 h-3.5 text-white/80" />
-                <span>{link.name}</span>
-              </a>
-            ))}
-          </div>
-
-          <div className="bg-white text-gray-800 rounded-3xl shadow-xl p-6 -mx-6 sm:mx-0 space-y-4">
+          <div className="mt-10 bg-white text-gray-800 rounded-3xl shadow-xl p-6 space-y-4">
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
-                <h3 className="text-xl font-semibold italic text-gray-900">
+                <h3 className="text-xl font-bold text-gray-900">
                   Subscribe to our Newsletter!
                 </h3>
                 <p className="text-sm text-gray-600">
@@ -169,7 +165,7 @@ const Footer = ({ onNavigate }) => {
 	              <button
 	                type="submit"
 	                disabled={isSubmittingNewsletter}
-	                className="w-full rounded-lg text-white font-bold text-base py-3 shadow-lg hover:shadow-xl transition-all duration-200"
+	                className="w-full sm:w-fit sm:px-10 rounded-full text-white font-bold text-base py-3 shadow-lg hover:shadow-xl transition-all duration-200"
 	                style={{
 	                  background:
 	                    "linear-gradient(269.96deg, #498D05 0.03%, #76C528 50%, #448602 99.97%)",
@@ -178,65 +174,74 @@ const Footer = ({ onNavigate }) => {
 	                SUBSCRIBE
 	              </button>
 	              {newsletterStatus && (
-	                <div aria-live="polite">{newsletterStatus}</div>
+	                <div
+	                  aria-live="polite"
+	                  className={`text-sm ${
+	                    newsletterStatus.toLowerCase().includes("success")
+	                      ? "text-green-700"
+	                      : "text-red-600"
+	                  }`}
+	                >
+	                  {newsletterStatus}
+	                </div>
 	              )}
 	            </form>
           </div>
 
-          <div className="space-y-3">
-            <div className="text-center text-sm tracking-[0.2em] uppercase text-white/90">
-              Follow us:
-            </div>
-            <div className="flex items-center justify-center gap-6 text-white">
-              <a
-                href="https://www.facebook.com/savemedhafoundation"
-                aria-label="Facebook"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#9bd853] transition-colors"
-              >
-                <Facebook className="w-7 h-7" />
-              </a>
-              <a
-                href="https://www.instagram.com/savemedhafoundation/"
-                aria-label="Instagram"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#9bd853] transition-colors"
-              >
-                <Instagram className="w-7 h-7" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/save-medha-foundation/"
-                aria-label="LinkedIn"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#9bd853] transition-colors"
-              >
-                <Linkedin className="w-7 h-7" />
-              </a>
-              <a
-                href="https://wa.me/919800808595"
-                aria-label="WhatsApp 9800808595"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#9bd853] transition-colors"
-              >
-                <ImWhatsapp className="w-7 h-7" />
-              </a>
-              <a
-                href="https://www.youtube.com/@savemedhafoundation7959"
-                aria-label="YouTube"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#9bd853] transition-colors"
-              >
-                <Youtube className="w-7 h-7" />
-              </a>
-            </div>
+          <div className="mt-10 grid grid-cols-2 gap-x-10 gap-y-6">
+            <div className="space-y-4">{navLinks1.map(renderMobileLink)}</div>
+            <div className="space-y-4">{navLinks2.map(renderMobileLink)}</div>
           </div>
 
-          <div className="text-center text-white text-base space-y-2">
+          <div className="mt-10 flex items-center justify-center gap-7 text-white">
+            <a
+              href="https://www.facebook.com/savemedhafoundation"
+              aria-label="Facebook"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-[#9bd853] transition-colors"
+            >
+              <Facebook className="w-7 h-7" />
+            </a>
+            <a
+              href="https://www.instagram.com/savemedhafoundation/"
+              aria-label="Instagram"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-[#9bd853] transition-colors"
+            >
+              <Instagram className="w-7 h-7" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/save-medha-foundation/"
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-[#9bd853] transition-colors"
+            >
+              <Linkedin className="w-7 h-7" />
+            </a>
+            <a
+              href="https://wa.me/919800808595"
+              aria-label="WhatsApp 9800808595"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-[#9bd853] transition-colors"
+            >
+              <ImWhatsapp className="w-7 h-7" />
+            </a>
+            <a
+              href="https://www.youtube.com/@savemedhafoundation7959"
+              aria-label="YouTube"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-[#9bd853] transition-colors"
+            >
+              <Youtube className="w-7 h-7" />
+            </a>
+          </div>
+
+          <div className="mt-10 text-center text-white/90 text-xl font-medium">
             <div>Terms &amp; Conditions Apply</div>
           </div>
         </div>
