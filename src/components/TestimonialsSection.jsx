@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Star } from "lucide-react";
 import axios from "axios";
 
-import LicenceLogo from "../assets/Photo/licenceLogo (2).png";
+import LicenceLogo from "../assets/Photo/licencelogo (2).png";
 
 const getInitial = (name) => {
   if (!name) return "?";
