@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import People from "../assets/Photo/bannerHomepage.png";
+import MobileBanner from "../assets/Photo/mobilebanner.png";
 
 const DotPattern = () => (
   <div
@@ -224,19 +225,43 @@ export default function HeroBanner({
   const heightClassName =
     containerClassName ?? "min-h-[420px] sm:min-h-[520px] md:min-h-[620px]";
 
+  const shouldUseMobileFallbackImage =
+    !imageMap && (!Array.isArray(backgroundImages) || backgroundImages.length === 0);
+
   return (
     <div
-      className={`relative flex flex-row w-full h-full ${heightClassName} ${className}`}
+      className={`relative flex flex-row w-full h-full overflow-hidden ${heightClassName} ${className}`}
     >
-      <img
-        src={images[activeIndex]}
-        alt={`${imageAlt} ${activeIndex + 1}`}
-        className="absolute inset-0 h-full w-full object-cover object-center"
-        loading="eager"
-        fetchPriority="high"
-        ref={imgRef}
-        useMap={scaledMapAreas.length ? `#${mapName}` : undefined}
-      />
+      {shouldUseMobileFallbackImage ? (
+        <>
+          <img
+            src={MobileBanner}
+            alt={`${imageAlt} mobile`}
+            className="absolute inset-0 h-full w-full object-contain object-bottom sm:hidden"
+            loading="eager"
+            fetchPriority="high"
+          />
+          <img
+            src={images[activeIndex]}
+            alt={`${imageAlt} ${activeIndex + 1}`}
+            className="absolute inset-0 hidden h-full w-full object-cover sm:block sm:origin-right sm:scale-[1.12] sm:object-[80%_center]"
+            loading="eager"
+            fetchPriority="high"
+            ref={imgRef}
+            useMap={scaledMapAreas.length ? `#${mapName}` : undefined}
+          />
+        </>
+      ) : (
+        <img
+          src={images[activeIndex]}
+          alt={`${imageAlt} ${activeIndex + 1}`}
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          loading="eager"
+          fetchPriority="high"
+          ref={imgRef}
+          useMap={scaledMapAreas.length ? `#${mapName}` : undefined}
+        />
+      )}
 
       {scaledMapAreas.length ? (
         <map name={mapName}>
