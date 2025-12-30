@@ -1048,7 +1048,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 		        src={RedRibbon}
 		        alt=""
 		        aria-hidden="true"
-		        className="pointer-events-none absolute right-6 top-8 z-20 w-20"
+		        className="pointer-events-none absolute right-6 top-15 z-20 w-20"
 		      />
 		
 		      <div className="relative z-10">
