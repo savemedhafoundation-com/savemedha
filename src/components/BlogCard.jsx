@@ -29,7 +29,7 @@ const BlogCard = ({id, title, author, date, excerpt = '', coverImage, onNavigate
   };
 
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 shadow-sm transition-shadow duration-200 hover:shadow-md">
+    <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 shadow-sm transition-shadow duration-200 hover:shadow-md ">
       {coverImage && (
         <img
           src={coverImage}

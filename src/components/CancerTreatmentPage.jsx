@@ -262,12 +262,26 @@ export default function CancerTreatmentPage({ onNavigate }) {
 
   const [healthVideos, setHealthVideos] = useState(initialHealthVideos);
   console.log("healthvideos",healthVideos);
+  const MOBILE_VIDEOS_PAGE_SIZE = 2;
+  const [mobileVisibleVideosCount, setMobileVisibleVideosCount] = useState(
+    MOBILE_VIDEOS_PAGE_SIZE
+  );
   const [loadingVideos, setLoadingVideos] = useState(false);
   const [videoError, setVideoError] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [activeVideoId, setActiveVideoId] = useState(
     initialHealthVideos[0]?.id || null
   );
+
+  useEffect(() => {
+    setMobileVisibleVideosCount(MOBILE_VIDEOS_PAGE_SIZE);
+  }, [MOBILE_VIDEOS_PAGE_SIZE, healthVideos]);
+
+  const handleLoadMoreVideosMobile = useCallback(() => {
+    setMobileVisibleVideosCount((current) =>
+      Math.min(current + MOBILE_VIDEOS_PAGE_SIZE, healthVideos.length)
+    );
+  }, [MOBILE_VIDEOS_PAGE_SIZE, healthVideos.length]);
 
   useEffect(() => {
     const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -809,48 +823,131 @@ export default function CancerTreatmentPage({ onNavigate }) {
       </section> */}
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
-<section className="w-full py-16">
-        <div className="mx-auto max-w-10xl px-4">
-          <div className="relative rounded-3xl overflow-hidden  border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] bg-[#FBFFF9]">
-            
-            {/* Top Header */}
-            <div className="relative text-center pt-12 pb-2 px-8">
-              
-              <div className="inline-flex items-center gap-6 mb-0">
-                <div className="relative">
-                  <img
-                    src={Computerimg}
-                    alt="Healthcare icon"
-                    className="w-40 h-42 drop-shadow-lg"
-                  />
-                  <div className="absolute bottom-12 -right-5 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
-                    <Play className="text-white ml-0.5" size={20} />
-                  </div>
-                </div>
-                <div className="text-left">
-                  <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-slate-900 mb-2 tracking-wide [word-spacing:2px] sm:[word-spacing:4px] md:[word-spacing:6px]">
-                    BROWSE OUR LATEST VIDEOS ON
-                  </h2>
-                  <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#74C425] mt-2 text-center relative">
-                    HEALTHCARE & WELLNESS
-                    <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-1 w-49 bg-[#74C425]" />
-                  </p>
-                </div>
-              </div>
-            </div>
+		<section className="w-full py-16 sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20">
+	        <div className="w-full">
+	          <div className="relative rounded-3xl overflow-hidden bg-[#FBFFF9]">
+	            {/* Mobile-only layout (matches screenshot) */}
+	            <div className="sm:hidden">
+	              <div className="relative px-6 pt-10 pb-6 text-center">
+	                <h2 className="text-[20px] font-bold tracking-wide text-slate-900">
+	                  <span className="block">BROWSE OUR LATEST</span>
+	                  <span className="block">VIDEOS ON</span>
+	                </h2>
+	                <div className="mt-2">
+	                  <div className="text-[20px] font-bold text-[#74C425]">
+	                    HEALTHCARE &amp; WELLNESS
+	                  </div>
+	                  <div
+	                    className="mx-auto mt-2 h-1 w-44 rounded-full bg-[#74C425]"
+	                    aria-hidden="true"
+	                  />
+	                </div>
+	              </div>
 
-           
-            {/* Video Grid - 5 columns, fixed card design like screenshot */}
-            <div className="relative overflow-hidden  pt-50 pb-16 px-2">
-	              <div
-	                className="absolute inset-0  bg-cover bg-center bg-no-repeat opacity-30 "
-	                style={{
-	                  backgroundImage: `url(${BgImgOfVideoSection})`,
-	                  backgroundSize: "contain", 
-	                }}
+	              <div className="relative overflow-hidden  px-12 pb-10">
+	                <div
+	                  className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 "
+	                  style={{
+	                    backgroundImage: `url(${BgImgOfVideoSection})`,
+	                  }}
+	                  aria-hidden="true"
+	                />
+
+	                <div className="relative mx-auto flex w-full max-w-[420px] flex-col gap-6">
+	                  {healthVideos
+	                    .slice(0, mobileVisibleVideosCount)
+	                    .map((video) => (
+	                      <button
+	                        key={video.id}
+	                        onClick={() => handleVideoSelect(video)}
+	                        title={video.title}
+	                        className="group w-full cursor-pointer rounded-2xl bg-white p-4 text-left shadow-[0_18px_40px_rgba(0,0,0,0.12)] ring-1 ring-black/5 transition-transform duration-200 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]"
+	                      >
+	                        <div className="relative overflow-hidden rounded-xl bg-slate-100">
+	                          <div className="aspect-video w-full">
+	                            <img
+	                              src={video.thumbnail || DEFAULT_THUMBNAIL}
+	                              alt={video.title}
+	                              className="h-full w-full object-cover"
+	                            />
+	                          </div>
+
+	                          <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+	                            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-600">
+	                              <Play
+	                                className="ml-0.5 text-white"
+	                                size={26}
+	                                fill="white"
+	                              />
+	                            </div>
+	                          </div>
+
+	                          <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 bg-black/20 px-3 py-2">
+	                            <div className="h-1 flex-1 rounded-full bg-white/40">
+	                              <div className="h-1 w-2/3 rounded-full bg-[#74C425]" />
+	                            </div>
+	                            <div className="h-2 w-3 rounded-sm" aria-hidden="true" />
+	                          </div>
+	                        </div>
+
+	                        <span
+	                          className="mt-3 block w-full cursor-pointer rounded-md bg-[#74C425] px-3 py-2 text-center text-[13px] font-bold uppercase tracking-wide text-white transition-colors group-hover:bg-[#1118A6]"
+	                          title={video.title}
+	                        >
+	                          <span className="block truncate">{video.title}</span>
+	                        </span>
+	                      </button>
+	                    ))}
+
+	                  {healthVideos.length > mobileVisibleVideosCount && (
+	                    <button
+	                      type="button"
+	                      onClick={handleLoadMoreVideosMobile}
+	                      className="mt-2 w-full rounded-xl bg-[#74C425] px-6 py-4 text-center text-lg font-semibold text-white shadow-md transition-transform duration-200 hover:bg-[#1118A6] active:scale-[0.99]"
+	                    >
+	                      Load More Videos
+	                    </button>
+	                  )}
+	                </div>
+	              </div>
+	            </div>
+
+	            {/* Desktop layout (unchanged) */}
+	            <div className="hidden sm:block">
+	              {/* Top Header */}
+	              <div className="relative text-center pt-12 pb-2 px-8">
 	                
-	                aria-hidden="true"
-	              />
+	                <div className="inline-flex items-center gap-6 mb-0">
+	                  <div className="relative">
+	                    <img
+	                      src={Computerimg}
+	                      alt="Healthcare icon"
+	                      className="w-40 h-42"
+	                    />
+	                    <div className="absolute bottom-12 -right-5 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+	                      <Play className="text-white ml-0.5" size={20} />
+	                    </div>
+	                  </div>
+	                  <div className="text-left">
+	                    <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-slate-900 mb-2 tracking-wide [word-spacing:2px] sm:[word-spacing:4px] md:[word-spacing:6px]">
+	                      BROWSE OUR LATEST VIDEOS ON
+	                    </h2>
+	                    <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#74C425] mt-2 text-center relative">
+	                      HEALTHCARE & WELLNESS
+	                      <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-1 w-49 bg-[#74C425]" />
+	                    </p>
+	                  </div>
+	                </div>
+	              </div>
+
+	           
+	            {/* Video Grid - 5 columns, fixed card design like screenshot */}
+	            <div className="relative overflow-hidden  pt-50 pb-16 px-2">
+			              <div
+		                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+		                style={{ backgroundImage: `url(${BgImgOfVideoSection})` }}
+		                aria-hidden="true"
+		              />
 
 	             
 
@@ -858,15 +955,15 @@ export default function CancerTreatmentPage({ onNavigate }) {
 
               <div className="relative">
         {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {healthVideos.slice(0, 20).map((video, index) => (
             <button
               key={video.id}
               onClick={() => handleVideoSelect(video)}
               title={video.title}
-              className="group w-full cursor-pointer rounded-[22px] bg-white p-3 text-left shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_14px_35px_rgba(0,0,0,0.22)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]"
+              className="group w-full cursor-pointer rounded-[22px] bg-white p-3 text-left transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]"
             >
-              <div className="relative overflow-hidden rounded-xl bg-slate-100 ring-1 ring-black/10">
+              <div className="relative overflow-hidden rounded-xl bg-slate-100">
                 <div className="aspect-video w-full">
                   <img
                     src={video.thumbnail || DEFAULT_THUMBNAIL}
@@ -876,7 +973,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 shadow-lg ring-2 ring-white/90">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
                     <Play className="ml-0.5 text-white" size={22} fill="white" />
                   </div>
                 </div>
@@ -886,7 +983,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
                     <div className="h-1 w-2/3 rounded-full bg-[#74C425]" />
                   </div>
                   <div
-                    className="h-2 w-3 rounded-sm border border-white/70"
+                    className="h-2 w-3 rounded-sm"
                     aria-hidden="true"
                   />
                 </div>
@@ -898,7 +995,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
                 )}
               </div>
 
-              <span className="mt-3 block w-full cursor-pointer rounded-md bg-[#74C425] px-2 py-2 text-center text-[11px] font-bold uppercase tracking-wide text-white shadow-sm transition-colors group-hover:bg-[#1118A6]">
+              <span className="mt-3 block w-full cursor-pointer rounded-md bg-[#74C425] px-2 py-2 text-center text-[11px] font-bold uppercase tracking-wide text-white transition-colors group-hover:bg-[#1118A6]">
                 {`Watch now `}
               </span>
             </button>
@@ -906,91 +1003,148 @@ export default function CancerTreatmentPage({ onNavigate }) {
         </div>
 
         {/* Watch More Button */}
-        <div className="text-center mt-12">
-          <a
-            href="https://youtube.com/@savemedhafoundation7959?si=y8vz2XCG11RgDmwg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full shadow-2xl transition-all transform hover:scale-105"
-          >
-            WATCH MORE
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-              <Play className="text-red-600" size={28} fill="red" />
-            </div>
-          </a>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-            
- <div className="w-full sm:w-[1730px] mt-20 py-10 sm:py-16 px-4 sm:pl-[30px] sm:pr-0 relative overflow-x-hidden sm:overflow-x-visible">
+	        <div className="text-center mt-12">
+	          <a
+	            href="https://youtube.com/@savemedhafoundation7959?si=y8vz2XCG11RgDmwg"
+	            target="_blank"
+	            rel="noopener noreferrer"
+	            className="inline-flex items-center translate-y-10 gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full transition-all transform hover:scale-105"
+	          >
+	            WATCH MORE
+	            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+	              <Play className="text-red-600" size={28} fill="red" />
+	            </div>
+	          </a>
+	        </div>
+	      </div>
+	      </div>
+	    </div>
+	  </div>
+	            </div>
+	            
+ <div className="relative mx-auto mt-20 w-full max-w-6xl overflow-x-hidden px-4 py-10 sm:overflow-x-visible sm:px-6 sm:py-16">
 
-  {/* GREEN CURVED BACK SHAPE */}
-  <div
-    className="absolute left-[10px] top-1/2 mt-4 -translate-y-1/2 h-[260px] w-[260px] sm:h-[400px] sm:w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
-    style={{
-      borderRadius: "50% 50% 0% 100% / 46% 43% 57% 54%",
-    }}
-  />
+	  {/* GREEN CURVED BACK SHAPE */}
+	  <div
+	    className="hidden sm:block absolute right-[800px] top-1/2 mt-4 -translate-y-1/2 h-[260px] w-[260px] sm:h-[400px] sm:w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
+	    style={{
+	      borderRadius: "50% 50% 0% 100% / 46% 43% 57% 54%",
+	    }}
+	  />
 
-  {/* MAIN WHITE PILL CARD */}
-  <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between bg-white rounded-[30px] shadow-[5px_4px_4px_0px_#215C0740] overflow-hidden h-auto sm:h-[260px] px-4 sm:px-14 py-6 sm:py-0 gap-6 sm:gap-0">
-
-    {/* LEFT CONTENT */}
-    <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 w-full sm:w-auto">
-      {/* DOCTOR IMAGE */}
-      <div className="h-[140px] w-[140px] sm:h-[230px] sm:w-[230px] rounded-full bg-[#e9f5dd] flex items-center justify-center overflow-hidden">
-        <img
-          src={DoctorImg}
-          alt="Subhankar Sarkar"
-          className="h-[128px] w-[128px] sm:h-[210px] sm:w-[210px] rounded-full object-cover grayscale"
-        />
-      </div>
-
-      {/* TEXT + CTA */}
-      <div className="flex flex-col mb-0 sm:mb-8 ml-0 sm:ml-8 gap-3 sm:gap-4 text-center sm:text-left">
-        <h3 className="text-[18px] sm:text-[30px] font-bold text-black uppercase leading-tight">
-          "OUR GOAL" – CANCER FREE WORLD <br /> 
-        </h3>
-
-        <p className="text-[16px] sm:text-[22px] text-gray-700 font-medium">
-          Subhankar Sarkar
-        </p>
-
-                    <button
-                      type="button"
-                      onClick={handleContactUsClick}
-                      className="mt-2 inline-flex items-center justify-center gap-2 rounded-[6px] bg-[#74C425] w-full sm:w-[188px] h-[45px] text-[15px] font-semibold text-white shadow hover:bg-[#1118A6] transition mx-auto sm:mx-0"
-                    >
-                      <MdPhoneInTalk size={16} />
-                      CONTACT US
-                    </button>
-      </div>
-    </div>
-
-    {/* CENTER RIBBON */}
-    <img
-      src={RedRibbon}
-      alt="Cancer Ribbon"
-      className="hidden sm:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px]"
-    />
-
-    {/* RIGHT IMAGE — ONLY PLACE BACKGROUND IMAGE HERE */}
-    <div className="relative h-[180px] sm:h-full w-full sm:w-[600px] transform translate-x-0 sm:translate-x-24 overflow-hidden rounded-2xl sm:rounded-none">
-  {/* Image */}
-  <img
-    src={BackgroundImg}
-    alt="Hope"
-    className="h-full w-full object-cover"
-  />
-
-  {/* White → Transparent Gradient */}
-  <div className="absolute inset-0 bg-gradient-to-r from-white via-white/40 to-transparent" />
-</div>
-
-
-  </div>
+	  {/* MAIN CARD */}
+		  <div className="relative z-10 overflow-hidden rounded-[20px] bg-white">
+		    {/* Mobile layout */}
+		    <div
+		      className="relative sm:hidden bg-cover bg-bottom bg-no-repeat px-6 pt-8 pb-10 text-center"
+		      style={{ backgroundImage: `url(${BackgroundImg})` }}
+		    >
+		      <div
+		        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-transparent via-white/60 to-white"
+		        aria-hidden="true"
+		      />
+		
+		      <img
+		        src={RedRibbon}
+		        alt=""
+		        aria-hidden="true"
+		        className="pointer-events-none absolute right-6 top-8 z-20 w-20"
+		      />
+		
+		      <div className="relative z-10">
+		        <h3 className="text-[22px] font-bold text-black uppercase leading-tight">
+		          "OUR GOAL" – CANCER <span className="block">FREE WORLD</span>
+		        </h3>
+		
+		        <div className="mt-6 flex justify-center">
+		          <div
+		            className="h-[260px] w-[260px] bg-gradient-to-b from-[#74C425] to-[#385E12] p-6 shadow-[0_14px_24px_rgba(0,0,0,0.18)]"
+		            style={{
+		              borderRadius: "70% 70% 0% 100% / 65% 60% 50% 54%",
+		            }}
+		          >
+		            <div className="h-full w-full rounded-full bg-white p-3">
+		              <div className="h-full w-full rounded-full bg-[#e9f5dd] overflow-hidden">
+		                <img
+		                  src={DoctorImg}
+		                  alt="Subhankar Sarkar"
+		                  className="h-full w-full object-cover grayscale"
+		                />
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		
+		        <p className="mt-6 text-[22px] text-black font-medium">
+		          Subhankar Sarkar
+		        </p>
+		
+		        <button
+		          type="button"
+		          onClick={handleContactUsClick}
+		          className="mt-4 inline-flex items-center justify-center gap-2 rounded-[6px] bg-[#74C425] px-8 py-3 text-[16px] font-semibold text-white shadow hover:bg-[#1118A6] transition"
+		        >
+		          <MdPhoneInTalk size={18} />
+		          CONTACT US
+		        </button>
+		      </div>
+		    </div>
+	
+	    {/* Desktop layout */}
+	    <div className="relative hidden sm:flex flex-col sm:flex-row items-center justify-between bg-white overflow-hidden h-auto sm:h-[260px] px-4 sm:pl-14 sm:pr-0 py-6 sm:py-0 gap-6 sm:gap-0">
+	      {/* LEFT CONTENT */}
+	      <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-8 w-full sm:w-auto">
+	        {/* DOCTOR IMAGE */}
+	        <div className="h-[140px] w-[140px] sm:h-[230px] sm:w-[230px] rounded-full bg-[#e9f5dd] flex items-center justify-center overflow-hidden">
+	          <img
+	            src={DoctorImg}
+	            alt="Subhankar Sarkar"
+	            className="h-[128px] w-[128px] sm:h-[210px] sm:w-[210px] rounded-full object-cover grayscale"
+	          />
+	        </div>
+	
+	        {/* TEXT + CTA */}
+	        <div className="flex flex-col mb-0 sm:mb-8 ml-0 sm:ml-8 gap-3 sm:gap-4 text-center sm:text-left">
+	          <h3 className="text-[18px] sm:text-[30px] font-bold text-black uppercase leading-tight whitespace-nowrap">
+	            "OUR GOAL" – CANCER FREE WORLD
+	          </h3>
+	
+	          <p className="text-[16px] sm:text-[22px] text-gray-700 font-medium">
+	            Subhankar Sarkar
+	          </p>
+	
+	          <button
+	            type="button"
+	            onClick={handleContactUsClick}
+	            className="mt-2 inline-flex items-center justify-center gap-2 rounded-[6px] bg-[#74C425] w-full sm:w-[188px] h-[45px] text-[15px] font-semibold text-white hover:bg-[#1118A6] transition mx-auto sm:mx-0"
+	          >
+	            <MdPhoneInTalk size={16} />
+	            CONTACT US
+	          </button>
+	        </div>
+	      </div>
+	
+	      {/* CENTER RIBBON */}
+	      <img
+	        src={RedRibbon}
+	        alt="Cancer Ribbon"
+	        className="pointer-events-none hidden sm:block absolute left-1/2 top-1/2 -translate-x-1 -translate-y-1/2 w-[220px] z-20"
+	      />
+	
+	      {/* RIGHT IMAGE — ONLY PLACE BACKGROUND IMAGE HERE */}
+	      <div className="pointer-events-none relative h-[180px] w-full overflow-hidden rounded-2xl sm:absolute sm:inset-0 sm:h-full sm:w-full sm:rounded-none sm:z-0">
+	        {/* Image */}
+	        <img
+	          src={BackgroundImg}
+	          alt="Hope"
+	          className="h-full w-full object-cover object-right"
+	        />
+	
+	        {/* White → Transparent Gradient */}
+	        <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent" />
+	      </div>
+	    </div>
+	  </div>
 </div>
 
 
@@ -1014,7 +1168,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
               <X size={28} />
             </button>
             {embedSrc ? (
-              <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl bg-black aspect-video">
+              <div className="relative w-full overflow-hidden rounded-2xl bg-black aspect-video">
                 <iframe
                   src={embedSrc}
                   title={selectedVideo.title || "YouTube video"}
@@ -1024,7 +1178,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
                 />
               </div>
             ) : (
-              <div className="bg-white rounded-2xl p-8 text-center shadow-2xl">
+              <div className="bg-white rounded-2xl p-8 text-center">
                 <p className="text-gray-800 font-medium mb-4">
                   Unable to play this video here. You can watch it directly on
                   YouTube.

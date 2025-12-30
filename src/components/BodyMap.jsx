@@ -1,4 +1,5 @@
 import organs from "../data/organs";
+import topRightDecoration from "../assets/Photo/Group 9291.png";
 import "./BodyMap.css";
 
 const BodyMap = ({ onOrganSelect }) => {
@@ -18,8 +19,16 @@ const BodyMap = ({ onOrganSelect }) => {
 
   return (
     // this div will take full width of the screen
-    <div className="body-map-wrapper w-full">
-      <div className="body-card">
+    <div className="body-map-wrapper relative w-full overflow-visible">
+      {/* Overlapping Decoration */}
+      <img
+        src={topRightDecoration}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute right-0 -top-24 hidden md:block md:w-[220px] lg:w-[260px] opacity-90 z-20"
+      />
+
+      <div className="body-card relative z-10">
         {/* <div className="body-card-header">
           <div>
             <p className="label">Organs</p>

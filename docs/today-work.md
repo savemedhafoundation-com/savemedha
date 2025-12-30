@@ -1,5 +1,47 @@
 # Work Log
 
+## 2025-12-29
+
+- Body Map section (Home):
+  - Added top-right decorative overlay image `src/assets/Photo/Group 9291.png` in both `src/components/BodyMap.jsx` and `src/components/FemaleBodyMap.jsx` (absolute `right-0 -top-24`, `z-20`, `md+` only).
+  - Updated wrappers to allow the decoration to overlap outside the green card (use `relative` + `overflow-visible` + z-index layering).
+  - Increased visible body area so legs fit better inside the green card by tuning the SVG sizing and bottom spacing in `src/components/BodyMap.css` / `src/components/FemaleBodyMap.css`.
+  - Restored/kept the “Treatment Categories” accordion card positioning/layering in the Body Map area in `src/components/HeroSection.jsx`.
+  - Updated Body Map heading copy and styling to match reference (“EXPLORE THE BODY MAP” with `#74C425`, plus helper lines) in `src/components/HeroSection.jsx`.
+
+- Treatment cards (mobile-only):
+  - Updated the card design to match the provided mobile reference (image fills width, green rounded footer overlap, 2-line title, pill “LEARN MORE”) in `src/components/Treatment_Cards.jsx`.
+  - Increased the mobile “LEARN MORE” button height/padding without changing desktop.
+  - Added mobile-only “LOAD MORE” behavior (shows 6 cards initially; desktop still shows all).
+
+- Cancer Treatment page (“OUR GOAL” CTA card):
+  - Split into separate mobile/desktop layouts to keep desktop unchanged while matching the mobile reference in `src/components/CancerTreatmentPage.jsx`.
+  - Desktop: kept horizontal layout, ensured the title stays on one line (`whitespace-nowrap`), and “melted” `BackgroundImg` behind the content with a left→right white fade overlay.
+  - Mobile: used `BackgroundImg` as the card background with a top fade, placed ribbon top-right, and used the requested green blob border-radius (`50% 50% 0% 100% / 46% 43% 57% 54%`) on the gradient shape behind the doctor image.
+
+- Volunteer banner:
+  - Made the section background full-bleed on desktop to remove side white gaps using negative margins/width calc in `src/components/VolunteerBanner.jsx`.
+  - Added/used background asset `src/assets/Photo/Group.png`.
+
+- About section (mobile-only typography):
+  - Updated the “About / Our Foundation” copy and applied the requested mobile typography (Poppins, 19px, `leading-[1]`, justify, specific bold/regular spans) while keeping desktop styling unchanged via `sm:` overrides in `src/components/AboutSection.jsx`.
+
+- Assets / housekeeping:
+  - Added new image assets: `src/assets/Photo/Group 9291.png` (Body Map decoration) and `src/assets/Photo/Group.png` (Volunteer banner background).
+  - Updated `src/assets/video/Recovery Animation.mp4` content (ensure Git LFS is enabled before committing due to file size).
+  - Ran `npm run build` successfully (Vite); noted the chunk-size warning only.
+  - Many files show as modified due to line-ending/formatting changes (LF ↔ CRLF); functional UI changes are mainly in the files listed above.
+
+## 2025-12-27
+
+- Contact banner: added configurable overlay support to `HeroBanner` and applied the green gradient overlay in `ContactUsBanner`.
+- Locate Us: added `Rectangle 265.png` as the query form section background with a `bg-black/40` dimming layer on top.
+- Footer (mobile): redesigned the mobile-only footer layout to match the provided design (logo + quote, newsletter card, 2-column links, social icons, terms + copyright).
+- Home page: removed border/shadow styling across Home sections (About, Patient Stories, Testimonials, Videos, Volunteer banner) and added `showShadows={false}` to disable Hero banner shadows on Home.
+- Vercel build fixes: fixed case-sensitive asset imports causing Rollup resolve errors:
+  - `TestimonialsSection.jsx`: `licenceLogo (2).png` → `licencelogo (2).png`
+  - `ContactUsBanner.jsx`: `contactUsBanner.png` → `Contactusbanner.png`
+
 ## 2025-12-26
 
 - Locate Us: updated the clinic cards `clip-path` polygon shape (added bottom notch points: `64% 100%`, `46% 76%`, `29% 100%`).

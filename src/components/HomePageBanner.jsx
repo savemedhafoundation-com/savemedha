@@ -31,7 +31,7 @@ const DotPattern = () => (
   </div>
 );
 
-const DefaultHeroContent = () => {
+const DefaultHeroContent = ({ showShadows = true }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -66,7 +66,7 @@ const DefaultHeroContent = () => {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 font-medium OpenSans text-base sm:text-lg md:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
-            isHovered ? "shadow-lg" : "shadow-md"
+            showShadows ? (isHovered ? "shadow-lg" : "shadow-md") : ""
           }`}
         >
           DISCOVER
@@ -84,6 +84,7 @@ export default function HeroBanner({
   imageMap,
   containerClassName,
   className = "",
+  showShadows = true,
   overlayStyle,
   overlayClassName = "",
   children,
@@ -207,7 +208,7 @@ export default function HeroBanner({
       : children !== undefined
         ? children
         : showDefaultContent
-          ? <DefaultHeroContent />
+          ? <DefaultHeroContent showShadows={showShadows} />
           : null;
 
   const shouldRenderDefaultSpacer = children === undefined && showDefaultContent;
@@ -287,7 +288,9 @@ export default function HeroBanner({
           <button
             type="button"
             onClick={goPrev}
-            className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 px-4 py-3 text-2xl font-bold text-slate-900 shadow-md transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#74C425]"
+            className={`absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 px-4 py-3 text-2xl font-bold text-slate-900 ${
+              showShadows ? "shadow-md" : ""
+            } transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#74C425]`}
             aria-label="Previous banner image"
           >
             ‹
@@ -295,7 +298,9 @@ export default function HeroBanner({
           <button
             type="button"
             onClick={goNext}
-            className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 px-4 py-3 text-2xl font-bold text-slate-900 shadow-md transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#74C425]"
+            className={`absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/80 px-4 py-3 text-2xl font-bold text-slate-900 ${
+              showShadows ? "shadow-md" : ""
+            } transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#74C425]`}
             aria-label="Next banner image"
           >
             ›

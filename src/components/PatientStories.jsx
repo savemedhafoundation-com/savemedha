@@ -202,7 +202,7 @@ const PatientStories = () => {
     <>
       <section
         id="patient-stories"
-        className="relative w-full bg-[#FBFFF9] shadow-[5px_4px_4px_0px_#215C0740] py-16 text-center rounded-3xl  overflow-hidden"
+        className="relative w-full bg-[#FBFFF9] py-16 text-center rounded-3xl  overflow-hidden"
       >
         <div className="mb-10 text-center ">
           <h2 className="relative inline-block text-4xl mb-25  font-bold text-slate-900">
@@ -219,7 +219,7 @@ const PatientStories = () => {
           <button
             type="button"
             aria-label="Previous story"
-            className="absolute left-2 md:left-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec] cursor-pointer"
+            className="absolute left-2 md:left-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] transition hover:bg-[#f2f8ec] cursor-pointer"
             onClick={() => rotateRing(1)}
           >
             <ArrowLeft size={22} />
@@ -227,7 +227,7 @@ const PatientStories = () => {
           <button
             type="button"
             aria-label="Next story"
-            className="absolute right-2 md:right-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-lg ring-1 ring-[#215C07]/30 transition hover:bg-[#f2f8ec]  cursor-pointer "
+            className="absolute right-2 md:right-10 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] transition hover:bg-[#f2f8ec]  cursor-pointer "
             onClick={() => rotateRing(-1)}
           >
             <ArrowRight size={22} />
@@ -270,7 +270,7 @@ const PatientStories = () => {
                     }
                   }}
                 >
-                  <div className="relative h-[220px] w-full overflow-visible rounded-2xl bg-[#0f172a] shadow-2xl md:right-26 md:bottom-20 md:h-[350px] md:w-[700px]">
+                  <div className="relative h-[220px] w-full overflow-visible rounded-2xl bg-[#0f172a] md:right-26 md:bottom-20 md:h-[350px] md:w-[700px]">
                     <img
                       src={toThumbnailUrl(story.youtubeUrl)}
                       alt={story.title}
@@ -290,7 +290,7 @@ const PatientStories = () => {
                     </div>
                     <button
                       type="button"
-                      className="pointer-events-auto absolute left-1/2 bottom-[-48px] sm:bottom-[-56px] md:bottom-[-90px] z-30 inline-flex items-center gap-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#74C425] px-4 py-2 text-sm sm:text-base md:text-[25px] font-semibold uppercase tracking-wide text-white shadow-[0_10px_25px_rgba(33,92,7,0.35)] transition hover:bg-[#5ea01d]"
+                      className="pointer-events-auto absolute left-1/2 bottom-[-48px] sm:bottom-[-56px] md:bottom-[-90px] z-30 inline-flex items-center gap-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#74C425] px-4 py-2 text-sm sm:text-base md:text-[25px] font-semibold uppercase tracking-wide text-white transition hover:bg-[#5ea01d]"
                       onClick={(e) => {
                         e.stopPropagation();
                         setOpenIndex(index);
@@ -311,7 +311,7 @@ const PatientStories = () => {
             onClick={() => setOpenIndex(null)}
           >
             <div
-              className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-black shadow-2xl"
+              className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-black"
               onClick={(e) => e.stopPropagation()}
             >
               <button

@@ -65,46 +65,31 @@ export default function HomePage({ onNavigate }) {
   return (
     <>
       <div className="-mx-4 sm:-mx-6 lg:-mx-20">
-        <HeroBanner />
+        <HeroBanner showShadows={false} />
       </div>
       <AboutSection onNavigate={onNavigate} />
       <ServicesSection onNavigate={onNavigate} />
       <section className="py-16">
-        <div className="w-full px-4 sm:px-6">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900">
-              Explore the Body Map
-            </h2>
-            <p className="text-gray-600 mt-3">
-              Hover to see focus and click an organ to learn how Natural
-              Immunotherapy supports it.
-            </p>
-          </div>
+	        <div className="w-full px-4 sm:px-6">
+	          <div className="text-center mb-10">
+	            <h2 className="text-3xl font-bold text-gray-900 uppercase tracking-wide">
+	              EXPLORE <span className="text-[#74C425]">THE BODY MAP</span>
+	            </h2>
+	            <p className="text-gray-600 mt-3">
+	              Click on an organ to learn how Natural Immunotherapy supports it.
+	            </p>
+	            <p className="text-gray-900 mt-1 font-semibold">
+	              Click to Explore More:
+	            </p>
+	          </div>
+	        </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-start relative overflow-hidden">
-            {/* new design */}
-            <div
-              className="hidden md:block absolute top-[-100px] left-[-10px] w-[180px] h-[180px] 
-               bg-gradient-to-br from-[#7bff63] to-[#47c82f]
-              shadow-[0_8px_25px_8px_rgba(0,0,0,0.25)] rounded-[52%_48%_92%_8%_/_43%_47%_53%_57%] z-12"
-            ></div>
-
-            <div
-              className="hidden md:block absolute top-[-50px] left-[140px] w-[180px] h-[180px] 
-             bg-gradient-to-br from-[#7bff63] to-[#47c82f]
-              shadow-[0_8px_25px_8px_rgba(0,0,0,0.25)] rounded-[52%_48%_92%_8%_/_43%_47%_53%_57%] z-13"
-            ></div>
-
-            <div
-              className="hidden md:block absolute top-[0px] left-[-10px] w-[200px] h-[200px] 
-               bg-gradient-to-br from-[#7bff63] to-[#47c82f]
-              shadow-[0_8px_25px_8px_rgba(0,0,0,0.25)] rounded-[52%_48%_92%_8%_/_43%_47%_53%_57%] z-14"
-            ></div>
-
+        <div className="sm:-mx-6 md:-mx-20">
+          <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-start relative overflow-visible">
             {/* Treatment Categories */}
-            <div className="hidden md:block w-full lg:max-w-[10px] xl:max-w-[280px] absolute top-40 left-40 z-10">
-              <div className="bg-[#fcfcfc] border-1 border-[#2f520c] p-2 shadow-lg rounded-sm">
-                <div className="bg-[#f1f6e6] border-2 border-[#7bb338] px-4 py-1 rounded-sm">
+            <div className="hidden md:block w-full lg:max-w-[10px] xl:max-w-[280px] absolute top-40 left-40 z-30">
+              <div className="bg-[#fcfcfc] p-2 rounded-sm">
+                <div className="bg-[#f1f6e6] px-4 py-1 rounded-sm">
                   <h3 className="text-xl font-semibold text-[#30590d] uppercase tracking-wide">
                     Treatment Categories:
                   </h3>
@@ -115,7 +100,7 @@ export default function HomePage({ onNavigate }) {
                     return (
                       <div
                         key={category.id}
-                        className="border-2 border-[#7bb338] bg-white shadow-sm rounded-sm"
+                        className="bg-white rounded-sm"
                       >
                         <button
                           type="button"
@@ -130,7 +115,7 @@ export default function HomePage({ onNavigate }) {
                           )}
                         </button>
                         {isOpen && (
-                          <div className="border-t border-[#7bb338] px-4 py-3 max-h-[150px] overflow-y-auto">
+                          <div className="px-4 py-3 max-h-[150px] overflow-y-auto">
                             <div className="space-y-2">
                               {category.items.map((item) => (
                                 <p

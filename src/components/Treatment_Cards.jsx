@@ -1,5 +1,4 @@
-import React from "react";
-import { GiReturnArrow } from "react-icons/gi";
+import React, { useState } from "react";
 import cancerImg from "../assets/treatmentpageasset/TREATMENT IMAGES/CANCER.png";
 import constipationImg from "../assets/treatmentpageasset/TREATMENT IMAGES/Constipation.png";
 import diabeticsImg from "../assets/treatmentpageasset/TREATMENT IMAGES/DIABETICS.png";
@@ -103,59 +102,83 @@ export default function TreatmentCards({
   onSelectCategory,
   selectedCategory,
 }) {
+  const [isExpandedOnMobile, setIsExpandedOnMobile] = useState(false);
+
   return (
-    <div className="relative max-w-screen-2xl mx-auto px-4 sm:px-6">
+    <div className="relative max-w-screen-2xl mx-auto px-2 sm:px-6">
       <div className="text-center">
         <h3 className="text-2xl sm:text-3xl lg:text-[35px] font-robotocondensed font-bold text-[#1b3610] tracking-tight uppercase">
           OUR <span className="text-[#74C425]">SERVICES</span>
         </h3>
       </div>
 
-      <div className="relative mt-6 sm:mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 lg:grid-rows-2 gap-3 sm:gap-4">
-        {TREATMENT_CARDS.map((card) => {
-          const isSelected = selectedCategory === card.key;
-
-          return (
-            <div
-              key={card.id}
-              className={`bg-white rounded-2xl shadow-[0_6px_12px_rgba(0,0,0,0.08)] overflow-hidden border flex flex-col transition-colors ${
-                isSelected
-                  ? "border-[#5cb624] ring-2 ring-[#5cb624]/30"
-                  : "border-[#e6e6e6]"
-              }`}
-            >
-              <div
-                className="h-16 md:h-16 sm:h-16 lg:h-28 bg-cover bg-center"
-                style={{ backgroundImage: `url('${card.image || CARD_IMAGE}')` }}
-              />
-              <div className="p-2 sm:p-2.5 text-center space-y-2 flex-1 flex flex-col">
-                <p className="text-[10px] sm:text-[11px] font-semibold text-[#0f1c08] leading-tight uppercase">
-                  {card.title}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (card.key && typeof onSelectCategory === "function") {
-                      onSelectCategory(card.key);
-                      return;
-                    }
-
-                    onNavigate?.("treatment-questions", { category: card.key });
-                  }}
-                  className={`mt-auto inline-flex items-center justify-center cursor-pointer gap-2 text-white text-[10px] sm:text-[11px] font-semibold px-2 py-1 rounded-full shadow transition-colors ${
-                    isSelected
-                      ? "bg-[#1118A5] hover:bg-[#0d128f]"
-                      : "bg-[#5cb624] hover:bg-[#4b9c1f]"
-                  }`}
-                  aria-pressed={isSelected}
-                >
-                  LEARN MORE <GiReturnArrow />
-                </button>
-              </div>
-            </div>
-          );
-        })}
+      <div className="relative mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-8 lg:grid-rows-2">
+        {TREATMENT_CARDS.map((card, index) => {
+		          const isSelected = selectedCategory === card.key;
+		          const titleParts = String(card.title || "").trim().split(/\s+/);
+		          const titleSuffix = titleParts.length ? titleParts.pop() : "";
+		          const titleMain = titleParts.join(" ");
+              const isHiddenOnMobile = !isExpandedOnMobile && index >= 6;
+		
+		          return (
+		            <div
+		              key={card.id}
+		              className={`bg-white rounded-2xl shadow-[0_6px_12px_rgba(0,0,0,0.08)] overflow-hidden border flex flex-col transition-colors ${
+		                isSelected
+		                  ? "border-[#5cb624] ring-2 ring-[#5cb624]/30"
+		                  : "border-[#e6e6e6]"
+		              } ${isHiddenOnMobile ? "hidden sm:flex" : ""}`}
+		            >
+				              <div
+				                className="h-28 bg-cover bg-center bg-no-repeat sm:h-16 lg:h-28"
+				                style={{ backgroundImage: `url('${card.image || CARD_IMAGE}')` }}
+				              />
+			              <div
+			                className={`relative -mt-6 flex flex-1 flex-col items-center justify-center gap-2 rounded-[30px] px-3 pb-4 pt-7 text-center sm:mt-0 sm:gap-2 sm:rounded-none sm:px-4 sm:py-3 ${
+			                  isSelected ? "bg-[#1118A5]" : "bg-[#74C425]"
+			                }`}
+			              >
+			                <p className="text-[12px] sm:text-[11px] font-bold text-white leading-[1.1] uppercase tracking-wide">
+			                  <span>{titleMain}</span>
+			                  {titleSuffix ? <span className="block">{titleSuffix}</span> : null}
+			                </p>
+		
+		                <button
+		                  type="button"
+		                  onClick={() => {
+		                    if (card.key && typeof onSelectCategory === "function") {
+		                      onSelectCategory(card.key);
+		                      return;
+		                    }
+		
+		                    onNavigate?.("treatment-questions", { category: card.key });
+		                  }}
+		                  className={`inline-flex items-center justify-center cursor-pointer rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-wide shadow transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:px-4 sm:py-1 sm:text-[10px] ${
+		                    isSelected
+		                      ? "bg-white text-[#1118A5] hover:bg-white/90"
+		                      : "bg-[#d8f4b8] text-[#1b3610] hover:bg-white"
+		                  }`}
+		                  aria-pressed={isSelected}
+		                >
+		                  LEARN MORE
+		                </button>
+		              </div>
+		            </div>
+		          );
+		        })}
       </div>
+
+      {!isExpandedOnMobile && (
+        <div className="mt-6 flex justify-center sm:hidden">
+          <button
+            type="button"
+            onClick={() => setIsExpandedOnMobile(true)}
+            className="inline-flex items-center justify-center rounded-md bg-[#1118A6] px-8 py-2 text-sm font-semibold text-white shadow transition hover:bg-[#0d128f]"
+          >
+            LOAD MORE
+          </button>
+        </div>
+      )}
     </div>
   );
 }

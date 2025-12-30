@@ -105,7 +105,7 @@ export default function TestimonialsSection() {
       </div>
 
       <section
-        className="py-10 px-4 sm:px-10 mb-10 border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-3xl"
+        className="py-10 px-4 sm:px-10 mb-10 rounded-3xl"
         style={{
           background: "linear-gradient(90deg, #74C425 0%, #3A6212 100%)",
         }}
@@ -115,7 +115,7 @@ export default function TestimonialsSection() {
             <button
               type="button"
               onClick={() => scrollTestimonials(-1)}
-              className="flex absolute left-2 sm:-left-20 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center shadow-lg transition hover:bg-[#edfce0] cursor-pointer"
+              className="flex absolute left-2 sm:-left-20 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white text-green-700 items-center justify-center transition hover:bg-[#edfce0] cursor-pointer"
               aria-label="Scroll testimonials left"
             >
               <ArrowLeft size={18} />
@@ -123,7 +123,7 @@ export default function TestimonialsSection() {
             <button
               type="button"
               onClick={() => scrollTestimonials(1)}
-              className="flex absolute right-2 sm:-right-20 top-1/2 -translate-y-1/2  z-10 w-12 h-12 rounded-full bg-white border border-[#0d8b1f] text-green-700 items-center justify-center shadow-lg transition hover:bg-[#d3f7b4] cursor-pointer"
+              className="flex absolute right-2 sm:-right-20 top-1/2 -translate-y-1/2  z-10 w-12 h-12 rounded-full bg-white text-green-700 items-center justify-center transition hover:bg-[#d3f7b4] cursor-pointer"
               aria-label="Scroll testimonials right"
             >
               <ArrowRight size={18} />
@@ -134,22 +134,22 @@ export default function TestimonialsSection() {
               className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 hide-scrollbar"
             >
               {loading ? (
-                <div className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]">
+                <div className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative">
                   Loading testimonials...
                 </div>
               ) : hasError ? (
-                <div className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]">
+                <div className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative">
                   Unable to load testimonials
                 </div>
               ) : testimonials.length === 0 ? (
-                <div className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]">
+                <div className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative">
                   No testimonials available
                 </div>
               ) : (
                 testimonials.map((t, idx) => (
                 <div
                   key={t.id ?? idx}
-                  className="snap-start flex-shrink-0 w-[390px] bg-white border border-gray-200 rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-[5px_4px_4px_0px_#215C0740]"
+                  className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative"
                 >
                   <div className="absolute top-4 left-1 w-4 h-4 rounded-full bg-[#74C425] mt-4 ml-2" />
                   <div className="absolute top-3 left-3 w-12 h-12 rounded-full bg-[#74C425] opacity-70 mt-8 ml-2" />
@@ -160,10 +160,10 @@ export default function TestimonialsSection() {
                         <img
                           src={t.image}
                           alt={t.name}
-                          className="w-16 h-16 rounded-full object-cover ring-4 ring-white shadow-md"
+                          className="w-16 h-16 rounded-full object-cover"
                         />
                       ) : (
-                        <div className="w-16 h-16 rounded-full ring-4 ring-white shadow-md bg-green-600 text-white font-semibold flex items-center justify-center text-lg">
+                        <div className="w-16 h-16 rounded-full bg-green-600 text-white font-semibold flex items-center justify-center text-lg">
                           {getInitial(t.name)}
                         </div>
                       )}
@@ -201,7 +201,7 @@ export default function TestimonialsSection() {
           <p className="mb-4 text-center text-lg font-bold text-gray-900">
             CERTIFIED BY
           </p>
-          <div className="w-full bg-white border border-gray-200 shadow-[5px_4px_4px_0px_#215C0740] rounded-md px-6 py-6">
+          <div className="w-full bg-white rounded-md px-6 py-6">
             <img
               src={LicenceLogo}
               alt="License logos"

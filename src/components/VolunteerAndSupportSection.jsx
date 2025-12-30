@@ -31,7 +31,7 @@ const VolunteerAndSupportSection = ({ onNavigate }) => {
               <button
                 type="button"
                 onClick={() => onNavigate?.("donate", { scrollTo: "donate-form" })}
-                className="cursor-pointer bg-[#74C425] hover:bg-[#1118A6] text-white font-bold text-[14px] sm:text-[25px] px-4 sm:px-10 py-1.5 sm:py-4 rounded-[5px] shadow-xl transition-all inline-flex items-center justify-center gap-2 sm:gap-3 max-w-[calc(100vw-2rem)] sm:max-w-none"
+                className="cursor-pointer bg-[#74C425] hover:bg-[#1118A6] text-white font-bold text-[14px] sm:text-[25px] px-4 sm:px-10 py-1.5 sm:py-4 rounded-[5px] transition-all inline-flex items-center justify-center gap-2 sm:gap-3 max-w-[calc(100vw-2rem)] sm:max-w-none"
               >
                 <img
                   src={HandHoldingHeart}

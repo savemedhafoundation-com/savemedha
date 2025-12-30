@@ -8,7 +8,7 @@
   border: 1px solid rgba(127, 198, 226, 0.15);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   border-radius: 28px;
-  padding: 1.5rem 1.5rem 2rem;
+  padding: 1.5rem 1.5rem 3rem;
   backdrop-filter: blur(10px);
 }
 
@@ -45,7 +45,7 @@
   justify-content: center;
   width: 100%;
   overflow: hidden;
-  margin-bottom: -80px; /* pull up to remove excess whitespace under the map */
+  margin-bottom: -80px; /* keep full body visible inside the card */
 }
 
 .body-map-svg {

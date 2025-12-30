@@ -4,7 +4,7 @@ import Hand2 from "../assets/Photo/Hand2.png";
 import People3 from "../assets/Photo/pepole3.png";
 import RectangleBlue1 from "../assets/Photo/rectangleblue1.png";
 import RectangleBlue2 from "../assets/Photo/rectangleblue2.png";
-import VolunteerBg from "../assets/Photo/valunteerBg.png";
+import VolunteerBg from "../assets/Photo/Group.png";
 
 export function JoinUsText({ className = "" }) {
   const ref = useRef(null);
@@ -36,7 +36,7 @@ export function JoinUsText({ className = "" }) {
             animationDelay: `${i * 120}ms`,
             textShadow: "6px 0px 0px #7CB342",
           }}
-          className="inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight cursor-pointer select-none hover:-translate-y-3 hover:scale-110 hover:text-[#7CB342] transition-all duration-300 drop-shadow-[0_6px_12px_rgba(0,0,0,0.45)] [-webkit-text-stroke:1px_black] md:[-webkit-text-stroke:2px_black]"
+          className="inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight cursor-pointer select-none hover:-translate-y-3 hover:scale-110 hover:text-[#7CB342] transition-all duration-300 [-webkit-text-stroke:1px_black] md:[-webkit-text-stroke:2px_black]"
         >
           {char === " " ? "\u00A0" : char}
         </span>
@@ -82,11 +82,11 @@ export default function VolunteerBanner() {
     setVolunteerForm({ name: "", phone: "" });
   };
 
-  return (
-    <section
-      className="relative w-full py-12 pb-20 flex justify-center bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${VolunteerBg})` }}
-    >
+	  return (
+	    <section
+	      className="relative w-full py-12 pb-20 flex justify-center bg-cover bg-center bg-no-repeat sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20"
+	      style={{ backgroundImage: `url(${VolunteerBg})` }}
+	    >
       <div className="absolute inset-0" aria-hidden="true" />
       <div className="relative w-[92%] max-w-[1400px]">
         {/* MAIN CARD */}
@@ -176,7 +176,7 @@ export default function VolunteerBanner() {
               setStatus("");
               setIsVolunteerModalOpen(true);
             }}
-            className="cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-lg sm:text-xl lg:text-2xl font-semibold px-10 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 rounded-[20px] shadow-2xl"
+            className="cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-lg sm:text-xl lg:text-2xl font-semibold px-10 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 rounded-[20px]"
           >
             BECOME OUR VOLUNTEER
           </button>
@@ -191,7 +191,7 @@ export default function VolunteerBanner() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="volunteer-modal-title"
-              className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl"
+              className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white"
               onClick={(event) => event.stopPropagation()}
             >
               <button
@@ -231,7 +231,7 @@ export default function VolunteerBanner() {
                       value={volunteerForm.name}
                       onChange={handleChange}
                       required
-                      className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm shadow-sm focus:border-[#1118A6] focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
+                      className="mt-2 w-full rounded-xl bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -251,7 +251,7 @@ export default function VolunteerBanner() {
                       value={volunteerForm.phone}
                       onChange={handleChange}
                       required
-                      className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm shadow-sm focus:border-[#1118A6] focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
+                      className="mt-2 w-full rounded-xl bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
                       placeholder="Enter your phone number"
                     />
                   </div>
@@ -259,14 +259,14 @@ export default function VolunteerBanner() {
                   <div className="pt-2 flex flex-col gap-3 sm:flex-row">
                     <button
                       type="submit"
-                      className="w-full rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#1118A6]"
+                      className="w-full rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#1118A6]"
                     >
                       Submit
                     </button>
                     <button
                       type="button"
                       onClick={closeModal}
-                      className="w-full rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                      className="w-full rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                     >
                       Cancel
                     </button>
