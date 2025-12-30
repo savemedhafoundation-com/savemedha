@@ -11,11 +11,11 @@ export default function AboutSection({ onNavigate }) {
   return (
     <section className="py-16 bg-white">
       <div className="w-full mx-auto  px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-20">
-        <div className="relative w-full lg:w-1/2 flex justify-center h-[320px] sm:h-[390px] md:h-[380px] lg:h-[400px]">
+        <div className="relative w-full lg:w-1/2 flex justify-center h-[340px] sm:h-[390px] md:h-[380px] lg:h-[400px]">
           <img
             src={AboutFrame}
             alt="Green circular frame"
-            className="absolute inset-0 w-full h-full object-contain translate-x-6 sm:translate-x-0 lg:left-4"
+            className="absolute inset-0 w-full h-full object-contain translate-x-12 sm:translate-x-0 lg:left-4"
           />
           <div className="relative z-10 bg-white overflow-hidden w-[85%] sm:w-[75%] md:w-[65%] lg:w-[80%] h-[85%] sm:h-[80%] md:h-[75%] lg:h-[85%] mt-6 sm:mt-8 lg:mt-6 right-0 sm:right-4 lg:right-9 rounded-tr-[160px] rounded-br-[160px] sm:rounded-tr-[180px] sm:rounded-br-[180px] lg:rounded-tr-[200px] lg:rounded-br-[200px] rounded-tl-[60px]">
             <img
@@ -39,10 +39,10 @@ export default function AboutSection({ onNavigate }) {
           <p className="mb-5 text-black font-poppins text-[19px] leading-[1] tracking-normal text-justify sm:text-gray-800 sm:font-sans sm:text-base sm:leading-relaxed sm:text-left">
             <span className="font-semibold">
               Save Medha Foundation is a dedicated NGO committed to fighting
-              cancer through Natural Immunotherapy
+              cancer through Natural Immunotherapy 
             </span>
             <span className="font-normal">
-              a holistic, science-backed approach that empowers the body’s own
+               {" "}a holistic, science-backed approach that empowers the body’s own
               immune system to combat cancer naturally. We have broken away from
               conventional medical procedures to establish an innovative and
               effective Natural Immunotherapy treatment system for our patients.

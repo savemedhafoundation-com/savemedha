@@ -823,7 +823,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
       </section> */}
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
-		<section className="w-full py-16 sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20">
+		<section className="w-full pt-6 pb-16 sm:py-16 sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20">
 	        <div className="w-full">
 	          <div className="relative rounded-3xl overflow-hidden bg-[#FBFFF9]">
 	            {/* Mobile-only layout (matches screenshot) */}
