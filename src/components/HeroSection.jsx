@@ -84,8 +84,8 @@ export default function HomePage({ onNavigate }) {
 	          </div>
 	        </div>
 
-        <div className="sm:-mx-6 md:-mx-20">
-          <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-start relative overflow-visible">
+	        <div className="sm:-mx-6 md:-mx-20">
+	          <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-stretch sm:items-start relative overflow-visible">
             {/* Treatment Categories */}
             <div className="hidden md:block w-full lg:max-w-[10px] xl:max-w-[280px] absolute top-40 left-40 z-30">
               <div className="bg-[#fcfcfc] p-2 rounded-sm">
