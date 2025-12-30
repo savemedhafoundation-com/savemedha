@@ -43,13 +43,39 @@ const toThumbnailUrl = (input = "") => {
 const PatientStories = () => {
   const ringRef = useRef(null);
   const itemRefs = useRef([]);
+  const mobileSliderRef = useRef(null);
   const [stories, setStories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [openIndex, setOpenIndex] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return true;
+    }
+    return window.matchMedia("(min-width: 640px)").matches;
+  });
 
   const currentVideoUrl =
     openIndex !== null ? toEmbedUrl(stories[openIndex]?.youtubeUrl) : null;
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return undefined;
+    }
+
+    const mql = window.matchMedia("(min-width: 640px)");
+
+    const update = () => setIsDesktop(mql.matches);
+    update();
+
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", update);
+      return () => mql.removeEventListener("change", update);
+    }
+
+    mql.addListener(update);
+    return () => mql.removeListener(update);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -92,6 +118,7 @@ const PatientStories = () => {
   }, []);
 
   const rotateRing = (direction = 1) => {
+    if (!isDesktop) return;
     const ringEl = ringRef.current;
     const items = itemRefs.current.filter(Boolean);
     if (!ringEl || !items.length) return;
@@ -104,13 +131,14 @@ const PatientStories = () => {
   };
 
   useEffect(() => {
+    if (!isDesktop) return;
+
     const ringEl = ringRef.current;
     const items = itemRefs.current.filter(Boolean);
     if (!ringEl || !items.length) return;
 
     const angle = 360 / items.length;
-    const radius =
-      typeof window !== "undefined" && window.innerWidth < 640 ? 200 : 420;
+    const radius = 420;
     let xPos = 0;
 
     gsap.set(ringEl, {
@@ -196,7 +224,14 @@ const PatientStories = () => {
         el.removeEventListener("mouseleave", handleLeave);
       });
     };
-  }, [stories.length]);
+  }, [stories.length, isDesktop]);
+
+  const scrollMobileStories = (direction) => {
+    const slider = mobileSliderRef.current;
+    if (!slider) return;
+    const delta = Math.max(1, Math.round(slider.clientWidth * 0.9));
+    slider.scrollBy({ left: direction * delta, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -211,11 +246,104 @@ const PatientStories = () => {
             <span className="text-[#74C425]">SUCCESS STORY</span>
           </h2>
           <p className=" text-sm -translate-y-20 text-slate-600">
-            Drag the carousel to explore stories in 3D, then tap to watch.
+            <span className="hidden sm:inline">
+              Drag the carousel to explore stories in 3D, then tap to watch.
+            </span>
+            <span className="sm:hidden">
+              Swipe to browse stories, then tap to watch.
+            </span>
           </p>
         </div>
 
-        <div className="relative mx-auto flex items-center justify-center px-4 pb-20">
+        {/* Mobile slider (no 3D/GSAP) */}
+        <div className="relative mx-auto sm:hidden px-4 pb-12">
+          {isLoading && <div>Loading patient stories...</div>}
+          {hasError && <div>Unable to load patient stories</div>}
+          {!isLoading && !hasError && stories.length === 0 && (
+            <div>No patient stories available</div>
+          )}
+
+          {!isLoading && !hasError && stories.length > 0 ? (
+            <>
+              {stories.length > 1 ? (
+                <>
+                  <button
+                    type="button"
+                    aria-label="Previous story"
+                    className="absolute left-2 top-[110px] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-sm transition hover:bg-[#f2f8ec] cursor-pointer"
+                    onClick={() => scrollMobileStories(-1)}
+                  >
+                    <ArrowLeft size={20} />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next story"
+                    className="absolute right-2 top-[110px] z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#215C07] shadow-sm transition hover:bg-[#f2f8ec] cursor-pointer"
+                    onClick={() => scrollMobileStories(1)}
+                  >
+                    <ArrowRight size={20} />
+                  </button>
+                </>
+              ) : null}
+
+              <div
+                ref={mobileSliderRef}
+                className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth px-2 pb-6"
+              >
+                {stories.map((story, index) => (
+                  <div key={story.id} className="shrink-0 snap-center w-[85%] max-w-[360px]">
+                    <div
+                      className="relative h-[220px] w-full overflow-hidden rounded-2xl bg-[#0f172a]"
+                      role="button"
+                      tabIndex={0}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenIndex(index);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setOpenIndex(index);
+                        }
+                      }}
+                    >
+                      <img
+                        src={toThumbnailUrl(story.youtubeUrl)}
+                        alt={story.title}
+                        className="h-full w-full object-contain bg-white"
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
+                      <div className="pointer-events-none absolute bottom-4 left-4 right-4 text-left text-white">
+                        <p className="text-[11px] uppercase tracking-[0.2em] text-white/70">
+                          Featured Story
+                        </p>
+                        <h3 className="mt-1 text-lg font-semibold leading-tight line-clamp-2">
+                          {story.title}
+                        </h3>
+                        <p className="mt-1 text-xs text-white/80 line-clamp-2">
+                          {story.description}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="mt-4 w-full rounded-full bg-[#74C425] px-4 py-2 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-[#5ea01d]"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOpenIndex(index);
+                      }}
+                    >
+                      Watch Now
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : null}
+        </div>
+
+        {/* Desktop 3D carousel (GSAP) */}
+        <div className="relative mx-auto hidden sm:flex items-center justify-center px-4 pb-20">
           <button
             type="button"
             aria-label="Previous story"
