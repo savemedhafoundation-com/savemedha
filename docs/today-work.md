@@ -1,5 +1,31 @@
 # Work Log
 
+## 2025-12-30
+
+- Home hero banner:
+  - Mobile: made the banner full-bleed and used `src/assets/Photo/mobilebanner.png` as the background (desktop unchanged) via `src/components/HeroSection.jsx` + `src/components/HomePageBanner.jsx`.
+  - Desktop: zoomed/shifted the People banner to reduce the large left white area in `src/components/HomePageBanner.jsx`.
+
+- Patient success story:
+  - Mobile: removed the GSAP 3D carousel and replaced it with a normal swipe/scroll slider (scroll-snap + smooth scroll); desktop GSAP carousel remains in `src/components/PatientStories.jsx`.
+
+- Healthcare videos section:
+  - Mobile: redesigned “BROWSE OUR LATEST VIDEOS ON / HEALTHCARE & WELLNESS” to match the provided mobile reference (stacked cards + “Load More Videos”) in `src/components/CancerTreatmentPage.jsx`.
+  - Mobile: reduced vertical spacing between “Patient Success Story” and the videos section in `src/components/HeroSection.jsx` + `src/components/CancerTreatmentPage.jsx`.
+
+- Body map (Home):
+  - Fixed mobile right-side white padding by stretching the layout on small screens in `src/components/HeroSection.jsx`.
+
+- About section:
+  - Mobile-only: nudged the green frame image to the right in `src/components/AboutSection.jsx`.
+
+- Volunteer banner:
+  - Mobile-only: redesigned the layout to match the provided screenshot (JOIN US header with animation, collage, bottom background + CTA) while keeping desktop unchanged in `src/components/VolunteerBanner.jsx`.
+  - Mobile-only: added the chevron/clip-path bottom shape + background blend overlay for `VolunteerBg` in `src/components/VolunteerBanner.jsx`.
+
+- Build:
+  - Ran `npm run build` successfully (Vite; chunk-size warning only).
+
 ## 2025-12-29
 
 - Body Map section (Home):
