@@ -31,7 +31,7 @@ export default function AboutSection({ onNavigate }) {
             <p className="text-[#020202] text-2xl sm:text-4xl font-bold tracking-[0.05em] -translate-x-5 sm:-translate-x-0 sm:tracking-[0.12em] uppercase">
               About
             </p>
-            <h2 className="text-2xl sm:text-4xl font-bold whitespace-nowrap uppercase tracking-[0.08em] -translate-x-5 sm:-translate-x-0 sm:tracking-[0.12em]">
+            <h2 className="text-2xl sm:text-4xl font-bold whitespace-nowrap uppercase tracking-[0.03em] -translate-x-5 sm:-translate-x-0 sm:tracking-[0.12em]">
               <span className="text-[#74C425]">Our Foundation</span>
             </h2>
           </div>

@@ -1,5 +1,32 @@
 # Work Log
 
+## 2025-12-31
+
+- Support Our Cause section (mobile-only):
+  - Made the banner image full-width on mobile while keeping desktop unchanged in `src/components/VolunteerAndSupportSection.jsx`.
+  - Kept “DONATE NOW” on a single line and fixed the heart icon rendering on mobile (FontAwesome icon on mobile; PNG on desktop).
+  - Reduced the green gradient blob size/position for mobile only.
+
+- Testimonials section (mobile-only):
+  - Added a mobile-only stacked testimonial layout while preserving the existing desktop/laptop horizontal scroller in `src/components/TestimonialsSection.jsx`.
+  - Added the mobile “CERTIFIED BY” card styling (desktop unchanged).
+  - Added a wave SVG shape at the top of the mobile background.
+
+- Footer (newsletter):
+  - Added `src/assets/Photo/send.png` as a decorative element inside the newsletter card for both mobile and desktop in `src/components/Footer.jsx`.
+
+- Apply Job page:
+  - Updated routing so `/apply` renders `ApplyJob` and fixed the blank page caused by the missing `Contact` import in `src/App.jsx`.
+  - Added “Web / Tech Volunteer (React / WordPress / AI)” to the “Applying For” dropdown in `src/pages/ApplyJob.jsx`.
+  - Modernized the resume upload input (custom file button styling + selected filename text) in `src/pages/ApplyJob.jsx`.
+
+- Spacing / typography (mobile-only):
+  - Reduced the mobile gap between “Support Our Cause” and “Testimonials” in `src/pages/Home.jsx`.
+  - Removed extra word-spacing on mobile by switching About text from `text-justify` to `text-left` (desktop unchanged) in `src/components/AboutSection.jsx`.
+
+- Build:
+  - Ran `npm run build` successfully (Vite; chunk-size warning only).
+
 ## 2025-12-30
 
 - Home hero banner:
