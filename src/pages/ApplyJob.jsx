@@ -105,6 +105,9 @@ export default function ApplyJob() {
               <option value="Nutritionist">Nutritionist</option>
               <option value="Research Assistant">Research Assistant</option>
               <option value="Patient Coordinator">Patient Coordinator</option>
+              <option value="Web / Tech Volunteer (React / WordPress / AI)">
+                Web / Tech Volunteer (React / WordPress / AI)
+              </option>
               <option value="Content & SEO Executive">
                 Content &amp; SEO Executive
               </option>
@@ -152,8 +155,16 @@ export default function ApplyJob() {
               name="resume"
               accept=".pdf,.doc,.docx"
               onChange={handleChange}
-              className="w-full"
+              className="block w-full cursor-pointer rounded-xl border border-gray-300 bg-white text-sm text-gray-700 shadow-sm
+                file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:bg-[#3c6513]/10 file:px-4 file:py-2.5
+                file:text-sm file:font-semibold file:text-[#3c6513] hover:file:bg-[#3c6513]/15
+                focus:outline-none focus:ring-2 focus:ring-[#3c6513]"
             />
+            <p className="mt-2 text-xs text-gray-500">
+              {formData.resume
+                ? `Selected: ${formData.resume.name}`
+                : "Accepted formats: PDF, DOC, DOCX"}
+            </p>
           </div>
 
           {/* Submit */}
