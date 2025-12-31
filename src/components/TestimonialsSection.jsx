@@ -114,23 +114,29 @@ export default function TestimonialsSection() {
         <div className="sm:hidden">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-white"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -top-[2px]"
           >
             <svg
               viewBox="0 0 300 100"
               preserveAspectRatio="none"
-              className=" h-16 w-full"
-              
+              className="block h-16 w-full"
             >
               <path
     d="
       M0,20
       C75,100 225,100 300,20
-      L300,0
-      L0,0
+      L300,-10
+      L0,-10
       Z
     "
                 fill="#ffffff"
+                stroke="#ffffff"
+                strokeWidth="2"
+                strokeLinejoin="round"
               />
             </svg>
           </div>
