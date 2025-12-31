@@ -15,7 +15,7 @@ const VolunteerAndSupportSection = ({ onNavigate }) => {
       <section className="relative py-25 sm:py-16 ">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-[-40px] bottom-[-150px] mt-4 -translate-x-[41px] sm:-translate-x-[220px]  -translate-y-75 sm:-translate-y-40 h-[100px] w-[100px] sm:h-[340px] sm:w-[340px] lg:h-[400px] lg:w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
+          className="pointer-events-none absolute right-[-40px] bottom-[-150px] mt-4 -translate-x-[25px] sm:-translate-x-[220px]  -translate-y-75 sm:-translate-y-40 h-[100px] w-[100px] sm:h-[340px] sm:w-[340px] lg:h-[400px] lg:w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
           style={{
             borderRadius: "50% 50% 0% 100% / 46% 43% 57% 54%",
           }}
