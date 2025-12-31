@@ -12,7 +12,7 @@ const VolunteerAndSupportSection = ({ onNavigate }) => {
       <VolunteerBanner />
 
       {/* Support Our Cause – Static Image */}
-      <section className="relative py-1 sm:py-16 ">
+      <section className="relative py-16 ">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute right-[-40px] bottom-[-150px] mt-4 -translate-x-[41px] sm:-translate-x-[220px]  -translate-y-50 sm:-translate-y-40 h-[100px] w-[100px] sm:h-[340px] sm:w-[340px] lg:h-[400px] lg:w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"

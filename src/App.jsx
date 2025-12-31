@@ -8,7 +8,7 @@ import Treatmentquestion from "./pages/Treatmentquestion";
 
 import Blogs from "./pages/Blogs";
 import Donate from "./pages/Donate";
-import Contact from "./pages/Contact";
+import ApplyJob from "./pages/ApplyJob";
 import { navigate } from "./store";
 import LocateUs from "./pages/LocateUs";
 import BlogsDetails from "./pages/BlogsDetails";
@@ -254,11 +254,11 @@ function App() {
         />
         <Route
           path="/apply"
-          element={<Contact onNavigate={handleNavigate} />}
+          element={<ApplyJob onNavigate={handleNavigate} />}
         />
         <Route
           path="/contact"
-          element={<Navigate to="/apply" replace />}
+          element={<Navigate to="/contact-us" replace />}
         />
         <Route
           path="/contact-us"

@@ -237,9 +237,9 @@ const PatientStories = () => {
     <>
       <section
         id="patient-stories"
-        className="relative w-full bg-[#FBFFF9] py-16 text-center rounded-3xl  overflow-hidden"
+        className="relative w-full bg-[#FBFFF9]  py-16 text-center rounded-3xl  overflow-hidden"
       >
-        <div className="mb-10 text-center ">
+        <div className="mb-15 text-center ">
           <h2 className="relative inline-block text-4xl mb-25  font-bold text-slate-900">
             <span className="relative">PATIENT </span>
             <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
