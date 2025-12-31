@@ -166,23 +166,22 @@ export default function VolunteerBanner() {
               </div>
             </div>
 
-            <h3 className="mt-3 text-[18px] font-extrabold uppercase tracking-wide text-slate-900">
+            <h3 className="mt-3 text-[22px] translate-y-12 translate-x-2 font-extrabold uppercase tracking-wide text-slate-900">
               BECOME OUR
             </h3>
-            <h4 className="text-[20px] font-black uppercase tracking-wide text-[#7BCF2A]">
+            <h4 className="text-[22px] font-black translate-x-1 translate-y-10 uppercase tracking-wide text-[#7BCF2A]">
               VOLUNTEER
             </h4>
-            <div className="mx-auto mt-2 h-1 w-28 rounded-full bg-[#7BCF2A]" aria-hidden="true" />
-
-            <p className="mt-4 text-[12px] leading-relaxed text-slate-700">
-              Fighting cancer the natural way — through{" "}
+           
+            <p className="mt-10 text-[14px] leading-relaxed text-slate-700">
+              Fighting cancer the natural way   through{" "}
               <span className="font-semibold text-[#7BCF2A]">
                 Natural Immunotherapy
               </span>{" "}
               that rebuilds your body’s defense and restores lasting health.
             </p>
 
-            <p className="mt-4 text-[14px] font-semibold text-[#2F5BD7]">
+            <p className="mt-4 text-[18px] font-semibold text-[#2F5BD7]">
               we are looking for the best people!
             </p>
           </div>
