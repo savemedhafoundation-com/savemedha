@@ -94,9 +94,9 @@ export default function TestimonialsSection() {
   return (
     <>
       <div className="mb-6 text-center">
-        <h2 className="relative inline-block text-4xl font-bold text-slate-900">
+        <h2 className="relative inline-block text-3xl sm:text-4xl font-bold text-slate-900">
           <span className="relative">TESTI</span>
-          <div className="absolute bottom-[-10px] left-0 h-1 w-20 bg-[#74C425]" />
+          <div className="absolute bottom-[-10px] left-0 h-1 w-16 sm:w-20 bg-[#74C425]" />
           <span className="text-[#74C425]">MONIALS</span>
         </h2>
         <p className="text-gray-600 mt-2 font-bold pt-3">
@@ -105,12 +105,115 @@ export default function TestimonialsSection() {
       </div>
 
       <section
-        className="py-10 px-4 sm:px-10 mb-10 rounded-3xl"
+        className="relative py-10 px-4 sm:px-10 mb-10 rounded-none sm:rounded-3xl overflow-hidden sm:overflow-visible"
         style={{
           background: "linear-gradient(90deg, #74C425 0%, #3A6212 100%)",
         }}
       >
-        <div className="w-full">
+        {/* Mobile: stacked cards (matches design image) */}
+        <div className="sm:hidden">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0"
+          >
+            <svg
+              viewBox="0 0 300 100"
+              preserveAspectRatio="none"
+              className=" h-16 w-full"
+              
+            >
+              <path
+    d="
+      M0,20
+      C75,100 225,100 300,20
+      L300,0
+      L0,0
+      Z
+    "
+                fill="#ffffff"
+              />
+            </svg>
+          </div>
+
+          <div className="relative z-10 pt-12 pb-2">
+            <div className="flex flex-col items-center gap-6">
+              {loading ? (
+                <div className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 shadow-lg">
+                  Loading testimonials...
+                </div>
+              ) : hasError ? (
+                <div className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 shadow-lg">
+                  Unable to load testimonials
+                </div>
+              ) : testimonials.length === 0 ? (
+                <div className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 shadow-lg">
+                  No testimonials available
+                </div>
+              ) : (
+                testimonials.map((t, idx) => {
+                  const haloClasses = [
+                    "bg-[#74C425]/35",
+                    "bg-[#EF4444]/30",
+                    "bg-[#A855F7]/30",
+                    "bg-[#3B82F6]/30",
+                  ];
+                  const haloClass = haloClasses[idx % haloClasses.length];
+
+                  return (
+                    <div
+                      key={t.id ?? idx}
+                      className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-lg"
+                    >
+                      <div className="absolute top-5 left-5 h-3 w-3 rounded-full bg-[#74C425]" />
+                      <div
+                        className={`absolute top-7 left-7 h-12 w-12 rounded-full ${haloClass}`}
+                      />
+
+                      <div className="relative z-10 flex items-start gap-4 mt-6">
+                        <div className="relative shrink-0">
+                          {t.image ? (
+                            <img
+                              src={t.image}
+                              alt={t.name}
+                              className="w-14 h-14 rounded-full object-cover shadow"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="w-14 h-14 rounded-full bg-green-600 text-white font-semibold flex items-center justify-center text-base shadow">
+                              {getInitial(t.name)}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex-1">
+                          <h4 className="text-sm font-semibold text-gray-900">
+                            {t.name}
+                          </h4>
+                          <div className="flex items-center gap-1 text-[#F7C948] my-2">
+                            {[...Array(t.rating)].map((_, i) => (
+                              <Star
+                                key={i}
+                                size={16}
+                                fill="#F7C948"
+                                className="text-[#F7C948]"
+                              />
+                            ))}
+                          </div>
+                          <p className="text-xs text-gray-700 leading-relaxed">
+                            {t.text}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop/Laptop: keep existing horizontal scroller */}
+        <div className="hidden sm:block w-full">
           <div className="relative w-full">
             <button
               type="button"
@@ -147,48 +250,48 @@ export default function TestimonialsSection() {
                 </div>
               ) : (
                 testimonials.map((t, idx) => (
-                <div
-                  key={t.id ?? idx}
-                  className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative"
-                >
-                  <div className="absolute top-4 left-1 w-4 h-4 rounded-full bg-[#74C425] mt-4 ml-2" />
-                  <div className="absolute top-3 left-3 w-12 h-12 rounded-full bg-[#74C425] opacity-70 mt-8 ml-2" />
+                  <div
+                    key={t.id ?? idx}
+                    className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative"
+                  >
+                    <div className="absolute top-4 left-1 w-4 h-4 rounded-full bg-[#74C425] mt-4 ml-2" />
+                    <div className="absolute top-3 left-3 w-12 h-12 rounded-full bg-[#74C425] opacity-70 mt-8 ml-2" />
 
-                  <div className="relative z-10 flex items-start gap-4 mt-8 ml-4">
-                    <div className="relative shrink-0">
-                      {t.image ? (
-                        <img
-                          src={t.image}
-                          alt={t.name}
-                          className="w-16 h-16 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-16 h-16 rounded-full bg-green-600 text-white font-semibold flex items-center justify-center text-lg">
-                          {getInitial(t.name)}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="flex-1">
-                      <h4 className="text-base font-semibold text-gray-900">
-                        {t.name}
-                      </h4>
-                      <div className="flex items-center gap-1 text-[#F7C948] my-2">
-                        {[...Array(t.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={18}
-                            fill="#F7C948"
-                            className="text-[#F7C948]"
+                    <div className="relative z-10 flex items-start gap-4 mt-8 ml-4">
+                      <div className="relative shrink-0">
+                        {t.image ? (
+                          <img
+                            src={t.image}
+                            alt={t.name}
+                            className="w-16 h-16 rounded-full object-cover"
                           />
-                        ))}
+                        ) : (
+                          <div className="w-16 h-16 rounded-full bg-green-600 text-white font-semibold flex items-center justify-center text-lg">
+                            {getInitial(t.name)}
+                          </div>
+                        )}
                       </div>
-                      <p className="text-sm text-gray-700 leading-relaxed">
-                        {t.text}
-                      </p>
+
+                      <div className="flex-1">
+                        <h4 className="text-base font-semibold text-gray-900">
+                          {t.name}
+                        </h4>
+                        <div className="flex items-center gap-1 text-[#F7C948] my-2">
+                          {[...Array(t.rating)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={18}
+                              fill="#F7C948"
+                              className="text-[#F7C948]"
+                            />
+                          ))}
+                        </div>
+                        <p className="text-sm text-gray-700 leading-relaxed">
+                          {t.text}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
                 ))
               )}
             </div>
@@ -196,7 +299,25 @@ export default function TestimonialsSection() {
         </div>
       </section>
 
-      <div className="flex justify-center">
+      {/* Mobile: certified card (matches design image) */}
+      <div className="flex justify-center sm:hidden">
+        <div className="w-full max-w-[360px] -translate-y-4 px-4">
+          <p className="mb-3 text-center text-base font-bold text-gray-900 tracking-wide">
+            CERTIFIED <span className="text-[#74C425]">BY</span>
+          </p>
+          <div className="w-full rounded-2xl bg-white p-4 shadow-lg ring-2 ring-[#CFE7B2] ring-offset-2 ring-offset-[#EAF7EA]">
+            <img
+              src={LicenceLogo}
+              alt="License logos"
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop/Laptop: keep existing layout */}
+      <div className="hidden sm:flex justify-center">
         <div className="w-full max-w-[780px] -translate-y-4">
           <p className="mb-4 text-center text-lg font-bold text-gray-900">
             CERTIFIED BY

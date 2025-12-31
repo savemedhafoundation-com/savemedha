@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
+import SendIcon from "../assets/Photo/send.png";
 import {
   Facebook,
   Instagram,
@@ -129,7 +130,7 @@ const Footer = ({ onNavigate }) => {
             healing begins with your own immune power.”
           </p>
 
-          <div className="mt-10 bg-white text-gray-800 rounded-3xl shadow-xl p-6 space-y-4">
+          <div className="mt-10 bg-white text-gray-800 rounded-3xl shadow-xl p-6 space-y-4 relative z-0 overflow-hidden">
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-1">
                 <h3 className="text-xl font-bold text-gray-900">
@@ -144,6 +145,14 @@ const Footer = ({ onNavigate }) => {
               </div>
             </div>
 
+            <img
+              src={SendIcon}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-16 w-24 opacity-70 select-none -z-10 !mt-0"
+              loading="lazy"
+            />
+
 	            <form
 	              className="space-y-3"
 	              onSubmit={handleNewsletterSubmit}
@@ -152,7 +161,7 @@ const Footer = ({ onNavigate }) => {
 	                Email address
 	              </label>
 	              <div className="flex items-center gap-3 border border-gray-300 rounded-full px-4 py-3 shadow-md focus-within:ring-2 focus-within:ring-[#6dcf27] bg-white">
-	                <AtSign className="w-5 h-5 text-gray-500" />
+	                <AtSign className="w-8 h-8 text-gray-500" />
 	                <input
 	                  id="newsletter-email-mobile"
 	                  type="email"
@@ -325,7 +334,7 @@ const Footer = ({ onNavigate }) => {
               </div>
 
               <div className="w-full">
-                <div className="bg-white text-gray-800 rounded-[28px] shadow-2xl p-6 sm:p-8 space-y-5 w-full sm:max-w-[520px] lg:max-w-[440px] xl:max-w-[460px] mx-auto lg:ml-auto">
+                <div className="bg-white text-gray-800 rounded-[28px] shadow-2xl p-6 sm:p-8 space-y-5 w-full sm:max-w-[520px] lg:max-w-[440px] xl:max-w-[460px] mx-auto lg:ml-auto relative z-0 overflow-hidden">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-2xl sm:text-3xl font-bold leading-tight text-gray-900">
                       Subscribe to
@@ -339,6 +348,13 @@ const Footer = ({ onNavigate }) => {
                   <p className="text-base text-gray-600">
                     Subscribe to our newsletter and stay updated.
                   </p>
+                  <img
+                    src={SendIcon}
+                    alt=""
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-8 top-20 w-32 opacity-60 select-none -z-10"
+                    loading="lazy"
+                  />
 	                  <form
 	                    className="space-y-4"
 	                    onSubmit={handleNewsletterSubmit}
