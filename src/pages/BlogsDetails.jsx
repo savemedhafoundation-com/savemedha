@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -42,6 +42,7 @@ export default function BlogsDetails({ onNavigate }) {
   const [blog, setBlog] = useState(null);
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [related, setRelated] = useState([]);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -147,19 +148,46 @@ export default function BlogsDetails({ onNavigate }) {
       .map((label) => ({ label }));
   }, [related]);
 
-  const contentHtml = useMemo(() => {
-    const raw = blog?.content || blog?.description || blog?.excerpt || "";
-    if (!raw) return "";
+  const rawContent = blog?.content || blog?.description || blog?.excerpt || "";
 
-    return raw
-      .replace(
-        /^([A-Z][A-Za-z0-9\s?']{8,})$/gm,
-        '<h2 class="text-2xl md:text-3xl font-bold text-[#155300] mt-10 mb-4">$1</h2>'
-      )
-      .replace(/^\s*[-•*]\s+/gm, '<span class="inline-block w-6 text-[#74C425]">✔</span>')
-      .replace(/\n\n/g, "</p><p class='mt-4'>")
-      .replace(/\n/g, "<br>");
-  }, [blog]);
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container || typeof window === "undefined") return;
+
+    const isExternalHref = (href) => {
+      const trimmed = href?.trim();
+      if (!trimmed || trimmed.startsWith("#")) return false;
+
+      const lowerHref = trimmed.toLowerCase();
+      if (
+        lowerHref.startsWith("mailto:") ||
+        lowerHref.startsWith("tel:") ||
+        lowerHref.startsWith("sms:") ||
+        lowerHref.startsWith("javascript:")
+      ) {
+        return false;
+      }
+
+      try {
+        const url = new URL(trimmed, window.location.origin);
+        return url.origin !== window.location.origin;
+      } catch {
+        return false;
+      }
+    };
+
+    container.querySelectorAll("a[href]").forEach((anchor) => {
+      const href = anchor.getAttribute("href");
+      if (!href || !isExternalHref(href)) return;
+
+      anchor.setAttribute("target", "_blank");
+      const existingRel = anchor.getAttribute("rel") || "";
+      const relTokens = new Set(existingRel.split(/\s+/).filter(Boolean));
+      relTokens.add("noopener");
+      relTokens.add("noreferrer");
+      anchor.setAttribute("rel", Array.from(relTokens).join(" "));
+    });
+  }, [rawContent]);
 
   if (status === "loading") {
     return (
@@ -314,9 +342,10 @@ export default function BlogsDetails({ onNavigate }) {
         {/* Content */}
         <section className="max-w-5xl mx-auto px-4 pt-8 space-y-6">
           <article
-            className="prose prose-lg max-w-none text-slate-800"
+            ref={contentRef}
+            className="prose prose-slate md:prose-lg mx-auto text-slate-800 font-shippori break-words prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:my-5 prose-p:leading-[1.8] prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-img:rounded-xl prose-img:shadow-sm"
             dangerouslySetInnerHTML={{
-              __html: contentHtml || (blog?.content ?? ""),
+              __html: rawContent,
             }}
           />
         </section>

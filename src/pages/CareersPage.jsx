@@ -224,22 +224,16 @@ export default function CareersPage({ onNavigate }) {
                 >
                   Apply Now
                 </Link>
-                <Link
-                  to="/apply"
-                  className="inline-flex items-center justify-center rounded-xl border border-slate-200 px-6 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
-                >
-                  Volunteer With Us
-                </Link>
               </div>
 
               <div className="mt-6 text-sm text-slate-600">
                 <p>
                   <span className="font-semibold text-slate-900">Email:</span>{" "}
                   <a
-                    href="mailto:careers@savemedha.com"
+                    href="mailto:info@savemedha.com"
                     className="text-emerald-800 underline underline-offset-2"
                   >
-                    careers@savemedha.com
+                    info@savemedha.com
                   </a>
                 </p>
                 <p className="mt-1">
