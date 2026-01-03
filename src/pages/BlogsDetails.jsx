@@ -248,7 +248,7 @@ export default function BlogsDetails({ onNavigate }) {
                 <span>•</span>
                 <span>Write a Comment</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold leading-tight">
+              <h1 className="text-3xl md:text-4xl font-bold  leading-tight">
                 {meta.title}
               </h1>
             </div>
@@ -384,7 +384,7 @@ export default function BlogsDetails({ onNavigate }) {
                         By {item.author || item.authorName || "Admin"} •{" "}
                         {formatDate(item.date || item.publishedAt || item.createdAt)}
                       </p>
-                      <h4 className="text-sm font-semibold text-slate-900 line-clamp-2">
+                      <h4 className="text-sm font-semibold text-[#74C425] line-clamp-2">
                         {item.title}
                       </h4>
                     </div>
