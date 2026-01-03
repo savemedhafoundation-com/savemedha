@@ -43,6 +43,8 @@ export default function BlogsDetails({ onNavigate }) {
   const [blog, setBlog] = useState(null);
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [related, setRelated] = useState([]);
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
   const [commentStatus, setCommentStatus] = useState("idle"); // idle | submitting | error
   const [commentError, setCommentError] = useState("");
   const contentRef = useRef(null);
@@ -161,6 +163,12 @@ export default function BlogsDetails({ onNavigate }) {
   const handleScrollToComments = () => {
     commentsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+  const handleToggleLike = () => {
+    setLiked((prev) => {
+      setLikeCount((count) => (prev ? Math.max(count - 1, 0) : count + 1));
+      return !prev;
+    });
+  };
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -253,6 +261,11 @@ export default function BlogsDetails({ onNavigate }) {
     });
   }, [rawContent]);
 
+  useEffect(() => {
+    setLikeCount(blog?.likesCount ?? 0);
+    setLiked(false);
+  }, [blog?.likesCount, blog?._id]);
+
   if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center text-lg text-slate-700">
@@ -319,13 +332,19 @@ export default function BlogsDetails({ onNavigate }) {
                 </button>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 text-[#74C425] border-2 border-[#74C425] px-3 py-1 rounded-full hover:bg-[#74C425] hover:text-white transition-colors"
+                  onClick={handleToggleLike}
+                  aria-pressed={liked}
+                  className={`inline-flex items-center gap-2 border-2 border-[#74C425] px-3 py-1 rounded-full transition-colors ${
+                    liked
+                      ? "bg-[#74C425] text-white"
+                      : "text-[#74C425] hover:bg-[#74C425] hover:text-white"
+                  }`}
                   aria-label="Like this blog"
                 >
-                  <Heart size={14} />
-                  <span>Like</span>
-                  <span className="text-[11px] text-slate-500">
-                    {blog?.likesCount ?? 0}
+                  <Heart size={14} className={liked ? "fill-current" : ""} />
+                  <span>{liked ? "Liked" : "Like"}</span>
+                  <span className={`text-[11px] ${liked ? "text-white" : "text-slate-500"}`}>
+                    {likeCount}
                   </span>
                 </button>
               </div>
