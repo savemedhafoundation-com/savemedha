@@ -261,7 +261,7 @@ export default function BlogsDetails({ onNavigate }) {
         <section className="max-w-6xl mx-auto px-4 pt-8">
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-3">
-              <div className="overflow-hidden rounded-xl shadow border border-gray-200 bg-white">
+              <div className="overflow-hidden rounded-xl shadow border text-[#74C425] border-gray-200 bg-white">
                 <img
                   src={meta.banner}
                   alt={meta.title}
