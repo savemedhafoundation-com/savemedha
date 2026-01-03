@@ -155,10 +155,15 @@ export default function BlogsDetails({ onNavigate }) {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const name = String(formData.get("name") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
     const message = String(formData.get("message") || "").trim();
     const blogId = blog?._id || id;
 
-    if (!name || !message || !blogId) return;
+    if (!name || !phone || !message || !blogId) {
+      setCommentStatus("error");
+      setCommentError("Comment, name, and phone number are required.");
+      return;
+    }
 
     try {
       setCommentStatus("submitting");
@@ -171,9 +176,9 @@ export default function BlogsDetails({ onNavigate }) {
           body: JSON.stringify(payload),
         });
 
-      let response = await submit({ name, message });
+      let response = await submit({ name, phone, comment: message, message });
       if (!response.ok) {
-        response = await submit({ name, comment: message });
+        response = await submit({ name, phone, message });
       }
 
       if (!response.ok) {
@@ -553,6 +558,23 @@ export default function BlogsDetails({ onNavigate }) {
                 required
                 autoComplete="name"
                 placeholder="Your name"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
+              />
+            </div>
+            <div className="space-y-1">
+              <label
+                htmlFor="comment-phone"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Phone Number
+              </label>
+              <input
+                id="comment-phone"
+                name="phone"
+                type="tel"
+                required
+                autoComplete="tel"
+                placeholder="Your phone number"
                 className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
               />
             </div>
