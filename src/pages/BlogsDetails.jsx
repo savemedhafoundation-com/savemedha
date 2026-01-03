@@ -160,25 +160,13 @@ export default function BlogsDetails({ onNavigate }) {
 
     try {
       const payload = { name, message, comment: message, blogId };
-      const endpoints = [
-        `${BLOGS_API_URL}/${blogId}/comment`,
-        `${BLOGS_API_URL}/${blogId}/comments`,
-      ];
-      let posted = false;
+      const response = await fetch(`${BLOGS_API_URL}/${blogId}/comments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-      for (const endpoint of endpoints) {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (response.ok) {
-          posted = true;
-          break;
-        }
-      }
-
-      if (!posted) return;
+      if (!response.ok) return;
 
       const refreshed = await fetch(`${BLOGS_API_URL}/${blogId}`);
       if (refreshed.ok) {
