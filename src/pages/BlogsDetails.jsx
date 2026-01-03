@@ -154,19 +154,33 @@ export default function BlogsDetails({ onNavigate }) {
     const formData = new FormData(form);
     const name = String(formData.get("name") || "").trim();
     const message = String(formData.get("message") || "").trim();
+    const blogId = blog?._id || id;
 
-    if (!name || !message) return;
+    if (!name || !message || !blogId) return;
 
     try {
-      const response = await fetch(`${BLOGS_API_URL}/${id}/comment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, message }),
-      });
+      const payload = { name, message, comment: message, blogId };
+      const endpoints = [
+        `${BLOGS_API_URL}/${blogId}/comment`,
+        `${BLOGS_API_URL}/${blogId}/comments`,
+      ];
+      let posted = false;
 
-      if (!response.ok) return;
+      for (const endpoint of endpoints) {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (response.ok) {
+          posted = true;
+          break;
+        }
+      }
 
-      const refreshed = await fetch(`${BLOGS_API_URL}/${id}`);
+      if (!posted) return;
+
+      const refreshed = await fetch(`${BLOGS_API_URL}/${blogId}`);
       if (refreshed.ok) {
         const data = await refreshed.json();
         setBlog(data || null);
