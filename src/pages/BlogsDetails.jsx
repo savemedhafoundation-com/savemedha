@@ -154,7 +154,7 @@ export default function BlogsDetails({ onNavigate }) {
     if (!rawContent) return "";
     return rawContent.replace(
       /(&bull;|&#9679;|[\u25CF\u2022])/g,
-      '<span class="inline-block text-[0.7em] align-middle leading-none">&#9679;</span>'
+      '<span class="inline-block text-[0.5em] align-middle leading-none">&#9679;</span>'
     );
   }, [rawContent]);
   const handleCommentSubmit = async (event) => {
