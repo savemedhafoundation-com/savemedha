@@ -8,6 +8,7 @@ import { fetchBlogPosts } from "../service/api";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
+const BLOGS_API_URL = "https://savemedhabackend.vercel.app/api/blogs";
 
 const extractArray = (candidate, seen = new Set()) => {
   if (!candidate || seen.has(candidate)) return [];
@@ -49,9 +50,7 @@ export default function BlogsDetails({ onNavigate }) {
 
     const load = async () => {
       try {
-        const res = await fetch(
-          `https://savemedhabackend.vercel.app/api/blogs/${id}`
-        );
+        const res = await fetch(`${BLOGS_API_URL}/${id}`);
         if (!res.ok) throw new Error("Not found");
         const data = await res.json();
         if (!cancelled) {
@@ -159,7 +158,7 @@ export default function BlogsDetails({ onNavigate }) {
     if (!name || !message) return;
 
     try {
-      const response = await fetch(`/api/blogs/${id}/comment`, {
+      const response = await fetch(`${BLOGS_API_URL}/${id}/comment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, message }),
@@ -167,9 +166,7 @@ export default function BlogsDetails({ onNavigate }) {
 
       if (!response.ok) return;
 
-      const refreshed = await fetch(
-        `https://savemedhabackend.vercel.app/api/blogs/${id}`
-      );
+      const refreshed = await fetch(`${BLOGS_API_URL}/${id}`);
       if (refreshed.ok) {
         const data = await refreshed.json();
         setBlog(data || null);
