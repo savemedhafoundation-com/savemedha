@@ -149,6 +149,36 @@ export default function BlogsDetails({ onNavigate }) {
   }, [related]);
 
   const rawContent = blog?.content || blog?.description || blog?.excerpt || "";
+  const handleCommentSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const name = String(formData.get("name") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    if (!name || !message) return;
+
+    try {
+      const response = await fetch(`/api/blogs/${id}/comment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, message }),
+      });
+
+      if (!response.ok) return;
+
+      const refreshed = await fetch(
+        `https://savemedhabackend.vercel.app/api/blogs/${id}`
+      );
+      if (refreshed.ok) {
+        const data = await refreshed.json();
+        setBlog(data || null);
+      }
+      form.reset();
+    } catch {
+      // Silently ignore to keep UX clean.
+    }
+  };
 
   useEffect(() => {
     const container = contentRef.current;
@@ -350,6 +380,58 @@ export default function BlogsDetails({ onNavigate }) {
           />
         </section>
 
+        {Array.isArray(blog?.blogImage) &&
+          blog.blogImage.some((item) => item?.imageUrl) && (
+            <section className="max-w-5xl mx-auto px-4 pt-10 space-y-5">
+              <h2 className="text-2xl font-bold text-slate-900">
+                Related Visual References
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {blog.blogImage
+                  .filter((item) => item?.imageUrl)
+                  .map((item, index) => (
+                    <div
+                      key={item.imageUrl ? `${item.imageUrl}-${index}` : index}
+                      className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                    >
+                      <img
+                        src={item.imageUrl}
+                        alt={`Blog reference ${index + 1}`}
+                        loading="lazy"
+                        className="h-56 w-full object-cover sm:h-64"
+                      />
+                    </div>
+                  ))}
+              </div>
+            </section>
+          )}
+
+        {Array.isArray(blog?.faqs) && blog.faqs.length > 0 && (
+          <section className="max-w-5xl mx-auto px-4 pt-10 space-y-5">
+            <h2 className="text-2xl font-bold text-slate-900">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-3">
+              {blog.faqs.map((faq, index) => (
+                <details
+                  key={faq.question ? `${faq.question}-${index}` : index}
+                  className="group rounded-xl border border-slate-200 bg-white p-4"
+                >
+                  <summary className="cursor-pointer list-none font-semibold text-slate-900 flex items-start justify-between gap-3">
+                    <span>{faq.question}</span>
+                    <span className="text-[#74C425] text-xl leading-none transition-transform group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <div className="mt-3 text-slate-700 leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Trending Slider */}
         <section className="mt-12 px-4">
           <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-b from-[#e8ffd8] to-white p-6 shadow-inner relative">
@@ -435,21 +517,69 @@ export default function BlogsDetails({ onNavigate }) {
             <h3 className="text-2xl font-bold text-slate-900">Comments</h3>
           </div>
 
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
-            <textarea
-              rows={3}
-              placeholder="Leave a comment"
-              className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
-            />
-            <div className="mt-3 flex justify-end">
-              <button className="rounded-full bg-[#74C425] text-white font-semibold px-5 py-2 hover:bg-[#155300] transition">
-                Comment
+          <form
+            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 space-y-3"
+            onSubmit={handleCommentSubmit}
+          >
+            <div className="space-y-1">
+              <label
+                htmlFor="comment-name"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Name
+              </label>
+              <input
+                id="comment-name"
+                name="name"
+                type="text"
+                required
+                autoComplete="name"
+                placeholder="Your name"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
+              />
+            </div>
+            <div className="space-y-1">
+              <label
+                htmlFor="comment-message"
+                className="text-sm font-semibold text-slate-700"
+              >
+                Message
+              </label>
+              <textarea
+                id="comment-message"
+                name="message"
+                rows={4}
+                required
+                placeholder="Write your comment"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
+              />
+            </div>
+            <div className="flex justify-end">
+              <button
+                type="submit"
+                className="rounded-full bg-[#74C425] text-white font-semibold px-5 py-2 hover:bg-[#155300] transition"
+              >
+                Submit Comment
               </button>
             </div>
-          </div>
+          </form>
 
-          <div className="space-y-6">
-            {!related?.length && (
+          <div className="space-y-4">
+            {Array.isArray(blog?.comments) && blog.comments.length > 0 ? (
+              blog.comments.map((comment, index) => (
+                <div
+                  key={comment?._id || comment?.createdAt || index}
+                  className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+                >
+                  <p className="font-semibold text-slate-900">
+                    {comment?.name || "Anonymous"}
+                  </p>
+                  <p className="mt-2 text-sm text-slate-700 leading-relaxed">
+                    {comment?.message}
+                  </p>
+                </div>
+              ))
+            ) : (
               <p className="text-sm text-slate-600">No comments yet.</p>
             )}
           </div>
