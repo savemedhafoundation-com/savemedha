@@ -24,6 +24,16 @@ const normalizeResponse = (payload) => extractArray(payload);
 
 const BLOGS_API_URL = "https://savemedhabackend.vercel.app/api/blogs";
 
+const stripHtml = (value = "") => {
+  if (!value) return "";
+  if (typeof window !== "undefined" && typeof document !== "undefined") {
+    const temp = document.createElement("div");
+    temp.innerHTML = value;
+    return (temp.textContent || temp.innerText || "").replace(/\s+/g, " ").trim();
+  }
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+};
+
 const formatDate = (value) => {
   if (!value) return "";
   const date = new Date(value);
@@ -54,7 +64,7 @@ export default function Blogs({ onNavigate }) {
     return {
       id: post?.id || post?._id || post?.slug || `blog-${index}`,
       title: post?.title || "",
-      excerpt: post?.description || "",
+      excerpt: stripHtml(post?.description || post?.excerpt || ""),
       coverImage: post?.imageUrl || post?.image || "",
       category: post?.category || "",
       author: post?.writtenBy || post?.author || post?.authorName || "",
