@@ -301,7 +301,7 @@ export default function BlogsDetails({ onNavigate }) {
                 <span>•</span>
                 <span>Write a Comment</span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold  leading-tight">
+              <h1 className="text-3xl md:text-4xl font-bold text-[#74C425] leading-tight">
                 {meta.title}
               </h1>
             </div>
