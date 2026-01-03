@@ -46,6 +46,7 @@ export default function BlogsDetails({ onNavigate }) {
   const [commentStatus, setCommentStatus] = useState("idle"); // idle | submitting | error
   const [commentError, setCommentError] = useState("");
   const contentRef = useRef(null);
+  const commentsRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -157,6 +158,9 @@ export default function BlogsDetails({ onNavigate }) {
       '<span class="inline-block text-[0.3em] align-middle leading-none">&#9679;</span>'
     );
   }, [rawContent]);
+  const handleScrollToComments = () => {
+    commentsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -306,7 +310,13 @@ export default function BlogsDetails({ onNavigate }) {
                 <span>•</span>
                 <span>{meta.date}</span>
                 <span>•</span>
-                <span>Write a Comment</span>
+                <button
+                  type="button"
+                  onClick={handleScrollToComments}
+                  className="text-slate-600 hover:text-[#74C425] transition-colors"
+                >
+                  Write a Comment
+                </button>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-[#74C425] leading-tight">
                 {meta.title}
@@ -539,7 +549,11 @@ export default function BlogsDetails({ onNavigate }) {
         </section>
 
         {/* Comments */}
-        <section className="max-w-6xl mx-auto px-4 pt-12 space-y-6">
+        <section
+          ref={commentsRef}
+          id="comments"
+          className="max-w-6xl mx-auto px-4 pt-12 space-y-6"
+        >
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full bg-[#e8ffd8] text-[#74C425] flex items-center justify-center">
               <Quote size={22} />
