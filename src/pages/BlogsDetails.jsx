@@ -570,7 +570,7 @@ export default function BlogsDetails({ onNavigate }) {
               </label>
               <input
                 id="comment-phone"
-                name="phone"
+                name="phoneNumber"
                 type="tel"
                 required
                 autoComplete="tel"
@@ -587,7 +587,7 @@ export default function BlogsDetails({ onNavigate }) {
               </label>
               <textarea
                 id="comment-message"
-                name="message"
+                name="comment"
                 rows={4}
                 required
                 placeholder="Write your comment"
