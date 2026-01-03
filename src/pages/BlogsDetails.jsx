@@ -610,19 +610,47 @@ export default function BlogsDetails({ onNavigate }) {
 
           <div className="space-y-4">
             {Array.isArray(blog?.comments) && blog.comments.length > 0 ? (
-              blog.comments.map((comment, index) => (
-                <div
-                  key={comment?._id || comment?.createdAt || index}
-                  className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
-                >
-                  <p className="font-semibold text-slate-900">
-                    {comment?.name || "Anonymous"}
-                  </p>
-                  <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-                    {comment?.message}
-                  </p>
-                </div>
-              ))
+              blog.comments.map((comment, index) => {
+                const displayName = comment?.name || "Anonymous";
+                const initials = displayName
+                  .trim()
+                  .split(/\s+/)
+                  .slice(0, 2)
+                  .map((part) => part[0]?.toUpperCase())
+                  .join("");
+                const body = comment?.comment || comment?.message || "";
+                const dateLabel = comment?.createdAt
+                  ? formatDate(comment.createdAt)
+                  : "";
+
+                return (
+                  <div
+                    key={comment?._id || comment?.createdAt || index}
+                    className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="h-10 w-10 shrink-0 rounded-full bg-[#e8ffd8] text-[#155300] font-semibold flex items-center justify-center">
+                        {initials || "A"}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <p className="font-semibold text-slate-900">
+                            {displayName}
+                          </p>
+                          {dateLabel && (
+                            <span className="text-xs text-slate-500">
+                              {dateLabel}
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-2 text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                          {body || "No message provided."}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
             ) : (
               <p className="text-sm text-slate-600">No comments yet.</p>
             )}
