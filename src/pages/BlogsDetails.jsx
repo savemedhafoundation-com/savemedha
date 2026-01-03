@@ -176,9 +176,9 @@ export default function BlogsDetails({ onNavigate }) {
           body: JSON.stringify(payload),
         });
 
-      let response = await submit({ name, phone, comment: message, message });
+      let response = await submit({ name, phoneNumber, comment });
       if (!response.ok) {
-        response = await submit({ name, phone, message });
+        response = await submit({ name, phoneNumber, comment });
       }
 
       if (!response.ok) {
