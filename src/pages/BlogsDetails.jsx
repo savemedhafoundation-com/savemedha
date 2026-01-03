@@ -155,11 +155,11 @@ export default function BlogsDetails({ onNavigate }) {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const name = String(formData.get("name") || "").trim();
-    const phone = String(formData.get("phone") || "").trim();
-    const message = String(formData.get("message") || "").trim();
+    const phoneNumber = String(formData.get("phoneNumber") || "").trim();
+    const comment = String(formData.get("comment") || "").trim();
     const blogId = blog?._id || id;
 
-    if (!name || !phone || !message || !blogId) {
+    if (!name || !phoneNumber || !comment || !blogId) {
       setCommentStatus("error");
       setCommentError("Comment, name, and phone number are required.");
       return;
