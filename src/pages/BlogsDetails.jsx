@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
+import { ArrowLeft, ArrowRight, Heart, Quote } from "lucide-react";
 import { IoLogoAmazon } from "react-icons/io5";
 import { fetchBlogPosts } from "../service/api";
 
@@ -313,9 +313,20 @@ export default function BlogsDetails({ onNavigate }) {
                 <button
                   type="button"
                   onClick={handleScrollToComments}
-                  className="text-slate-600 hover:text-[#74C425] transition-colors"
+                  className="text-slate-600 border-2 border-[#74C425] px-3 py-1 rounded-full hover:text-[#74C425] transition-colors"
                 >
                   Write a Comment
+                </button>
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-2 text-[#74C425] border-2 border-[#74C425] px-3 py-1 rounded-full hover:bg-[#74C425] hover:text-white transition-colors"
+                  aria-label="Like this blog"
+                >
+                  <Heart size={14} />
+                  <span>Like</span>
+                  <span className="text-[11px] text-slate-500">
+                    {blog?.likesCount ?? 0}
+                  </span>
                 </button>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-[#74C425] leading-tight">
