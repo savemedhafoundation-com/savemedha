@@ -43,6 +43,8 @@ export default function BlogsDetails({ onNavigate }) {
   const [blog, setBlog] = useState(null);
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [related, setRelated] = useState([]);
+  const [commentStatus, setCommentStatus] = useState("idle"); // idle | submitting | error
+  const [commentError, setCommentError] = useState("");
   const contentRef = useRef(null);
 
   useEffect(() => {
@@ -159,14 +161,29 @@ export default function BlogsDetails({ onNavigate }) {
     if (!name || !message || !blogId) return;
 
     try {
-      const payload = { name, message, comment: message, blogId };
-      const response = await fetch(`${BLOGS_API_URL}/${blogId}/comments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      setCommentStatus("submitting");
+      setCommentError("");
 
-      if (!response.ok) return;
+      const submit = (payload) =>
+        fetch(`${BLOGS_API_URL}/${blogId}/comments`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+      let response = await submit({ name, message });
+      if (!response.ok) {
+        response = await submit({ name, comment: message });
+      }
+
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => "");
+        setCommentStatus("error");
+        setCommentError(
+          errorText || "Unable to submit comment. Please try again."
+        );
+        return;
+      }
 
       const refreshed = await fetch(`${BLOGS_API_URL}/${blogId}`);
       if (refreshed.ok) {
@@ -174,8 +191,10 @@ export default function BlogsDetails({ onNavigate }) {
         setBlog(data || null);
       }
       form.reset();
+      setCommentStatus("idle");
     } catch {
-      // Silently ignore to keep UX clean.
+      setCommentStatus("error");
+      setCommentError("Unable to submit comment. Please try again.");
     }
   };
 
@@ -556,11 +575,15 @@ export default function BlogsDetails({ onNavigate }) {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="rounded-full bg-[#74C425] text-white font-semibold px-5 py-2 hover:bg-[#155300] transition"
+                disabled={commentStatus === "submitting"}
+                className="rounded-full bg-[#74C425] text-white font-semibold px-5 py-2 hover:bg-[#155300] transition disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Submit Comment
+                {commentStatus === "submitting" ? "Submitting..." : "Submit Comment"}
               </button>
             </div>
+            {commentError && (
+              <p className="text-sm text-red-600">{commentError}</p>
+            )}
           </form>
 
           <div className="space-y-4">
