@@ -2,8 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { ebooks } from "../data/ebooks";
+import { fetchEbooks } from "../service/api";
+import {
+  getEbookSlug,
+  normalizeEbook,
+  normalizeEbookResponse,
+} from "../utils/ebook";
 import heroFallbackCover from "../assets/Photo/BOOK1 1.png";
+import heroBackdrop from "../assets/Photo/WHITEBOARD.png";
+import greenElement from "../assets/Photo/ELEMENT (1).png";
 
 const PAGE_SIZE = 9;
 const HERO_FALLBACK_COVER = heroFallbackCover;
@@ -16,14 +23,39 @@ const HIGHLIGHTS = [
   "Download and share with no cost or barriers.",
 ];
 
-const getSlugFromReadLink = (readLink) => {
-  if (typeof readLink !== "string") return "";
-  const parts = readLink.split("/").filter(Boolean);
-  return parts.length ? parts[parts.length - 1] : "";
-};
-
 export default function EbookPage({ onNavigate }) {
   const [page, setPage] = useState(1);
+  const [ebooks, setEbooks] = useState([]);
+  const [status, setStatus] = useState("loading"); // loading | success | error
+  const [error, setError] = useState("");
+  const [reloadToken, setReloadToken] = useState(0);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadEbooks = async () => {
+      setStatus("loading");
+      setError("");
+      try {
+        const response = await fetchEbooks();
+        if (!isMounted) return;
+        const rawItems = normalizeEbookResponse(response);
+        setEbooks(rawItems.map(normalizeEbook));
+        setStatus("success");
+      } catch (err) {
+        console.error("Failed to load ebooks:", err);
+        if (!isMounted) return;
+        setStatus("error");
+        setError("Unable to load e-books right now.");
+      }
+    };
+
+    loadEbooks();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [reloadToken]);
 
   const totalPages = Math.max(1, Math.ceil(ebooks.length / PAGE_SIZE));
 
@@ -34,12 +66,16 @@ export default function EbookPage({ onNavigate }) {
   const visibleEbooks = useMemo(() => {
     const end = page * PAGE_SIZE;
     return ebooks.slice(0, end);
-  }, [page]);
+  }, [page, ebooks]);
 
   const heroBook = ebooks[0] || {};
-  const heroCover = heroBook.cover || HERO_FALLBACK_COVER;
-  const heroDownloadName =
-    getSlugFromReadLink(heroBook.readLink) || "ebook";
+  const heroCover = HERO_FALLBACK_COVER;
+  const heroDownloadName = getEbookSlug(heroBook) || "ebook";
+  const heroDownloadLink = heroBook.downloadLink;
+  const heroDownloadDisabled = !heroDownloadLink;
+  const showLoadingInline = status === "loading";
+  const showErrorInline = status === "error";
+  const showEmptyInline = status === "success" && ebooks.length === 0;
 
   return (
     <div className="min-h-screen bg-white">
@@ -59,8 +95,8 @@ export default function EbookPage({ onNavigate }) {
             className="absolute left-1/2 top-8 h-20 w-20 -translate-x-1/2 rounded-full bg-[#a8f066]/40 blur-2xl"
             aria-hidden="true"
           />
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="mx-auto max-w-6xl px-4 py-20 sm:py-24 sm:px-6 lg:px-8 lg:py-28">
+            <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]  ">
               <div>
                 <span className="inline-flex items-center rounded-full bg-[#74C425]/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#3c7d13]">
                   100% Free Downloads
@@ -83,9 +119,15 @@ export default function EbookPage({ onNavigate }) {
                     className="w-full flex-1 rounded-full border border-[#cbe9a2] bg-white/90 px-5 py-3 text-sm text-slate-800 shadow-sm focus:border-[#74C425] focus:outline-none focus:ring-2 focus:ring-[#74C425]/30 sm:w-auto"
                   />
                   <a
-                    href={heroBook.downloadLink || "#"}
-                    download={`${heroDownloadName}.pdf`}
-                    className="inline-flex items-center justify-center rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#4b8f1c]"
+                    href={heroDownloadLink || undefined}
+                    download={
+                      heroDownloadDisabled ? undefined : `${heroDownloadName}.pdf`
+                    }
+                    aria-disabled={heroDownloadDisabled}
+                    tabIndex={heroDownloadDisabled ? -1 : undefined}
+                    className={`inline-flex items-center justify-center rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#4b8f1c] ${
+                      heroDownloadDisabled ? "cursor-not-allowed opacity-60" : ""
+                    }`}
                   >
                     Download Free E-Book
                   </a>
@@ -94,13 +136,25 @@ export default function EbookPage({ onNavigate }) {
                   We only send the download link. No spam.
                 </p>
               </div>
+              <div
+                  className="pointer-events-none absolute inset-0 left-240 translate-y-30 flex justify-center"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={heroBackdrop}
+                    alt=""
+                    className="h-80 w-full max-w-[1060px]  opacity-95"
+                    loading="lazy"
+                  />
+                </div>
 
               <div className="relative flex justify-center lg:justify-end">
+                
                 <div
                   className="absolute -top-6 right-8 hidden h-24 w-24 rounded-full border border-[#74C425]/30 sm:block"
                   aria-hidden="true"
                 />
-                <div className="relative">
+                <div className="relative z-10">
                   <div
                     className="absolute -bottom-5 -right-5 h-24 w-24 rounded-3xl bg-[#74C425]/20"
                     aria-hidden="true"
@@ -108,41 +162,48 @@ export default function EbookPage({ onNavigate }) {
                   <img
                     src={heroCover}
                     alt={heroBook.title || "E-book cover"}
-                    className="relative z-10 w-60 rounded-[28px] border-4 border-white shadow-2xl sm:w-72 lg:w-80"
+                    className="relative z-10 w-60 sm:w-72 lg:w-80"
                     loading="lazy"
                   />
-                  <div className="absolute -left-8 top-10 hidden items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#3c7d13] shadow sm:flex">
-                    Best Seller
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="relative overflow-hidden bg-[#74C425]">
-          <div
-            className="absolute -left-16 bottom-10 h-44 w-44 rounded-full bg-[#9be55b]/70 blur-3xl"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute right-0 top-8 h-56 w-56 rounded-full bg-[#5aa81f]/60 blur-3xl"
-            aria-hidden="true"
-          />
-          <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="rounded-3xl bg-[#dbffbf] px-6 py-8 text-center shadow-2xl ring-1 ring-white/40">
+        <section className="relative bg-[#74C425]">
+          <div className="absolute inset-0 overflow-hidden " aria-hidden="true">
+            <div className="absolute -left-16 bottom-10  h-44 w-44 rounded-full bg-[#9be55b]/70 blur-3xl" />
+            <div className="absolute right-0 top-8 h-56 w-56 rounded-full bg-[#5aa81f]/60 blur-3xl " />
+            <img
+              src={greenElement}
+              alt=""
+              className="absolute bottom-6 right-8 hidden w-90 scale-160 -translate-x-15 -translate-y-10 opacity-85 sm:block"
+              loading="lazy"
+            />
+            <img
+              src={greenElement}
+              alt=""
+              className="absolute bottom-6 left-8 hidden w-90 scale-160 translate-x-10 -translate-y-80 opacity-85 sm:block"
+              loading="lazy"
+            />
+          </div>
+          
+          <div className="relative z-10 mx-auto max-w-4xl px-4 pb-24 pt-16 sm:px-6 lg:px-8">
+            <div className="relative -mt-10 -mb-16  bg-[#DCFFB9] px-6 py-8 text-center  -translate-y-30">
               <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-                What Will You Get From Our E-Book?
+                <span className="block">What Will You Get From</span>
+                <span className="block text-[#2F5905]">Our E-Book?</span>
               </h2>
               <p className="mt-3 text-sm text-slate-700 sm:text-base">
                 Understand Natural Immunotherapy and nutrition science in
                 simple, actionable terms.
               </p>
-              <div className="mt-6 grid gap-4 text-left sm:grid-cols-2">
+              <div className="mt-6 grid gap-4 text-left sm:grid-cols-1">
                 {HIGHLIGHTS.map((item, index) => (
                   <div
                     key={`${item}-${index}`}
-                    className="flex gap-3 rounded-2xl bg-white/80 p-4 shadow-sm"
+                    className="flex gap-5 "
                   >
                     <span className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#74C425] text-white">
                       <svg
@@ -183,7 +244,7 @@ export default function EbookPage({ onNavigate }) {
         </section>
 
         <section id="ebook-library" className="bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl px-4 pb-16 pt-24 sm:px-6 lg:px-8">
             <div className="text-center">
               <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
                 E-Books
@@ -196,6 +257,31 @@ export default function EbookPage({ onNavigate }) {
               </p>
             </div>
 
+            {showErrorInline && (
+              <div className="mt-8 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
+                <button
+                  type="button"
+                  onClick={() => setReloadToken((token) => token + 1)}
+                  className="ml-3 rounded-full bg-[#74C425] px-3 py-1 text-xs font-semibold text-white hover:bg-[#155300]"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
+
+            {showLoadingInline && (
+              <div className="mt-8 text-sm font-semibold text-slate-600">
+                Loading e-books...
+              </div>
+            )}
+
+            {showEmptyInline && (
+              <div className="mt-8 text-sm text-slate-600">
+                No e-books available right now.
+              </div>
+            )}
+
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {visibleEbooks.map((book) => (
                 <div
@@ -205,7 +291,7 @@ export default function EbookPage({ onNavigate }) {
                   <div className="p-5">
                     <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
                       <img
-                        src={book.cover}
+                        src={book.cover || HERO_FALLBACK_COVER}
                         alt={book.title}
                         className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                         loading="lazy"
@@ -223,14 +309,20 @@ export default function EbookPage({ onNavigate }) {
                         {book.desc}
                       </p>
 
-                      <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-600">
-                        <span className="rounded-full bg-slate-100 px-3 py-1">
-                          {book.pages}
-                        </span>
-                        <span className="rounded-full bg-slate-100 px-3 py-1">
-                          {book.readTime}
-                        </span>
-                      </div>
+                      {(book.pages || book.readTime) && (
+                        <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-600">
+                          {book.pages && (
+                            <span className="rounded-full bg-slate-100 px-3 py-1">
+                              {book.pages}
+                            </span>
+                          )}
+                          {book.readTime && (
+                            <span className="rounded-full bg-slate-100 px-3 py-1">
+                              {book.readTime}
+                            </span>
+                          )}
+                        </div>
+                      )}
 
                       <div className="mt-4 grid gap-2">
                         <Link
@@ -240,9 +332,17 @@ export default function EbookPage({ onNavigate }) {
                           Read Online
                         </Link>
                         <a
-                          href={book.downloadLink}
-                          download={`${getSlugFromReadLink(book.readLink) || book.id}.pdf`}
-                          className="inline-flex items-center justify-center rounded-full border border-[#6bc12f] px-4 py-2 text-sm font-semibold text-[#3c7d13] transition hover:bg-[#f0ffe0]"
+                          href={book.downloadLink || undefined}
+                          download={
+                            book.downloadLink
+                              ? `${book.slug || book.id}.pdf`
+                              : undefined
+                          }
+                          aria-disabled={!book.downloadLink}
+                          tabIndex={book.downloadLink ? undefined : -1}
+                          className={`inline-flex items-center justify-center rounded-full border border-[#6bc12f] px-4 py-2 text-sm font-semibold text-[#3c7d13] transition hover:bg-[#f0ffe0] ${
+                            book.downloadLink ? "" : "cursor-not-allowed opacity-60"
+                          }`}
                         >
                           Download PDF
                         </a>

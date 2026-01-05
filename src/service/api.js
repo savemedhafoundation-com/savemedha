@@ -5,3 +5,8 @@ export const fetchBlogPosts = async () => {
   return data;
 };
 
+export const fetchEbooks = async () => {
+  const { data } = await api.get('https://savemedhabackend.vercel.app/api/ebooks');
+  return data;
+};
+
