@@ -1,6 +1,5 @@
 import { Fragment, useMemo, createElement } from "react";
 
-const ESCAPED_PLACEHOLDER_REGEX = /(?:<)?&lt;image:(\d+)&gt;?(?:>)?/g;
 const TOKEN_PREFIX = "__BLOG_IMAGE_PLACEHOLDER__";
 const TOKEN_SUFFIX = "__";
 const TOKEN_SPLIT_REGEX = new RegExp(
@@ -9,6 +8,11 @@ const TOKEN_SPLIT_REGEX = new RegExp(
 const TOKEN_MATCH_REGEX = new RegExp(
   `^${TOKEN_PREFIX}(\\d+)${TOKEN_SUFFIX}$`
 );
+const PLACEHOLDER_PATTERNS = [
+  /(?:<)?&amp;lt;?image:(\d+)&amp;gt;?(?:>)?/gi,
+  /(?:<)?&lt;?image:(\d+)&gt;?(?:>)?/gi,
+  /<image:(\d+)\s*\/?>/gi,
+];
 
 const INLINE_IMAGE_STYLE = {
   display: "block",
@@ -49,10 +53,14 @@ const BOOLEAN_ATTRIBUTES = new Set([
 
 const normalizePlaceholders = (html) => {
   if (typeof html !== "string") return "";
-  return html.replace(
-    ESCAPED_PLACEHOLDER_REGEX,
-    (_, index) => `${TOKEN_PREFIX}${index}${TOKEN_SUFFIX}`
-  );
+  let normalized = html;
+  PLACEHOLDER_PATTERNS.forEach((pattern) => {
+    normalized = normalized.replace(
+      pattern,
+      (_, index) => `${TOKEN_PREFIX}${index}${TOKEN_SUFFIX}`
+    );
+  });
+  return normalized;
 };
 
 const parseStyleString = (styleValue) => {
