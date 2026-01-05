@@ -8,6 +8,7 @@ import {
   normalizeEbook,
   normalizeEbookResponse,
 } from "../utils/ebook";
+import { fallbackEbooks } from "../data/ebookFallback";
 import heroFallbackCover from "../assets/Photo/BOOK1 1.png";
 import heroBackdrop from "../assets/Photo/WHITEBOARD.png";
 import greenElement from "../assets/Photo/ELEMENT (1).png";
@@ -45,8 +46,9 @@ export default function EbookPage({ onNavigate }) {
       } catch (err) {
         console.error("Failed to load ebooks:", err);
         if (!isMounted) return;
-        setStatus("error");
-        setError("Unable to load e-books right now.");
+        const fallbackItems = fallbackEbooks.map(normalizeEbook);
+        setEbooks(fallbackItems);
+        setStatus("success");
       }
     };
 
@@ -246,15 +248,13 @@ export default function EbookPage({ onNavigate }) {
         <section id="ebook-library" className="bg-white">
           <div className="mx-auto max-w-6xl px-4 pb-16 pt-24 sm:px-6 lg:px-8">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+              <h2 className="text-3xl font-bold text-slate-900 sm:text-6xl">
                 E-Books
               </h2>
-              <p className="mt-2 text-lg font-semibold text-[#74C425]">
+              <p className="mt-2 text-lg sm:text-6xl font-bold text-[#74C425]">
                 & Research Publications
               </p>
-              <p className="mt-3 text-sm text-slate-600">
-                Explore the full collection of research-backed resources.
-              </p>
+              
             </div>
 
             {showErrorInline && (
@@ -286,14 +286,14 @@ export default function EbookPage({ onNavigate }) {
               {visibleEbooks.map((book) => (
                 <div
                   key={book.id}
-                  className="group rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                  className="group w-[400px] h-[720px]  border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div className="p-5">
-                    <div className="aspect-[3/4] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                    <div className="aspect-[3/4] overflow-hidden  ">
                       <img
                         src={book.cover || HERO_FALLBACK_COVER}
                         alt={book.title}
-                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                        className="h-full w-full  object-cover transition duration-300 group-hover:scale-105"
                         loading="lazy"
                       />
                     </div>
@@ -329,7 +329,7 @@ export default function EbookPage({ onNavigate }) {
                           to={book.readLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center rounded-full bg-[#6bc12f] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#4b8f1c]"
+                          className="inline-flex items-center justify-center  bg-[#6bc12f] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#4b8f1c]"
                         >
                           Read Online
                         </Link>
@@ -342,7 +342,7 @@ export default function EbookPage({ onNavigate }) {
                           }
                           aria-disabled={!book.downloadLink}
                           tabIndex={book.downloadLink ? undefined : -1}
-                          className={`inline-flex items-center justify-center rounded-full border border-[#6bc12f] px-4 py-2 text-sm font-semibold text-[#3c7d13] transition hover:bg-[#f0ffe0] ${
+                          className={`inline-flex items-center justify-center  border border-[#6bc12f] px-4 py-2 text-sm font-semibold text-[#3c7d13] transition hover:bg-[#f0ffe0] ${
                             book.downloadLink ? "" : "cursor-not-allowed opacity-60"
                           }`}
                         >

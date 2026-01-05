@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { fetchEbooks } from "../service/api";
 import { getEbookSlug, normalizeEbook, normalizeEbookResponse } from "../utils/ebook";
+import { fallbackEbooks } from "../data/ebookFallback";
 
 export default function EbookRead({ onNavigate }) {
   const { slug } = useParams();
@@ -38,8 +39,18 @@ export default function EbookRead({ onNavigate }) {
       } catch (err) {
         console.error("Failed to load ebook:", err);
         if (!isMounted) return;
-        setStatus("error");
-        setError("Unable to load this e-book right now.");
+        const fallbackItems = fallbackEbooks.map(normalizeEbook);
+        const match =
+          fallbackItems.find((item) => item.slug === normalizedSlug) ||
+          fallbackItems.find((item) => String(item.id) === normalizedSlug);
+        if (match) {
+          setBook(match);
+          setStatus("success");
+          setError("");
+        } else {
+          setStatus("error");
+          setError("Unable to load this e-book right now.");
+        }
       }
     };
 
