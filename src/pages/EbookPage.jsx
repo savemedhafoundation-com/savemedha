@@ -327,6 +327,8 @@ export default function EbookPage({ onNavigate }) {
                       <div className="mt-4 grid gap-2">
                         <Link
                           to={book.readLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="inline-flex items-center justify-center rounded-full bg-[#6bc12f] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#4b8f1c]"
                         >
                           Read Online
