@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BlogContentRenderer from "../components/BlogContentRenderer";
 import { ArrowLeft, ArrowRight, Heart, Quote } from "lucide-react";
 import { IoLogoAmazon } from "react-icons/io5";
 import { fetchBlogPosts } from "../service/api";
@@ -154,6 +153,13 @@ export default function BlogsDetails({ onNavigate }) {
   }, [related]);
 
   const rawContent = blog?.content || blog?.description || blog?.excerpt || "";
+  const formattedContent = useMemo(() => {
+    if (!rawContent) return "";
+    return rawContent.replace(
+      /(&bull;|&#9679;|[\u25CF\u2022])/g,
+      '<span class="inline-block text-[0.3em] align-middle leading-none">&#9679;</span>'
+    );
+  }, [rawContent]);
   const handleScrollToComments = () => {
     commentsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -438,13 +444,37 @@ export default function BlogsDetails({ onNavigate }) {
           <article
             ref={contentRef}
             className="prose prose-slate md:prose-lg text-slate-800 font-shippori break-words prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:my-5 prose-p:leading-[1.8] prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-img:rounded-xl prose-img:shadow-sm"
-          >
-            <BlogContentRenderer
-              description={rawContent}
-              blogImage={blog?.blogImage}
-            />
-          </article>
+            dangerouslySetInnerHTML={{
+              __html: formattedContent,
+            }}
+          />
         </section>
+
+        {Array.isArray(blog?.blogImage) &&
+          blog.blogImage.some((item) => item?.imageUrl) && (
+            <section className="max-w-5xl mx-auto px-4 pt-10 space-y-5">
+              <h2 className="text-2xl font-bold text-slate-900">
+                Related Visual References
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {blog.blogImage
+                  .filter((item) => item?.imageUrl)
+                  .map((item, index) => (
+                    <div
+                      key={item.imageUrl ? `${item.imageUrl}-${index}` : index}
+                      className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                    >
+                      <img
+                        src={item.imageUrl}
+                        alt={`Blog reference ${index + 1}`}
+                        loading="lazy"
+                        className="h-56 w-full object-cover sm:h-64"
+                      />
+                    </div>
+                  ))}
+              </div>
+            </section>
+          )}
 
         {Array.isArray(blog?.faqs) && blog.faqs.length > 0 && (
           <section className="max-w-5xl mx-auto px-4 pt-10 space-y-5">

@@ -51,16 +51,6 @@ body {
     Roboto, Helvetica, Arial, sans-serif;
 }
 
-.blog-inline-image {
-  margin: 1.5rem 0;
-}
-
-.blog-inline-image img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-}
 
 /* Global button font: Open Sans (loaded via index.html) */
 button, .btn {
