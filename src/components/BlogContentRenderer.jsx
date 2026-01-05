@@ -1,6 +1,6 @@
 import { Fragment, useMemo, createElement } from "react";
 
-const ESCAPED_PLACEHOLDER_REGEX = /&lt;image:(\d+)&gt;/g;
+const ESCAPED_PLACEHOLDER_REGEX = /(?:<)?&lt;image:(\d+)&gt;?(?:>)?/g;
 const TOKEN_PREFIX = "__BLOG_IMAGE_PLACEHOLDER__";
 const TOKEN_SUFFIX = "__";
 const TOKEN_SPLIT_REGEX = new RegExp(
