@@ -12,6 +12,13 @@ import { fallbackEbooks } from "../data/ebookFallback";
 import heroFallbackCover from "../assets/Photo/BOOK1 1.png";
 import heroBackdrop from "../assets/Photo/WHITEBOARD.png";
 import greenElement from "../assets/Photo/ELEMENT (1).png";
+import demoEbookCover from "../assets/Photo/3.jpg";
+import demoKindleCover from "../assets/Photo/5.jpg";
+import downloadButtonImage from "../assets/Photo/downloads.png";
+import amazonButtonImage from "../assets/Photo/amazon.png";
+import faqBookImage from "../assets/Photo/bookb.png";
+import contentBgImage from "../assets/Photo/bg g1 1.png";
+import contentPreviewImage from "../assets/Photo/Rectangle 711.png";
 
 const PAGE_SIZE = 9;
 const HERO_FALLBACK_COVER = heroFallbackCover;
@@ -22,6 +29,13 @@ const HIGHLIGHTS = [
   "Clear myths vs facts with step-by-step learning.",
   "Written for individuals, caregivers, and families.",
   "Download and share with no cost or barriers.",
+];
+const FAQ_ITEMS = [
+  "Who are these e-books intended for?",
+  "Is the information evidence-based or opinion based?",
+  "Can I apply the recommendations directly to my health condition?",
+  "Why are these e-books offered for free?",
+  "Are these e-books regularly updated?",
 ];
 
 export default function EbookPage({ onNavigate }) {
@@ -369,6 +383,75 @@ export default function EbookPage({ onNavigate }) {
               </div>
             )}
 
+           
+            <div className="mt-12   bg-white px-6 py-10 text-center shadow-sm sm:px-10">
+              <div className="mx-auto max-w-3xl">
+                <h3 className="text-2xl font-bold text-slate-900">
+                  Can I trust your E-Book?
+                </h3>
+                <p className="mt-3 text-sm text-slate-600">
+                  Developed by Save Medha Foundation, these resources are based
+                  on established nutrition science, Natural Immunotherapy
+                  principles, and documented clinical experience.
+                </p>
+              </div>
+              <div className="mt-8 grid gap-6 md:grid-cols-2">
+                <div className=" border border-[#cbe9a2] bg-[linear-gradient(180deg,_#F2FFE4_0%,_#F3F5F2_51.92%,_#C8DAB6_100%)] p-6 text-center shadow-sm">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2f5905]">
+                    <span className="block">Get Free</span>
+                    <span className="block">Download</span>
+                  </p>
+                  <div className="mt-4 overflow-hidden  border border-white bg-white shadow">
+                    <img
+                      src={demoEbookCover}
+                      alt="Demo free ebook cover"
+                      className="h-44 w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    className="mt-4 inline-flex items-center justify-center"
+                    aria-label="Download"
+                  >
+                    <img
+                      src={downloadButtonImage}
+                      alt="Download"
+                      className="h-[55px] w-[55px] translate-y-28"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div className="border border-[#e1e1e1] bg-[linear-gradient(180deg,_#F2FFE4_0%,_#F3F5F2_51.92%,_#C8DAB6_100%)] p-6 text-center shadow-sm">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-700">
+                    <span className="block">BUY ON </span>
+                    <span className="block">AMAZON KINDLE</span>
+                  </p>
+                  <div className="mt-4 overflow-hidden bg-white shadow">
+                    <img
+                      src={demoKindleCover}
+                      alt="Demo Kindle cover"
+                      className="h-50 w-full object-cover "
+                      loading="lazy"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    className="mt-4 py-5 inline-flex items-center justify-center "
+                    aria-label="Amazon Store"
+                  >
+                    <img
+                      src={amazonButtonImage}
+                      alt="Amazon Store"
+                      className="h-[55px] w-[55px] translate-y-18"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <div className="mt-12 max-w-3xl text-sm text-slate-500">
               <p>
                 These e-books are provided for educational purposes only. They
@@ -377,8 +460,89 @@ export default function EbookPage({ onNavigate }) {
                 Immunotherapy practice under Save Medha Foundation.
               </p>
             </div>
+
+            <section
+              className="relative mt-12 overflow-hidden bg-no-repeat bg-right bg-contain px-6 py-10 shadow-sm sm:px-10"
+              style={{
+                backgroundImage: `url(${faqBookImage})`,
+                backgroundSize: "960px",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/200" aria-hidden="true" />
+              <div className="relative z-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                <div>
+                  <h3 className="text-xl font-bold text-[#74C425]">
+                    Frequently Asked Questions
+                  </h3>
+                  <div className="mt-6 space-y-4 text-sm text-slate-700">
+                    {FAQ_ITEMS.map((item, index) => (
+                      <div
+                        key={`${item}-${index}`}
+                        className="flex items-start justify-between gap-4 border-b border-slate-200 pb-3"
+                      >
+                        <span className="font-medium">
+                          {index + 1}. {item}
+                        </span>
+                        <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#74C425]/10 text-[#74C425]">
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            className="h-4 w-4"
+                            aria-hidden="true"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="hidden lg:block" />
+              </div>
+            </section>
           </div>
         </section>
+         <section className="mt-12 overflow-hidden rounded-3xl border border-[#5aa81f]/30 shadow-sm">
+              
+                <div className="bg-white">
+                 <div className="relative z-10">
+                  <p className="text-center text-[50px] font-semibold uppercase tracking-[0.35em] text-[#020300]">
+                    Our Content
+                  </p>
+                  
+                 
+                    
+                    </div>
+                <img
+                  src={contentBgImage}
+                  alt="E-book preview"
+                  className="w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+               
+                  <div className="h-2 w-1/3 rounded-full bg-[#bffb7a]" />
+                    <p className="mt-2 text-xs text-[#e8ffd0]">Pages 1 of 25</p>
+                  
+                
+              
+              <div className="bg-[linear-gradient(184.62deg,_#74C425_3.73%,_#5DAC0E_43.77%,_#3D6C0D_96.27%)]">
+                <img
+                  src={contentPreviewImage}
+                  alt="E-book preview"
+                  className="w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </section>
+
       </main>
 
       <Footer onNavigate={onNavigate} />
