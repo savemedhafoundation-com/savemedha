@@ -17,8 +17,10 @@ import demoKindleCover from "../assets/Photo/5.jpg";
 import downloadButtonImage from "../assets/Photo/downloads.png";
 import amazonButtonImage from "../assets/Photo/amazon.png";
 import faqBookImage from "../assets/Photo/bookb.png";
-import contentBgImage from "../assets/Photo/bg g1 1.png";
-import contentPreviewImage from "../assets/Photo/Rectangle 711.png";
+import contentCoverOne from "../assets/Photo/bookcover1.png";
+import contentTocLayout from "../assets/Photo/Table of contents layout in green.png";
+import contentCoverThree from "../assets/Photo/bookcover3.png";
+import contentCoverTwo from "../assets/Photo/Rectangle 711.png";
 
 const PAGE_SIZE = 9;
 const HERO_FALLBACK_COVER = heroFallbackCover;
@@ -509,39 +511,51 @@ export default function EbookPage({ onNavigate }) {
             </section>
           </div>
         </section>
-         <section className="mt-12 overflow-hidden rounded-3xl border border-[#5aa81f]/30 shadow-sm">
-              
-                <div className="bg-white">
-                 <div className="relative z-10">
-                  <p className="text-center text-[50px] font-semibold uppercase tracking-[0.35em] text-[#020300]">
-                    Our Content
-                  </p>
-                  
-                 
-                    
-                    </div>
+        <section className="mt-12">
+          <div className="overflow-hidden   bg-[linear-gradient(180deg,_#74C425_0%,_#5DAC0E_55%,_#3D6C0D_100%)] px-6 py-10  sm:px-10">
+            <h3 className="text-center text-2xl font-semibold uppercase tracking-[0.25em] text-white sm:text-4xl sm:tracking-[0.35em]">
+              Our Content
+            </h3>
+            <div className="mt-8  p-6">
+              <div className="grid items-center gap-6 md:grid-cols-3">
                 <img
-                  src={contentBgImage}
+                  src={contentCoverOne}
                   alt="E-book preview"
-                  className="w-full object-cover"
+                  className="mx-auto h-56 w-auto object-contain shadow-lg translate-x-35"
+                  loading="lazy"
+                />
+                <img
+                  src={contentTocLayout}
+                  alt="E-book preview"
+                  className="mx-auto h-56 w-auto object-contain shadow-lg"
+                  loading="lazy"
+                />
+                <img
+                  src={contentCoverThree}
+                  alt="E-book preview"
+                  className="mx-auto h-56 w-auto object-contain shadow-lg -translate-x-34"
                   loading="lazy"
                 />
               </div>
-               
-                  <div className="h-2 w-1/3 rounded-full bg-[#bffb7a]" />
-                    <p className="mt-2 text-xs text-[#e8ffd0]">Pages 1 of 25</p>
-                  
-                
-              
-              <div className="bg-[linear-gradient(184.62deg,_#74C425_3.73%,_#5DAC0E_43.77%,_#3D6C0D_96.27%)]">
-                <img
-                  src={contentPreviewImage}
-                  alt="E-book preview"
-                  className="w-full object-cover"
-                  loading="lazy"
-                />
+            </div>
+            <div className="mx-auto mt-8 max-w-4xl text-left">
+              <div className="h-2 w-full rounded-full bg-white/30">
+                <div className="h-full w-1/3 rounded-full bg-[#bffb7a]" />
               </div>
-            </section>
+              <p className="mt-2 text-xs text-white/80">Pages 1 of 25</p>
+            </div>
+          </div>
+          <div>
+            <img
+              src={contentCoverTwo}
+              alt="cover"
+              className="mx-auto  h-auto w-auto object-contain shadow-lg  scale-b-150"
+              loading="lazy"
+            />
+
+            
+          </div>
+        </section>
 
       </main>
 

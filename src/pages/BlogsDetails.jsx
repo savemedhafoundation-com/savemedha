@@ -3,8 +3,16 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BlogContentRenderer from "../components/BlogContentRenderer";
-import { ArrowLeft, ArrowRight, Heart, Quote } from "lucide-react";
+import { ArrowLeft, ArrowRight, Heart, Quote, Share2 } from "lucide-react";
 import { IoLogoAmazon } from "react-icons/io5";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaLink,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 import { fetchBlogPosts } from "../service/api";
 
 const fallbackBanner = "https://placehold.co/1200x640";
@@ -46,10 +54,13 @@ export default function BlogsDetails({ onNavigate }) {
   const [related, setRelated] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const [shareStatus, setShareStatus] = useState("idle"); // idle | copied | error
   const [commentStatus, setCommentStatus] = useState("idle"); // idle | submitting | error
   const [commentError, setCommentError] = useState("");
   const contentRef = useRef(null);
   const commentsRef = useRef(null);
+  const shareMenuRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -112,6 +123,50 @@ export default function BlogsDetails({ onNavigate }) {
     return { title, banner, category, date, author };
   }, [blog]);
 
+  const shareUrl = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    return window.location.href;
+  }, [id]);
+  const shareTitle = meta.title || "Blog";
+  const shareLinks = useMemo(() => {
+    if (!shareUrl) return [];
+    const encodedUrl = encodeURIComponent(shareUrl);
+    const encodedTitle = encodeURIComponent(shareTitle);
+    const encodedText = encodeURIComponent(`${shareTitle} - ${meta.author}`);
+
+    return [
+      {
+        label: "WhatsApp",
+        href: `https://wa.me/?text=${encodeURIComponent(
+          `${shareTitle} ${shareUrl}`
+        )}`,
+        Icon: FaWhatsapp,
+      },
+      {
+        label: "Facebook",
+        href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+        Icon: FaFacebookF,
+      },
+      {
+        label: "X (Twitter)",
+        href: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+        Icon: FaTwitter,
+      },
+      {
+        label: "LinkedIn",
+        href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+        Icon: FaLinkedinIn,
+      },
+      {
+        label: "Email",
+        href: `mailto:?subject=${encodedTitle}&body=${encodeURIComponent(
+          `${shareTitle}\n${shareUrl}`
+        )}`,
+        Icon: MdEmail,
+      },
+    ];
+  }, [shareUrl, shareTitle, meta.author]);
+
   const trendingPosts = useMemo(() => {
     if (!related?.length) return [];
     return related
@@ -162,6 +217,31 @@ export default function BlogsDetails({ onNavigate }) {
       setLikeCount((count) => (prev ? Math.max(count - 1, 0) : count + 1));
       return !prev;
     });
+  };
+  const handleToggleShare = () => {
+    setIsShareOpen((prev) => !prev);
+  };
+  const handleCopyShareLink = async () => {
+    if (!shareUrl) return;
+
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = shareUrl;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "absolute";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+      }
+      setShareStatus("copied");
+    } catch {
+      setShareStatus("error");
+    }
   };
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
@@ -260,6 +340,35 @@ export default function BlogsDetails({ onNavigate }) {
     setLiked(false);
   }, [blog?.likesCount, blog?._id]);
 
+  useEffect(() => {
+    if (!isShareOpen) return;
+
+    const handleOutsideClick = (event) => {
+      if (!shareMenuRef.current) return;
+      if (!shareMenuRef.current.contains(event.target)) {
+        setIsShareOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") setIsShareOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isShareOpen]);
+
+  useEffect(() => {
+    if (shareStatus === "idle") return;
+    const timeout = setTimeout(() => setShareStatus("idle"), 2000);
+    return () => clearTimeout(timeout);
+  }, [shareStatus]);
+
   if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center text-lg text-slate-700">
@@ -341,6 +450,53 @@ export default function BlogsDetails({ onNavigate }) {
                     {likeCount}
                   </span>
                 </button>
+                <div className="relative" ref={shareMenuRef}>
+                  <button
+                    type="button"
+                    onClick={handleToggleShare}
+                    aria-expanded={isShareOpen}
+                    aria-controls="blog-share-menu"
+                    className="inline-flex items-center gap-2 border-2 border-[#74C425] px-3 py-1 rounded-full text-[#74C425] transition-colors hover:bg-[#74C425] hover:text-white"
+                    aria-label="Share this blog"
+                  >
+                    <Share2 size={14} />
+                    <span>Share</span>
+                  </button>
+                  {isShareOpen && (
+                    <div
+                      id="blog-share-menu"
+                      className="absolute right-0 mt-2 w-52 rounded-xl border border-slate-200 bg-white p-2 text-xs text-slate-700 shadow-lg"
+                    >
+                      {shareLinks.map(({ label, href, Icon }) => (
+                        <a
+                          key={label}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsShareOpen(false)}
+                          className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-[#f0ffe0]"
+                        >
+                          <Icon className="h-4 w-4 text-[#74C425]" />
+                          <span>{label}</span>
+                        </a>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={handleCopyShareLink}
+                        className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left hover:bg-[#f0ffe0]"
+                      >
+                        <FaLink className="h-4 w-4 text-[#74C425]" />
+                        <span>
+                          {shareStatus === "copied"
+                            ? "Link copied"
+                            : shareStatus === "error"
+                              ? "Copy failed"
+                              : "Copy link"}
+                        </span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-[#74C425] leading-tight">
                 {meta.title}
