@@ -51,18 +51,18 @@ const Footer = ({ onNavigate }) => {
   };
 
   const navLinks1 = [
-    { name: "HOME", key: "home" },
-    { name: "ABOUT US", key: "about" },
-    { name: "TREATMENT", key: "treatment" },
+    { name: "HOME", key: "home", href: "/" },
+    { name: "ABOUT US", key: "about", href: "/about-us" },
+    { name: "TREATMENT", key: "treatment", href: "/treatment" },
     { name: "DONATE", key: "donate", href: "/donate" },
     { name: "EVENTS & PROJECTS", href: "#" },
   ];
 
   const navLinks2 = [
-    { name: "BLOGS", key: "blogs" },
-    { name: "E-BOOK", key: "ebook" },
-    { name: "CAREERS", key: "careers" },
-    { name: "CONTACT", key: "locateus" },
+    { name: "BLOGS", key: "blogs", href: "/blogs" },
+    { name: "E-BOOK", key: "ebook", href: "/ebook" },
+    { name: "CAREERS", key: "careers", href: "/careers" },
+    { name: "CONTACT", key: "locateus", href: "/contact-us" },
   ];
 
   const handleLinkClick = (event, link) => {
