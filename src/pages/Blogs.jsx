@@ -23,6 +23,7 @@ const extractArray = (candidate, seen = new Set()) => {
 const normalizeResponse = (payload) => extractArray(payload);
 
 const BLOGS_API_URL = "https://savemedhabackend.vercel.app/api/blogs";
+const POSTS_PER_PAGE = 8;
 
 const stripHtml = (value = "") => {
   if (!value) return "";
@@ -59,6 +60,7 @@ export default function Blogs({ onNavigate }) {
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [reloadToken, setReloadToken] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const normalizePost = useCallback((post, index) => {
     return {
@@ -100,6 +102,10 @@ export default function Blogs({ onNavigate }) {
   const searchQuery = new URLSearchParams(location.search).get("q")?.trim() || "";
   const normalizedSearchQuery = searchQuery.toLowerCase();
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [normalizedSearchQuery]);
+
   const visiblePosts = normalizedSearchQuery
     ? normalizedPosts.filter((post) => {
         const haystack = [
@@ -119,6 +125,28 @@ export default function Blogs({ onNavigate }) {
   const latestPost = visiblePosts[0];
   const trendingPosts = visiblePosts.slice(0, 2);
   const gridPosts = visiblePosts;
+  const totalPages = Math.ceil(gridPosts.length / POSTS_PER_PAGE);
+  const activePage = totalPages ? Math.min(currentPage, totalPages) : 1;
+  const startIndex = (activePage - 1) * POSTS_PER_PAGE;
+  const paginatedPosts = gridPosts.slice(
+    startIndex,
+    startIndex + POSTS_PER_PAGE
+  );
+
+  useEffect(() => {
+    if (!totalPages) {
+      if (currentPage !== 1) setCurrentPage(1);
+      return;
+    }
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const handlePageChange = (page) => {
+    if (page < 1 || page > totalPages || page === currentPage) return;
+    setCurrentPage(page);
+  };
 
   const handleReadMore = (postId) => {
     if (onNavigate && postId) {
@@ -355,7 +383,7 @@ export default function Blogs({ onNavigate }) {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {gridPosts.map((post) => (
+            {paginatedPosts.map((post) => (
               <article
                 key={post.id}
                 className="border border-gray-200 rounded-lg bg-[#f2f9e9] shadow-sm overflow-hidden flex flex-col min-h-[320px] md:min-h-[360px]"
@@ -390,23 +418,53 @@ export default function Blogs({ onNavigate }) {
           </div>
 
           {/* Pagination */}
-          <div className="flex items-center justify-center gap-2 mt-8">
-            <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-[#155300]">
-              «
-            </button>
-            <button className="px-3 py-1 border border-[#74C425] bg-[#74C425] text-white rounded">
-              1
-            </button>
-            <button className="px-3 py-1 border border-[#74C425] text-[#74C425] rounded hover:bg-[#74C425] hover:text-white">
-              2
-            </button>
-            <button className="px-3 py-1 border border-[#74C425] text-[#74C425] rounded hover:bg-[#74C425] hover:text-white">
-              3
-            </button>
-            <button className="px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 text-[#155300]">
-              »
-            </button>
-          </div>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-8">
+              <button
+                type="button"
+                onClick={() => handlePageChange(activePage - 1)}
+                disabled={activePage === 1}
+                className={`px-3 py-1 border rounded transition ${
+                  activePage === 1
+                    ? "border-gray-200 text-gray-300 cursor-not-allowed"
+                    : "border-gray-300 hover:bg-gray-100 text-[#155300]"
+                }`}
+              >
+                «
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => {
+                const pageNumber = index + 1;
+                const isActive = pageNumber === activePage;
+                return (
+                  <button
+                    key={pageNumber}
+                    type="button"
+                    onClick={() => handlePageChange(pageNumber)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`px-3 py-1 border rounded transition ${
+                      isActive
+                        ? "border-[#74C425] bg-[#74C425] text-white"
+                        : "border-[#74C425] text-[#74C425] hover:bg-[#74C425] hover:text-white"
+                    }`}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                onClick={() => handlePageChange(activePage + 1)}
+                disabled={activePage === totalPages}
+                className={`px-3 py-1 border rounded transition ${
+                  activePage === totalPages
+                    ? "border-gray-200 text-gray-300 cursor-not-allowed"
+                    : "border-gray-300 hover:bg-gray-100 text-[#155300]"
+                }`}
+              >
+                »
+              </button>
+            </div>
+          )}
         </section>
 
         {/* Categories */}

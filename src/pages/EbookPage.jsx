@@ -464,10 +464,9 @@ export default function EbookPage({ onNavigate }) {
             </div>
 
             <section
-              className="relative mt-12 overflow-hidden bg-no-repeat bg-right bg-contain px-6 py-10 shadow-sm sm:px-10"
+              className="relative mt-12 overflow-hidden bg-no-repeat bg-center bg-cover px-6 py-10 shadow-sm sm:px-10"
               style={{
                 backgroundImage: `url(${faqBookImage})`,
-                backgroundSize: "960px",
               }}
             >
               <div className="absolute inset-0 bg-white/200" aria-hidden="true" />
