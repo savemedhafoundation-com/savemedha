@@ -323,7 +323,7 @@ export default function AboutUs({ onNavigate }) {
 
           <div className="relative rounded-[32px] bg-white shadow-[0_25px_90px_rgba(0,0,0,0.07)] border border-[#e8f0e3] p-8 md:p-12">
             <div className="absolute -left-8 top-1/2 h-14 w-14 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#dff0d6] to-white shadow-md" aria-hidden="true" />
-            <div className="absolute -right-6 bottom-4 h-10 w-10 rounded-full border-2 border-[#f08a1d] opacity-60" aria-hidden="true" />
+            <div className="absolute right-6 bottom-4 h-10 w-10 rounded-full border-2 border-[#f08a1d] opacity-60" aria-hidden="true" />
             <div className="space-y-5 text-base md:text-m leading-relaxed text-gray-700">
               {fightAgainstCancerText.map((paragraph, idx) => (
                 <p key={idx} className="text-justify">
