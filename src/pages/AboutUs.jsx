@@ -308,7 +308,7 @@ export default function AboutUs({ onNavigate }) {
           <span className="h-16 w-16 rounded-full border-2 border-[#6ab12f]" />
           <span className="h-16 w-16 -ml-10 rounded-full border-2 border-[#e95f2a]" />
         </div>
-        <div className="absolute -right-10 bottom-6 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-30" aria-hidden="true" />
+        <div className="absolute right-10 bottom-6 h-24 w-24 rounded-full border-4 border-[#f08a1d] opacity-30" aria-hidden="true" />
 
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-4">
