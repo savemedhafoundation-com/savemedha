@@ -8,6 +8,7 @@ import jobData from "../assets/Photo/3.jpg";
 import jobMedia from "../assets/Photo/5.jpg";
 import jobTech from "../assets/Photo/6.jpg";
 import internshipImage from "../assets/Photo/internship.jpg";
+import { useEffect, useRef } from "react";
 
 const WHY_CARDS = [
   {
@@ -72,25 +73,25 @@ function SectionHeading({ title, subtitle }) {
         <p className="mt-3 text-base text-slate-600 sm:text-lg">{subtitle}</p>
       ) : null}
 
-        <svg
-                className="mt-2 h-3 w-64 text-lime-500"
-                viewBox="0 0 256 12"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M18 8 C 80 2, 152 2, 250 1"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M2 12 C 62 8, 140 8, 246 7"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-              </svg>
+      <svg
+        className="mt-2 h-3 w-64 text-lime-500"
+        viewBox="0 0 256 12"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M18 8 C 80 2, 152 2, 250 1"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+        <path
+          d="M2 12 C 62 8, 140 8, 246 7"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+      </svg>
     </div>
   );
 }
@@ -110,17 +111,29 @@ function Card({ title, children, className = "" }) {
   );
 }
 
-function JobCard({ title, type, location,image, index }) {
-    const isImageLeft = index % 2 === 1;
+function JobCard({ title, type, location, image, index }) {
+  const isRightCard = index % 2 === 1;
+
   return (
-   <article className="rounded-3xl border border-lime-200/80 bg-white p-6 shadow-[0_18px_40px_rgba(34,197,94,0.12)]">
+    <div
+      className={`
+        rounded-3xl border border-lime-200/80 bg-white p-6
+        shadow-[0_18px_40px_rgba(34,197,94,0.12)]
+        transition-transform
+        max-w-xl
+        mb-10
+        ${isRightCard ? "lg:translate-y-24 lg:translate-x-24" : ""}
+      `}
+    >
       <div
         className={`flex flex-col gap-6 lg:items-center ${
-          isImageLeft ? "lg:flex-row-reverse" : "lg:flex-row"
+          isRightCard ? "lg:flex-row-reverse" : "lg:flex-row"
         }`}
       >
-        <div className={`${isImageLeft ? "lg:text-right" : ""}`}>
+        {/* Content */}
+        <div className={` relative ${isRightCard ? "lg:text-right" : ""}`}>
           <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
+
           <dl className="mt-4 grid gap-2 text-sm text-slate-700">
             <div className="flex items-center justify-between gap-3">
               <dt className="text-slate-500">Job type</dt>
@@ -131,32 +144,80 @@ function JobCard({ title, type, location,image, index }) {
               <dd className="font-medium text-slate-800">{location}</dd>
             </div>
           </dl>
+
           <div className="mt-6">
             <Link
               to="/apply"
-              className="inline-flex min-w-[160px] items-center justify-center rounded-2xl bg-lime-500 px-6 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-lime-600"
+              className="inline-flex min-w-[160px] items-center justify-center
+              rounded-2xl bg-lime-500 px-6 py-2 text-sm font-semibold
+              text-white shadow-sm hover:bg-lime-600"
             >
               Apply Now
             </Link>
           </div>
         </div>
-        <div className="flex justify-center">
-          <div className="relative h-28 w-28 sm:h-32 sm:w-32">
+
+        {/* Image */}
+        <div
+          className={`absolute flex justify-center ${
+            isRightCard ? "-left-10" : "inset-x-2"
+          }`}
+        >
+          <div className="relative h-44 w-44 sm:h-40 sm:w-40">
             <div className="absolute inset-0 rotate-45 rounded-[1.6rem] bg-lime-200" />
-            <div className="absolute inset-1 rotate-45 overflow-hidden rounded-[1.4rem] bg-white shadow-md">
+            <div className="absolute inset-y-1 rotate-45 overflow-hidden rounded-[1.4rem] bg-white shadow-md">
               <img
                 src={image}
                 alt=""
-                className="h-full w-full -rotate-45 object-cover scale-125"
+                className="h-full w-full -rotate-45 object-cover scale-128"
                 loading="lazy"
               />
             </div>
           </div>
         </div>
       </div>
-    </article>
+    </div>
   );
 }
+
+// the flipster slide for the careers page
+const CoverflowCarousel = () => {
+  const flipsterRef = useRef(null);
+
+  useEffect(() => {
+    if (!window.$ || !window.$.fn.flipster) {
+      return;
+    }
+
+    window.$(flipsterRef.current).flipster({
+      style: "flat",
+      spacing: -0.9,
+      nav: false,
+      buttons: true,
+      loop: true,
+      start: 0,
+    });
+  }, []);
+
+  return (
+    <div className="flipster p-20" ref={flipsterRef}>
+      <ul>
+        <li>
+          <div className="slide bg-teal-500">Application Preview</div>
+        </li>
+        <li>
+          <div className="slide bg-teal-300">Interaction</div>
+        </li>
+        <li>
+          <div className="slide bg-teal-100">Role discussion / task</div>
+        </li>
+        <li>
+          <div className="slide bg-teal-50">Onboarding</div>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 export default function CareersPage({ onNavigate }) {
   return (
@@ -165,7 +226,8 @@ export default function CareersPage({ onNavigate }) {
 
       <main>
         {/* 1) HERO SECTION */}
-           <div className="pointer-events-none absolute -right-10 bottom-[120rem] h-201 w-[28rem] rotate-12 rounded-[4rem] bg-lime-100/50" />
+        <div className="pointer-events-none absolute -right-10 bottom-[120rem] h-201 w-[38rem] rotate-12 rounded-[4rem] bg-lime-100/20" />
+        <div className="pointer-events-none absolute -left-42 bottom-[-3rem] h-620 w-[48rem] rotate-62 rounded-[4rem] bg-lime-100/20" />
         <section className="bg-white relative mb-22">
           <div className="pointer-events-none absolute -left-24 top-8 h-64 w-64 rounded-full bg-emerald-100/70 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 left-22 h-72 w-72 rotate-45 rounded-[3rem] bg-lime-100/30" />
@@ -219,7 +281,7 @@ export default function CareersPage({ onNavigate }) {
         {/* 2) WHY WORK WITH US (4 CARDS) */}
         <section className="relative overflow-hidden">
           {/* <div className="pointer-events-none absolute -left-32 -top-24 h-80 w-80 rounded-full bg-lime-200/60 blur-3xl" /> */}
-       
+
           <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
               <h2 className="text-3xl font-semibold text-black">
@@ -261,11 +323,11 @@ export default function CareersPage({ onNavigate }) {
         </section>
 
         {/* 3) OPEN POSITIONS SECTION */}
-            <section className="relative overflow-hidden bg-transparent">
+        <section className="relative overflow-hidden bg-transparent">
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
             <SectionHeading title="Open Positions" />
 
-            <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            <div className="mt-8 grid gap-10 lg:grid-cols-2">
               {OPEN_POSITIONS.map((job, index) => (
                 <JobCard
                   key={job.title}
@@ -338,19 +400,25 @@ export default function CareersPage({ onNavigate }) {
 
         {/* 5) HIRING PROCESS SECTION */}
         <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <SectionHeading title="Hiring Process" />
+          <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
+            <div className="flex justify-center items-center">
+              <SectionHeading title="Hiring Process" />
+            </div>
 
-            <ol className="mt-6 max-w-3xl list-decimal space-y-3 pl-5 text-base text-slate-700">
+            {/* <ol className="mt-6 max-w-3xl list-decimal space-y-3 pl-5 text-base text-slate-700">
               <li>Application review</li>
               <li>Interaction</li>
               <li>Role discussion / task</li>
               <li>Onboarding</li>
-            </ol>
+            </ol> */}
 
-            <div className="mt-6 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-700">
-              <p className="font-semibold text-slate-900">Transparency note</p>
-              <p className="mt-2">
+            <div className=" relative mx-auto max-w-7xl px-4 py-5">
+              <div className="absolute z-10 bottom-121 left-36 h-14 w-14 rounded-full bg-lime-400" />
+              <CoverflowCarousel />
+            </div>
+
+            <div className="mt-6 max-w-4xl rounded-full bg-[#74C425] font-semibold text-lg px-8 py-5 text-center text-sm font-medium text-[#0B2A1F] shadow-md">
+              <p className="">
                 We do not make fake promises. We hire ethically, communicate
                 respectfully, and keep expectations clear, so candidates can
                 decide with confidence.
@@ -360,41 +428,46 @@ export default function CareersPage({ onNavigate }) {
         </section>
 
         {/* 6) APPLY CTA SECTION */}
-        <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-              <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#f8faf7] via-[#eef6ea] to-[#e6f4f1] shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:px-10">
+          <div className="pointer-events-none absolute -left-20 top-18 h-96 w-96 rounded-full bg-[#5CA415]/8" />
+          <div className="pointer-events-none absolute -right-25 -top-0 h-96 w-96 rounded-full bg-[#5CA415]/8" />
+          <div className="pointer-events-none absolute left-150 top-18 h-26 w-26 rounded-full bg-[#5CA415]" />
+            <div className="pointer-events-none absolute left-190 top-60 h-26 w-26 rounded-full bg-[#5CA415]" />
+             <div className="pointer-events-none absolute left-210 top-50 h-26 w-26 rounded-full bg-[#5CA415]" />
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-3xl rounded-3xl bg-white/70 px-6 py-10 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:px-10">
+              <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">
                 Ready to contribute with care and clarity?
               </h2>
-              <p className="mt-3 text-base text-slate-600">
+              <p className="mt-3 text-base text-slate-700">
                 If our mission feels aligned with your values, we would like to
                 hear from you. Share your background and how you want to help.
               </p>
 
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <div className="mt-6 flex flex-col items-center gap-3">
                 <Link
                   to="/apply"
-                  className="inline-flex items-center justify-center rounded-xl bg-emerald-700 px-6 py-2 text-sm font-semibold text-white hover:bg-emerald-800"
+                  className="inline-flex items-center justify-center rounded-full bg-[#74C425] px-8 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#64ac1d]"
                 >
                   Apply Now
                 </Link>
               </div>
 
-              <div className="mt-6 text-sm text-slate-600">
+              <div className="mt-6 space-y-1 text-sm text-slate-700">
                 <p>
-                  <span className="font-semibold text-slate-900">Email:</span>{" "}
+                  <span className="font-semibold text-slate-900">Email :</span>{" "}
                   <a
                     href="mailto:info@savemedha.com"
-                    className="text-emerald-800 underline underline-offset-2"
+                    className="font-medium text-slate-900 underline underline-offset-4"
                   >
                     info@savemedha.com
                   </a>
                 </p>
-                <p className="mt-1">
-                  <span className="font-semibold text-slate-900">Phone:</span>{" "}
+                <p>
+                  <span className="font-semibold text-slate-900">Phone :</span>{" "}
                   <a
                     href="tel:+919800808595"
-                    className="text-emerald-800 underline underline-offset-2"
+                    className="font-medium text-slate-900 underline underline-offset-4"
                   >
                     +91 98008 08595
                   </a>
@@ -405,9 +478,9 @@ export default function CareersPage({ onNavigate }) {
         </section>
 
         {/* 7) FOOTER NOTE */}
-        <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-            <p className="max-w-3xl text-xs leading-relaxed text-slate-500">
+        <section className="bg-slate-50">
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+            <p className="mx-auto max-w-4xl text-center text-sx font-semibold leading-relaxed text-slate-600">
               Save Medha Foundation is an equal opportunity organization. We aim
               for respectful hiring, fair evaluation, and a mission-aligned work
               culture where people are treated with dignity.
