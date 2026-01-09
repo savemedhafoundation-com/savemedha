@@ -570,12 +570,15 @@ export default function BlogsDetails({ onNavigate }) {
                   <p className="text-[15px] font-bold text-slate-900 tracking-wide">
                     Know More:
                   </p>
-                  <button
+                  <a
+                    href="https://www.amazon.in/dp/B0FF2CTTND?ref=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&ref_=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&social_share=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&bestFormat=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-4 py-3 text-white font-semibold text-sm shadow hover:bg-[#e1951c] transition-all duration-300 hover:shadow-lg"
                   >
                     <IoLogoAmazon size={26} className="text-white" />
                     Ebook Reference
-                  </button>
+                  </a>
                 </div>
 
                 

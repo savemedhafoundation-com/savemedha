@@ -389,7 +389,7 @@ export default function Blogs({ onNavigate }) {
               >
                 <img
                   src={post.coverImage || blogBanner}
-                  className="w-full h-70 md:h-40 object-cover"
+                  className="w-full h-70  md:h-50 object-cover"
                   alt={post.title}
                 />
                 <div className="p-4 flex flex-col gap-2 flex-1">
@@ -400,8 +400,7 @@ export default function Blogs({ onNavigate }) {
                     {post.title}
                   </h4>
                   <p className="text-xs text-slate-600">
-                    By {post.author || "Admin"} | {post.date || "—"} | Write a
-                    Comment
+                    By {post.author || "Admin"} | {post.date || "—"}
                   </p>
                   <div className="mt-auto">
                     <button
