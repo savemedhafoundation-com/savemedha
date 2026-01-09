@@ -456,3 +456,54 @@ iframe.goog-te-banner-frame,
 body {
   top: 0 !important;
 }
+
+.slide {
+  width: 260px;
+  height: 420px;
+  border-radius: 28px;
+
+  /* background image / color handled elsewhere */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* CENTER TEXT */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* TEXT STYLE */
+  color: #080000;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1.4;
+  text-shadow: 0 2px 6px rgba(241, 245, 5, 600);
+
+  /* polish */
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* dark overlay for readability */
+.slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 26, 33, 0.9),
+    rgba(0, 26, 33, 0.35)
+  );
+  border-radius: inherit;
+}
+
+
+/* ensure text stays above overlay */
+.slide > * {
+  position: relative;
+  z-index: 1;
+}
+
