@@ -236,15 +236,14 @@ export default function Blogs({ onNavigate }) {
               <img
                 src={latestPost?.coverImage || blogBanner}
                 alt={latestPost?.title || "Latest blog"}
-                className="w-full object-cover"
+                className="w-full h-[420px] object-cover"
               />
               <div className="p-6 space-y-3">
                 <div className="text-xs text-slate-500 space-x-2">
                   <span>By {latestPost?.author || "Admin"}</span>
                   <span className="text-[#74C425]">|</span>
                   <span>{latestPost?.date || "—"}</span>
-                  <span className="text-[#74C425]">|</span>
-                  <span>Write a Comment</span>
+                  
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 leading-snug">
                   {latestPost?.title}
@@ -353,8 +352,8 @@ export default function Blogs({ onNavigate }) {
                         <span>By {post.author || "Admin"}</span>
                         <span className="text-[#74C425]">|</span>
                         <span>{post.date || "—"}</span>
-                        <span className="text-[#74C425]">|</span>
-                        <span>Write a Comment</span>
+                        
+                        
                       </div>
                       <p className="mt-2 font-semibold text-slate-900 leading-snug">
                         {post.title}

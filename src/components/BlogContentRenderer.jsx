@@ -16,9 +16,9 @@ const PLACEHOLDER_PATTERNS = [
 
 const INLINE_IMAGE_STYLE = {
   display: "block",
-  width: "60%",
-  maxWidth: "100%",
+  minWidth: "380px",
   height: "auto",
+  maxHeight: "520px",
   margin: "1.5rem 0",
   borderRadius: "12px",
 };
