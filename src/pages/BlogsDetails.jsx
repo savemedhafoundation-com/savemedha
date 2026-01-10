@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BlogContentRenderer from "../components/BlogContentRenderer";
@@ -49,6 +49,7 @@ const formatDate = (value) => {
 
 export default function BlogsDetails({ onNavigate }) {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [related, setRelated] = useState([]);
@@ -61,6 +62,7 @@ export default function BlogsDetails({ onNavigate }) {
   const contentRef = useRef(null);
   const commentsRef = useRef(null);
   const shareMenuRef = useRef(null);
+  const trendingScrollRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -104,8 +106,7 @@ export default function BlogsDetails({ onNavigate }) {
 
   const meta = useMemo(() => {
     const title =
-      blog?.title ||
-      "Why Natural Immunotherapy is the Future of Healing";
+      blog?.title || "Why Natural Immunotherapy is the Future of Healing";
     const banner =
       blog?.imageUrl ||
       blog?.coverImage ||
@@ -114,12 +115,10 @@ export default function BlogsDetails({ onNavigate }) {
       blog?.thumbnail ||
       fallbackBanner;
     const category = blog?.category || blog?.tag || "Health";
-    const date = formatDate(blog?.publishedAt || blog?.createdAt || blog?.updatedAt) || "";
+    const date =
+      formatDate(blog?.publishedAt || blog?.createdAt || blog?.updatedAt) || "";
     const author =
-      blog?.writtenBy ||
-      blog?.author?.name ||
-      blog?.author ||
-      "Admin";
+      blog?.writtenBy || blog?.author?.name || blog?.author || "Admin";
     return { title, banner, category, date, author };
   }, [blog]);
 
@@ -203,12 +202,33 @@ export default function BlogsDetails({ onNavigate }) {
           .filter(Boolean)
       )
     );
-    return (categories.length ? categories : ["Health", "Wellness", "Research", "Nutrition", "Holistic"])
+    return (
+      categories.length
+        ? categories
+        : ["Health", "Wellness", "Research", "Nutrition", "Holistic"]
+    )
       .slice(0, 5)
       .map((label) => ({ label }));
   }, [related]);
 
   const rawContent = blog?.content || blog?.description || blog?.excerpt || "";
+
+  const handleOpenBlog = (blogId) => {
+    if (!blogId) return;
+    if (onNavigate) {
+      onNavigate("blogs-detail", { id: blogId });
+      return;
+    }
+    navigate(`/blogs/${blogId}`);
+  };
+
+  const handleTrendingScroll = (direction) => {
+    const el = trendingScrollRef.current;
+    if (!el) return;
+    const scrollAmount = Math.max(240, Math.floor(el.clientWidth * 0.9));
+    el.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+  };
+
   const handleScrollToComments = () => {
     commentsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -415,7 +435,7 @@ export default function BlogsDetails({ onNavigate }) {
                 <img
                   src={meta.banner}
                   alt={meta.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-fill"
                 />
               </div>
               <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600">
@@ -446,7 +466,11 @@ export default function BlogsDetails({ onNavigate }) {
                 >
                   <Heart size={14} className={liked ? "fill-current" : ""} />
                   <span>{liked ? "Liked" : "Like"}</span>
-                  <span className={`text-[11px] ${liked ? "text-white" : "text-slate-500"}`}>
+                  <span
+                    className={`text-[11px] ${
+                      liked ? "text-white" : "text-slate-500"
+                    }`}
+                  >
                     {likeCount}
                   </span>
                 </button>
@@ -490,8 +514,8 @@ export default function BlogsDetails({ onNavigate }) {
                           {shareStatus === "copied"
                             ? "Link copied"
                             : shareStatus === "error"
-                              ? "Copy failed"
-                              : "Copy link"}
+                            ? "Copy failed"
+                            : "Copy link"}
                         </span>
                       </button>
                     </div>
@@ -505,65 +529,61 @@ export default function BlogsDetails({ onNavigate }) {
 
             <div className="space-y-4">
               <div className="rounded-2xl bg-[#74C425] text-white p-6 shadow">
-                <h3 className="text-xl font-bold mb-2">Request a call back from us!</h3>
+                <h3 className="text-xl font-bold mb-2">
+                  Request a call back from us!
+                </h3>
                 <p className="text-sm text-white/90 mb-4">
-                  Fill in the form below to request a call back to get further assistance from us.
+                  Fill in the form below to request a call back to get further
+                  assistance from us.
                 </p>
                 <form className="space-y-5 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
-                  <div className="relative">
-                    <input
-                      type="text"
-                      id="callback-name"
-                      className="peer w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 placeholder-transparent focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition"
-                      placeholder="Your Name"
-                    />
-                    <label
-                      htmlFor="callback-name"
-                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#1e3a8a] transition-all"
-                    >
-                      Your Name
-                    </label>
-                  </div>
 
-                  <div className="relative">
-                    <input
-                      type="text"
-                      id="callback-mobile"
-                      className="peer w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 placeholder-transparent focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition"
-                      placeholder="Your Mobile No."
-                    />
-                    <label
-                      htmlFor="callback-mobile"
-                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#1e3a8a] transition-all"
-                    >
-                      Your Mobile No.
-                    </label>
-                  </div>
+  {/* Name */}
+  <div className="w-full">
+    <input
+      type="text"
+      id="callback-name"
+      placeholder="Your Name"
+      required
+      className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800
+                 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition"
+    />
+  </div>
 
-                  <div className="relative">
-                    <textarea
-                      id="callback-description"
-                      rows="3"
-                      className="peer w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 placeholder-transparent focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition resize-none"
-                      placeholder="Describe your issue"
-                    />
-                    <label
-                      htmlFor="callback-description"
-                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#1e3a8a] transition-all"
-                    >
-                      Description
-                    </label>
-                  </div>
+  {/* Mobile */}
+  <div className="w-full">
+    <input
+      type="text"
+      id="callback-mobile"
+      placeholder="Your Mobile No."
+      className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800
+                 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition"
+    />
+  </div>
 
-                  <button
-                    type="button"
-                    className="w-full bg-[#1e3a8a] hover:bg-[#14275d] text-white font-semibold py-3 rounded-xl transition shadow-md hover:shadow-lg"
-                  >
-                    Submit
-                  </button>
-                </form>
+  {/* Description */}
+  <div className="w-full">
+    <textarea
+      id="callback-description"
+      rows={3}
+      placeholder="Describe your issue"
+      className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800
+                 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition resize-none"
+    />
+  </div>
+
+  {/* Button */}
+  <button
+    type="button"
+    className="w-full bg-[#1e3a8a] hover:bg-[#14275d] text-white font-semibold py-3 rounded-xl transition shadow-md hover:shadow-lg"
+  >
+    Submit
+  </button>
+
+</form>
+
               </div>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className="text-4xl">📘</div>
@@ -580,16 +600,9 @@ export default function BlogsDetails({ onNavigate }) {
                     Ebook Reference
                   </a>
                 </div>
-
-                
-                  
-                
               </div>
             </div>
-              </div>
-
-             
-          
+          </div>
         </section>
 
         {/* Content */}
@@ -634,47 +647,77 @@ export default function BlogsDetails({ onNavigate }) {
         {/* Trending Slider */}
         <section className="mt-12 px-4">
           <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-b from-[#e8ffd8] to-white p-6 shadow-inner relative">
-            <h3 className="text-xl font-bold text-slate-900 mb-4">Trending Blogs</h3>
+            <h3 className="text-xl font-bold text-slate-900 mb-4">
+              Trending Blogs
+            </h3>
             <div className="relative">
               <button
                 type="button"
-                className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white border border-[#74C425] text-[#74C425] shadow"
+                onClick={() => handleTrendingScroll(-1)}
+                className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white border border-[#74C425] text-[#74C425] shadow cursor-pointer"
                 aria-label="Previous"
               >
                 <ArrowLeft size={18} />
               </button>
-              <div className="flex gap-4 overflow-x-auto scroll-smooth pb-2 hide-scrollbar">
-                {(trendingPosts.length ? trendingPosts : related).map((item, index) => (
-                  <div
-                    key={item.id || index}
-                    className="min-w-[240px] rounded-xl bg-white border border-gray-200 shadow-sm p-3 flex gap-3"
-                  >
-                    <img
-                      src={
-                        item.image ||
-                        item.coverImage?.url ||
-                        item.coverImage ||
-                        item.heroImage ||
-                        placeholderThumb
-                      }
-                      alt={item.title}
-                      className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
-                    />
-                    <div className="flex flex-col gap-1">
-                      <p className="text-xs text-slate-500">
-                        By {item.author || item.authorName || "Admin"} •{" "}
-                        {formatDate(item.date || item.publishedAt || item.createdAt)}
-                      </p>
-                      <h4 className="text-sm font-semibold text-[#74C425] line-clamp-2">
-                        {item.title}
-                      </h4>
-                    </div>
-                  </div>
-                ))}
+              <div
+                ref={trendingScrollRef}
+                className="flex gap-4 overflow-x-auto scroll-smooth pb-2 hide-scrollbar"
+              >
+                {(trendingPosts.length ? trendingPosts : related).map(
+                  (item, index) => {
+                    const blogId = item?.id || item?._id;
+                    const imageSrc =
+                      item?.image ||
+                      item?.imageUrl ||
+                      item?.coverImage?.url ||
+                      item?.coverImage ||
+                      item?.heroImage ||
+                      item?.thumbnail ||
+                      placeholderThumb;
+                    const authorName =
+                      item?.author ||
+                      item?.authorName ||
+                      item?.writtenBy ||
+                      item?.author?.name ||
+                      "Admin";
+                    const dateLabel = formatDate(
+                      item?.date || item?.publishedAt || item?.createdAt
+                    );
+
+                    return (
+                      <button
+                        key={blogId || index}
+                        type="button"
+                        onClick={() => handleOpenBlog(blogId)}
+                        className="min-w-[240px] rounded-xl bg-white border border-gray-200 shadow-sm p-3 flex gap-3 text-left transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#74C425]/40 cursor-pointer"
+                        aria-label={
+                          item?.title ? `Open blog: ${item.title}` : "Open blog"
+                        }
+                      >
+                        <img
+                          src={imageSrc}
+                          alt={item?.title || "Blog thumbnail"}
+                          className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                          loading="lazy"
+                        />
+                        <div className="flex flex-col gap-1">
+                          <p className="text-xs text-slate-500">
+                            By {authorName}
+                            {dateLabel ? ` • ${dateLabel}` : ""}
+                          </p>
+                          <h4 className="text-sm font-semibold text-[#74C425] line-clamp-2">
+                            {item?.title || "Untitled"}
+                          </h4>
+                        </div>
+                      </button>
+                    );
+                  }
+                )}
               </div>
               <button
                 type="button"
-                className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white border border-[#74C425] text-[#74C425] shadow"
+                onClick={() => handleTrendingScroll(1)}
+                className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white border border-[#74C425] text-[#74C425] shadow cursor-pointer"
                 aria-label="Next"
               >
                 <ArrowRight size={18} />
@@ -686,7 +729,9 @@ export default function BlogsDetails({ onNavigate }) {
         {/* Categories */}
         <section className="max-w-6xl mx-auto px-4 pt-10">
           <div className="flex items-center gap-3 mb-6">
-            <h3 className="text-xl md:text-2xl font-bold text-slate-900">All Category</h3>
+            <h3 className="text-xl md:text-2xl font-bold text-slate-900">
+              All Category
+            </h3>
             <span className="h-[2px] w-10 bg-slate-900 inline-block" />
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -738,7 +783,7 @@ export default function BlogsDetails({ onNavigate }) {
                 required
                 autoComplete="name"
                 placeholder="Your name"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425] "
               />
             </div>
             <div className="space-y-1">
@@ -780,7 +825,9 @@ export default function BlogsDetails({ onNavigate }) {
                 disabled={commentStatus === "submitting"}
                 className="rounded-full bg-[#74C425] text-white font-semibold px-5 py-2 hover:bg-[#155300] transition disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {commentStatus === "submitting" ? "Submitting..." : "Submit Comment"}
+                {commentStatus === "submitting"
+                  ? "Submitting..."
+                  : "Submit Comment"}
               </button>
             </div>
             {commentError && (

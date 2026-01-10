@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import blogBanner from "../assets/Photo/blog image.png";
+import naturalScienceImage from "../assets/Photo/natrual science.png";
+import naturalImmunotherapyImage from "../assets/Photo/Natural Immunotherapy.png";
 
 const extractArray = (candidate, seen = new Set()) => {
   if (!candidate || seen.has(candidate)) return [];
@@ -47,12 +49,12 @@ const formatDate = (value) => {
 };
 
 const categoryCards = [
-  { label: "Natural Science", image: "https://placehold.co/120x120" },
+  { label: "Natural Science", image: naturalScienceImage },
   { label: "Chronic Disease Related", image: "https://placehold.co/120x120" },
   { label: "Thalassemia Related", image: "https://placehold.co/120x120" },
   { label: "Nutrition Based", image: "https://placehold.co/120x120" },
   { label: "A Holistic Perspective", image: "https://placehold.co/120x120" },
-  { label: "Natural Immunotherapy", image: "https://placehold.co/120x120" },
+  { label: "Natural Immunotherapy", image: naturalImmunotherapyImage },
 ];
 
 export default function Blogs({ onNavigate }) {
@@ -236,7 +238,7 @@ export default function Blogs({ onNavigate }) {
               <img
                 src={latestPost?.coverImage || blogBanner}
                 alt={latestPost?.title || "Latest blog"}
-                className="w-full h-[420px] object-cover"
+                className="w-full h-[420px] object-fill"
               />
               <div className="p-6 space-y-3">
                 <div className="text-xs text-slate-500 space-x-2">
