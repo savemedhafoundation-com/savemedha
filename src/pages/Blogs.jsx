@@ -477,7 +477,7 @@ export default function Blogs({ onNavigate }) {
             <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
               All Category
             </h3>
-            <span className="h-[2px] w-10 bg-slate-900 inline-block" />
+            
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categoryCards.map((cat) => (
