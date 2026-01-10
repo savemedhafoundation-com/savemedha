@@ -6,6 +6,10 @@ import Footer from "../components/Footer";
 import blogBanner from "../assets/Photo/blog image.png";
 import naturalScienceImage from "../assets/Photo/natrual science.png";
 import naturalImmunotherapyImage from "../assets/Photo/Natural Immunotherapy.png";
+import chronicDiseaseImage from "../assets/Photo/Chronic Disease.png";
+import thalassemiaRelatedImage from "../assets/Photo/Thalassemia Related.png";
+import nutritionBasedImage from "../assets/Photo/Nutrition Based.png";
+import holisticPerspectiveImage from "../assets/Photo/A Holistic Perspective.png";
 
 const extractArray = (candidate, seen = new Set()) => {
   if (!candidate || seen.has(candidate)) return [];
@@ -50,10 +54,10 @@ const formatDate = (value) => {
 
 const categoryCards = [
   { label: "Natural Science", image: naturalScienceImage },
-  { label: "Chronic Disease Related", image: "https://placehold.co/120x120" },
-  { label: "Thalassemia Related", image: "https://placehold.co/120x120" },
-  { label: "Nutrition Based", image: "https://placehold.co/120x120" },
-  { label: "A Holistic Perspective", image: "https://placehold.co/120x120" },
+  { label: "Chronic Disease Related", image: chronicDiseaseImage },
+  { label: "Thalassemia Related", image: thalassemiaRelatedImage },
+  { label: "Nutrition Based", image: nutritionBasedImage },
+  { label: "A Holistic Perspective", image: holisticPerspectiveImage },
   { label: "Natural Immunotherapy", image: naturalImmunotherapyImage },
 ];
 
