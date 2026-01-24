@@ -17,7 +17,9 @@ import { fetchBlogPosts } from "../service/api";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
-const BLOGS_API_URL = "https://savemedhabackend.vercel.app/api/blogs";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
+const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
 
 const extractArray = (candidate, seen = new Set()) => {
   if (!candidate || seen.has(candidate)) return [];
@@ -48,7 +50,7 @@ const formatDate = (value) => {
 };
 
 export default function BlogsDetails({ onNavigate }) {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const [status, setStatus] = useState("loading"); // loading | success | error
@@ -69,7 +71,7 @@ export default function BlogsDetails({ onNavigate }) {
 
     const load = async () => {
       try {
-        const res = await fetch(`${BLOGS_API_URL}/${id}`);
+        const res = await fetch(`${BLOGS_API_URL}/slug/${slug}`);
         if (!res.ok) throw new Error("Not found");
         const data = await res.json();
         if (!cancelled) {
@@ -102,7 +104,7 @@ export default function BlogsDetails({ onNavigate }) {
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [slug]);
 
   const meta = useMemo(() => {
     const title =
@@ -123,9 +125,9 @@ export default function BlogsDetails({ onNavigate }) {
   }, [blog]);
 
   const shareUrl = useMemo(() => {
-    if (typeof window === "undefined") return "";
-    return window.location.href;
-  }, [id]);
+    if (!slug) return "";
+    return `${BLOGS_API_URL}/share/${encodeURIComponent(slug)}`;
+  }, [slug]);
   const shareTitle = meta.title || "Blog";
   const shareLinks = useMemo(() => {
     if (!shareUrl) return [];
@@ -170,12 +172,13 @@ export default function BlogsDetails({ onNavigate }) {
     if (!related?.length) return [];
     return related
       .filter((item) => {
-        const itemId = item?.id || item?._id;
-        return itemId && itemId !== id;
+        const itemSlug = item?.slug;
+        return itemSlug && itemSlug !== slug;
       })
       .slice(0, 5)
       .map((item, index) => ({
         id: item.id || item._id || `related-${index}`,
+        slug: item.slug || "",
         title: item.title || "Untitled",
         author:
           item.writtenBy ||
@@ -192,7 +195,7 @@ export default function BlogsDetails({ onNavigate }) {
           item.heroImage ||
           placeholderThumb,
       }));
-  }, [related, id]);
+  }, [related, slug]);
 
   const categoryCards = useMemo(() => {
     const categories = Array.from(
@@ -213,13 +216,13 @@ export default function BlogsDetails({ onNavigate }) {
 
   const rawContent = blog?.content || blog?.description || blog?.excerpt || "";
 
-  const handleOpenBlog = (blogId) => {
-    if (!blogId) return;
+  const handleOpenBlog = (blogSlug) => {
+    if (!blogSlug) return;
     if (onNavigate) {
-      onNavigate("blogs-detail", { id: blogId });
+      onNavigate("blogs-detail", { slug: blogSlug });
       return;
     }
-    navigate(`/blogs/${blogId}`);
+    navigate(`/blogs/${blogSlug}`);
   };
 
   const handleTrendingScroll = (direction) => {
@@ -270,7 +273,7 @@ export default function BlogsDetails({ onNavigate }) {
     const name = String(formData.get("name") || "").trim();
     const phoneNumber = String(formData.get("phoneNumber") || "").trim();
     const comment = String(formData.get("comment") || "").trim();
-    const blogId = blog?._id || id;
+    const blogId = blog?._id;
 
     if (!name || !phoneNumber || !comment || !blogId) {
       setCommentStatus("error");
@@ -665,7 +668,7 @@ export default function BlogsDetails({ onNavigate }) {
               >
                 {(trendingPosts.length ? trendingPosts : related).map(
                   (item, index) => {
-                    const blogId = item?.id || item?._id;
+                    const blogSlug = item?.slug;
                     const imageSrc =
                       item?.image ||
                       item?.imageUrl ||
@@ -686,9 +689,9 @@ export default function BlogsDetails({ onNavigate }) {
 
                     return (
                       <button
-                        key={blogId || index}
+                        key={blogSlug || item?._id || index}
                         type="button"
-                        onClick={() => handleOpenBlog(blogId)}
+                        onClick={() => handleOpenBlog(blogSlug)}
                         className="min-w-[240px] rounded-xl bg-white border border-gray-200 shadow-sm p-3 flex gap-3 text-left transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#74C425]/40 cursor-pointer"
                         aria-label={
                           item?.title ? `Open blog: ${item.title}` : "Open blog"

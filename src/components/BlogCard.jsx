@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 
 const truncateToNearestWord = (text = '', limit = 250) => {
@@ -14,7 +13,7 @@ const truncateToNearestWord = (text = '', limit = 250) => {
   return `${safeSlice.trimEnd()}...`;
 };
 
-const BlogCard = ({id, title, author, date, excerpt = '', coverImage, onNavigate }) => {
+const BlogCard = ({ id, slug, title, author, date, excerpt = '', coverImage, onNavigate }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const preview = useMemo(() => truncateToNearestWord(excerpt), [excerpt]);
@@ -23,8 +22,8 @@ const BlogCard = ({id, title, author, date, excerpt = '', coverImage, onNavigate
 
   const hasMore = excerpt && excerpt.length > preview.length;
   const handleReadMore = () => {
-    if (onNavigate && id) {
-      onNavigate("blogs-detail", { id });
+    if (onNavigate && slug) {
+      onNavigate("blogs-detail", { slug });
     }
   };
 

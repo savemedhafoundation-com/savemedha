@@ -28,8 +28,12 @@ const extractArray = (candidate, seen = new Set()) => {
 
 const normalizeResponse = (payload) => extractArray(payload);
 
-const BLOGS_API_URL = "https://savemedhabackend.vercel.app/api/blogs";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
+const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
 const POSTS_PER_PAGE = 8;
+const getShareUrl = (slug) =>
+  `${API_BASE_URL}/api/blogs/share/${encodeURIComponent(slug)}`;
 
 const stripHtml = (value = "") => {
   if (!value) return "";
@@ -71,6 +75,7 @@ export default function Blogs({ onNavigate }) {
   const normalizePost = useCallback((post, index) => {
     return {
       id: post?.id || post?._id || post?.slug || `blog-${index}`,
+      slug: post?.slug || "",
       title: post?.title || "",
       excerpt: stripHtml(post?.description || post?.excerpt || ""),
       coverImage: post?.imageUrl || post?.image || "",
@@ -154,10 +159,18 @@ export default function Blogs({ onNavigate }) {
     setCurrentPage(page);
   };
 
-  const handleReadMore = (postId) => {
-    if (onNavigate && postId) {
-      onNavigate("blogs-detail", { id: postId });
+  const handleReadMore = (postSlug) => {
+    if (onNavigate && postSlug) {
+      onNavigate("blogs-detail", { slug: postSlug });
     }
+  };
+  const handleShare = (postSlug, title = "Save Medha Blog") => {
+    if (!postSlug) return;
+    const shareUrl = getShareUrl(postSlug);
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+      `${title} ${shareUrl}`
+    )}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
 
   const showLoadingInline = status === "loading";
@@ -259,9 +272,18 @@ export default function Blogs({ onNavigate }) {
                 </p>
                 <button
                   className="mt-2 bg-[#74C425] text-white font-semibold px-5 py-2 rounded hover:bg-[#155300] transition"
-                  onClick={() => handleReadMore(latestPost?.id)}
+                  onClick={() => handleReadMore(latestPost?.slug)}
                 >
                   Read more
+                </button>
+                <button
+                  type="button"
+                  className="ml-3 mt-2 border border-[#74C425] text-[#74C425] font-semibold px-5 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
+                  onClick={() =>
+                    handleShare(latestPost?.slug, latestPost?.title)
+                  }
+                >
+                  Share
                 </button>
               </div>
             </article>
@@ -411,9 +433,16 @@ export default function Blogs({ onNavigate }) {
                   <div className="mt-auto">
                     <button
                       className="bg-[#74C425] text-white text-sm font-semibold px-4 py-2 rounded hover:bg-[#155300] transition"
-                      onClick={() => handleReadMore(post.id)}
+                      onClick={() => handleReadMore(post.slug)}
                     >
                       Read more
+                    </button>
+                    <button
+                      type="button"
+                      className="ml-2 border border-[#74C425] text-[#74C425] text-sm font-semibold px-4 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
+                      onClick={() => handleShare(post.slug, post.title)}
+                    >
+                      Share
                     </button>
                   </div>
                 </div>

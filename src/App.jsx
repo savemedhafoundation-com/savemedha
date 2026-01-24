@@ -165,12 +165,12 @@ function App() {
         //   break;
         // }
         case "blogs-detail": {
-          const blogId = options?.id;
-          if (!blogId) {
-            console.warn("blogs-detail navigation requires id");
+          const blogSlug = options?.slug;
+          if (!blogSlug) {
+            console.warn("blogs-detail navigation requires slug");
             return;
           }
-          targetPath = `/blogs/${blogId}`;
+          targetPath = `/blogs/${blogSlug}`;
           break;
         }
         case "donate":
@@ -233,7 +233,7 @@ function App() {
         />
         <Route path="/blogs" element={<Blogs onNavigate={handleNavigate} />} />
         <Route
-          path="/blogs/:id"
+          path="/blogs/:slug"
           element={<BlogsDetails onNavigate={handleNavigate}/>}
         />
         <Route
