@@ -31,9 +31,14 @@ const normalizeResponse = (payload) => extractArray(payload);
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
 const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
+const SITE_BASE_URL =
+  import.meta.env.VITE_SITE_URL ||
+  (typeof window !== "undefined"
+    ? window.location.origin
+    : "https://savemedha.com");
 const POSTS_PER_PAGE = 8;
 const getShareUrl = (slug) =>
-  `${API_BASE_URL}/api/blogs/share/${encodeURIComponent(slug)}`;
+  `${SITE_BASE_URL.replace(/\/$/, "")}/blogs/${encodeURIComponent(slug)}`;
 
 const stripHtml = (value = "") => {
   if (!value) return "";

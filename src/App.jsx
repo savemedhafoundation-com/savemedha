@@ -1,6 +1,13 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import TreatmentPage from "./pages/TreatmentPage";
@@ -16,6 +23,11 @@ import EbookPage from "./pages/EbookPage";
 import EbookRead from "./pages/EbookRead";
 import CareersPage from "./pages/CareersPage";
 // demo commit
+
+function BlogShareRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={slug ? `/blogs/${slug}` : "/blogs"} replace />;
+}
 
 function App() {
   const dispatch = useDispatch();
@@ -232,6 +244,7 @@ function App() {
           element={<Treatmentquestion onNavigate={handleNavigate} />}
         />
         <Route path="/blogs" element={<Blogs onNavigate={handleNavigate} />} />
+        <Route path="/blogs/share/:slug" element={<BlogShareRedirect />} />
         <Route
           path="/blogs/:slug"
           element={<BlogsDetails onNavigate={handleNavigate}/>}
