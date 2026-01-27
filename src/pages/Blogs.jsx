@@ -37,7 +37,7 @@ const SITE_BASE_URL =
 const POSTS_PER_PAGE = 8;
 const getShareUrl = (shareId) => {
   if (!shareId || !SITE_BASE_URL) return "";
-  return `${SITE_BASE_URL.replace(/\/$/, "")}/blogs/share/${encodeURIComponent(
+  return `${SITE_BASE_URL.replace(/\/$/, "")}/blogs/${encodeURIComponent(
     shareId
   )}`;
 };
@@ -142,6 +142,7 @@ export default function Blogs({ onNavigate }) {
     : normalizedPosts;
 
   const latestPost = visiblePosts[0];
+  console.log("latest post", latestPost);
   const trendingPosts = visiblePosts.slice(0, 2);
   const gridPosts = visiblePosts;
   const totalPages = Math.ceil(gridPosts.length / POSTS_PER_PAGE);
@@ -172,8 +173,9 @@ export default function Blogs({ onNavigate }) {
       onNavigate("blogs-detail", { slug: postSlug });
     }
   };
-  const handleShare = (shareId, title = "Save Medha Blog") => {
-    const shareUrl = getShareUrl(shareId);
+  const handleShare = (slug, title = "Save Medha Blog") => {
+    const shareUrl = getShareUrl(slug);
+    console.log("shareurl", shareUrl);
     if (!shareUrl) return;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
       `${title} ${shareUrl}`
@@ -288,7 +290,7 @@ export default function Blogs({ onNavigate }) {
                   type="button"
                   className="ml-3 mt-2 border border-[#74C425] text-[#74C425] font-semibold px-5 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
                   onClick={() =>
-                    handleShare(latestPost?.shareId, latestPost?.title)
+                    handleShare(latestPost?.slug, latestPost?.title)
                   }
                 >
                   Share
@@ -448,7 +450,9 @@ export default function Blogs({ onNavigate }) {
                     <button
                       type="button"
                       className="ml-2 border border-[#74C425] text-[#74C425] text-sm font-semibold px-4 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
-                      onClick={() => handleShare(post.shareId, post.title)}
+                      onClick={() => handleShare(post.slug, post.title)}
+
+                      // onClick={() => handleShare(post.shareId, post.title)}
                     >
                       Share
                     </button>
