@@ -11,5 +11,12 @@
       "config": { "distDir": "dist" }
     }
   ],
-  "routes": [{ "handle": "filesystem" }, { "src": "/(.*)", "dest": "/index.html" }]
+  "routes": [
+    {
+      "src": "/blogs/share/(.*)",
+      "dest": "https://savemedhabackend.vercel.app/api/blogs/$1/share"
+    },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }

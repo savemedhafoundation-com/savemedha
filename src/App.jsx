@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   Navigate,
@@ -24,9 +24,54 @@ import EbookRead from "./pages/EbookRead";
 import CareersPage from "./pages/CareersPage";
 // demo commit
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
+const isObjectId = (value) => /^[a-f\d]{24}$/i.test(value);
+
 function BlogShareRedirect() {
-  const { slug } = useParams();
-  return <Navigate to={slug ? `/blogs/${slug}` : "/blogs"} replace />;
+  const { id } = useParams();
+  const [target, setTarget] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const resolveTarget = async () => {
+      if (!id) {
+        if (!cancelled) setTarget("/blogs");
+        return;
+      }
+
+      if (!isObjectId(id)) {
+        if (!cancelled) setTarget(`/blogs/${id}`);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/blogs/${id}`);
+        if (!response.ok) throw new Error("Not found");
+        const data = await response.json();
+        const slug = data?.slug;
+        if (!cancelled) setTarget(slug ? `/blogs/${slug}` : "/blogs");
+      } catch {
+        if (!cancelled) setTarget("/blogs");
+      }
+    };
+
+    resolveTarget();
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  if (!target) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-slate-600">
+        Redirecting...
+      </div>
+    );
+  }
+
+  return <Navigate to={target} replace />;
 }
 
 function App() {
@@ -244,7 +289,7 @@ function App() {
           element={<Treatmentquestion onNavigate={handleNavigate} />}
         />
         <Route path="/blogs" element={<Blogs onNavigate={handleNavigate} />} />
-        <Route path="/blogs/share/:slug" element={<BlogShareRedirect />} />
+        <Route path="/blogs/share/:id" element={<BlogShareRedirect />} />
         <Route
           path="/blogs/:slug"
           element={<BlogsDetails onNavigate={handleNavigate}/>}

@@ -33,12 +33,14 @@ const API_BASE_URL =
 const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
 const SITE_BASE_URL =
   import.meta.env.VITE_SITE_URL ||
-  (typeof window !== "undefined"
-    ? window.location.origin
-    : "https://savemedha.com");
+  (typeof window !== "undefined" ? window.location.origin : "");
 const POSTS_PER_PAGE = 8;
-const getShareUrl = (slug) =>
-  `${SITE_BASE_URL.replace(/\/$/, "")}/blogs/${encodeURIComponent(slug)}`;
+const getShareUrl = (shareId) => {
+  if (!shareId || !SITE_BASE_URL) return "";
+  return `${SITE_BASE_URL.replace(/\/$/, "")}/blogs/share/${encodeURIComponent(
+    shareId
+  )}`;
+};
 
 const stripHtml = (value = "") => {
   if (!value) return "";
@@ -80,6 +82,7 @@ export default function Blogs({ onNavigate }) {
   const normalizePost = useCallback((post, index) => {
     return {
       id: post?.id || post?._id || post?.slug || `blog-${index}`,
+      shareId: post?._id || post?.id || "",
       slug: post?.slug || "",
       title: post?.title || "",
       excerpt: stripHtml(post?.description || post?.excerpt || ""),
@@ -169,9 +172,9 @@ export default function Blogs({ onNavigate }) {
       onNavigate("blogs-detail", { slug: postSlug });
     }
   };
-  const handleShare = (postSlug, title = "Save Medha Blog") => {
-    if (!postSlug) return;
-    const shareUrl = getShareUrl(postSlug);
+  const handleShare = (shareId, title = "Save Medha Blog") => {
+    const shareUrl = getShareUrl(shareId);
+    if (!shareUrl) return;
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
       `${title} ${shareUrl}`
     )}`;
@@ -285,7 +288,7 @@ export default function Blogs({ onNavigate }) {
                   type="button"
                   className="ml-3 mt-2 border border-[#74C425] text-[#74C425] font-semibold px-5 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
                   onClick={() =>
-                    handleShare(latestPost?.slug, latestPost?.title)
+                    handleShare(latestPost?.shareId, latestPost?.title)
                   }
                 >
                   Share
@@ -445,7 +448,7 @@ export default function Blogs({ onNavigate }) {
                     <button
                       type="button"
                       className="ml-2 border border-[#74C425] text-[#74C425] text-sm font-semibold px-4 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
-                      onClick={() => handleShare(post.slug, post.title)}
+                      onClick={() => handleShare(post.shareId, post.title)}
                     >
                       Share
                     </button>

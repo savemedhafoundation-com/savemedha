@@ -20,11 +20,9 @@ const placeholderThumb = "https://placehold.co/400x260";
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
 const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
-const SITE_BASE_URL = "https://savemedha.com/";
+const SITE_BASE_URL =
   import.meta.env.VITE_SITE_URL ||
-  (typeof window !== "undefined"
-    ? window.location.origin
-    : "https://savemedha.com");
+  (typeof window !== "undefined" ? window.location.origin : "");
 
 const extractArray = (candidate, seen = new Set()) => {
   if (!candidate || seen.has(candidate)) return [];
@@ -130,11 +128,15 @@ export default function BlogsDetails({ onNavigate }) {
   }, [blog]);
 
   const shareUrl = useMemo(() => {
+    const baseUrl = SITE_BASE_URL.replace(/\/$/, "");
+    if (!baseUrl) return "";
+    const shareId = blog?._id || blog?.id;
+    if (shareId) {
+      return `${baseUrl}/blogs/share/${encodeURIComponent(shareId)}`;
+    }
     if (!slug) return "";
-    return `${SITE_BASE_URL.replace(/\/$/, "")}/blogs/share/${encodeURIComponent(
-      slug
-    )}`;
-  }, [slug]);
+    return `${baseUrl}/blogs/${encodeURIComponent(slug)}`;
+  }, [blog?._id, blog?.id, slug]);
   const shareTitle = meta.title || "Blog";
   const shareLinks = useMemo(() => {
     if (!shareUrl) return [];
