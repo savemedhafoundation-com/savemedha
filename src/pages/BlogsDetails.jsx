@@ -60,6 +60,7 @@ export default function BlogsDetails({ onNavigate }) {
   const [related, setRelated] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [likeStatus, setLikeStatus] = useState("idle"); // idle | loading | error
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [shareStatus, setShareStatus] = useState("idle"); // idle | copied | error
   const [commentStatus, setCommentStatus] = useState("idle"); // idle | submitting | error
@@ -244,11 +245,34 @@ export default function BlogsDetails({ onNavigate }) {
   const handleScrollToComments = () => {
     commentsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const handleToggleLike = () => {
-    setLiked((prev) => {
-      setLikeCount((count) => (prev ? Math.max(count - 1, 0) : count + 1));
-      return !prev;
-    });
+  const handleToggleLike = async () => {
+    if (likeStatus === "loading" || liked) return;
+    const blogId = blog?._id || blog?.id;
+    if (!blogId) return;
+
+    const previousCount = likeCount;
+    setLiked(true);
+    setLikeCount(previousCount + 1);
+    setLikeStatus("loading");
+
+    try {
+      const response = await fetch(`${BLOGS_API_URL}/${blogId}/like`, {
+        method: "POST",
+      });
+      if (!response.ok) throw new Error("Like failed");
+      const data = await response.json();
+      if (data && typeof data === "object") {
+        setBlog(data);
+        if (typeof data.likesCount === "number") {
+          setLikeCount(data.likesCount);
+        }
+      }
+      setLikeStatus("idle");
+    } catch {
+      setLiked(false);
+      setLikeCount(previousCount);
+      setLikeStatus("idle");
+    }
   };
   const handleToggleShare = () => {
     setIsShareOpen((prev) => !prev);
@@ -369,8 +393,12 @@ export default function BlogsDetails({ onNavigate }) {
 
   useEffect(() => {
     setLikeCount(blog?.likesCount ?? 0);
+  }, [blog?.likesCount]);
+
+  useEffect(() => {
     setLiked(false);
-  }, [blog?.likesCount, blog?._id]);
+    setLikeStatus("idle");
+  }, [blog?._id]);
 
   useEffect(() => {
     if (!isShareOpen) return;
@@ -469,7 +497,9 @@ export default function BlogsDetails({ onNavigate }) {
                   type="button"
                   onClick={handleToggleLike}
                   aria-pressed={liked}
-                  className={`inline-flex items-center gap-2 border-2 border-[#74C425] px-3 py-1 rounded-full transition-colors ${
+                  disabled={likeStatus === "loading"}
+                  aria-busy={likeStatus === "loading"}
+                  className={`inline-flex items-center gap-2 border-2 border-[#74C425] px-3 py-1 rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
                     liked
                       ? "bg-[#74C425] text-white"
                       : "text-[#74C425] hover:bg-[#74C425] hover:text-white"
@@ -483,7 +513,7 @@ export default function BlogsDetails({ onNavigate }) {
                       liked ? "text-white" : "text-slate-500"
                     }`}
                   >
-                    {likeCount}
+                    {/* {likeCount} */}
                   </span>
                 </button>
                 <div className="relative" ref={shareMenuRef}>
