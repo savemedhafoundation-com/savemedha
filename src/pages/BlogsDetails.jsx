@@ -17,7 +17,7 @@ import { fetchBlogPosts } from "../service/api";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
-const API_BASE_URL =  "https://savemedha.com/";
+const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
 const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
 
