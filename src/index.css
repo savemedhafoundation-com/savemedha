@@ -71,6 +71,25 @@ button, .btn {
   line-height: 1.1;
 }
 
+/* Ensure list bullets and numbering render inside rich blog content. */
+.prose ul {
+  list-style: disc;
+  list-style-position: outside;
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose ol {
+  list-style: decimal;
+  list-style-position: outside;
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin: 0.5rem 0;
+}
+
 .hero-bg {
   background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
 }
