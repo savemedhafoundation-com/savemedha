@@ -225,7 +225,22 @@ export default function Blogs({ onNavigate }) {
         {/* Latest + Callback + Trending */}
         <section className="max-w-7xl  mx-auto px-12 md:px-2 pt-10 pb-12">
           {showLoadingInline && (
-            <div>Loading blogs...</div>
+            <div className="flex items-center justify-center py-10">
+              <div className="flex flex-col items-center gap-4">
+                <div
+                  className="relative h-12 w-12"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <div className="absolute inset-0 rounded-full border-4 border-[#74C425]/20" />
+                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#74C425] animate-spin" />
+                  <span className="sr-only">Loading blogs</span>
+                </div>
+                <p className="text-sm font-medium text-slate-600">
+                  Loading blogs…
+                </p>
+              </div>
+            </div>
           )}
 
           {showErrorInline && (
@@ -413,8 +428,13 @@ export default function Blogs({ onNavigate }) {
             </h3>
             <span className="h-[2px] w-10 bg-slate-900 inline-block" />
             {status === "loading" && (
-              <span className="text-xs text-slate-500">
-                Loading live posts...
+              <span className="inline-flex items-center gap-2 text-xs text-slate-500">
+                <span className="relative h-4 w-4" role="status" aria-live="polite">
+                  <span className="absolute inset-0 rounded-full border-2 border-[#74C425]/20" />
+                  <span className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#74C425] animate-spin" />
+                  <span className="sr-only">Loading live posts</span>
+                </span>
+                <span>Loading live posts…</span>
               </span>
             )}
           </div>

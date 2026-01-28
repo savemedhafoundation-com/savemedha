@@ -14,9 +14,15 @@ import {
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { fetchBlogPosts } from "../service/api";
+import relatedBlogsBanner from "../assets/Photo/Rectangle 745.png";
+import insideBlogsBanner2 from "../assets/Photo/insideblogsbanner2.jpeg";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
+const RELATED_BLOG_BANNERS = [relatedBlogsBanner, insideBlogsBanner2];
+const RELATED_BLOG_BANNER_ROTATE_MS = 10000;
+const ebookReferenceUrl =
+  "https://www.amazon.in/dp/B0FF2CTTND?ref=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&ref_=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&social_share=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&bestFormat=true";
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
 const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
@@ -65,7 +71,12 @@ export default function BlogsDetails({ onNavigate }) {
   const [shareStatus, setShareStatus] = useState("idle"); // idle | copied | error
   const [commentStatus, setCommentStatus] = useState("idle"); // idle | submitting | error
   const [commentError, setCommentError] = useState("");
+  const [activeSideSection, setActiveSideSection] = useState("Description");
+  const [relatedBannerIndex, setRelatedBannerIndex] = useState(0);
+  const heroRef = useRef(null);
   const contentRef = useRef(null);
+  const contentEndRef = useRef(null);
+  const relatedSectionRef = useRef(null);
   const commentsRef = useRef(null);
   const shareMenuRef = useRef(null);
   const trendingScrollRef = useRef(null);
@@ -109,6 +120,20 @@ export default function BlogsDetails({ onNavigate }) {
       cancelled = true;
     };
   }, [slug]);
+
+  useEffect(() => {
+    if (RELATED_BLOG_BANNERS.length < 2 || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setRelatedBannerIndex(
+        (current) => (current + 1) % RELATED_BLOG_BANNERS.length
+      );
+    }, RELATED_BLOG_BANNER_ROTATE_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   const meta = useMemo(() => {
     const title =
@@ -244,6 +269,49 @@ export default function BlogsDetails({ onNavigate }) {
 
   const handleScrollToComments = () => {
     commentsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleScrollToHero = () => {
+    heroRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleScrollToContent = () => {
+    contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleScrollToConclusion = () => {
+    contentEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const handleScrollToRelated = () => {
+    relatedSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const handleSideSectionClick = (sectionKey) => {
+    setActiveSideSection(sectionKey);
+
+    switch (sectionKey) {
+      case "Introduction":
+        handleScrollToHero();
+        break;
+      case "Description":
+        handleScrollToContent();
+        break;
+      case "Conclusion":
+        handleScrollToConclusion();
+        break;
+      case "Comments":
+        handleScrollToComments();
+        break;
+      default:
+        break;
+    }
   };
   const handleToggleLike = async () => {
     if (likeStatus === "loading" || liked) return;
@@ -441,8 +509,15 @@ export default function BlogsDetails({ onNavigate }) {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center text-lg text-slate-700">
-        Loading blog...
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative h-12 w-12" role="status" aria-live="polite">
+            <div className="absolute inset-0 rounded-full border-4 border-[#74C425]/20" />
+            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#74C425] animate-spin" />
+            <span className="sr-only">Loading</span>
+          </div>
+          <p className="text-sm font-medium text-slate-600">Loading blog…</p>
+        </div>
       </div>
     );
   }
@@ -478,7 +553,7 @@ export default function BlogsDetails({ onNavigate }) {
         </div>
 
         {/* Hero + Sidebar */}
-        <section className="max-w-6xl mx-auto px-4 pt-8">
+        <section ref={heroRef} className="max-w-6xl mx-auto px-4 pt-8">
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-3">
               <div className="h-125  overflow-hidden rounded-xl shadow border text-[#74C425] border-gray-200 bg-white">
@@ -638,16 +713,13 @@ export default function BlogsDetails({ onNavigate }) {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <div className="text-4xl">📘</div>
-                  <p className="text-[15px] font-bold text-slate-900 tracking-wide">
-                    Know More:
-                  </p>
-                  <a
-                    href="https://www.amazon.in/dp/B0FF2CTTND?ref=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&ref_=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&social_share=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&bestFormat=true"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-4 py-3 text-white font-semibold text-sm shadow hover:bg-[#e1951c] transition-all duration-300 hover:shadow-lg"
-                  >
+                 
+                    <a
+                      href={ebookReferenceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold text-sm shadow hover:bg-[#e1951c] transition-all translate-x-17 duration-300 hover:shadow-lg"
+                    >
                     <IoLogoAmazon size={26} className="text-white" />
                     Ebook Reference
                   </a>
@@ -658,16 +730,75 @@ export default function BlogsDetails({ onNavigate }) {
         </section>
 
         {/* Content */}
-        <section className="max-w-6xl mx-auto px-4 pt-8 space-y-6">
-          <article
-            ref={contentRef}
-            className="prose prose-slate md:prose-lg text-slate-800 font-shippori break-words prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:my-5 prose-p:leading-[1.8] prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-img:rounded-xl prose-img:shadow-sm"
-          >
-            <BlogContentRenderer
-              description={rawContent}
-              blogImage={blog?.blogImage}
-            />
-          </article>
+        <section className="max-w-6xl mx-auto px-4 pt-8">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+            <article
+              ref={contentRef}
+              className="prose prose-slate md:prose-lg text-slate-800 font-shippori break-words prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:my-5 prose-p:leading-[1.8] prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-img:rounded-xl prose-img:shadow-sm"
+            >
+              <BlogContentRenderer
+                description={rawContent}
+                blogImage={blog?.blogImage}
+              />
+              <div ref={contentEndRef} />
+            </article>
+
+            <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
+              <div className="rounded-[10px] bg-gradient-to-b from-[#f59e0b] to-[#fde68a] p-6 shadow-lg border border-[#fbbf24]/40">
+                <h4 className="text-2xl font-extrabold text-white drop-shadow-sm">
+                  On this blog:
+                </h4>
+                <div className="mt-4 space-y-3">
+                  {["Introduction", "Description", "Conclusion", "Comments"].map(
+                    (label) => {
+                      const isActive = activeSideSection === label;
+                      return (
+                        <button
+                          key={label}
+                          type="button"
+                          onClick={() => handleSideSectionClick(label)}
+                          className={`w-full rounded-2xl px-4 py-3 text-left font-semibold shadow-md ring-1 ring-black/5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
+                            isActive
+                              ? "bg-gradient-to-r from-[#92400e] to-[#a16207] text-white shadow-lg"
+                              : "bg-white/95 text-slate-900 hover:bg-white hover:shadow-lg"
+                          }`}
+                        >
+                          {label}
+                        </button>
+                      );
+                    }
+                  )}
+                </div>
+              </div>
+
+              <div className="rounded-[10px] bg-gradient-to-b from-[#7c4a0a] to-[#5a3608] p-6 shadow-lg border border-white/10">
+                <h4 className="text-3xl font-extrabold text-white">Resources</h4>
+                <div className="mt-4 space-y-3">
+                  <a
+                    href={ebookReferenceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                  >
+                    <span>Get E-Book reference</span>
+                    <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
+                      +
+                    </span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleScrollToRelated}
+                    className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                  >
+                    <span>Get similar links</span>
+                    <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
+                      +
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </aside>
+          </div>
         </section>
 
         {Array.isArray(blog?.faqs) && blog.faqs.length > 0 && (
@@ -697,7 +828,7 @@ export default function BlogsDetails({ onNavigate }) {
         )}
 
         {/* Trending Slider */}
-        <section className="mt-12 px-4">
+        <section ref={relatedSectionRef} className="mt-12 px-4">
           <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-b from-[#e8ffd8] to-white p-6 shadow-inner relative">
             <h3 className="text-xl font-bold text-slate-900 mb-4">
               Related Blogs
@@ -775,7 +906,17 @@ export default function BlogsDetails({ onNavigate }) {
                 <ArrowRight size={18} />
               </button>
             </div>
-          </div>
+           </div>
+           
+         </section>
+
+        <section className="w-full mx-auto px-4 pt-6">
+          <img
+            src={RELATED_BLOG_BANNERS[relatedBannerIndex]}
+            alt="Related blogs banner"
+            className="w-full rounded-3xl "
+            loading="lazy"
+          />
         </section>
 
         {/* Categories */}
@@ -790,12 +931,12 @@ export default function BlogsDetails({ onNavigate }) {
             {categoryCards.map((cat) => (
               <div
                 key={cat.label}
-                className="rounded-2xl bg-[#f0f6ff] text-center p-4 shadow border border-gray-100"
+                className="rounded-2xl bg-[#3B40AA] text-center p-4 shadow border border-gray-100"
               >
                 <div className="w-16 h-16 mx-auto rounded-full bg-[#74C425] text-white flex items-center justify-center text-2xl mb-3">
                   📘
                 </div>
-                <p className="font-semibold text-slate-900">{cat.label}</p>
+                <p className="font-semibold text-white">{cat.label}</p>
                 <button className="mt-2 text-sm font-semibold text-[#74C425] hover:text-[#155300]">
                   Know More
                 </button>
