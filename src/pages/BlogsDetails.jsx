@@ -306,7 +306,7 @@ export default function BlogsDetails({ onNavigate }) {
     const name = String(formData.get("name") || "").trim();
     const phoneNumber = String(formData.get("phoneNumber") || "").trim();
     const comment = String(formData.get("comment") || "").trim();
-    const blogId = blog?._id;
+    const blogId = blog?._id || blog?.id;
 
     if (!name || !phoneNumber || !comment || !blogId) {
       setCommentStatus("error");
@@ -318,31 +318,41 @@ export default function BlogsDetails({ onNavigate }) {
       setCommentStatus("submitting");
       setCommentError("");
 
-      const submit = (payload) =>
-        fetch(`${BLOGS_API_URL}/${blogId}/comments`, {
+      const response = await fetch(`${BLOGS_API_URL}/${blogId}/comments`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({ name, phoneNumber, comment }),
         });
-
-      let response = await submit({ name, phoneNumber, comment });
-      if (!response.ok) {
-        response = await submit({ name, phoneNumber, comment });
-      }
 
       if (!response.ok) {
         const errorText = await response.text().catch(() => "");
+        let message = errorText;
+        try {
+          const parsed = errorText ? JSON.parse(errorText) : null;
+          message =
+            parsed?.message || parsed?.error || parsed?.details || message;
+        } catch {
+          // Keep raw text when it's not JSON.
+        }
         setCommentStatus("error");
         setCommentError(
-          errorText || "Unable to submit comment. Please try again."
+          message || "Unable to submit comment. Please try again."
         );
         return;
       }
 
-      const refreshed = await fetch(`${BLOGS_API_URL}/${blogId}`);
-      if (refreshed.ok) {
-        const data = await refreshed.json();
-        setBlog(data || null);
+      // Backend returns the updated blog payload; use it directly to avoid an
+      // extra fetch (the `/api/blogs/:id` read can be slow/unreliable).
+      const updatedBlog = await response.json().catch(() => null);
+      if (updatedBlog && typeof updatedBlog === "object") {
+        setBlog(updatedBlog);
+      } else if (slug) {
+        // Fallback: re-fetch by slug to refresh comments.
+        const refreshed = await fetch(`${BLOGS_API_URL}/slug/${slug}`);
+        if (refreshed.ok) {
+          const data = await refreshed.json();
+          setBlog(data || null);
+        }
       }
       form.reset();
       setCommentStatus("idle");
@@ -690,7 +700,7 @@ export default function BlogsDetails({ onNavigate }) {
         <section className="mt-12 px-4">
           <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-b from-[#e8ffd8] to-white p-6 shadow-inner relative">
             <h3 className="text-xl font-bold text-slate-900 mb-4">
-              Trending Blogs
+              Related Blogs
             </h3>
             <div className="relative">
               <button

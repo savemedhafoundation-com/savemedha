@@ -205,12 +205,12 @@ export default function Blogs({ onNavigate }) {
                 style={{ backgroundImage: `url(${blogBanner})` }}
               >
                 <div className="absolute inset-0 " aria-hidden />
-                <div className="ml-auto flex flex-col items-center gap-4 px-10 py-10 md:px-10 md:py-14 text-right translate-x-80 md:translate-x-90">
-                  <h2 className="text-4xl font-bold text-[#000000]">BLOGS</h2>
-                  <p className="text-lg text-blue-900 tracking-wide">
+                <div className="ml-auto flex flex-col items-center gap-4 px-10 py-10 md:px-10 md:py-14 text-right ">
+                  <h2 className="text-7xl  text-[#000000]">BLOGS</h2>
+                  <p className="text-3xl text-blue-900 tracking-wide">
                     On Health
                   </p>
-                  <button className="bg-[#74C425] text-white font-semibold px-6 py-2 rounded shadow hover:bg-[#155300] transition">
+                  <button className="bg-[#74C425] text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-[#155300] transition">
                     Subscribe
                   </button>
                  
