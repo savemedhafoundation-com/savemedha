@@ -16,11 +16,17 @@ import { MdEmail } from "react-icons/md";
 import { fetchBlogPosts } from "../service/api";
 import relatedBlogsBanner from "../assets/Photo/Rectangle 745.png";
 import insideBlogsBanner2 from "../assets/Photo/insideblogsbanner2.jpeg";
+import blogAdOne from "../assets/Photo/blogADimg/WEBSITE AD.jpg";
+import blogAdTwo from "../assets/Photo/blogADimg/WEBSITE AD 2.jpg";
+import blogAdThree from "../assets/Photo/blogADimg/5.jpg";
+import blogAdFour from "../assets/Photo/blogADimg/6.jpg";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
 const RELATED_BLOG_BANNERS = [relatedBlogsBanner, insideBlogsBanner2];
 const RELATED_BLOG_BANNER_ROTATE_MS = 10000;
+const BLOG_AD_IMAGES = [blogAdOne, blogAdTwo, blogAdThree, blogAdFour];
+const BLOG_AD_ROTATE_MS = 5000;
 const ebookReferenceUrl =
   "https://www.amazon.in/dp/B0FF2CTTND?ref=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&ref_=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&social_share=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&bestFormat=true";
 const API_BASE_URL =
@@ -73,6 +79,8 @@ export default function BlogsDetails({ onNavigate }) {
   const [commentError, setCommentError] = useState("");
   const [activeSideSection, setActiveSideSection] = useState("Description");
   const [relatedBannerIndex, setRelatedBannerIndex] = useState(0);
+  const [showResourceAds, setShowResourceAds] = useState(false);
+  const [adImageIndex, setAdImageIndex] = useState(0);
   const heroRef = useRef(null);
   const contentRef = useRef(null);
   const contentEndRef = useRef(null);
@@ -134,6 +142,36 @@ export default function BlogsDetails({ onNavigate }) {
 
     return () => window.clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const total =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = total > 0 ? scrollTop / total : 0;
+      setShowResourceAds(progress >= 0.6);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!showResourceAds || BLOG_AD_IMAGES.length < 2 || typeof window === "undefined") {
+      setAdImageIndex(0);
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setAdImageIndex((current) => (current + 1) % BLOG_AD_IMAGES.length);
+    }, BLOG_AD_ROTATE_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, [showResourceAds]);
 
   const meta = useMemo(() => {
     const title =
@@ -771,32 +809,51 @@ export default function BlogsDetails({ onNavigate }) {
                 </div>
               </div>
 
-              <div className="rounded-[10px] bg-gradient-to-b from-[#7c4a0a] to-[#5a3608] p-6 shadow-lg border border-white/10">
-                <h4 className="text-3xl font-extrabold text-white">Resources</h4>
-                <div className="mt-4 space-y-3">
-                  <a
-                    href={ebookReferenceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                  >
-                    <span>Get E-Book reference</span>
-                    <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
-                      +
-                    </span>
-                  </a>
-                  <button
-                    type="button"
-                    onClick={handleScrollToRelated}
-                    className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                  >
-                    <span>Get similar links</span>
-                    <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
-                      +
-                    </span>
-                  </button>
+              {!showResourceAds && (
+                <div className="rounded-[10px] bg-gradient-to-b from-[#7c4a0a] to-[#5a3608] p-6 shadow-lg border border-white/10">
+                  <h4 className="text-3xl font-extrabold text-white">Resources</h4>
+                  <div className="mt-4 space-y-3">
+                    <a
+                      href={ebookReferenceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    >
+                      <span>Get E-Book reference</span>
+                      <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
+                        +
+                      </span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={handleScrollToRelated}
+                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                    >
+                      <span>Get similar links</span>
+                      <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
+                        +
+                      </span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
+              {showResourceAds && (
+                <div className="rounded-[10px] bg-white p-3">
+                  <div className="relative w-full bg-white h-[520px] min-h-[520px] min-w-[620px]">
+                    {BLOG_AD_IMAGES.map((src, index) => (
+                      <img
+                        key={src}
+                        src={src}
+                        alt="Blog advertisement"
+                        className={`absolute inset-0 h-full -translate-x-33 w-full object-contain transition-opacity duration-700 ${
+                          index === adImageIndex ? "opacity-100" : "opacity-0"
+                        }`}
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </aside>
           </div>
         </section>

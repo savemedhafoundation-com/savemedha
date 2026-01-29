@@ -1,3 +1,11 @@
+# Today's Work (2026-01-28)
+
+- Blogs details sidebar: hide the entire Resources card once ads are triggered, and show the rotating ad image block instead in `src/pages/BlogsDetails.jsx`.
+
+## Files touched
+
+- `src/pages/BlogsDetails.jsx`
+
 # Today's Work (2026-01-27)
 
 - Fixed blog details fetch base URL so blog detail loads from the backend.

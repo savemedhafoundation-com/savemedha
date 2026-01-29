@@ -137,19 +137,31 @@ export default function HomePage({ onNavigate }) {
 
             {/* Body Map */}
             <div className="flex-1 relative flex justify-center items-center">
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 flex gap-10 z-20">
-                {/* Male Selector */}
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20">
                 <div
-                 
+                  className="glass-card flex items-center gap-6 px-6 py-3"
+                  style={{
+                    "--glass-card-width": "auto",
+                    "--glass-card-height": "auto",
+                  }}
+                >
+                {/* Male Selector */}
+                <button
+                  type="button"
                   onClick={() => selectedSex("male")}
+                  className={`group flex flex-col items-center justify-center rounded-2xl px-4 py-2 transition-all duration-300 ${
+                    sex === "male"
+                      ? "bg-white/60 text-[#1f310d] shadow-md"
+                      : "text-[#1f310d]/70 hover:bg-white/30"
+                  }`}
                 >
                   <FaMale
                     size={50}
                     className={`transition-colors duration-300 
         ${
           sex === "male"
-            ? "text-[#ffff] "
-            : "text-[#9AFF34]"
+            ? "text-[#1f310d]"
+            : "text-[#5a7f2d] group-hover:text-[#1f310d]"
         }
       `}
                   />
@@ -158,25 +170,31 @@ export default function HomePage({ onNavigate }) {
         ${
           sex === "male"
             ? "text-[#1f310d]"
-            : "text-[#1f310d]"
+            : "text-[#1f310d]/70 group-hover:text-[#1f310d]"
         }
       `}
                   >
                     Male
                   </span>
-                </div>
+                </button>
 
                 {/* Female Selector */}
-                <div
+                <button
+                  type="button"
                   onClick={() => selectedSex("female")}
+                  className={`group flex flex-col items-center justify-center rounded-2xl px-4 py-2 transition-all duration-300 ${
+                    sex === "female"
+                      ? "bg-white/60 text-[#1f310d] shadow-md"
+                      : "text-[#1f310d]/70 hover:bg-white/30"
+                  }`}
                 >
                   <FaFemale
                     size={50}
                     className={`transition-colors duration-300 
         ${
           sex === "female"
-            ? "text-[#ffff]"
-            : "text-[#9AFF34] group-hover:text-[#74C425]"
+            ? "text-[#1f310d]"
+            : "text-[#5a7f2d] group-hover:text-[#1f310d]"
         }
       `}
                   />
@@ -191,6 +209,7 @@ export default function HomePage({ onNavigate }) {
                   >
                     Female
                   </span>
+                </button>
                 </div>
               </div>
 
