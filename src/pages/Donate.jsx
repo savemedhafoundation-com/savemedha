@@ -3,10 +3,6 @@ import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HomePageBanner from "../components/HomePageBanner";
-import donateBanner1 from "../assets/donateBannerImage/Donatebanner1.png";
-import donateBanner2 from "../assets/donateBannerImage/DonateBanner2.png";
-import donateBanner3 from "../assets/donateBannerImage/DonateBanner3.png";
-import donateBanner4 from "../assets/donateBannerImage/DonateBanner4.png";
 import charityImage from "../assets/Photo/Jar.png";
 import handHoldingHeartImage from "../assets/Photo/image1.png";
 import peopleImage from "../assets/Photo/kid.png";
@@ -37,7 +33,11 @@ const loadRazorpayCheckout = () =>
 
 export default function Donate({ onNavigate }) {
   const location = useLocation();
-  const donateBanners = [donateBanner1, donateBanner2, donateBanner3, donateBanner4];
+  const donateBanners = [
+    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677466/Donatebanner1_ipkbl2.png",
+    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677466/DonateBanner2_rogvhy.png",
+    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677466/DonateBanner3_o49uan.png",
+    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677468/DonateBanner4_eaop9l.png"];
   const [currency, setCurrency] = useState("INR");
   const [selectedAmount, setSelectedAmount] = useState(200);
   const [customAmount, setCustomAmount] = useState("");
