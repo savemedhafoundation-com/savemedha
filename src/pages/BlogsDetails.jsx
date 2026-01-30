@@ -547,7 +547,7 @@ export default function BlogsDetails({ onNavigate }) {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center blog-main">
         <div className="flex flex-col items-center gap-4">
           <div className="relative h-12 w-12" role="status" aria-live="polite">
             <div className="absolute inset-0 rounded-full border-4 border-[#74C425]/20" />
@@ -562,8 +562,8 @@ export default function BlogsDetails({ onNavigate }) {
 
   if (status === "error" || !blog) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center text-center space-y-4">
-        <p className="text-2xl text-red-600">Blog not found</p>
+      <div className="min-h-screen flex flex-col items-center justify-center text-center space-y-4 blog-main">
+        <p className="text-2xl text-red-600 font-poppins">Blog not found</p>
         <button
           onClick={() => onNavigate?.("blogs")}
           className="rounded-full bg-[#74C425] px-5 py-2 text-white font-semibold hover:bg-[#155300]"
@@ -578,7 +578,7 @@ export default function BlogsDetails({ onNavigate }) {
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar currentPage="blogs" onNavigate={onNavigate} />
 
-      <main className="pb-16">
+      <main className="pb-16 blog-main">
         <div className="max-w-6xl mx-auto px-4 pt-6">
           <button
             type="button"
@@ -756,7 +756,7 @@ export default function BlogsDetails({ onNavigate }) {
                       href={ebookReferenceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold text-sm shadow hover:bg-[#e1951c] transition-all translate-x-17 duration-300 hover:shadow-lg"
+                      className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold font-poppins text-sm shadow hover:bg-[#e1951c] transition-all translate-x-17 duration-300 hover:shadow-lg"
                     >
                     <IoLogoAmazon size={26} className="text-white" />
                     Ebook Reference
@@ -772,7 +772,7 @@ export default function BlogsDetails({ onNavigate }) {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
             <article
               ref={contentRef}
-              className="prose prose-slate md:prose-lg text-slate-800 font-shippori break-words prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:my-5 prose-p:leading-[1.8] prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-img:rounded-xl prose-img:shadow-sm"
+              className="prose prose-slate md:prose-lg text-slate-800 font-sen break-words prose-headings:font-poppins prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:font-sen prose-p:my-5 prose-p:leading-[1.8] prose-li:font-sen prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-blockquote:font-sen prose-img:rounded-xl prose-img:shadow-sm"
             >
               <BlogContentRenderer
                 description={rawContent}
@@ -795,7 +795,7 @@ export default function BlogsDetails({ onNavigate }) {
                           key={label}
                           type="button"
                           onClick={() => handleSideSectionClick(label)}
-                          className={`w-full rounded-2xl px-4 py-3 text-left font-semibold shadow-md ring-1 ring-black/5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
+                          className={`w-full rounded-2xl px-4 py-3 text-left font-semibold font-sen shadow-md ring-1 ring-black/5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
                             isActive
                               ? "bg-gradient-to-r from-[#92400e] to-[#a16207] text-white shadow-lg"
                               : "bg-white/95 text-slate-900 hover:bg-white hover:shadow-lg"
@@ -817,7 +817,7 @@ export default function BlogsDetails({ onNavigate }) {
                       href={ebookReferenceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold font-sen shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                     >
                       <span>Get E-Book reference</span>
                       <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
@@ -827,7 +827,7 @@ export default function BlogsDetails({ onNavigate }) {
                     <button
                       type="button"
                       onClick={handleScrollToRelated}
-                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold font-sen shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
                     >
                       <span>Get similar links</span>
                       <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
@@ -993,7 +993,9 @@ export default function BlogsDetails({ onNavigate }) {
                 <div className="w-16 h-16 mx-auto rounded-full bg-[#74C425] text-white flex items-center justify-center text-2xl mb-3">
                   📘
                 </div>
-                <p className="font-semibold text-white">{cat.label}</p>
+                <p className="font-semibold font-poppins text-white">
+                  {cat.label}
+                </p>
                 <button className="mt-2 text-sm font-semibold text-[#74C425] hover:text-[#155300]">
                   Know More
                 </button>
@@ -1012,7 +1014,9 @@ export default function BlogsDetails({ onNavigate }) {
             <div className="h-10 w-10 rounded-full bg-[#e8ffd8] text-[#74C425] flex items-center justify-center">
               <Quote size={22} />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900">Comments</h3>
+            <h3 className="text-2xl font-bold font-poppins text-slate-900">
+              Comments
+            </h3>
           </div>
 
           <form
@@ -1022,7 +1026,7 @@ export default function BlogsDetails({ onNavigate }) {
             <div className="space-y-1">
               <label
                 htmlFor="comment-name"
-                className="text-sm font-semibold text-slate-700"
+                className="text-sm font-semibold font-sen text-slate-700"
               >
                 Name
               </label>
@@ -1039,7 +1043,7 @@ export default function BlogsDetails({ onNavigate }) {
             <div className="space-y-1">
               <label
                 htmlFor="comment-phone"
-                className="text-sm font-semibold text-slate-700"
+                className="text-sm font-semibold font-sen text-slate-700"
               >
                 Phone Number
               </label>
@@ -1056,7 +1060,7 @@ export default function BlogsDetails({ onNavigate }) {
             <div className="space-y-1">
               <label
                 htmlFor="comment-message"
-                className="text-sm font-semibold text-slate-700"
+                className="text-sm font-semibold font-sen text-slate-700"
               >
                 Message
               </label>

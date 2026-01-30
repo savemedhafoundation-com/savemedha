@@ -308,7 +308,7 @@ export default function TestimonialsSection() {
       {/* Mobile: certified card (matches design image) */}
       <div className="flex justify-center sm:hidden">
         <div className="w-full max-w-[360px] -translate-y-4 px-4">
-          <p className="mb-3 text-center text-base font-bold text-gray-900 tracking-wide">
+          <p className="mb-3 text-center text-base font-bold text-gray-900 tracking-wide home-heading">
             CERTIFIED <span className="text-[#74C425]">BY</span>
           </p>
           <div className="w-full rounded-2xl bg-white p-4 shadow-lg ring-2 ring-[#CFE7B2] ring-offset-2 ring-offset-[#EAF7EA]">
@@ -325,7 +325,7 @@ export default function TestimonialsSection() {
       {/* Desktop/Laptop: keep existing layout */}
       <div className="hidden sm:flex justify-center">
         <div className="w-full max-w-[780px] -translate-y-4">
-          <p className="mb-4 text-center text-lg font-bold text-gray-900">
+          <p className="mb-4 text-center text-lg font-bold text-gray-900 home-heading">
             CERTIFIED BY
           </p>
           <div className="w-full bg-white rounded-md px-6 py-6">

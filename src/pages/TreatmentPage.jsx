@@ -52,14 +52,14 @@ export default function TreatmentPage({ onNavigate }) {
         <button
           type="button"
           onClick={() => onNavigate?.("treatment-questions")}
-          className="bg-white text-[#6AB12F] font-semibold text-sm sm:text-base px-6 py-2 rounded-[7px] cursor-pointer shadow-md transition-all duration-100 ease-out transform hover:scale-105 hover:shadow-lg"
+          className="bg-white text-[#6AB12F] font-semibold font-poppins text-sm sm:text-base px-6 py-2 rounded-[7px] cursor-pointer shadow-md transition-all duration-100 ease-out transform hover:scale-105 hover:shadow-lg"
         >
           Learn More
         </button>
 
                 <button
                   type="button"
-                  className="bg-white text-[#6AB12F] font-semibold text-sm sm:text-base px-6 py-2 rounded-[7px] cursor-pointer shadow-md transition-all duration-100 ease-out transform hover:scale-105 hover:shadow-lg"
+                  className="bg-white text-[#6AB12F] font-semibold font-poppins text-sm sm:text-base px-6 py-2 rounded-[7px] cursor-pointer shadow-md transition-all duration-100 ease-out transform hover:scale-105 hover:shadow-lg"
                 >
                   <a href="https://dantura.com/" target="_blank" rel="noopener noreferrer">
                   Get Therapy
@@ -88,7 +88,7 @@ export default function TreatmentPage({ onNavigate }) {
                 <div className="relative mb-6">
                   <div className="absolute inset-y-0 -left-[100px] right-[-100px] bg-gradient-to-r from-[#FFFFFF00] via-[#74C42580] to-[#FFFFFF00] -z-10 opacity-100 h-full w-[150%] rounded-l-full"></div>
 
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-shippori  uppercase tracking-wide leading-tight py-4">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-poppins uppercase tracking-wide leading-tight py-4">
                     WE TREAT THROUGH <br /> NATURAL IMMUNOTHERAPY:
                   </h2>
                 </div>
@@ -107,7 +107,7 @@ export default function TreatmentPage({ onNavigate }) {
 
                 <div className="mt-8 ">
                   <StartNaturalImmunotherapyButton
-                    className="w-[300px] px-2 py-3"
+                    className="w-[300px] px-2 py-3 font-poppins"
                   />
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function TreatmentPage({ onNavigate }) {
 
           <div className=" w-full bg-gradient-to-r from-[#fda489] via-[#E7581F] to-[#fda489] py-6 px-4 shadow-inner">
             <div className="max-w-4xl mx-auto text-center">
-              <h4 className="text-white text-lg md:text-xl font-roboto lg:text-2xl font-semibold italic [text-shadow:_0px_3px_2px_#636262]">
+              <h4 className="text-white text-lg md:text-xl font-poppins lg:text-2xl font-semibold italic [text-shadow:_0px_3px_2px_#636262]">
                 Get All Solutions to Your Chronic Health Issues, <br />
                 We Know You've been suffering since so long.
               </h4>
@@ -196,9 +196,9 @@ export default function TreatmentPage({ onNavigate }) {
 
         {/* Lists of Questions */}
         <section className="relative py-10 px-4">
-          <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden font-poppins">
             <div className="  text-white text-center py-4 px-4 bg-[linear-gradient(to_right,#74C425_75%,#defcc0_100%)]">
-              <h4 className="text-2xl sm:text-3xl font-semibold font-robotocondensed ">
+              <h4 className="text-2xl sm:text-3xl font-semibold font-poppins">
                 Lists of Questions of Your Mind for your complete recovery
               </h4>
             </div>
@@ -233,17 +233,17 @@ export default function TreatmentPage({ onNavigate }) {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 pb-8 px-6">
-              <button
-                type="button"
-                onClick={() =>
-                  onNavigate?.("treatment-questions")
-                }
-                className="bg-[#7BC043] w-[300px] hover:bg-green-600 transition cursor-pointer text-white font-bold font-opensans py-3 px-8 rounded-[4px] shadow-md uppercase tracking-wider transition-colors text-base md:text-lg  "
-              >
-                CLICK HERE TO KNOW MORE
-              </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    onNavigate?.("treatment-questions")
+                  }
+                className="bg-[#7BC043] w-[300px] hover:bg-green-600 transition cursor-pointer text-white font-bold font-poppins py-3 px-8 rounded-[4px] shadow-md uppercase tracking-wider transition-colors text-base md:text-lg"
+                >
+                  CLICK HERE TO KNOW MORE
+                </button>
               <StartNaturalImmunotherapyButton
-                className="w-[300px] "
+                className="w-[300px] font-poppins"
                 px="px-8"
                 py="py-3"
               />
@@ -252,7 +252,7 @@ export default function TreatmentPage({ onNavigate }) {
         </section>
 
         {/* Yellow marquee banner */}
-        <section className="bg-yellow-400 py-3 text-center justify-items-center sm:text-lg font-semibold text-blue-900 uppercase">
+        <section className="bg-yellow-400 py-3 text-center justify-items-center sm:text-lg font-semibold font-poppins text-blue-900 uppercase">
           <marquee
             behavior="scroll"
             direction="left"

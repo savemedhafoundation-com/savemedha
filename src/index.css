@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=KoHo:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;600;700&family=Shippori+Antique+B1&family=Source+Sans+3:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=KoHo:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;600;700&family=Sen:wght@400;600;700;800&family=Shippori+Antique+B1&family=Source+Sans+3:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Antique+B1:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@400;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap');
@@ -34,6 +35,10 @@ body {
   font-family: "Roboto Condensed", sans-serif;
 }
 
+.font-roboto-regular {
+  font-family: "Roboto", "Open Sans", sans-serif;
+}
+
 .font-poppins {
   font-family: 'Poppins', 'Open Sans', sans-serif;
 }
@@ -44,6 +49,10 @@ body {
 
 .font-kalam {
   font-family: 'Kalam', 'Open Sans', sans-serif;
+}
+
+.font-sen {
+  font-family: 'Sen', 'Open Sans', sans-serif;
 }
 
 .font-neue-machina {
@@ -102,6 +111,94 @@ body {
 /* Global button font: Open Sans (loaded via index.html) */
 button, .btn {
   font-family: 'Open Sans', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif !important;
+}
+
+.blog-main {
+  font-family: 'Sen', 'Open Sans', sans-serif;
+}
+
+.blog-main h1,
+.blog-main h2,
+.blog-main h3,
+.blog-main h4,
+.blog-main h5,
+.blog-main h6 {
+  font-family: 'Poppins', 'Open Sans', sans-serif;
+}
+
+.blog-main button,
+.blog-main .btn {
+  font-family: 'Poppins', 'Open Sans', sans-serif !important;
+}
+
+.blog-main .font-sen {
+  font-family: 'Sen', 'Open Sans', sans-serif !important;
+}
+
+.blog-main input,
+.blog-main textarea,
+.blog-main select,
+.blog-main label {
+  font-family: 'Sen', 'Open Sans', sans-serif;
+}
+
+.ebook-main {
+  font-family: 'Sen', 'Open Sans', sans-serif;
+}
+
+.ebook-main h1,
+.ebook-main h2,
+.ebook-main h3,
+.ebook-main h4,
+.ebook-main h5,
+.ebook-main h6 {
+  font-family: 'Poppins', 'Open Sans', sans-serif;
+}
+
+.ebook-main button,
+.ebook-main .btn {
+  font-family: 'Poppins', 'Open Sans', sans-serif !important;
+}
+
+.home-main {
+  font-family: 'Sen', 'Open Sans', sans-serif;
+}
+
+.home-main h1,
+.home-main h2,
+.home-main h3,
+.home-main h4,
+.home-main h5,
+.home-main h6 {
+  font-family: 'Poppins', 'Open Sans', sans-serif;
+}
+
+.home-main p {
+  font-family: 'Sen', 'Open Sans', sans-serif;
+}
+
+.home-main button,
+.home-main .btn {
+  font-family: 'Poppins', 'Open Sans', sans-serif !important;
+}
+
+.home-main a.inline-flex,
+.home-main a.inline-block {
+  font-family: 'Poppins', 'Open Sans', sans-serif !important;
+}
+
+.home-main .home-heading {
+  font-family: 'Poppins', 'Open Sans', sans-serif !important;
+}
+
+.home-main .home-hero-heading {
+  font-family: 'Old Standard TT', serif !important;
+}
+
+.home-main .home-hero-subheading,
+.home-main .home-hero-button,
+.home-main .home-hero-tag {
+  font-family: 'Poppins', 'Open Sans', sans-serif !important;
 }
 
 /* Quill size helpers inside prose content. */

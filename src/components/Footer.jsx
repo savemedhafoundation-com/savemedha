@@ -55,7 +55,7 @@ const Footer = ({ onNavigate }) => {
     { name: "ABOUT US", key: "about", href: "/about-us" },
     { name: "TREATMENT", key: "treatment", href: "/treatment" },
     { name: "DONATE", key: "donate", href: "/donate" },
-    { name: "EVENTS & PROJECTS", href: "#" },
+    { name: "EVENTS & PROJECTS", key: "events-projects", href: "/events-projects" },
   ];
 
   const navLinks2 = [

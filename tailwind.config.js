@@ -15,6 +15,7 @@ export default {
         opensans: ['"Open Sans"', 'sans-serif'],
         shippori: ['"Shippori Antique B1"', 'sans-serif'],
         kalam: ['"Kalam"', 'sans-serif'],
+        sen: ['"Sen"', 'sans-serif'],
         roboto: ['"Roboto Condensed"', 'sans-serif'],
         montagu: ['"Montagu Slab"', 'serif'],
         oldstandard: ['"Old Standard TT"', 'serif'],

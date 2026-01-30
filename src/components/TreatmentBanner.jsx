@@ -149,7 +149,7 @@ export default function TreatmentBanner({
           {showText && (
             <>
               <h1
-                className="w-full max-w-[850px] text-2xl sm:text-3xl md:text-4xl font-extrabold drop-shadow-lg mb-3 uppercase tracking-tight leading-tight"
+                className="w-full max-w-[850px] text-2xl sm:text-3xl md:text-4xl font-extrabold font-poppins drop-shadow-lg mb-3 uppercase tracking-tight leading-tight"
                 style={{
                   color: titleColor,
                   WebkitTextStrokeColor: "transparent",
@@ -157,7 +157,7 @@ export default function TreatmentBanner({
               >
                 {typedTitle || title}
               </h1>
-              <p className="w-full max-w-[700px] text-sm sm:text-base text-gray-100 leading-relaxed">
+              <p className="w-full max-w-[700px] text-sm sm:text-base font-sen text-gray-100 leading-relaxed">
                 {typedSubtitle || subtitle}
               </p>
             </>
@@ -167,7 +167,7 @@ export default function TreatmentBanner({
             <button
               type="button"
               onClick={onCtaClick}
-              className="mt-5 inline-flex items-center justify-center px-5 py-2 rounded-full bg-white text-[#5cb624] font-semibold text-sm shadow hover:bg-green-50 transition"
+              className="mt-5 inline-flex items-center justify-center px-5 py-2 rounded-full bg-white text-[#5cb624] font-semibold font-poppins text-sm shadow hover:bg-green-50 transition"
             >
               {ctaLabel}
             </button>

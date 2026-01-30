@@ -99,7 +99,7 @@ export default function EbookPage({ onNavigate }) {
     <div className="min-h-screen bg-white">
       <Navbar currentPage="ebook" onNavigate={onNavigate} />
 
-      <main className="bg-white">
+      <main className="bg-white ebook-main">
         <section className="relative overflow-hidden bg-gradient-to-br from-[#f2ffe0] via-white to-[#eefed4]">
           <div
             className="absolute -top-16 -left-16 h-44 w-44 rounded-full bg-[#74C425]/20 blur-3xl"
@@ -143,7 +143,7 @@ export default function EbookPage({ onNavigate }) {
                     }
                     aria-disabled={heroDownloadDisabled}
                     tabIndex={heroDownloadDisabled ? -1 : undefined}
-                    className={`inline-flex items-center justify-center rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#4b8f1c] ${
+                    className={`inline-flex items-center justify-center rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold font-poppins text-white shadow-md transition hover:bg-[#4b8f1c] ${
                       heroDownloadDisabled ? "cursor-not-allowed opacity-60" : ""
                     }`}
                   >
@@ -267,7 +267,7 @@ export default function EbookPage({ onNavigate }) {
               <h2 className="text-3xl font-bold text-slate-900 sm:text-6xl">
                 E-Books
               </h2>
-              <p className="mt-2 text-lg sm:text-6xl font-bold text-[#74C425]">
+              <p className="mt-2 text-lg sm:text-6xl font-bold font-poppins text-[#74C425]">
                 & Research Publications
               </p>
               
@@ -315,10 +315,10 @@ export default function EbookPage({ onNavigate }) {
                     </div>
 
                     <div className="mt-4">
-                      <h3 className="text-base font-semibold text-slate-900">
+                      <h3 className="text-base font-semibold font-poppins text-slate-900">
                         {book.title}
                       </h3>
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="mt-1 text-xs font-roboto-regular text-slate-500">
                         By {book.author}
                       </p>
                       <p className="mt-3 text-sm text-slate-700 line-clamp-3">
@@ -345,7 +345,7 @@ export default function EbookPage({ onNavigate }) {
                           to={book.readLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center  bg-[#6bc12f] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#4b8f1c]"
+                          className="inline-flex items-center justify-center bg-[#6bc12f] px-4 py-2 text-sm font-semibold font-poppins text-white shadow-sm transition hover:bg-[#4b8f1c]"
                         >
                           Read Online
                         </Link>
@@ -358,7 +358,7 @@ export default function EbookPage({ onNavigate }) {
                           }
                           aria-disabled={!book.downloadLink}
                           tabIndex={book.downloadLink ? undefined : -1}
-                          className={`inline-flex items-center justify-center  border border-[#6bc12f] px-4 py-2 text-sm font-semibold text-[#3c7d13] transition hover:bg-[#f0ffe0] ${
+                          className={`inline-flex items-center justify-center border border-[#6bc12f] px-4 py-2 text-sm font-semibold font-poppins text-[#3c7d13] transition hover:bg-[#f0ffe0] ${
                             book.downloadLink ? "" : "cursor-not-allowed opacity-60"
                           }`}
                         >
@@ -399,7 +399,7 @@ export default function EbookPage({ onNavigate }) {
               </div>
               <div className="mt-8 grid gap-6 md:grid-cols-2">
                 <div className=" border border-[#cbe9a2] bg-[linear-gradient(180deg,_#F2FFE4_0%,_#F3F5F2_51.92%,_#C8DAB6_100%)] p-6 text-center shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#2f5905]">
+                  <p className="text-xs font-semibold font-poppins uppercase tracking-[0.2em] text-[#2f5905]">
                     <span className="block">Get Free</span>
                     <span className="block">Download</span>
                   </p>
@@ -413,7 +413,7 @@ export default function EbookPage({ onNavigate }) {
                   </div>
                   <button
                     type="button"
-                    className="mt-4 inline-flex items-center justify-center"
+                    className="mt-4 inline-flex items-center justify-center font-poppins"
                     aria-label="Download"
                   >
                     <img
@@ -426,7 +426,7 @@ export default function EbookPage({ onNavigate }) {
                 </div>
 
                 <div className="border border-[#e1e1e1] bg-[linear-gradient(180deg,_#F2FFE4_0%,_#F3F5F2_51.92%,_#C8DAB6_100%)] p-6 text-center shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-700">
+                  <p className="text-xs font-semibold font-poppins uppercase tracking-[0.2em] text-slate-700">
                     <span className="block">BUY ON </span>
                     <span className="block">AMAZON KINDLE</span>
                   </p>
@@ -440,7 +440,7 @@ export default function EbookPage({ onNavigate }) {
                   </div>
                   <button
                     type="button"
-                    className="mt-4 py-5 inline-flex items-center justify-center "
+                    className="mt-4 py-5 inline-flex items-center justify-center font-poppins"
                     aria-label="Amazon Store"
                   >
                     <img

@@ -8,7 +8,7 @@ export default function Home({ onNavigate }) {
   return (
     <div className="min-h-screen bg-white">
       <Navbar currentPage="home" onNavigate={onNavigate} />
-      <main className="w-full px-4 sm:px-6 md:px-20">
+      <main className="w-full px-4 sm:px-6 md:px-20 home-main">
         <HomePage onNavigate={onNavigate} />
         <VolunteerAndSupportSection onNavigate={onNavigate} />
         <div className="mt-2 sm:mt-16">

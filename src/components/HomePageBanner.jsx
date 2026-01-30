@@ -42,18 +42,18 @@ const DefaultHeroContent = ({ showShadows = true }) => {
       </div>
 
       <div className="w-full px-4 sm:px-6 md:px-25">
-        <div className="inline-block bg-[#74C425] px-4 py-1.5 sm:px-6 sm:py-2 md:px-[25px] md:py-[5px] text-white rounded-sm mb-4 sm:mb-6 font-bold-250px italic uppercase tracking-wide text-base sm:text-lg md:text-[25px] ">
+        <div className="inline-block bg-[#74C425] px-4 py-1.5 sm:px-6 sm:py-2 md:px-[25px] md:py-[5px] text-white rounded-sm mb-4 sm:mb-6 font-bold-250px italic uppercase tracking-wide text-base sm:text-lg md:text-[25px] home-hero-tag">
           Natural Immunotherapy
         </div>
 
-        <h1 className="font-serif font-extrabold text-black leading-tight text-[32px] sm:text-[42px] md:text-[57px]">
+        <h1 className="font-oldstandard home-hero-heading font-extrabold text-black leading-tight text-[32px] sm:text-[42px] md:text-[57px]">
           Empowering lives,
         </h1>
-        <h2 className="font-serif font-extrabold text-[#74C425] leading-tight text-[28px] sm:text-[40px] md:text-[55px] mb-3 sm:mb-4">
+        <h2 className="font-oldstandard home-hero-heading font-extrabold text-[#74C425] leading-tight text-[28px] sm:text-[40px] md:text-[55px] mb-3 sm:mb-4">
           Saving futures
         </h2>
 
-        <p className="font-sans text-[14px] sm:text-[16px] md:text-[20px] font-semibold mb-4 sm:mb-6">
+        <p className="font-sans home-hero-subheading text-[14px] sm:text-[16px] md:text-[20px] font-semibold mb-4 sm:mb-6">
           Fighting to make a{" "}
           <span className="text-blue-600 font-bold text-[14px] sm:text-[16px] md:text-[20px]">
             CANCER FREE WORLD
@@ -66,7 +66,7 @@ const DefaultHeroContent = ({ showShadows = true }) => {
           rel="noopener noreferrer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 font-medium OpenSans text-base sm:text-lg md:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
+          className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 font-medium OpenSans home-hero-button text-base sm:text-lg md:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
             showShadows ? (isHovered ? "shadow-lg" : "shadow-md") : ""
           }`}
         >

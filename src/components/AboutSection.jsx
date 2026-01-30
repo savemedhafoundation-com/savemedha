@@ -13,7 +13,7 @@ export default function AboutSection({ onNavigate }) {
       <div className="w-full mx-auto  px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-20">
         <div className="relative w-full lg:w-1/2 flex justify-center h-[270px] sm:h-[390px] md:h-[380px] lg:h-[400px]">
           <div className="absolute top-0 left-0 w-full pt-2 flex flex-col items-center gap-1 sm:hidden z-20">
-            <p className="text-[#020202] -translate-y-18 text-3xl font-bold  uppercase">
+            <p className="text-[#020202] -translate-y-18 text-3xl font-bold uppercase home-heading">
               About
             </p>
             <h2 className="text-[25px] font-bold uppercase -translate-y-20">
@@ -36,7 +36,7 @@ export default function AboutSection({ onNavigate }) {
 
         <div className="w-full ">
           <div className="hidden sm:flex sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-4">
-            <p className="text-[#020202] text-3xl sm:text-4xl font-bold tracking-[0.05em]  sm:tracking-[0.12em] uppercase">
+            <p className="text-[#020202] text-3xl sm:text-4xl font-bold tracking-[0.05em] sm:tracking-[0.12em] uppercase home-heading">
               About
             </p>
             <h2 className="text-2xl sm:text-4xl font-bold whitespace-nowrap uppercase  sm:tracking-[0.12em]">

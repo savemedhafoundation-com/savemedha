@@ -197,7 +197,7 @@ export default function Blogs({ onNavigate }) {
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar currentPage="blogs" onNavigate={onNavigate} />
 
-      <main className="pb-8">
+      <main className="pb-8 blog-main">
         {/* Hero */}
         <section className="w-full mx-auto  ">
           <div className="bg-white  overflow-hidden relative">
@@ -408,7 +408,7 @@ export default function Blogs({ onNavigate }) {
                         
                         
                       </div>
-                      <p className="mt-2 font-semibold text-slate-900 leading-snug">
+                      <p className="mt-2 font-semibold font-poppins text-slate-900 leading-snug">
                         {post.title}
                       </p>
                     </div>
@@ -551,7 +551,7 @@ export default function Blogs({ onNavigate }) {
                   alt={cat.label}
                   className="w-16 h-16 rounded-full object-cover"
                 />
-                <div className="text-sm font-semibold text-slate-900">
+                <div className="text-sm font-semibold font-poppins text-slate-900">
                   {cat.label}
                 </div>
                 <button className="text-[#74C425] font-semibold text-sm hover:text-[#155300]">

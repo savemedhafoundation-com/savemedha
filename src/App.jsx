@@ -22,6 +22,8 @@ import BlogsDetails from "./pages/BlogsDetails";
 import EbookPage from "./pages/EbookPage";
 import EbookRead from "./pages/EbookRead";
 import CareersPage from "./pages/CareersPage";
+import EventsProjects from "./pages/EventsProjects";
+import OngoingEvents from "./pages/OngoingEvents";
 // demo commit
 
 const API_BASE_URL =
@@ -239,6 +241,12 @@ function App() {
         case "careers":
           targetPath = "/careers";
           break;
+        case "events-projects":
+          targetPath = "/events-projects";
+          break;
+        case "ongoing-events":
+          targetPath = "/ongoing-events";
+          break;
         case "contact":
           targetPath = "/contact-us";
           break;
@@ -309,6 +317,14 @@ function App() {
         <Route
           path="/careers"
           element={<CareersPage onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/events-projects"
+          element={<EventsProjects onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/ongoing-events"
+          element={<OngoingEvents onNavigate={handleNavigate} />}
         />
         <Route
           path="/apply"
