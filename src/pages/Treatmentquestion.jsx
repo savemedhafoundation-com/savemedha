@@ -69,7 +69,7 @@ const scrollToQuestionSection = () => {
           onNavigate={onNavigate}
           onSelectCategory={(category) => {
             setSelectedCategory(category);
-            scrollToQuestionSection(); // 👈 THIS fixes everything
+            scrollToQuestionSection(); 
             }}
 
           selectedCategory={selectedCategory}

@@ -234,7 +234,7 @@ export default function Donate({ onNavigate }) {
             </h2>
           </div>
           <div
-            className="mt-3 w-full px-5 py-2 text-white text-sm sm:text-base font-semibold text-center font-shippori"
+            className="mt-3 w-full px-5 py-2 text-white text-sm sm:text-base font-semibold text-center font-sen"
             style={{
               background:
                 "linear-gradient(90deg, #FFFFFF 0%, #E7581F 17.79%, #E7581F 81.73%, #FFFFFF 100%)",
@@ -255,7 +255,7 @@ export default function Donate({ onNavigate }) {
               </div>
 
               <div className="rounded-xl border border-slate-200 bg-white p-6 sm:p-8">
-                <p className="text-sm sm:text-base leading-relaxed text-slate-700 font-shippori">
+                <p className="text-sm sm:text-base leading-relaxed text-slate-700 font-sen">
                   Join us in donating for a good cause. Your contribution can make a world of
                   difference. In someone&apos;s life, every donation, no matter how small, helps
                   support critical medical treatments, emergency responses, and community health
@@ -265,7 +265,7 @@ export default function Donate({ onNavigate }) {
 
                
                 {paymentMessage ? (
-                  <div className="mt-4 text-sm font-semibold font-shippori text-slate-800">
+                  <div className="mt-4 text-sm font-semibold font-sen text-slate-800">
                     {paymentMessage}
                   </div>
                 ) : null}
@@ -277,14 +277,14 @@ export default function Donate({ onNavigate }) {
                 <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 font-poppins">
                   Donate For a Good Cause <span className="text-red-600">♥</span>
                 </h3>
-                <p className="mt-2 text-sm sm:text-base text-slate-700 font-shippori">
+                <p className="mt-2 text-sm sm:text-base text-slate-700 font-sen">
                   Your help fuels nutrition support and compassionate care for recovery journeys.
                 </p>
                 <button
                   type="button"
                   onClick={startRazorpay}
                   disabled={isPaying}
-                  className="mt-5 inline-flex items-center justify-center rounded-md bg-[#2563eb] px-6 py-3 text-white font-semibold hover:bg-[#1d4ed8] transition-colors"
+                  className="mt-5 inline-flex items-center justify-center rounded-md bg-[#2563eb] px-6 py-3 text-white font-semibold font-poppins hover:bg-[#1d4ed8] transition-colors"
                 >
                   {isPaying ? "Opening..." : "Donate Now"}
                 </button>
@@ -313,7 +313,7 @@ export default function Donate({ onNavigate }) {
                 <h3 className="text-center text-2xl sm:text-3xl font-extrabold text-slate-900 font-poppins">
                   Support Our Cause
                 </h3>
-                <p className="mt-2 text-center text-sm sm:text-base text-slate-600 font-shippori">
+                <p className="mt-2 text-center text-sm sm:text-base text-slate-600 font-sen">
                   Help our organization by donating today! Donations go to making a difference for
                   our cause.
                 </p>
@@ -339,7 +339,7 @@ export default function Donate({ onNavigate }) {
                   <h4 className="text-lg sm:text-xl font-extrabold text-slate-900 font-poppins">
                     Impact So Far
                   </h4>
-                  <ul className="mt-3 space-y-2 text-sm sm:text-base text-slate-700 font-shippori list-disc pl-5">
+                  <ul className="mt-3 space-y-2 text-sm sm:text-base text-slate-700 font-sen list-disc pl-5">
                     <li>
                       Supported individuals through nutrition-based immune support programs and
                       holistic care guidance.
@@ -373,7 +373,7 @@ export default function Donate({ onNavigate }) {
                           Donation Amount <span className="text-red-600">*</span>
                         </h4>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs sm:text-sm text-slate-600 font-shippori">
+                          <span className="text-xs sm:text-sm text-slate-600 font-sen">
                             Currency
                           </span>
                           <select
@@ -413,7 +413,7 @@ export default function Donate({ onNavigate }) {
                       </div>
 
                       <div className="mt-5">
-                        <label className="block text-xs sm:text-sm text-slate-600 font-shippori">
+                        <label className="block text-xs sm:text-sm text-slate-600 font-sen">
                           Enter custom amount
                         </label>
                         <input
@@ -429,7 +429,7 @@ export default function Donate({ onNavigate }) {
                         <h4 className="text-base sm:text-lg font-extrabold text-slate-900 font-poppins">
                           Who&apos;s Giving Today?
                         </h4>
-                        <p className="mt-1 text-xs sm:text-sm text-slate-600 font-shippori">
+                        <p className="mt-1 text-xs sm:text-sm text-slate-600 font-sen">
                           This is confidential; we won&apos;t share it.
                         </p>
 
@@ -469,7 +469,7 @@ export default function Donate({ onNavigate }) {
                         <h4 className="text-base sm:text-lg font-extrabold text-slate-900 font-poppins">
                           Payment Details
                         </h4>
-                        <p className="mt-1 text-xs sm:text-sm text-slate-600 font-shippori">
+                        <p className="mt-1 text-xs sm:text-sm text-slate-600 font-sen">
                           How would you like to pay for your donation?
                         </p>
 
@@ -477,20 +477,20 @@ export default function Donate({ onNavigate }) {
                           <h5 className="text-sm sm:text-base font-extrabold text-slate-900 font-poppins">
                             Donation Summary
                           </h5>
-                          <div className="mt-3 space-y-2 text-sm text-slate-800 font-shippori">
+                          <div className="mt-3 space-y-2 text-sm text-slate-800 font-sen">
                             <div className="flex items-center justify-between gap-4">
                               <span>Donation Amount</span>
-                              <span className="font-bold">
+                              <span className="font-bold font-poppins">
                                 {currency} {donationAmount || 0}
                               </span>
                             </div>
                             <div className="flex items-center justify-between gap-4">
                               <span>Giving Frequency</span>
-                              <span className="font-bold">One-time</span>
+                              <span className="font-bold font-poppins">One-time</span>
                             </div>
                             <div className="flex items-center justify-between gap-4">
                               <span>Donation Total</span>
-                              <span className="font-bold">
+                              <span className="font-bold font-poppins">
                                 {currency} {donationAmount || 0}
                               </span>
                             </div>
@@ -506,7 +506,7 @@ export default function Donate({ onNavigate }) {
                           {isPaying ? "OPENING..." : "DONATE NOW"}
                         </button>
                         {paymentMessage ? (
-                          <div className="mt-4 text-sm font-semibold font-shippori text-slate-800">
+                          <div className="mt-4 text-sm font-semibold font-sen text-slate-800">
                             {paymentMessage}
                           </div>
                         ) : null}

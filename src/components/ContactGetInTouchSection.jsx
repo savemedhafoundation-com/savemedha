@@ -34,10 +34,10 @@ export default function ContactGetInTouchSection({
       <div className="relative mx-auto w-full max-w-[1440px] px-4 py-12 sm:px-6 md:px-20">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.2fr]">
           <div className="max-w-xl">
-            <h2 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+            <h2 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl font-poppins">
               {title}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg font-sen">
               {subtitle}
             </p>
 
@@ -47,10 +47,12 @@ export default function ContactGetInTouchSection({
                   <Phone className="h-8 w-8" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-2xl font-semibold text-slate-900">Call Us</p>
+                  <p className="text-2xl font-semibold text-slate-900 font-poppins">
+                    Call Us
+                  </p>
                   <a
                     href={`tel:${phone.replace(/\s+/g, "")}`}
-                    className="mt-1 inline-block text-xl text-slate-600 hover:text-slate-900"
+                    className="mt-1 inline-block text-xl text-slate-600 hover:text-slate-900 font-sen"
                   >
                     {phone}
                   </a>
@@ -62,10 +64,12 @@ export default function ContactGetInTouchSection({
                   <Mail className="h-8 w-8" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-2xl font-semibold text-slate-900">Email</p>
+                  <p className="text-2xl font-semibold text-slate-900 font-poppins">
+                    Email
+                  </p>
                   <a
                     href={`mailto:${email}`}
-                    className="mt-1 inline-block text-xl text-slate-600 hover:text-slate-900"
+                    className="mt-1 inline-block text-xl text-slate-600 hover:text-slate-900 font-sen"
                   >
                     {email}
                   </a>

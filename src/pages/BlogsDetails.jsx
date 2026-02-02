@@ -27,7 +27,8 @@ const RELATED_BLOG_BANNERS = [relatedBlogsBanner, insideBlogsBanner2];
 const RELATED_BLOG_BANNER_ROTATE_MS = 10000;
 const BLOG_AD_IMAGES = [blogAdOne, blogAdTwo, blogAdThree, blogAdFour];
 const BLOG_AD_ROTATE_MS = 5000;
-const ebookReferenceUrl =
+const RESOURCE_ADS_TOGGLE_MS = 10000;
+const DEFAULT_EBOOK_REFERENCE_URL =
   "https://www.amazon.in/dp/B0FF2CTTND?ref=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&ref_=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&social_share=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&bestFormat=true";
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
@@ -146,18 +147,11 @@ export default function BlogsDetails({ onNavigate }) {
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
 
-    const handleScroll = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const total =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress = total > 0 ? scrollTop / total : 0;
-      setShowResourceAds(progress >= 0.6);
-    };
+    const intervalId = window.setInterval(() => {
+      setShowResourceAds((current) => !current);
+    }, RESOURCE_ADS_TOGGLE_MS);
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -189,6 +183,15 @@ export default function BlogsDetails({ onNavigate }) {
     const author =
       blog?.writtenBy || blog?.author?.name || blog?.author || "Admin";
     return { title, banner, category, date, author };
+  }, [blog]);
+
+  const ebookReferenceUrl = useMemo(() => {
+    return (
+      blog?.ebookReferenceUrl ||
+      blog?.ebook?.referenceUrl ||
+      blog?.ebookUrl ||
+      DEFAULT_EBOOK_REFERENCE_URL
+    );
   }, [blog]);
 
   const shareUrl = useMemo(() => {
@@ -751,13 +754,12 @@ export default function BlogsDetails({ onNavigate }) {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                 
-                    <a
-                      href={ebookReferenceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold font-poppins text-sm shadow hover:bg-[#e1951c] transition-all translate-x-17 duration-300 hover:shadow-lg"
-                    >
+                  <a
+                    href={ebookReferenceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold font-poppins text-sm shadow hover:bg-[#e1951c] transition-all translate-x-17 duration-300 hover:shadow-lg"
+                  >
                     <IoLogoAmazon size={26} className="text-white" />
                     Ebook Reference
                   </a>

@@ -506,16 +506,16 @@ const sendOtp = async () => {
 
             {/* Content layer */}
             <div className="relative z-10 max-w-7xl mx-auto">
-              <h2 className="text-3xl sm:text-[48px] font-normal  leading-[100%] tracking-[0] md:text-4xl font-thick text-center text-[#57A30B] mb-2">
+              <h2 className="text-3xl sm:text-[48px] font-normal leading-[100%] tracking-[0] md:text-4xl font-thick text-center text-[#57A30B] mb-2 font-sen">
                 #have questions?
               </h2>
-              <h2 className="text-center text-[#020202] text-4xl sm:text-[60px] font-mormal leading-[100%] tracking-[0] mb-3 sm:mb-5">
+              <h2 className="text-center text-[#020202] text-4xl sm:text-[60px] font-mormal leading-[100%] tracking-[0] mb-3 sm:mb-5 font-poppins">
                 Fill this Form
               </h2>
 
               <div className="grid md:grid-cols-[2fr_1fr] gap-6 sm:gap-8 items-start">
                 {/* Left: Contact Form */}
-                <form className="space-y-6 bg-[#fbf5fc] py-6 sm:py-8 px-4 sm:px-30 rounded-2xl">
+                <form className="space-y-6 bg-[#fbf5fc] py-6 sm:py-8 px-4 sm:px-30 rounded-2xl font-sen">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input
                       type="text"
@@ -581,7 +581,7 @@ const sendOtp = async () => {
                       <button
                         type="button"
                         onClick={sendOtp}
-                        className="mt-3 w-full sm:w-auto bg-gradient-to-r from-[#59961C] to-[#74C425] sm:hover:shadow-xl text-white font-semibold py-2 px-6 rounded transition transform sm:hover:scale-105"
+                        className="mt-3 w-full sm:w-auto bg-gradient-to-r from-[#59961C] to-[#74C425] sm:hover:shadow-xl text-white font-semibold font-poppins py-2 px-6 rounded transition transform sm:hover:scale-105"
                       >
                         Send OTP
                       </button>
@@ -601,7 +601,7 @@ const sendOtp = async () => {
                         <button
                           type="button"
                           onClick={verifyOtp}
-                          className="mt-3 w-full sm:w-auto bg-blue-600 text-white font-semibold py-2 px-6 rounded sm:hover:bg-blue-700"
+                          className="mt-3 w-full sm:w-auto bg-blue-600 text-white font-semibold font-poppins py-2 px-6 rounded sm:hover:bg-blue-700"
                         >
                           Verify OTP
                         </button>
@@ -645,7 +645,7 @@ const sendOtp = async () => {
                   <div className="text-left">
                     <button
                       type="submit"
-                      className="w-full sm:w-auto bg-gradient-to-r from-[#59961C] to-[#74C425] sm:hover:shadow-xl text-white font-bold text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-12 rounded shadow-lg transition transform sm:hover:scale-105"
+                      className="w-full sm:w-auto bg-gradient-to-r from-[#59961C] to-[#74C425] sm:hover:shadow-xl text-white font-bold font-poppins text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-12 rounded shadow-lg transition transform sm:hover:scale-105"
                     >
                       Submit
                     </button>
@@ -663,9 +663,13 @@ const sendOtp = async () => {
                     <div className="text-3xl sm:text-4xl">
                       <MdEmail />
                     </div>
-                    <p className="text-lg sm:text-xl font-semibold">Let's Call or Email</p>
-                    <p className="text-base sm:text-lg font-normal">+91 9800808595</p>
-                    <p className="text-base sm:text-lg font-normal">
+                    <p className="text-lg sm:text-xl font-semibold font-poppins">
+                      Let's Call or Email
+                    </p>
+                    <p className="text-base sm:text-lg font-normal font-sen">
+                      +91 9800808595
+                    </p>
+                    <p className="text-base sm:text-lg font-normal font-sen">
                       info@savemedha.com
                     </p>
                   </div>
@@ -676,11 +680,13 @@ const sendOtp = async () => {
                     <div className="text-3xl sm:text-4xl">
                       <MdPeopleAlt />
                     </div>
-                    <p className="text-lg sm:text-xl font-semibold">
+                    <p className="text-lg sm:text-xl font-semibold font-poppins">
                       Be Our Creative Team
                     </p>
-                    <p className="text-base sm:text-lg font-normal">+91 9800808595</p>
-                    <p className="text-base sm:text-lg font-normal">
+                    <p className="text-base sm:text-lg font-normal font-sen">
+                      +91 9800808595
+                    </p>
+                    <p className="text-base sm:text-lg font-normal font-sen">
                       info@savemedha.com
                     </p>
                   </div>
@@ -691,8 +697,12 @@ const sendOtp = async () => {
                     <div className="bg-white text-green-700 rounded-full p-2 sm:p-3 text-xl sm:text-2xl">
                       <FaLinkedin />
                     </div>
-                    <p className="text-lg sm:text-xl font-semibold">Let's Talk To Us</p>
-                    <p className="text-base sm:text-lg font-normal">Save Medha Foundation</p>
+                    <p className="text-lg sm:text-xl font-semibold font-poppins">
+                      Let's Talk To Us
+                    </p>
+                    <p className="text-base sm:text-lg font-normal font-sen">
+                      Save Medha Foundation
+                    </p>
                   </div>
                 </div>
               </div>

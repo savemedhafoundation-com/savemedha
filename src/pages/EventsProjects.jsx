@@ -36,7 +36,7 @@ const EventCard = ({
       <button
         type="button"
         onClick={onClick}
-        className="rounded-full bg-[#def1c5] px-6 py-2 text-sm font-semibold text-[#000000] shadow-sm"
+        className="rounded-full bg-[#def1c5] px-6 py-2 text-sm font-semibold font-poppins text-[#000000] shadow-sm"
       >
         {label}
       </button>
@@ -110,7 +110,7 @@ export default function EventsProjects({ onNavigate }) {
 
           <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-20 pt-12 lg:flex-row lg:items-center lg:pt-16">
             <div className="space-y-6 text-white lg:max-w-xl">
-              <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
+              <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl font-poppins">
                 Creating <span className="text-[#9ee06c] italic">Change</span>
                 <br />
                 Where It{" "}
@@ -131,8 +131,8 @@ export default function EventsProjects({ onNavigate }) {
                 <span className="absolute left-[540px] top-1/2 h-2 w-2 -translate-y-1/2 translate-x-[136px] -translate-y-[120px] rounded-full bg-white" />
               </div>
 
-              <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base">
-                <span className="block text-base font-semibold text-white sm:text-lg md:text-xl">
+              <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base font-sen">
+                <span className="block text-base font-semibold text-white sm:text-lg md:text-xl font-sen">
                   Empowering communities through sustainable action and
                   meaningful partnerships.
                 </span>
@@ -148,7 +148,7 @@ export default function EventsProjects({ onNavigate }) {
               <button
                 type="button"
                 onClick={handleScrollToEvents}
-                className="inline-flex items-center gap-3 rounded-full bg-[#e86b2a] px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#d96023]"
+                className="inline-flex items-center gap-3 rounded-full bg-[#e86b2a] px-6 py-3 text-sm font-semibold font-poppins text-white shadow-lg transition hover:bg-[#d96023]"
               >
                 View Achievement
                 <ArrowRight size={18} />
@@ -200,11 +200,11 @@ export default function EventsProjects({ onNavigate }) {
           className="relative bg-white py-16"
         >
           <div className="mx-auto max-w-5xl px-6 text-center">
-            <h2 className="text-2xl font-bold text-[#78bb2a] sm:text-3xl">
+            <h2 className="text-2xl font-bold text-[#78bb2a] sm:text-3xl font-poppins">
               Events For You
             </h2>
             <div className="mx-auto mt-2 h-[3px] w-24 rounded-full bg-[#78bb2a]" />
-            <p className="mt-4 text-sm font-semibold text-slate-700 sm:text-base">
+            <p className="mt-4 text-sm font-semibold text-slate-700 sm:text-base font-sen">
               An Evening Dedicated to Hope and Impact
             </p>
           </div>
@@ -275,20 +275,20 @@ export default function EventsProjects({ onNavigate }) {
           </div>
 
           <div className="mx-auto max-w-3xl px-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/80">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/80 font-sen">
               Get In Touch
             </p>
-            <h3 className="mt-3 text-2xl font-bold sm:text-3xl">
+            <h3 className="mt-3 text-2xl font-bold sm:text-3xl font-poppins">
               we'd Love To Hear From You
             </h3>
-            <p className="mt-4 text-sm text-white/90 sm:text-base">
+            <p className="mt-4 text-sm text-white/90 sm:text-base font-sen">
               We are here to listen, support, and collaborate. Whether it is a
               simple question or a big idea, do not hesitate to reach out.
             </p>
             <button
               type="button"
               onClick={() => onNavigate?.("locateus")}
-              className="mt-6 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#e45f26] shadow-lg transition hover:bg-[#f8f2ee]"
+              className="mt-6 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-sm font-semibold font-poppins text-[#e45f26] shadow-lg transition hover:bg-[#f8f2ee]"
             >
               Contact with us
               <ArrowRight size={18} />

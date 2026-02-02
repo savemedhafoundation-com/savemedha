@@ -68,9 +68,13 @@ const OPEN_POSITIONS = [
 function SectionHeading({ title, subtitle }) {
   return (
     <div className="max-w-3xl">
-      <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">{title}</h2>
+      <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl font-poppins">
+        {title}
+      </h2>
       {subtitle ? (
-        <p className="mt-3 text-base text-slate-600 sm:text-lg">{subtitle}</p>
+        <p className="mt-3 text-base text-slate-600 sm:text-lg font-sen">
+          {subtitle}
+        </p>
       ) : null}
 
       <svg
@@ -99,7 +103,7 @@ function SectionHeading({ title, subtitle }) {
 function Card({ title, children, className = "" }) {
   return (
     <div
-      className={`rounded-2xl border min-h-[16rem] border-lime-300/80 bg-gradient-to-b from-lime-100/80 via-lime-50/70 to-white p-6 shadow-[0_14px_30px_rgba(22,101,52,0.08)] ${className}`}
+      className={`rounded-2xl border min-h-[16rem] border-lime-300/80 bg-gradient-to-b from-lime-100/80 via-lime-50/70 to-white p-6 shadow-[0_14px_30px_rgba(22,101,52,0.08)] font-poppins ${className}`}
     >
       <h3 className="text-base font-semibold text-slate-900 pb-5">{title}</h3>
       <div className="mt-3 text-sm font-semibold leading-relaxed text-slate-600">
@@ -122,6 +126,7 @@ function JobCard({ title, type, location, image, index }) {
         transition-transform
         max-w-xl
         mb-10
+        font-poppins
         ${isRightCard ? "lg:translate-y-24 lg:translate-x-24" : ""}
       `}
     >
@@ -149,7 +154,7 @@ function JobCard({ title, type, location, image, index }) {
             <Link
               to="/apply"
               className="inline-flex min-w-[160px] items-center justify-center
-              rounded-2xl bg-lime-500 px-6 py-2 text-sm font-semibold
+              rounded-2xl bg-lime-500 px-6 py-2 text-sm font-semibold font-poppins
               text-white shadow-sm hover:bg-lime-600"
             >
               Apply Now
@@ -235,19 +240,19 @@ export default function CareersPage({ onNavigate }) {
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div className="max-w-xl">
-                <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl">
+                <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl font-poppins">
                   Careers at{" "}
                   <span className="font-bold text-[#74C425]">Save</span>{" "}
                   <span className="block font-semibold italic text-[#74C425]">
                     Medha Foundation
                   </span>
                 </h1>
-                <p className="mt-4 text-lg text-slate-700 sm:text-xl">
+                <p className="mt-4 text-lg text-slate-700 sm:text-xl font-sen">
                   Work with purpose. Heal with science.
                   <br />
                   Serve with humanity.
                 </p>
-                <p className="mt-5 text-base leading-relaxed text-slate-600">
+                <p className="mt-5 text-base leading-relaxed text-slate-600 font-sen">
                   Save Medha Foundation supports patients through Natural
                   Immunotherapy and evidence-informed guidance on nutrition,
                   detoxification, and immunity. We work with an ethical mindset:
@@ -284,7 +289,7 @@ export default function CareersPage({ onNavigate }) {
 
           <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-              <h2 className="text-3xl font-semibold text-black">
+              <h2 className="text-3xl font-semibold text-black font-poppins">
                 Why work with us
               </h2>
               <svg
@@ -306,7 +311,7 @@ export default function CareersPage({ onNavigate }) {
                   strokeLinecap="round"
                 />
               </svg>
-              <p className="mt-3 text-base font-semibold text-slate-700 max-w-lg sm:text-lg">
+              <p className="mt-3 text-base font-semibold text-slate-700 max-w-lg sm:text-lg font-sen">
                 A calm, professional environment where patients and teams are
                 treated with dignity.
               </p>
@@ -363,7 +368,7 @@ export default function CareersPage({ onNavigate }) {
                 </div>
               </div>
               <div className="text-center lg:text-left">
-                <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
+                <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl font-poppins">
                   Internship &amp; Fellowship
                 </h2>
                 <svg
@@ -385,7 +390,7 @@ export default function CareersPage({ onNavigate }) {
                     strokeLinecap="round"
                   />
                 </svg>
-                <p className="mt-5 text-base leading-relaxed text-slate-600">
+                <p className="mt-5 text-base leading-relaxed text-slate-600 font-sen">
                   We welcome students and freshers who want practical exposure
                   in ethical healthcare work. Opportunities are available across
                   medical support, nutrition, public health, tech, and media.
@@ -417,7 +422,7 @@ export default function CareersPage({ onNavigate }) {
               <CoverflowCarousel />
             </div>
 
-            <div className="mt-6 max-w-4xl rounded-full bg-[#74C425] font-semibold text-lg px-8 py-5 text-center text-sm font-medium text-[#0B2A1F] shadow-md">
+            <div className="mt-6 max-w-4xl rounded-full bg-[#74C425] font-semibold text-lg px-8 py-5 text-center text-sm font-medium text-[#0B2A1F] shadow-md font-sen">
               <p className="">
                 We do not make fake promises. We hire ethically, communicate
                 respectfully, and keep expectations clear, so candidates can
@@ -436,10 +441,10 @@ export default function CareersPage({ onNavigate }) {
              <div className="pointer-events-none absolute left-210 top-50 h-26 w-26 rounded-full bg-[#5CA415]" />
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-3xl rounded-3xl bg-white/70 px-6 py-10 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:px-10">
-              <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">
+              <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl font-poppins">
                 Ready to contribute with care and clarity?
               </h2>
-              <p className="mt-3 text-base text-slate-700">
+              <p className="mt-3 text-base text-slate-700 font-sen">
                 If our mission feels aligned with your values, we would like to
                 hear from you. Share your background and how you want to help.
               </p>
@@ -447,13 +452,13 @@ export default function CareersPage({ onNavigate }) {
               <div className="mt-6 flex flex-col items-center gap-3">
                 <Link
                   to="/apply"
-                  className="inline-flex items-center justify-center rounded-full bg-[#74C425] px-8 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#64ac1d]"
+                  className="inline-flex items-center justify-center rounded-full bg-[#74C425] px-8 py-2 text-sm font-semibold font-poppins text-white shadow-sm transition hover:bg-[#64ac1d]"
                 >
                   Apply Now
                 </Link>
               </div>
 
-              <div className="mt-6 space-y-1 text-sm text-slate-700">
+              <div className="mt-6 space-y-1 text-sm text-slate-700 font-sen">
                 <p>
                   <span className="font-semibold text-slate-900">Email :</span>{" "}
                   <a
@@ -480,7 +485,7 @@ export default function CareersPage({ onNavigate }) {
         {/* 7) FOOTER NOTE */}
         <section className="bg-slate-50">
           <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            <p className="mx-auto max-w-4xl text-center text-sx font-semibold leading-relaxed text-slate-600">
+            <p className="mx-auto max-w-4xl text-center text-sx font-semibold leading-relaxed text-slate-600 font-sen">
               Save Medha Foundation is an equal opportunity organization. We aim
               for respectful hiring, fair evaluation, and a mission-aligned work
               culture where people are treated with dignity.

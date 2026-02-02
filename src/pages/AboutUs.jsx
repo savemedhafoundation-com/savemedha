@@ -245,12 +245,12 @@ export default function AboutUs({ onNavigate }) {
   const renderDesktopTabletLayout = () => (
     <>
       <section className="relative h-[360px] md:h-[460px] lg:h-[520px] flex items-center justify-center overflow-hidden text-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${HeroBackground})`,
-          }}
-          aria-hidden="true"
+        <img
+          src={HeroBackground}
+          alt=""
+          fetchpriority="high"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b2910]/85 via-[#1b3c1a]/70 to-[#0b2910]/85" />
         <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-[#6ab12f]/25 blur-3xl" />
