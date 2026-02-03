@@ -16,17 +16,17 @@ import { MdEmail } from "react-icons/md";
 import { fetchBlogPosts } from "../service/api";
 import relatedBlogsBanner from "../assets/Photo/Rectangle 745.png";
 import insideBlogsBanner2 from "../assets/Photo/insideblogsbanner2.jpeg";
-import blogAdOne from "../assets/Photo/blogADimg/WEBSITE AD.jpg";
-import blogAdTwo from "../assets/Photo/blogADimg/WEBSITE AD 2.jpg";
-import blogAdThree from "../assets/Photo/blogADimg/5.jpg";
-import blogAdFour from "../assets/Photo/blogADimg/6.jpg";
 import {Seo} from "../components/Seo";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
 const RELATED_BLOG_BANNERS = [relatedBlogsBanner, insideBlogsBanner2];
 const RELATED_BLOG_BANNER_ROTATE_MS = 10000;
-const BLOG_AD_IMAGES = [blogAdOne, blogAdTwo, blogAdThree, blogAdFour];
+const BLOG_AD_IMAGES = [
+  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683255/WEBSITE_AD_znyf0a.jpg",
+  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683255/WEBSITE_AD_2_ficitx.jpg",
+  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683254/5_naq52q.jpg",
+  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683254/6_tjewb0.jpg"];
 const BLOG_AD_ROTATE_MS = 5000;
 const RESOURCE_ADS_TOGGLE_MS = 10000;
 const DEFAULT_EBOOK_REFERENCE_URL =
