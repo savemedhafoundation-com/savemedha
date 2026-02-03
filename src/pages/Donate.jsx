@@ -34,10 +34,13 @@ const loadRazorpayCheckout = () =>
 export default function Donate({ onNavigate }) {
   const location = useLocation();
   const donateBanners = [
-    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677466/Donatebanner1_ipkbl2.png",
-    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677466/DonateBanner2_rogvhy.png",
-    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677466/DonateBanner3_o49uan.png",
-    "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769677468/DonateBanner4_eaop9l.png"];
+  "https://res.cloudinary.com/savemedha/image/upload/v1769677466/Donatebanner1_ipkbl2.png",
+  "https://res.cloudinary.com/savemedha/image/upload/v1769677466/DonateBanner2_rogvhy.png",
+  "https://res.cloudinary.com/savemedha/image/upload/v1769677466/DonateBanner3_o49uan.png",
+  "https://res.cloudinary.com/savemedha/image/upload/v1769677468/DonateBanner4_eaop9l.png",
+];
+
+
   const [currency, setCurrency] = useState("INR");
   const [selectedAmount, setSelectedAmount] = useState(200);
   const [customAmount, setCustomAmount] = useState("");
