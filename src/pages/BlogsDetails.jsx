@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BlogContentRenderer from "../components/BlogContentRenderer";
+import BlogYoutubeEmbed from "../components/BlogYoutubeEmbed";
 import { ArrowLeft, ArrowRight, Heart, Quote, Share2 } from "lucide-react";
 import { IoLogoAmazon } from "react-icons/io5";
 import {
@@ -30,6 +31,7 @@ const BLOG_AD_IMAGES = [
 const BLOG_AD_FALLBACK = relatedBlogsBanner;
 const BLOG_AD_ROTATE_MS = 5000;
 const RESOURCE_ADS_TOGGLE_MS = 10000;
+const YOUTUBE_PLACEHOLDER = "Youtubevideo";
 const DEFAULT_EBOOK_REFERENCE_URL =
   "https://www.amazon.in/dp/B0FF2CTTND?ref=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&ref_=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&social_share=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&bestFormat=true";
 const API_BASE_URL =
@@ -298,6 +300,10 @@ export default function BlogsDetails({ onNavigate }) {
   }, [related]);
 
   const rawContent = blog?.content || blog?.description || blog?.excerpt || "";
+  const contentParts = useMemo(() => {
+    if (!rawContent) return [""];
+    return String(rawContent).split(YOUTUBE_PLACEHOLDER);
+  }, [rawContent]);
 
   const handleOpenBlog = (blogSlug) => {
     if (!blogSlug) return;
@@ -783,10 +789,19 @@ export default function BlogsDetails({ onNavigate }) {
               ref={contentRef}
               className="prose prose-slate md:prose-lg text-slate-800 font-sen break-words prose-headings:font-poppins prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:font-sen prose-p:my-5 prose-p:leading-[1.8] prose-li:font-sen prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-blockquote:font-sen prose-img:rounded-xl prose-img:shadow-sm"
             >
-              <BlogContentRenderer
-                description={rawContent}
-                blogImage={blog?.blogImage}
-              />
+              {contentParts.map((part, index) => (
+                <Fragment key={`content-part-${index}`}>
+                  {part && (
+                    <BlogContentRenderer
+                      description={part}
+                      blogImage={blog?.blogImage}
+                    />
+                  )}
+                  {index < contentParts.length - 1 && (
+                    <BlogYoutubeEmbed youtubeLink={blog?.youtubeLink} />
+                  )}
+                </Fragment>
+              ))}
               <div ref={contentEndRef} />
             </article>
 
