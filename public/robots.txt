@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Important pages
+Sitemap: https://savemedha.com/sitemap.xml
+

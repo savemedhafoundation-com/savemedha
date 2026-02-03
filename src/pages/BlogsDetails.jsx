@@ -20,6 +20,7 @@ import blogAdOne from "../assets/Photo/blogADimg/WEBSITE AD.jpg";
 import blogAdTwo from "../assets/Photo/blogADimg/WEBSITE AD 2.jpg";
 import blogAdThree from "../assets/Photo/blogADimg/5.jpg";
 import blogAdFour from "../assets/Photo/blogADimg/6.jpg";
+import {Seo} from "../components/Seo";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
@@ -89,6 +90,11 @@ export default function BlogsDetails({ onNavigate }) {
   const commentsRef = useRef(null);
   const shareMenuRef = useRef(null);
   const trendingScrollRef = useRef(null);
+
+
+  useEffect(()=>{
+    Seo({title:blog?.title, description:blog?.title, path:`/blogs/${blog?.slug}`})
+  },[blog])
 
   useEffect(() => {
     let cancelled = false;
