@@ -21,12 +21,13 @@ import {Seo} from "../components/Seo";
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
 const RELATED_BLOG_BANNERS = [relatedBlogsBanner, insideBlogsBanner2];
-const RELATED_BLOG_BANNER_ROTATE_MS = 10000;
+const RELATED_BLOG_BANNER_ROTATE_MS = 5000;
 const BLOG_AD_IMAGES = [
-  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683255/WEBSITE_AD_znyf0a.jpg",
-  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683255/WEBSITE_AD_2_ficitx.jpg",
-  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683254/5_naq52q.jpg",
-  "https://res.cloudinary.com/dijpuzbvv/image/upload/v1769683254/6_tjewb0.jpg"];
+  "https://res.cloudinary.com/savemedha/image/upload/v1769683255/WEBSITE_AD_2_ficitx.jpg",
+  "https://res.cloudinary.com/savemedha/image/upload/v1769683255/WEBSITE_AD_znyf0a.jpg",
+  "https://res.cloudinary.com/savemedha/image/upload/v1769683254/6_tjewb0.jpg",
+  "https://res.cloudinary.com/savemedha/image/upload/v1769683254/5_naq52q.jpg"];
+const BLOG_AD_FALLBACK = relatedBlogsBanner;
 const BLOG_AD_ROTATE_MS = 5000;
 const RESOURCE_ADS_TOGGLE_MS = 10000;
 const DEFAULT_EBOOK_REFERENCE_URL =
@@ -847,16 +848,22 @@ export default function BlogsDetails({ onNavigate }) {
               )}
               {showResourceAds && (
                 <div className="rounded-[10px] bg-white p-3">
-                  <div className="relative w-full bg-white h-[520px] min-h-[520px] min-w-[620px]">
+                  <div className="relative w-full h-[520px] overflow-hidden rounded-xl bg-white">
                     {BLOG_AD_IMAGES.map((src, index) => (
                       <img
                         key={src}
                         src={src}
                         alt="Blog advertisement"
-                        className={`absolute inset-0 h-full -translate-x-33 w-full object-contain transition-opacity duration-700 ${
+                        className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ${
                           index === adImageIndex ? "opacity-100" : "opacity-0"
                         }`}
                         loading="lazy"
+                        onError={(event) => {
+                          const target = event.currentTarget;
+                          if (target.src !== BLOG_AD_FALLBACK) {
+                            target.src = BLOG_AD_FALLBACK;
+                          }
+                        }}
                       />
                     ))}
                   </div>
