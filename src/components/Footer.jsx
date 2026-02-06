@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
-import SendIcon from "../assets/Photo/send.png";
+const SMF_LOGO_WHITE_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272640/smf_logo_white.02_eabqf7.png";
+const SEND_ICON_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272637/send_demitw.png";
 import {
   Facebook,
   Instagram,
@@ -119,7 +121,7 @@ const Footer = ({ onNavigate }) => {
         <div className="px-6 pt-12 pb-10">
           <div className="flex justify-center">
             <img
-              src={SmfLogoWhite}
+              src={SMF_LOGO_WHITE_URL}
               alt="Save Medha Foundation logo"
               className="h-16 w-auto object-contain"
             />
@@ -146,7 +148,7 @@ const Footer = ({ onNavigate }) => {
             </div>
 
             <img
-              src={SendIcon}
+              src={SEND_ICON_URL}
               alt=""
               aria-hidden="true"
               className="pointer-events-none absolute right-4 top-16 w-24 opacity-70 select-none -z-10 !mt-0"
@@ -256,7 +258,7 @@ const Footer = ({ onNavigate }) => {
         </div>
 
         <div className="bg-black py-4 px-6 text-center text-white text-sm mt-6">
-          Copyright &copy;2025 Save Medha Foundation
+          Copyright &copy;2026 Save Medha Foundation
         </div>
       </div>
 
@@ -268,7 +270,7 @@ const Footer = ({ onNavigate }) => {
               <div className="flex flex-col gap-10">
                 <div className="max-w-[260px] w-full ">
                   <img
-                    src={SmfLogoWhite}
+                    src={SMF_LOGO_WHITE_URL}
                     alt="Save Medha Foundation logo"
                     className="w-full max-h-28 object-contain"
                   />
@@ -349,7 +351,7 @@ const Footer = ({ onNavigate }) => {
                     Subscribe to our newsletter and stay updated.
                   </p>
                   <img
-                    src={SendIcon}
+                    src={SEND_ICON_URL}
                     alt=""
                     aria-hidden="true"
                     className="pointer-events-none absolute right-8 top-20 w-32 opacity-60 select-none -z-10"
@@ -404,7 +406,7 @@ const Footer = ({ onNavigate }) => {
         <div className="bg-black py-4 px-6 sm:px-10">
           <div className="max-w-7xl mx-auto text-center">
             <p className="text-white text-base">
-              Copyright &copy;2025 Save Medha Foundation
+              Copyright &copy;2026 Save Medha Foundation
             </p>
           </div>
         </div>

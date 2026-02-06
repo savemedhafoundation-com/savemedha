@@ -1,5 +1,7 @@
-import BgOffice from "../assets/homepageassets/Rectangle 355.png";
-import AboutFrame from "../assets/homepageassets/Rectangle 354.png";
+const BG_OFFICE_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770264935/Rectangle_355_ajipoa.png";
+const ABOUT_FRAME_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770264934/Rectangle_354_yefdzc.png";
 
 export default function AboutSection({ onNavigate }) {
   const handleReadMore = () => {
@@ -21,13 +23,13 @@ export default function AboutSection({ onNavigate }) {
             </h2>
           </div>
           <img
-            src={AboutFrame}
+            src={ABOUT_FRAME_URL}
             alt="Green circular frame"
             className="absolute inset-0 w-full h-full object-contain translate-x-4 translate-y-0 sm:translate-x-0 lg:left-4"
           />
           <div className="relative z-10 bg-white overflow-hidden w-[85%] sm:w-[75%] md:w-[65%] lg:w-[80%] h-[85%] sm:h-[80%] md:h-[75%] lg:h-[85%] mt-6 sm:mt-8 lg:mt-6 right-0 sm:right-4 lg:right-9 rounded-tr-[160px] rounded-br-[160px] sm:rounded-tr-[180px] sm:rounded-br-[180px] lg:rounded-tr-[200px] lg:rounded-br-[200px] rounded-tl-[60px]">
             <img
-              src={BgOffice}
+              src={BG_OFFICE_URL}
               alt="Save Medha Foundation office"
               className="w-full h-full object-cover"
             />

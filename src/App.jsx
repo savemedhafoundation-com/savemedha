@@ -24,6 +24,8 @@ import EbookRead from "./pages/EbookRead";
 import CareersPage from "./pages/CareersPage";
 import EventsProjects from "./pages/EventsProjects";
 import OngoingEvents from "./pages/OngoingEvents";
+import CookiePolicyPage from "./pages/CookiePolicyPage";
+import CookieBanner from "./components/CookieBanner";
 // demo commit
 
 const API_BASE_URL =
@@ -282,6 +284,7 @@ function App() {
 
   return (
     <div className="app-scale-wrapper">
+      <CookieBanner />
       <Routes>
         <Route path="/" element={<Home onNavigate={handleNavigate} />} />
         <Route
@@ -337,6 +340,10 @@ function App() {
         <Route
           path="/contact-us"
           element={<LocateUs onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/cookie-policy"
+          element={<CookiePolicyPage onNavigate={handleNavigate} />}
         />
         <Route path="/locate-us" element={<Navigate to="/contact-us" replace />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />

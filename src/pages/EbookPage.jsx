@@ -10,7 +10,8 @@ import {
 } from "../utils/ebook";
 import { fallbackEbooks } from "../data/ebookFallback";
 import heroFallbackCover from "../assets/Photo/BOOK1 1.png";
-import heroBackdrop from "../assets/Photo/WHITEBOARD.png";
+const HERO_BACKDROP_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272647/WHITEBOARD_koavov.png";
 import greenElement from "../assets/Photo/ELEMENT (1).png";
 import demoEbookCover from "../assets/Photo/3.jpg";
 import demoKindleCover from "../assets/Photo/5.jpg";
@@ -18,9 +19,11 @@ import downloadButtonImage from "../assets/Photo/downloads.png";
 import amazonButtonImage from "../assets/Photo/amazon.png";
 import faqBookImage from "../assets/Photo/bookb.png";
 import contentCoverOne from "../assets/Photo/bookcover1.png";
-import contentTocLayout from "../assets/Photo/Table of contents layout in green.png";
+const CONTENT_TOC_LAYOUT_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272642/Table_of_contents_layout_in_green_jn0jsn.png";
 import contentCoverThree from "../assets/Photo/bookcover3.png";
-import contentCoverTwo from "../assets/Photo/Rectangle 711.png";
+const CONTENT_COVER_TWO_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272629/Rectangle_711_hqmhag.png";
 
 const PAGE_SIZE = 9;
 const HERO_FALLBACK_COVER = heroFallbackCover;
@@ -159,7 +162,7 @@ export default function EbookPage({ onNavigate }) {
                   aria-hidden="true"
                 >
                   <img
-                    src={heroBackdrop}
+                    src={HERO_BACKDROP_URL}
                     alt=""
                     className="h-80 w-full max-w-[1060px]  opacity-95"
                     loading="lazy"
@@ -524,7 +527,7 @@ export default function EbookPage({ onNavigate }) {
                   loading="lazy"
                 />
                 <img
-                  src={contentTocLayout}
+                  src={CONTENT_TOC_LAYOUT_URL}
                   alt="E-book preview"
                   className="mx-auto h-56 w-auto object-contain shadow-lg"
                   loading="lazy"
@@ -546,7 +549,7 @@ export default function EbookPage({ onNavigate }) {
           </div>
           <div>
             <img
-              src={contentCoverTwo}
+              src={CONTENT_COVER_TWO_URL}
               alt="cover"
               className="mx-auto  h-auto w-auto object-contain shadow-lg  scale-b-150"
               loading="lazy"

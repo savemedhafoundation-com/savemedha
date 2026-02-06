@@ -5,7 +5,8 @@ import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import { ImWhatsapp } from "react-icons/im";
 
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
-import SmfLogoWhite from "../assets/Photo/smf logo white.02.png";
+const SMF_LOGO_WHITE_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272640/smf_logo_white.02_eabqf7.png";
 import { MdPhoneInTalk } from "react-icons/md";
 import { MdAttachEmail } from "react-icons/md";
 
@@ -442,7 +443,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                 <div className="px-12  py-20 mt-4 bg-[#427402] text-white rounded-t-2xl">
                   <div className="max-w-[260px] w-full mb-6">
                     <img
-                      src={SmfLogoWhite}
+                      src={SMF_LOGO_WHITE_URL}
                       alt="Save Medha Foundation logo"
                       className="w-full max-h-28 object-contain"
                     />

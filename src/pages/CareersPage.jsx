@@ -1,14 +1,21 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import careersHero from "../assets/Photo/carrer_hero.jpg";
-import jobClinical from "../assets/Photo/3.jpg";
-import jobNutrition from "../assets/Photo/3.jpg";
-import jobData from "../assets/Photo/3.jpg";
-import jobMedia from "../assets/Photo/5.jpg";
-import jobTech from "../assets/Photo/6.jpg";
 import internshipImage from "../assets/Photo/internship.jpg";
 import { useEffect, useRef } from "react";
+
+const CLINICAL_RESEARCH_IMG =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770268797/scientist-woman-doctor-holding-glass-flask-analyzing-liquid-solution_1_gs6jud.png";
+const NUTRITION_IMMUNITY_IMG =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770268796/Mask_group_v8fbar.png";
+const DATA_CASE_DOC_IMG =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770268796/Mask_group_1_mjllb0.png";
+const MEDIA_AWARENESS_IMG =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770268796/Mask_group_2_m4u60u.png";
+const WEB_TECH_VOLUNTEER_IMG =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770268797/Mask_group_3_vrxctr.png";
+const CAREERS_HERO_IMG =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770271124/carrer_hero_uhicbz.jpg";
 
 const WHY_CARDS = [
   {
@@ -38,31 +45,31 @@ const OPEN_POSITIONS = [
     title: "Clinical Research Associate",
     type: "Full-time",
     location: "On-site",
-    image: jobClinical,
+    image: CLINICAL_RESEARCH_IMG,
   },
   {
     title: "Nutrition & Immunity Counselor",
     type: "Part-time",
     location: "Hybrid",
-    image: jobNutrition,
+    image: NUTRITION_IMMUNITY_IMG,
   },
   {
     title: "Data & Case Documentation Executive",
     type: "Full-time",
     location: "On-site",
-    image: jobData,
+    image: DATA_CASE_DOC_IMG,
   },
   {
     title: "Media & Awareness Coordinator",
     type: "Part-time",
     location: "Hybrid",
-    image: jobMedia,
+    image: MEDIA_AWARENESS_IMG,
   },
   {
     title: "Web / Tech Volunteer (React / WordPress / AI)",
     type: "Volunteer",
     location: "Remote",
-    image: jobTech,
+    image: WEB_TECH_VOLUNTEER_IMG,
   },
 ];
 function SectionHeading({ title, subtitle }) {
@@ -174,7 +181,7 @@ function JobCard({ title, type, location, image, index }) {
               <img
                 src={image}
                 alt=""
-                className="h-full w-full -rotate-45 object-cover scale-128"
+                className="h-full w-full -rotate-60 object-cover scale-128"
                 loading="lazy"
               />
             </div>
@@ -271,7 +278,7 @@ export default function CareersPage({ onNavigate }) {
                     <div className="absolute h-99 w-93 right-0 left-1 top-9 rotate-45 rounded-[2.5rem] border-[28px] border-lime-500" />
                     <div className="absolute right-0 top-8 rotate-45  overflow-hidden rounded-[2.2rem] bg-white shadow-lg ">
                       <img
-                        src={careersHero}
+                        src={CAREERS_HERO_IMG}
                         alt="Careers at Save Medha Foundation"
                         className="h-full w-full -rotate-45 object-cover scale-135"
                       />

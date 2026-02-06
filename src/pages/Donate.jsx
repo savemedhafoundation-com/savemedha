@@ -224,6 +224,8 @@ export default function Donate({ onNavigate }) {
         backgroundImages={donateBanners}
         imageAlt="Donate banner"
         showDefaultContent={false}
+        showArrows={false}
+        autoAdvanceMs={5000}
         className="min-h-[140px] sm:min-h-[220px] md:min-h-[260px] lg:min-h-[620px]"
         imageMap={donateBannerImageMap}
       />

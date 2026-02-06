@@ -1,41 +1,57 @@
 import React, { useState } from "react";
-import cancerImg from "../assets/treatmentpageasset/TREATMENT IMAGES/CANCER.png";
-import constipationImg from "../assets/treatmentpageasset/TREATMENT IMAGES/Constipation.png";
-import diabeticsImg from "../assets/treatmentpageasset/TREATMENT IMAGES/DIABETICS.png";
-import genitalImg from "../assets/treatmentpageasset/TREATMENT IMAGES/GENITAL.png";
-import hairImg from "../assets/treatmentpageasset/TREATMENT IMAGES/HAIR.png";
-import heartImg from "../assets/treatmentpageasset/TREATMENT IMAGES/HEART.png";
-import indigestionImg from "../assets/treatmentpageasset/TREATMENT IMAGES/INDIGESTION.png";
-import kidneyImg from "../assets/treatmentpageasset/TREATMENT IMAGES/KIDNEY.png";
-import liverImg from "../assets/treatmentpageasset/TREATMENT IMAGES/LIVER.png";
-import nerveImg from "../assets/treatmentpageasset/TREATMENT IMAGES/NERVE.png";
-import otherImg from "../assets/treatmentpageasset/TREATMENT IMAGES/OTHER.png";
-import skinImg from "../assets/treatmentpageasset/TREATMENT IMAGES/SKIN.png";
-import spinalImg from "../assets/treatmentpageasset/TREATMENT IMAGES/SPINAL.png";
-import thalassemiaImg from "../assets/treatmentpageasset/TREATMENT IMAGES/THALASSEMIA.png";
-import thyroidImg from "../assets/treatmentpageasset/TREATMENT IMAGES/THYROID.png";
-import vitiligoImg from "../assets/treatmentpageasset/TREATMENT IMAGES/VITILIGO.png";
+const CANCER_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266153/CANCER_xmjtjj.png";
+const CONSTIPATION_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266153/Constipation_dmizbj.png";
+const DIABETICS_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/DIABETICS_bbhnpl.png";
+const GENITAL_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/GENITAL_zngpaj.png";
+const HAIR_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/HAIR_mfmdca.png";
+const HEART_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/HEART_dgtoqd.png";
+const INDIGESTION_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266155/INDIGESTION_lblubd.png";
+const KIDNEY_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266157/KIDNEY_t9qnrc.png";
+const LIVER_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266158/LIVER_i6hqhz.png";
+const NERVE_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266159/NERVE_vvturs.png";
+const OTHER_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266159/OTHER_xaekqs.png";
+const SKIN_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266162/SKIN_yvww0a.png";
+const SPINAL_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266163/SPINAL_g4itqj.png";
+const THALASSEMIA_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266163/THALASSEMIA_lkc840.png";
+const THYROID_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266166/THYROID_lqqtpt.png";
+const VITILIGO_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770266166/VITILIGO_vkp4hr.png";
 
 const CARD_IMAGE =
   "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=600&q=80";
 
 const baseImages = {
-  cancer: cancerImg,
-  kidney: kidneyImg,
-  liver: liverImg,
-  heart: heartImg,
-  nerve: nerveImg,
-  thyroid: thyroidImg,
-  genital: genitalImg,
-  spinal: spinalImg,
-  vitiligo: vitiligoImg,
-  thalassemia: thalassemiaImg,
-  diabetics: diabeticsImg,
-  skin: skinImg,
-  hair: hairImg,
-  constipation: constipationImg,
-  indigestion: indigestionImg,
-  other: otherImg,
+  cancer: CANCER_URL,
+  kidney: KIDNEY_URL,
+  liver: LIVER_URL,
+  heart: HEART_URL,
+  nerve: NERVE_URL,
+  thyroid: THYROID_URL,
+  genital: GENITAL_URL,
+  spinal: SPINAL_URL,
+  vitiligo: VITILIGO_URL,
+  thalassemia: THALASSEMIA_URL,
+  diabetics: DIABETICS_URL,
+  skin: SKIN_URL,
+  hair: HAIR_URL,
+  constipation: CONSTIPATION_URL,
+  indigestion: INDIGESTION_URL,
+  other: OTHER_URL,
 };
 
 const TREATMENT_CARDS = [

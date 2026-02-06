@@ -14,8 +14,10 @@ import { FaLinkedin } from "react-icons/fa";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { createRecaptcha, clearRecaptcha, auth } from "../Firebase/Setup";
 // import {contactusBanner} from "../assets/Photo/Contactusbanner.png";
-import headsetSupportImage from "../assets/Photo/young woman in headset using laptop and taking notes.png";
-import rectangle265Background from "../assets/Photo/Rectangle 265.png";
+const HEADSET_SUPPORT_IMAGE =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272648/young_woman_in_headset_using_laptop_and_taking_notes_vyijul.png";
+const RECTANGLE_265_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770274809/Rectangle_265_dsoage.jpg";
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {
@@ -499,7 +501,7 @@ const sendOtp = async () => {
           {/* Query Form Section */}
           <div
             className="relative bg-cover bg-center rounded-2xl shadow-2xl p-5 sm:p-8 md:p-12 max-w-8xl mx-auto overflow-hidden"
-            style={{ backgroundImage: `url(${rectangle265Background})` }}
+            style={{ backgroundImage: `url(${RECTANGLE_265_URL})` }}
           >
             {/* Background dimming layer */}
             <div className="absolute inset-0 bg-[#F3FFECCC]/90"></div>
@@ -655,7 +657,7 @@ const sendOtp = async () => {
                 {/* Right */}
                 <div className="bg-gradient-to-b from-[#74C425] to-[#385E12] text-white rounded-2xl p-6 sm:p-10 text-center space-y-6 sm:space-y-8 shadow-xl h-full pt-6 sm:pt-10 relative">
                   <img
-                    src={headsetSupportImage}
+                    src={HEADSET_SUPPORT_IMAGE}
                     alt="Support representative"
                     className="pointer-events-none select-none hidden md:block absolute -top-40 left-30 h-[220px] w-auto object-contain drop-shadow-xl"
                   />

@@ -4,7 +4,8 @@ import Footer from "../components/Footer";
 import kidsImage from "../assets/Photo/kid.png";
 import donationImage from "../assets/Photo/event/EVENT BOX/1.png";
 import handsImage from "../assets/Photo/event/EVENT BOX/2.png";
-import teamworkImage from "../assets/Photo/Rectangle 265.png";
+const RECTANGLE_265_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770274809/Rectangle_265_dsoage.jpg";
 import charityImage from "../assets/Photo/Jar.png";
 import helpImage from "../assets/Photo/event/EVENT BOX/4.png";
 
@@ -17,7 +18,7 @@ const mosaicRows = [
   {
     large: charityImage,
     top: helpImage,
-    bottom: teamworkImage,
+    bottom: RECTANGLE_265_URL,
     flip: true,
   },
   {
@@ -28,7 +29,7 @@ const mosaicRows = [
   {
     large: charityImage,
     top: helpImage,
-    bottom: teamworkImage,
+    bottom: RECTANGLE_265_URL,
     flip: true,
   },
   {

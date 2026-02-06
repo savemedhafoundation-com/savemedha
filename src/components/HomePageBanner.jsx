@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import People from "../assets/Photo/bannerHomepage.png";
 import MobileBanner from "../assets/Photo/mobilebanner.png";
+
+const HOME_BANNER_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770264936/homepagebannner_nwnzig.png";
 
 const DotPattern = () => (
   <div
@@ -82,6 +84,7 @@ export default function HeroBanner({
   imageAlt = "Banner image",
   showDefaultContent = true,
   showArrows = true,
+  autoAdvanceMs = 0,
   imageMap,
   containerClassName,
   className = "",
@@ -94,7 +97,7 @@ export default function HeroBanner({
     if (Array.isArray(backgroundImages) && backgroundImages.length > 0) {
       return backgroundImages;
     }
-    return [People];
+    return [HOME_BANNER_URL];
   }, [backgroundImages]);
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -108,6 +111,16 @@ export default function HeroBanner({
   useEffect(() => {
     setActiveIndex(0);
   }, [images]);
+
+  useEffect(() => {
+    if (!autoAdvanceMs || images.length < 2) return undefined;
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % images.length);
+    }, autoAdvanceMs);
+
+    return () => window.clearInterval(intervalId);
+  }, [autoAdvanceMs, images.length]);
 
   useEffect(() => {
     if (!imageMap?.areasByIndex?.length) {
@@ -244,7 +257,7 @@ export default function HeroBanner({
           <img
             src={images[activeIndex]}
             alt={`${imageAlt} ${activeIndex + 1}`}
-            className="absolute inset-0 hidden h-full w-full object-cover sm:block sm:origin-right sm:scale-[1.12] sm:object-[80%_center]"
+            className="absolute inset-0 hidden h-full w-full object-cover sm:block sm:origin-right  sm:object-[80%_center]"
             loading="eager"
             fetchPriority="high"
             ref={imgRef}

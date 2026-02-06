@@ -10,7 +10,8 @@ import { MdPhoneInTalk } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 import DoctorImg from "../assets/Photo/doc.png";
-import RedRibbon from "../assets/Photo/redreben.png";
+const RED_RIBBON_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272630/redreben_hqaury.png";
 import BackgroundImg from "../assets/Photo/backgroud.png";
 import Computerimg from "../assets/Photo/Remote work and video call with colleagues.png";
 import BgImgOfVideoSection from "../assets/Photo/bgimgofvideosection.png";
@@ -1045,7 +1046,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 		      />
 		
 		      <img
-		        src={RedRibbon}
+		        src={RED_RIBBON_URL}
 		        alt=""
 		        aria-hidden="true"
 		        className="pointer-events-none absolute right-6 top-15 z-20 w-20"
@@ -1126,7 +1127,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 	
 	      {/* CENTER RIBBON */}
 	      <img
-	        src={RedRibbon}
+	        src={RED_RIBBON_URL}
 	        alt="Cancer Ribbon"
 	        className="pointer-events-none hidden sm:block absolute left-1/2 top-1/2 -translate-x-1 -translate-y-1/2 w-[220px] z-20"
 	      />

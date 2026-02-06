@@ -7,7 +7,8 @@ import blogBanner from "../assets/Photo/blog image.png";
 import naturalScienceImage from "../assets/Photo/natrual science.png";
 import naturalImmunotherapyImage from "../assets/Photo/Natural Immunotherapy.png";
 import chronicDiseaseImage from "../assets/Photo/Chronic Disease.png";
-import thalassemiaRelatedImage from "../assets/Photo/Thalassemia Related.png";
+const THALASSEMIA_RELATED_IMG =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272644/Thalassemia_Related_jw8yvq.png";
 import nutritionBasedImage from "../assets/Photo/Nutrition Based.png";
 import holisticPerspectiveImage from "../assets/Photo/A Holistic Perspective.png";
 
@@ -66,7 +67,7 @@ const formatDate = (value) => {
 const categoryCards = [
   { label: "Natural Science", image: naturalScienceImage },
   { label: "Chronic Disease Related", image: chronicDiseaseImage },
-  { label: "Thalassemia Related", image: thalassemiaRelatedImage },
+  { label: "Thalassemia Related", image: THALASSEMIA_RELATED_IMG },
   { label: "Nutrition Based", image: nutritionBasedImage },
   { label: "A Holistic Perspective", image: holisticPerspectiveImage },
   { label: "Natural Immunotherapy", image: naturalImmunotherapyImage },

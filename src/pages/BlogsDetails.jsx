@@ -15,20 +15,21 @@ import {
 } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { fetchBlogPosts } from "../service/api";
-import relatedBlogsBanner from "../assets/Photo/Rectangle 745.png";
+const RELATED_BLOGS_BANNER_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272630/Rectangle_745_e4t1nx.png";
 import insideBlogsBanner2 from "../assets/Photo/insideblogsbanner2.jpeg";
 import {Seo} from "../components/Seo";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
-const RELATED_BLOG_BANNERS = [relatedBlogsBanner, insideBlogsBanner2];
+const RELATED_BLOG_BANNERS = [RELATED_BLOGS_BANNER_URL, insideBlogsBanner2];
 const RELATED_BLOG_BANNER_ROTATE_MS = 5000;
 const BLOG_AD_IMAGES = [
   "https://res.cloudinary.com/savemedha/image/upload/v1769683255/WEBSITE_AD_2_ficitx.jpg",
   "https://res.cloudinary.com/savemedha/image/upload/v1769683255/WEBSITE_AD_znyf0a.jpg",
   "https://res.cloudinary.com/savemedha/image/upload/v1769683254/6_tjewb0.jpg",
   "https://res.cloudinary.com/savemedha/image/upload/v1769683254/5_naq52q.jpg"];
-const BLOG_AD_FALLBACK = relatedBlogsBanner;
+const BLOG_AD_FALLBACK = RELATED_BLOGS_BANNER_URL;
 const BLOG_AD_ROTATE_MS = 5000;
 const RESOURCE_ADS_TOGGLE_MS = 10000;
 const YOUTUBE_PLACEHOLDER = "Youtubevideo";
