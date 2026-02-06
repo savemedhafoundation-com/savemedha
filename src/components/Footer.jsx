@@ -74,6 +74,13 @@ const Footer = ({ onNavigate }) => {
     }
   };
 
+  const handleTermsClick = (event) => {
+    if (typeof onNavigate === "function") {
+      event.preventDefault();
+      onNavigate("terms-conditions-apply");
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -253,7 +260,13 @@ const Footer = ({ onNavigate }) => {
           </div>
 
           <div className="mt-10 text-center text-white/90 text-xl font-medium">
-            <div>Terms &amp; Conditions Apply</div>
+            <a
+              href="/terms-conditions-apply"
+              onClick={handleTermsClick}
+              className="hover:text-[#9bd853] transition-colors"
+            >
+              Terms &amp; Conditions Apply
+            </a>
           </div>
         </div>
 
@@ -398,7 +411,13 @@ const Footer = ({ onNavigate }) => {
             </div>
 
             <div className="mt-12 text-center text-gray-300 text-sm tracking-wide">
-              Terms &amp; Conditions Apply
+              <a
+                href="/terms-conditions-apply"
+                onClick={handleTermsClick}
+                className="hover:text-[#74c425] transition-colors"
+              >
+                Terms &amp; Conditions Apply
+              </a>
             </div>
           </div>
         </div>

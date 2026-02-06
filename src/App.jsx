@@ -25,7 +25,9 @@ import CareersPage from "./pages/CareersPage";
 import EventsProjects from "./pages/EventsProjects";
 import OngoingEvents from "./pages/OngoingEvents";
 import CookiePolicyPage from "./pages/CookiePolicyPage";
+import TermsConditionsApply from "./pages/TermsConditionsApply";
 import CookieBanner from "./components/CookieBanner";
+import TrackUserGeo from "./components/TrackUserGeo";
 // demo commit
 
 const API_BASE_URL =
@@ -261,6 +263,9 @@ function App() {
         case "locateus":
           targetPath = "/contact-us";
           break;
+        case "terms-conditions-apply":
+          targetPath = "/terms-conditions-apply";
+          break;
         case "cancer-detail":
         case "kidney-detail":
         case "heart-detail":
@@ -285,6 +290,7 @@ function App() {
   return (
     <div className="app-scale-wrapper">
       <CookieBanner />
+      <TrackUserGeo />
       <Routes>
         <Route path="/" element={<Home onNavigate={handleNavigate} />} />
         <Route
@@ -344,6 +350,10 @@ function App() {
         <Route
           path="/cookie-policy"
           element={<CookiePolicyPage onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/terms-conditions-apply"
+          element={<TermsConditionsApply onNavigate={handleNavigate} />}
         />
         <Route path="/locate-us" element={<Navigate to="/contact-us" replace />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
