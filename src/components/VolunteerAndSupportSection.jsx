@@ -1,9 +1,11 @@
 import React from "react";
 import VolunteerBanner from "./VolunteerBanner";
-import SupportCauseImg from "../assets/Photo/BANNER (26).png";
 import HandHoldingHeart from "../assets/Photo/Hand Holding Heart.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingHeart } from "@fortawesome/free-solid-svg-icons";
+
+const SUPPORT_CAUSE_IMG_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272549/BANNER_26_efsjhk.png";
 
 const VolunteerAndSupportSection = ({ onNavigate }) => {
   return (
@@ -24,7 +26,7 @@ const VolunteerAndSupportSection = ({ onNavigate }) => {
         <div className="relative z-10 max-w-7xl mx-auto px-0 sm:px-6">
           <div className="relative">
             <img
-              src={SupportCauseImg}
+              src={SUPPORT_CAUSE_IMG_URL}
               alt="Support Our Cause"
               className="w-full h-auto rounded-2xl "
             />

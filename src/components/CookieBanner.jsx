@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/cookieConsent.css";
-
 const STORAGE_KEY = "cookie_consent";
 const SESSION_REJECT_KEY = "cookie_consent_rejected_session";
 

@@ -1,6 +1,5 @@
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
-import HeroBackground from '../assets/Photo/background.jpg';
 import DoctorImage from '../assets/Photo/doc.png';
 import FssaiLogo from '../assets/Photo/Fssai.png';
 import IsoLogo from '../assets/Photo/Logo ISO_9001.png';
@@ -10,6 +9,9 @@ import CertifiedLogo from '../assets/Photo/certified.png';
 import { IoPeopleSharp } from 'react-icons/io5';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+
+const HERO_BACKGROUND_URL =
+  'https://res.cloudinary.com/savemedha/image/upload/v1770272544/background_oumysq.jpg';
 
 const highlightText = [
   "Medha was a vibrant, spirited 14-year-old girl from Nator, Bangladesh, who had a rare gift, as she lit up every room she entered with her innocent smile and boundless curiosity. A dreamer with an artist's heart, her life was filled with joy, school, friends, and laughter until her world was abruptly changed by a diagnosis of blood cancer. What followed was a painful journey of hospital stays, rigorous chemotherapy, and unimaginable struggle. Despite the physical pain that weighed heavy in her deep, soulful eyes, Medha chose to smile - her light refusing to dim. Support for her battle came from near and far, touching hearts across the world. Renowned figures like Ratan Tata and Sonu Sood, Salman Khan, known for their generosity, extended their aid. But the disease took its toll, and Medha, despite all the love and efforts surrounding her, took her last breath, leaving behind a void that words could never fill.",
@@ -246,7 +248,7 @@ export default function AboutUs({ onNavigate }) {
     <>
       <section className="relative h-[360px] md:h-[460px] lg:h-[520px] flex items-center justify-center overflow-hidden text-white">
         <img
-          src={HeroBackground}
+          src={HERO_BACKGROUND_URL}
           alt=""
           fetchpriority="high"
           decoding="async"
@@ -444,7 +446,7 @@ export default function AboutUs({ onNavigate }) {
       <section className="relative h-[260px] w-full overflow-hidden rounded-b-[32px] bg-gradient-to-b from-[#e7f2db] via-[#d7ecc7] to-[#c8e6b8] shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
         <div className="absolute inset-0">
           <img
-            src={HeroBackground}
+            src={HERO_BACKGROUND_URL}
             alt="Save Medha Foundation background"
             className="h-full w-full object-cover opacity-85"
           />

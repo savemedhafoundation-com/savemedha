@@ -12,9 +12,12 @@ import { useNavigate } from "react-router-dom";
 import DoctorImg from "../assets/Photo/doc.png";
 const RED_RIBBON_URL =
   "https://res.cloudinary.com/savemedha/image/upload/v1770272630/redreben_hqaury.png";
-import BackgroundImg from "../assets/Photo/backgroud.png";
-import Computerimg from "../assets/Photo/Remote work and video call with colleagues.png";
-import BgImgOfVideoSection from "../assets/Photo/bgimgofvideosection.png";
+const BACKGROUND_IMG_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272543/backgroud_e6kehs.png";
+const COMPUTER_IMAGE_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272630/Remote_work_and_video_call_with_colleagues_qv2tvk.png";
+const BG_IMG_OF_VIDEO_SECTION_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272552/bgimgofvideosection_fhbtmu.png";
 import Rectangle374 from "../assets/Photo/Rectangle 374.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
@@ -685,7 +688,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
             <div className="mb-10 text-center">
               <div className="inline-flex items-center gap-4">
                 <img
-                  src={Computerimg}
+                  src={COMPUTER_IMAGE_URL}
                   alt="Healthcare icon"
                   className="h-16 w-16 sm:h-20 sm:w-20"
                 />
@@ -849,7 +852,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 	                <div
 	                  className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 "
 	                  style={{
-	                    backgroundImage: `url(${BgImgOfVideoSection})`,
+	                    backgroundImage: `url(${BG_IMG_OF_VIDEO_SECTION_URL})`,
 	                  }}
 	                  aria-hidden="true"
 	                />
@@ -921,7 +924,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 	                <div className="inline-flex items-center gap-6 mb-0">
 	                  <div className="relative">
 	                    <img
-	                      src={Computerimg}
+	                      src={COMPUTER_IMAGE_URL}
 	                      alt="Healthcare icon"
 	                      className="w-40 h-42"
 	                    />
@@ -946,7 +949,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 	            <div className="relative overflow-hidden  pt-50 pb-16 px-2">
 			              <div
 		                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-		                style={{ backgroundImage: `url(${BgImgOfVideoSection})` }}
+		                style={{ backgroundImage: `url(${BG_IMG_OF_VIDEO_SECTION_URL})` }}
 		                aria-hidden="true"
 		              />
 
@@ -1038,7 +1041,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 		    {/* Mobile layout */}
 		    <div
 		      className="relative sm:hidden bg-cover bg-bottom bg-no-repeat px-6 pt-8 pb-10 text-center"
-		      style={{ backgroundImage: `url(${BackgroundImg})` }}
+		      style={{ backgroundImage: `url(${BACKGROUND_IMG_URL})` }}
 		    >
 		      <div
 		        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-transparent via-white/60 to-white"
@@ -1136,7 +1139,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 	      <div className="pointer-events-none relative h-[180px] w-full overflow-hidden rounded-2xl sm:absolute sm:inset-0 sm:h-full sm:w-full sm:rounded-none sm:z-0">
 	        {/* Image */}
 	        <img
-	          src={BackgroundImg}
+	          src={BACKGROUND_IMG_URL}
 	          alt="Hope"
 	          className="h-full w-full object-cover object-right"
 	        />

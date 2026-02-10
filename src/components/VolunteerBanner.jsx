@@ -4,7 +4,9 @@ import Hand2 from "../assets/Photo/Hand2.png";
 import People3 from "../assets/Photo/pepole3.png";
 import RectangleBlue1 from "../assets/Photo/rectangleblue1.png";
 import RectangleBlue2 from "../assets/Photo/rectangleblue2.png";
-import VolunteerBg from "../assets/Photo/Group.png";
+
+const VOLUNTEER_BG_URL =
+  "https://res.cloudinary.com/savemedha/image/upload/v1770272579/Group_uqeqer.png";
 
 export function JoinUsText({ className = "", variant = "default" }) {
   const ref = useRef(null);
@@ -97,7 +99,7 @@ export default function VolunteerBanner() {
 	  return (
 	    <section
 	      className="relative w-full pt-8 pb-20 flex justify-center bg-cover bg-right bg-no-repeat -mb-16 z-10 [clip-path:polygon(0_0,0_calc(100%-56px),50%_100%,100%_calc(100%-56px),100%_0)] sm:pt-12 sm:mb-0 sm:z-auto sm:[clip-path:none] sm:bg-center sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20"
-	      style={{ backgroundImage: `url(${VolunteerBg})` }}
+	      style={{ backgroundImage: `url(${VOLUNTEER_BG_URL})` }}
 	    >
       <div
         className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/5 to-transparent pointer-events-none sm:hidden"
@@ -109,7 +111,7 @@ export default function VolunteerBanner() {
           {/* Top background with Join Us */}
           <div className="relative h-[140px]">
             <img
-              src={VolunteerBg}
+              src={VOLUNTEER_BG_URL}
               alt=""
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover object-right scale-[1.15]"
@@ -189,7 +191,7 @@ export default function VolunteerBanner() {
           {/* Bottom background + CTA */}
           <div className="relative h-[190px]">
             <img
-              src={VolunteerBg}
+              src={VOLUNTEER_BG_URL}
               alt=""
               aria-hidden="true"
               className="absolute inset-0 h-full w-full object-cover object-right"
@@ -294,7 +296,7 @@ export default function VolunteerBanner() {
                 </p>
               </div>
 
-              {/* RIGHT IMAGE (ONLY PLACE VolunteerBg IS USED) */}
+              {/* RIGHT IMAGE */}
               <div className="hidden lg:block relative min-h-[520px] overflow-hidden" />
             </div>
           </div>
