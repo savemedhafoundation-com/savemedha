@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import BodyMap from "./BodyMap";
 import OrganModal from "./OrganModal";
 import HeroBanner from "./HomePageBanner";
 import AboutSection from "./AboutSection";
 import ServicesSection from "./ServicesSection";
-import PatientStories from "./PatientStories";
-import CancerTreatmentPage from "./CancerTreatmentPage";
+import RenderOnView from "./RenderOnView";
 import { FaMale, FaFemale } from "react-icons/fa";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import FemaleBodyMap from "../components/FemaleBodyMap";
 import { treatmentCategories } from "../data/organs";
+
+const PatientStories = lazy(() => import("./PatientStories"));
+const CancerTreatmentPage = lazy(() => import("./CancerTreatmentPage"));
 
 //   {
 //     id: "cancer",
@@ -69,6 +71,10 @@ export default function HomePage({ onNavigate }) {
       </div>
       <AboutSection onNavigate={onNavigate} />
       <ServicesSection onNavigate={onNavigate} />
+      <RenderOnView
+        rootMargin="250px 0px"
+        fallback={<div className="min-h-[680px]" aria-hidden="true" />}
+      >
       <section className="py-16">
 	        <div className="w-full px-4 sm:px-6">
 	          <div className="text-center mb-10">
@@ -228,12 +234,27 @@ export default function HomePage({ onNavigate }) {
           </div>
         </div>
       </section>
-      <div className="mt-16">
-        <PatientStories />
-      </div>
-      <div className="mt-6 sm:mt-16">
-        <CancerTreatmentPage onNavigate={onNavigate} />
-      </div>
+      </RenderOnView>
+      <RenderOnView
+        rootMargin="350px 0px"
+        fallback={<div className="mt-16 min-h-[300px]" aria-hidden="true" />}
+      >
+        <div className="mt-16">
+          <Suspense fallback={<div className="min-h-[300px]" aria-hidden="true" />}>
+            <PatientStories />
+          </Suspense>
+        </div>
+      </RenderOnView>
+      <RenderOnView
+        rootMargin="450px 0px"
+        fallback={<div className="mt-6 sm:mt-16 min-h-[320px]" aria-hidden="true" />}
+      >
+        <div className="mt-6 sm:mt-16">
+          <Suspense fallback={<div className="min-h-[320px]" aria-hidden="true" />}>
+            <CancerTreatmentPage onNavigate={onNavigate} />
+          </Suspense>
+        </div>
+      </RenderOnView>
       <OrganModal
         organ={selectedOrgan}
         onClose={() => setSelectedOrgan(null)}

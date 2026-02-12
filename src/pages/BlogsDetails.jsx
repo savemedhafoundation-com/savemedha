@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BlogContentRenderer from "../components/BlogContentRenderer";
 import BlogYoutubeEmbed from "../components/BlogYoutubeEmbed";
+import SkeletonBox from "../components/SkeletonBox";
 import { ArrowLeft, ArrowRight, Heart, Quote, Share2 } from "lucide-react";
 import { IoLogoAmazon } from "react-icons/io5";
 import {
@@ -38,6 +39,7 @@ const DEFAULT_EBOOK_REFERENCE_URL =
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
 const BLOGS_API_URL = `${API_BASE_URL}/api/blogs`;
+const BLOG_DETAILS_CACHE_PREFIX = "blog_details_cache_v1_";
 const SITE_BASE_URL =
   import.meta.env.VITE_SITE_URL ||
   (typeof window !== "undefined" ? window.location.origin : "");
@@ -104,17 +106,36 @@ export default function BlogsDetails({ onNavigate }) {
     let cancelled = false;
 
     const load = async () => {
+      const cacheKey = `${BLOG_DETAILS_CACHE_PREFIX}${slug || ""}`;
+      try {
+        const cachedRaw = window.localStorage.getItem(cacheKey);
+        if (cachedRaw) {
+          const cachedBlog = JSON.parse(cachedRaw);
+          if (!cancelled && cachedBlog && typeof cachedBlog === "object") {
+            setBlog(cachedBlog);
+            setStatus("success");
+          }
+        }
+      } catch {
+        // Ignore cache read errors and continue with network request.
+      }
+
       try {
         const res = await fetch(`${BLOGS_API_URL}/slug/${slug}`);
         if (!res.ok) throw new Error("Not found");
         const data = await res.json();
         if (!cancelled) {
           setBlog(data || null);
+          try {
+            window.localStorage.setItem(cacheKey, JSON.stringify(data || null));
+          } catch {
+            // Ignore cache write failures.
+          }
           setStatus("success");
         }
       } catch {
         if (!cancelled) {
-          setStatus("error");
+          setStatus((prev) => (prev === "success" ? "success" : "error"));
         }
       }
     };
@@ -564,19 +585,22 @@ export default function BlogsDetails({ onNavigate }) {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center blog-main">
-        <div className="flex flex-col items-center gap-4">
-          <div className="relative h-12 w-12" role="status" aria-live="polite">
-            <div className="absolute inset-0 rounded-full border-4 border-[#74C425]/20" />
-            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#74C425] animate-spin" />
-            <span className="sr-only">Loading</span>
+      <div className="min-h-screen bg-white text-slate-900">
+        <Navbar currentPage="blogs" onNavigate={onNavigate} />
+        <main className="pb-16 blog-main">
+          <div className="max-w-6xl mx-auto px-4 pt-8 space-y-6">
+            <SkeletonBox className="h-10 w-28 rounded-full" />
+            <div className="space-y-3">
+              <SkeletonBox className="h-8 w-3/4" />
+              <SkeletonBox className="h-4 w-full" />
+              <SkeletonBox className="h-4 w-11/12" />
+              <SkeletonBox className="h-4 w-10/12" />
+            </div>
           </div>
-          <p className="text-sm font-medium text-slate-600">Loading blog…</p>
-        </div>
+        </main>
       </div>
     );
   }
-
   if (status === "error" || !blog) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center space-y-4 blog-main">
@@ -611,11 +635,17 @@ export default function BlogsDetails({ onNavigate }) {
         <section ref={heroRef} className="max-w-6xl mx-auto px-4 pt-8">
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-3">
-              <div className="h-125  overflow-hidden rounded-xl shadow border text-[#74C425] border-gray-200 bg-white">
+              <div className="h-[31.25rem] overflow-hidden rounded-xl shadow border text-[#74C425] border-gray-200 bg-white">
                 <img
                   src={meta.banner}
                   alt={meta.title}
-                  className="w-full h-full object-fill"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  onError={(event) => {
+                    if (event.currentTarget.src !== fallbackBanner) {
+                      event.currentTarget.src = fallbackBanner;
+                    }
+                  }}
                 />
               </div>
               <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600">
@@ -875,9 +905,8 @@ export default function BlogsDetails({ onNavigate }) {
                         }`}
                         loading="lazy"
                         onError={(event) => {
-                          const target = event.currentTarget;
-                          if (target.src !== BLOG_AD_FALLBACK) {
-                            target.src = BLOG_AD_FALLBACK;
+                          if (event.currentTarget.src !== BLOG_AD_FALLBACK) {
+                            event.currentTarget.src = BLOG_AD_FALLBACK;
                           }
                         }}
                       />
@@ -970,6 +999,11 @@ export default function BlogsDetails({ onNavigate }) {
                           alt={item?.title || "Blog thumbnail"}
                           className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
                           loading="lazy"
+                          onError={(event) => {
+                            if (event.currentTarget.src !== placeholderThumb) {
+                              event.currentTarget.src = placeholderThumb;
+                            }
+                          }}
                         />
                         <div className="flex flex-col gap-1">
                           <p className="text-xs text-slate-500">
@@ -1002,8 +1036,13 @@ export default function BlogsDetails({ onNavigate }) {
           <img
             src={RELATED_BLOG_BANNERS[relatedBannerIndex]}
             alt="Related blogs banner"
-            className="w-full rounded-3xl "
+            className="w-full rounded-3xl"
             loading="lazy"
+            onError={(event) => {
+              if (event.currentTarget.src !== BLOG_AD_FALLBACK) {
+                event.currentTarget.src = BLOG_AD_FALLBACK;
+              }
+            }}
           />
         </section>
 
@@ -1174,3 +1213,7 @@ export default function BlogsDetails({ onNavigate }) {
     </div>
   );
 }
+
+
+
+

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import BlogPageSkeleton from "../components/BlogPageSkeleton";
 import blogBanner from "../assets/Photo/blog image.png";
 import naturalScienceImage from "../assets/Photo/natrual science.png";
 import naturalImmunotherapyImage from "../assets/Photo/Natural Immunotherapy.png";
@@ -36,6 +37,7 @@ const SITE_BASE_URL =
   import.meta.env.VITE_SITE_URL ||
   (typeof window !== "undefined" ? window.location.origin : "");
 const POSTS_PER_PAGE = 8;
+const BLOGS_CACHE_KEY = "blogs_cache_v1";
 const getShareUrl = (shareId) => {
   if (!shareId || !SITE_BASE_URL) return "";
   return `${SITE_BASE_URL.replace(/\/$/, "")}/blogs/${encodeURIComponent(
@@ -100,14 +102,33 @@ export default function Blogs({ onNavigate }) {
     const loadBlogs = async () => {
       setStatus("loading");
       try {
+        const cachedRaw = window.localStorage.getItem(BLOGS_CACHE_KEY);
+        if (cachedRaw) {
+          const cachedPosts = JSON.parse(cachedRaw);
+          if (Array.isArray(cachedPosts) && cachedPosts.length) {
+            setPosts(cachedPosts);
+            setStatus("success");
+          }
+        }
+      } catch {
+        // Ignore cache read errors and continue with network request.
+      }
+
+      try {
         const response = await axios.get(BLOGS_API_URL);
         if (!isMounted) return;
         const rawPosts = normalizeResponse(response?.data);
-        setPosts(rawPosts.map(normalizePost));
+        const normalized = rawPosts.map(normalizePost);
+        setPosts(normalized);
+        try {
+          window.localStorage.setItem(BLOGS_CACHE_KEY, JSON.stringify(normalized));
+        } catch {
+          // Ignore cache write failures.
+        }
         setStatus("success");
       } catch {
         if (!isMounted) return;
-        setStatus("error");
+        setStatus((prev) => (prev === "success" ? "success" : "error"));
       }
     };
 
@@ -184,7 +205,6 @@ export default function Blogs({ onNavigate }) {
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
 
-  const showLoadingInline = status === "loading";
   const showErrorInline = status === "error";
   const showEmptyInline = status === "success" && !normalizedPosts.length;
   const showNoMatchesInline =
@@ -225,25 +245,6 @@ export default function Blogs({ onNavigate }) {
 
         {/* Latest + Callback + Trending */}
         <section className="max-w-7xl  mx-auto px-12 md:px-2 pt-10 pb-12">
-          {showLoadingInline && (
-            <div className="flex items-center justify-center py-10">
-              <div className="flex flex-col items-center gap-4">
-                <div
-                  className="relative h-12 w-12"
-                  role="status"
-                  aria-live="polite"
-                >
-                  <div className="absolute inset-0 rounded-full border-4 border-[#74C425]/20" />
-                  <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-[#74C425] animate-spin" />
-                  <span className="sr-only">Loading blogs</span>
-                </div>
-                <p className="text-sm font-medium text-slate-600">
-                  Loading blogs…
-                </p>
-              </div>
-            </div>
-          )}
-
           {showErrorInline && (
             <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               Unable to load blogs
@@ -281,7 +282,8 @@ export default function Blogs({ onNavigate }) {
               <img
                 src={latestPost?.coverImage || blogBanner}
                 alt={latestPost?.title || "Latest blog"}
-                className="w-full h-[420px] object-fill"
+                className="w-full aspect-video object-cover"
+                loading="eager"
               />
               <div className="p-6 space-y-3">
                 <div className="text-xs text-slate-500 space-x-2">
@@ -428,63 +430,57 @@ export default function Blogs({ onNavigate }) {
               All Blogs
             </h3>
             <span className="h-[2px] w-10 bg-slate-900 inline-block" />
-            {status === "loading" && (
-              <span className="inline-flex items-center gap-2 text-xs text-slate-500">
-                <span className="relative h-4 w-4" role="status" aria-live="polite">
-                  <span className="absolute inset-0 rounded-full border-2 border-[#74C425]/20" />
-                  <span className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#74C425] animate-spin" />
-                  <span className="sr-only">Loading live posts</span>
-                </span>
-                <span>Loading live posts…</span>
-              </span>
-            )}
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {paginatedPosts.map((post) => (
-              <article
-                key={post.id}
-                className="border border-gray-200 rounded-lg bg-[#f2f9e9] shadow-sm overflow-hidden flex flex-col min-h-[320px] md:min-h-[360px]"
-              >
-                <img
-                  src={post.coverImage || blogBanner}
-                  className="w-full h-70  md:h-50 object-cover"
-                  alt={post.title}
-                />
-                <div className="p-4 flex flex-col gap-2 flex-1">
-                  <span className="text-xs text-slate-500">
-                    {post.category || "Health"}
-                  </span>
-                  <h4 className="font-semibold text-slate-900 leading-snug line-clamp-2">
-                    {post.title}
-                  </h4>
-                  <p className="text-xs text-slate-600">
-                    By {post.author || "Admin"} | {post.date || "—"}
-                  </p>
-                  <div className="mt-auto">
-                    <button
-                      className="bg-[#74C425] text-white text-sm font-semibold px-4 py-2 rounded hover:bg-[#155300] transition"
-                      onClick={() => handleReadMore(post.slug)}
-                    >
-                      Read more
-                    </button>
-                    <button
-                      type="button"
-                      className="ml-2 border border-[#74C425] text-[#74C425] text-sm font-semibold px-4 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
-                      onClick={() => handleShare(post.slug, post.title)}
-
-                      // onClick={() => handleShare(post.shareId, post.title)}
-                    >
-                      Share
-                    </button>
+          {/* Show skeleton cards until API data is ready, then swap to real cards */}
+          {status === "loading" ? (
+            <BlogPageSkeleton count={POSTS_PER_PAGE} showImage={false} />
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {paginatedPosts.map((post) => (
+                <article
+                  key={post.id}
+                  className="border border-gray-200 rounded-lg bg-[#f2f9e9] shadow-sm overflow-hidden flex flex-col min-h-[320px] md:min-h-[360px]"
+                >
+                  <img
+                    src={post.coverImage || blogBanner}
+                    alt={post.title}
+                    className="w-full aspect-video object-cover"
+                    loading="lazy"
+                  />
+                  <div className="p-4 flex flex-col gap-2 flex-1">
+                    <span className="text-xs text-slate-500">
+                      {post.category || "Health"}
+                    </span>
+                    <h4 className="font-semibold text-slate-900 leading-snug line-clamp-2">
+                      {post.title}
+                    </h4>
+                    <p className="text-xs text-slate-600">
+                      By {post.author || "Admin"} | {post.date || "—"}
+                    </p>
+                    <div className="mt-auto">
+                      <button
+                        className="bg-[#74C425] text-white text-sm font-semibold px-4 py-2 rounded hover:bg-[#155300] transition"
+                        onClick={() => handleReadMore(post.slug)}
+                      >
+                        Read more
+                      </button>
+                      <button
+                        type="button"
+                        className="ml-2 border border-[#74C425] text-[#74C425] text-sm font-semibold px-4 py-2 rounded hover:bg-[#74C425] hover:text-white transition"
+                        onClick={() => handleShare(post.slug, post.title)}
+                      >
+                        Share
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          )}
 
           {/* Pagination */}
-          {totalPages > 1 && (
+          {status !== "loading" && totalPages > 1 && (
             <div className="flex items-center justify-center gap-2 mt-8">
               <button
                 type="button"
@@ -618,3 +614,6 @@ export default function Blogs({ onNavigate }) {
     </div>
   );
 }
+
+
+

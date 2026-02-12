@@ -479,6 +479,20 @@ button, .btn {
   animation-play-state: running;
 }
 
+/* Subtle shimmer for skeleton loading surfaces */
+@keyframes skeletonShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-skeleton-shimmer {
+  animation: skeletonShimmer 1.5s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .joinus span {
     animation: none !important;
