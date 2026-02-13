@@ -17,7 +17,7 @@ import { createRecaptcha, clearRecaptcha, auth } from "../Firebase/Setup";
 const HEADSET_SUPPORT_IMAGE =
   "https://res.cloudinary.com/savemedha/image/upload/v1770272648/young_woman_in_headset_using_laptop_and_taking_notes_vyijul.png";
 const RECTANGLE_265_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770274809/Rectangle_265_dsoage.jpg";
+  "https://res.cloudinary.com/savemedha/image/upload/v1770956304/Rectangle1_mlebrp.jpg";
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {

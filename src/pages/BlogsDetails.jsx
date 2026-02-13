@@ -228,13 +228,9 @@ export default function BlogsDetails({ onNavigate }) {
   const shareUrl = useMemo(() => {
     const baseUrl = SITE_BASE_URL.replace(/\/$/, "");
     if (!baseUrl) return "";
-    const shareId = blog?._id || blog?.id;
-    if (shareId) {
-      return `${baseUrl}/blogs/share/${encodeURIComponent(shareId)}`;
-    }
     if (!slug) return "";
     return `${baseUrl}/blogs/${encodeURIComponent(slug)}`;
-  }, [blog?._id, blog?.id, slug]);
+  }, [slug]);
   const shareTitle = meta.title || "Blog";
   const shareLinks = useMemo(() => {
     if (!shareUrl) return [];

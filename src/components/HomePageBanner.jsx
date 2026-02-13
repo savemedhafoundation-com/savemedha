@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import MobileBanner from "../assets/Photo/mobilebanner.png";
 
 const HOME_BANNER_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770264936/homepagebannner_nwnzig.png";
+  "https://res.cloudinary.com/savemedha/image/upload/v1770891682/homepagebannner_nwnzig_aelxxh.jpg";
 
 const DotPattern = () => (
   <div
