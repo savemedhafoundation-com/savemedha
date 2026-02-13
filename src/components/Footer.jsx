@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { ImWhatsapp } from "react-icons/im";
 import { CgArrowLongUpL } from "react-icons/cg";
+import { FaPinterestP } from "react-icons/fa";
 
 const Footer = ({ onNavigate }) => {
   const [showTopButton, setShowTopButton] = useState(false);
@@ -257,6 +258,15 @@ const Footer = ({ onNavigate }) => {
             >
               <Youtube className="w-7 h-7" />
             </a>
+            <a
+              href="https://pin.it/1tneqIjW6"
+              aria-label="Pinterest"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-[#9bd853] transition-colors"
+            >
+              <FaPinterestP className="w-7 h-7" />
+            </a>
           </div>
 
           <div className="mt-10 text-center text-white/90 text-xl font-medium">
@@ -339,6 +349,15 @@ const Footer = ({ onNavigate }) => {
                     className="hover:text-[#74c425] transition-colors"
                   >
                     <Youtube className="w-7 h-7" />
+                  </a>
+                  <a
+                    href="https://pin.it/1tneqIjW6"
+                    aria-label="Pinterest"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-[#74c425] transition-colors"
+                  >
+                    <FaPinterestP className="w-7 h-7" />
                   </a>
                 </div>
               </div>
