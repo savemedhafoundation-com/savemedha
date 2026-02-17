@@ -11,7 +11,7 @@ import {
 import { fallbackEbooks } from "../data/ebookFallback";
 import heroFallbackCover from "../assets/Photo/BOOK1 1.png";
 const HERO_BACKDROP_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272647/WHITEBOARD_koavov.png";
+  "https://res.cloudinary.com/savemedha/image/upload/v1770977116/WHITEBOARD_cd4z4f.jpg";
 import greenElement from "../assets/Photo/ELEMENT (1).png";
 import demoEbookCover from "../assets/Photo/3.jpg";
 import demoKindleCover from "../assets/Photo/5.jpg";

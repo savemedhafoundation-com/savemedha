@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/cookieConsent.css";
 const STORAGE_KEY = "cookie_consent";
 const SESSION_REJECT_KEY = "cookie_consent_rejected_session";
+const CONSENT_EVENT = "cookie-consent-updated";
 
 export default function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,6 +24,11 @@ export default function CookieBanner() {
       } else {
         window.sessionStorage.removeItem(SESSION_REJECT_KEY);
       }
+      window.dispatchEvent(
+        new CustomEvent(CONSENT_EVENT, {
+          detail: { consent: value },
+        })
+      );
     }
     setIsVisible(false);
   };

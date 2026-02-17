@@ -9,7 +9,7 @@ import naturalScienceImage from "../assets/Photo/natrual science.png";
 import naturalImmunotherapyImage from "../assets/Photo/Natural Immunotherapy.png";
 import chronicDiseaseImage from "../assets/Photo/Chronic Disease.png";
 const THALASSEMIA_RELATED_IMG =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272644/Thalassemia_Related_jw8yvq.png";
+  "https://res.cloudinary.com/savemedha/image/upload/v1770977322/Thalassemia_Related_jw8yvq.jpg";
 import nutritionBasedImage from "../assets/Photo/Nutrition Based.png";
 import holisticPerspectiveImage from "../assets/Photo/A Holistic Perspective.png";
 

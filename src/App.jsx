@@ -21,6 +21,7 @@ import LocateUs from "./pages/LocateUs";
 import BlogsDetails from "./pages/BlogsDetails";
 import EbookPage from "./pages/EbookPage";
 import EbookRead from "./pages/EbookRead";
+import CaseStudies from "./pages/CaseStudies";
 import CareersPage from "./pages/CareersPage";
 import EventsProjects from "./pages/EventsProjects";
 import OngoingEvents from "./pages/OngoingEvents";
@@ -216,6 +217,9 @@ function App() {
             ? `/blogs?q=${encodeURIComponent(options.query)}`
             : "/blogs";
           break;
+        case "case-studies":
+          targetPath = "/case-studies";
+          break;
 
         //           case "blogs-detail": {
         //   const blogId = options?.id;
@@ -306,6 +310,10 @@ function App() {
           element={<Treatmentquestion onNavigate={handleNavigate} />}
         />
         <Route path="/blogs" element={<Blogs onNavigate={handleNavigate} />} />
+        <Route
+          path="/case-studies"
+          element={<CaseStudies onNavigate={handleNavigate} />}
+        />
         <Route path="/blogs/share/:id" element={<BlogShareRedirect />} />
         <Route
           path="/blogs/:slug"

@@ -6,37 +6,63 @@ const SESSION_KEY = "geoCollected";
 const CONSENT_KEY = "cookie_consent";
 const LEGACY_CONSENT_KEY = "cookieConsent";
 const LOCAL_GEO_DATA_KEY = "geoPreferencePayload";
-const COLLECT_ENDPOINT = "https://savemedhabackend.vercel.app/set-preferences";
+const CONSENT_EVENT = "cookie-consent-updated";
+const API_BASE_URL =
+  import.meta.env?.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
+const PRIMARY_PREFERENCES_ENDPOINT =
+  import.meta.env?.VITE_PREFERENCES_ENDPOINT ||
+  `${API_BASE_URL}/set-preferences`;
+const PREFERENCES_ENDPOINTS = Array.from(
+  new Set([
+    PRIMARY_PREFERENCES_ENDPOINT,
+    `${API_BASE_URL}/api/set-preferences`,
+  ])
+).filter(Boolean);
 const GEO_API_KEY = import.meta.env?.VITE_IPGEOLOCATION_API_KEY || "";
 
 export default function TrackUserGeo() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const consent = localStorage.getItem(CONSENT_KEY);
-    const legacyConsent = localStorage.getItem(LEGACY_CONSENT_KEY);
-    const hasConsent = consent === "accepted" || legacyConsent === "true";
-    if (!hasConsent) return;
+    let cancelled = false;
+    let isCollecting = false;
 
-    const alreadyCollected = sessionStorage.getItem(SESSION_KEY);
-    if (alreadyCollected === "true") return;
+    const hasConsent = () => {
+      const consent = localStorage.getItem(CONSENT_KEY);
+      const legacyConsent = localStorage.getItem(LEGACY_CONSENT_KEY);
+      return consent === "accepted" || legacyConsent === "true";
+    };
 
     const sendPayload = async (payload) => {
-      const response = await fetch(COLLECT_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-        keepalive: true,
-      });
+      let lastError = null;
 
-      if (!response.ok) {
-        throw new Error("Failed to save preferences");
+      for (const endpoint of PREFERENCES_ENDPOINTS) {
+        try {
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+            keepalive: true,
+          });
+
+          if (response.ok) {
+            sessionStorage.setItem(SESSION_KEY, "true");
+            localStorage.removeItem(LOCAL_GEO_DATA_KEY);
+            return;
+          }
+
+          lastError = new Error(
+            `Failed to save preferences (${response.status})`
+          );
+
+        } catch (error) {
+          lastError = error;
+        }
       }
 
-      sessionStorage.setItem(SESSION_KEY, "true");
-      localStorage.removeItem(LOCAL_GEO_DATA_KEY);
+      throw lastError || new Error("Failed to save preferences");
     };
 
     const collectGeo = async () => {
@@ -54,14 +80,49 @@ export default function TrackUserGeo() {
         const geoData = await getGeoData(ip, GEO_API_KEY);
         if (!geoData) return;
 
-        localStorage.setItem(LOCAL_GEO_DATA_KEY, JSON.stringify(geoData));
-        await sendPayload(geoData);
+        const consent = localStorage.getItem(CONSENT_KEY);
+        const legacyConsent = localStorage.getItem(LEGACY_CONSENT_KEY);
+        const payload = {
+          ...geoData,
+          cookieConsent: consent || legacyConsent || "unknown",
+        };
+
+        localStorage.setItem(LOCAL_GEO_DATA_KEY, JSON.stringify(payload));
+        await sendPayload(payload);
       } catch {
         // Fail silently to avoid disrupting UX.
       }
     };
 
-    collectGeo();
+    const tryCollectGeo = async () => {
+      if (cancelled || isCollecting) return;
+      if (!hasConsent()) return;
+      if (sessionStorage.getItem(SESSION_KEY) === "true") return;
+
+      isCollecting = true;
+      await collectGeo();
+      isCollecting = false;
+    };
+
+    const onConsentUpdated = () => {
+      tryCollectGeo();
+    };
+
+    const onStorage = (event) => {
+      if (event.key === CONSENT_KEY || event.key === LEGACY_CONSENT_KEY) {
+        tryCollectGeo();
+      }
+    };
+
+    tryCollectGeo();
+    window.addEventListener(CONSENT_EVENT, onConsentUpdated);
+    window.addEventListener("storage", onStorage);
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener(CONSENT_EVENT, onConsentUpdated);
+      window.removeEventListener("storage", onStorage);
+    };
   }, []);
 
   return null;
