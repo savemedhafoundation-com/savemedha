@@ -9,15 +9,9 @@ const LOCAL_GEO_DATA_KEY = "geoPreferencePayload";
 const CONSENT_EVENT = "cookie-consent-updated";
 const API_BASE_URL =
   import.meta.env?.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
-const PRIMARY_PREFERENCES_ENDPOINT =
+const PREFERENCES_ENDPOINT =
   import.meta.env?.VITE_PREFERENCES_ENDPOINT ||
   `${API_BASE_URL}/set-preferences`;
-const PREFERENCES_ENDPOINTS = Array.from(
-  new Set([
-    PRIMARY_PREFERENCES_ENDPOINT,
-    `${API_BASE_URL}/api/set-preferences`,
-  ])
-).filter(Boolean);
 const GEO_API_KEY = import.meta.env?.VITE_IPGEOLOCATION_API_KEY || "";
 
 export default function TrackUserGeo() {
@@ -33,36 +27,25 @@ export default function TrackUserGeo() {
       return consent === "accepted" || legacyConsent === "true";
     };
 
+    const hasRequiredGeoFields = (payload) =>
+      Boolean(payload && typeof payload === "object" && payload.country_name);
+
     const sendPayload = async (payload) => {
-      let lastError = null;
+      const response = await fetch(PREFERENCES_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        keepalive: true,
+      });
 
-      for (const endpoint of PREFERENCES_ENDPOINTS) {
-        try {
-          const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-            keepalive: true,
-          });
-
-          if (response.ok) {
-            sessionStorage.setItem(SESSION_KEY, "true");
-            localStorage.removeItem(LOCAL_GEO_DATA_KEY);
-            return;
-          }
-
-          lastError = new Error(
-            `Failed to save preferences (${response.status})`
-          );
-
-        } catch (error) {
-          lastError = error;
-        }
+      if (!response.ok) {
+        throw new Error(`Failed to save preferences (${response.status})`);
       }
 
-      throw lastError || new Error("Failed to save preferences");
+      sessionStorage.setItem(SESSION_KEY, "true");
+      localStorage.removeItem(LOCAL_GEO_DATA_KEY);
     };
 
     const collectGeo = async () => {
@@ -70,15 +53,19 @@ export default function TrackUserGeo() {
         const pendingPayloadRaw = localStorage.getItem(LOCAL_GEO_DATA_KEY);
         if (pendingPayloadRaw) {
           const pendingPayload = JSON.parse(pendingPayloadRaw);
-          await sendPayload(pendingPayload);
-          return;
+          if (!hasRequiredGeoFields(pendingPayload)) {
+            localStorage.removeItem(LOCAL_GEO_DATA_KEY);
+          } else {
+            await sendPayload(pendingPayload);
+            return;
+          }
         }
 
         const ip = await getUserIP();
         if (!ip) return;
 
         const geoData = await getGeoData(ip, GEO_API_KEY);
-        if (!geoData) return;
+        if (!hasRequiredGeoFields(geoData)) return;
 
         const consent = localStorage.getItem(CONSENT_KEY);
         const legacyConsent = localStorage.getItem(LEGACY_CONSENT_KEY);
@@ -87,6 +74,7 @@ export default function TrackUserGeo() {
           cookieConsent: consent || legacyConsent || "unknown",
         };
 
+        if (!hasRequiredGeoFields(payload)) return;
         localStorage.setItem(LOCAL_GEO_DATA_KEY, JSON.stringify(payload));
         await sendPayload(payload);
       } catch {
