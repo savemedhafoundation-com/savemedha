@@ -27,16 +27,37 @@ export default function TrackUserGeo() {
       return consent === "accepted" || legacyConsent === "true";
     };
 
-    const hasRequiredGeoFields = (payload) =>
-      Boolean(payload && typeof payload === "object" && payload.country_name);
+    const normalizePayload = (payload = {}, ip = "") => {
+      const consent = localStorage.getItem(CONSENT_KEY);
+      const legacyConsent = localStorage.getItem(LEGACY_CONSENT_KEY);
+      const source = payload && typeof payload === "object" ? payload : {};
+      const timeZoneName =
+        source?.time_zone?.name ||
+        (typeof Intl !== "undefined"
+          ? Intl.DateTimeFormat().resolvedOptions().timeZone
+          : "");
+
+      return {
+        country_name: source.country_name || source.country || "Unknown",
+        country_code2: source.country_code2 || "",
+        state_prov: source.state_prov || source.state || "",
+        city: source.city || "",
+        ip: source.ip || ip || "",
+        latitude: source.latitude || "",
+        longitude: source.longitude || "",
+        time_zone: source.time_zone || { name: timeZoneName },
+        cookieConsent: consent || legacyConsent || "unknown",
+      };
+    };
 
     const sendPayload = async (payload) => {
+      const safePayload = normalizePayload(payload, payload?.ip || "");
       const response = await fetch(PREFERENCES_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(safePayload),
         keepalive: true,
       });
 
@@ -53,28 +74,13 @@ export default function TrackUserGeo() {
         const pendingPayloadRaw = localStorage.getItem(LOCAL_GEO_DATA_KEY);
         if (pendingPayloadRaw) {
           const pendingPayload = JSON.parse(pendingPayloadRaw);
-          if (!hasRequiredGeoFields(pendingPayload)) {
-            localStorage.removeItem(LOCAL_GEO_DATA_KEY);
-          } else {
-            await sendPayload(pendingPayload);
-            return;
-          }
+          await sendPayload(pendingPayload);
+          return;
         }
 
         const ip = await getUserIP();
-        if (!ip) return;
-
         const geoData = await getGeoData(ip, GEO_API_KEY);
-        if (!hasRequiredGeoFields(geoData)) return;
-
-        const consent = localStorage.getItem(CONSENT_KEY);
-        const legacyConsent = localStorage.getItem(LEGACY_CONSENT_KEY);
-        const payload = {
-          ...geoData,
-          cookieConsent: consent || legacyConsent || "unknown",
-        };
-
-        if (!hasRequiredGeoFields(payload)) return;
+        const payload = normalizePayload(geoData, ip || "");
         localStorage.setItem(LOCAL_GEO_DATA_KEY, JSON.stringify(payload));
         await sendPayload(payload);
       } catch {
