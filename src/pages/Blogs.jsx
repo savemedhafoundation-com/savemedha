@@ -282,7 +282,7 @@ export default function Blogs({ onNavigate }) {
               <img
                 src={latestPost?.coverImage || blogBanner}
                 alt={latestPost?.title || "Latest blog"}
-                className="w-full aspect-video object-cover"
+                className="w-full h-[35.25rem] object-cover"
                 loading="eager"
               />
               <div className="p-6 space-y-3">
