@@ -7,9 +7,7 @@ const CONSENT_KEYS = ["cookieConsent", "cookie_consent"];
 const CONSENT_EVENT = "cookie-consent-updated";
 const API_BASE_URL =
   import.meta.env?.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
-const PREFERENCES_ENDPOINT =
-  import.meta.env?.VITE_PREFERENCES_ENDPOINT ||
-  `${API_BASE_URL}/set-preferences`;
+const PREFERENCES_ENDPOINT_FALLBACK = `${API_BASE_URL}/set-preferences`;
 const GEO_API_KEY = import.meta.env?.VITE_IPGEOLOCATION_API_KEY || "";
 
 export default function TrackUserGeo() {
@@ -19,10 +17,29 @@ export default function TrackUserGeo() {
     let cancelled = false;
     let isCollecting = false;
 
+    const resolveEndpoint = () => {
+      const fromEnv =
+        typeof import.meta.env?.VITE_PREFERENCES_ENDPOINT === "string"
+          ? import.meta.env.VITE_PREFERENCES_ENDPOINT.trim()
+          : "";
+      const endpoint = fromEnv || PREFERENCES_ENDPOINT_FALLBACK;
+
+      try {
+        // Ensure we don't try to fetch an invalid URL silently.
+        return new URL(endpoint).toString();
+      } catch {
+        return PREFERENCES_ENDPOINT_FALLBACK;
+      }
+    };
+
     const getConsentValue = () => {
       for (const key of CONSENT_KEYS) {
-        const value = localStorage.getItem(key);
-        if (value) return value;
+        try {
+          const value = localStorage.getItem(key);
+          if (value) return value;
+        } catch {
+          return "";
+        }
       }
       return "";
     };
@@ -33,13 +50,14 @@ export default function TrackUserGeo() {
     };
 
     const sendPayload = async (payload) => {
-      const response = await fetch(PREFERENCES_ENDPOINT, {
+      const response = await fetch(resolveEndpoint(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
         keepalive: true,
+        mode: "cors",
       });
 
       if (!response.ok) {
@@ -51,13 +69,11 @@ export default function TrackUserGeo() {
 
     const collectGeo = async () => {
       const ip = await getUserIP();
-      if (!ip) return;
-
-      const geoData = await getGeoData(ip, GEO_API_KEY);
+      const geoData = ip ? await getGeoData(ip, GEO_API_KEY) : null;
       const consentValue = getConsentValue();
       const payload = {
         ...(geoData && typeof geoData === "object" ? geoData : {}),
-        ip,
+        ip: ip || "",
         cookieConsent: consentValue || "unknown",
         collectedAt: new Date().toISOString(),
       };
@@ -66,8 +82,13 @@ export default function TrackUserGeo() {
 
       try {
         await sendPayload(payload);
-      } catch {
-        // Fail silently to avoid disrupting UX.
+      } catch (error) {
+        if (import.meta.env.DEV) {
+          console.error("TrackUserGeo POST failed:", {
+            endpoint: resolveEndpoint(),
+            message: error?.message || "unknown error",
+          });
+        }
       }
     };
 
