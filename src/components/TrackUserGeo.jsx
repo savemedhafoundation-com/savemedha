@@ -3,7 +3,7 @@ import { getUserIP } from "../utils/getUserIP";
 import { getGeoData } from "../utils/getGeoData";
 
 const SESSION_KEY = "geoCollected";
-const CONSENT_KEYS = ["cookieConsent", "cookie_consent"];
+const CONSENT_KEY = "cookie_consent";
 const CONSENT_EVENT = "cookie-consent-updated";
 const API_BASE_URL =
   import.meta.env?.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
@@ -32,21 +32,12 @@ export default function TrackUserGeo() {
       }
     };
 
-    const getConsentValue = () => {
-      for (const key of CONSENT_KEYS) {
-        try {
-          const value = localStorage.getItem(key);
-          if (value) return value;
-        } catch {
-          return "";
-        }
-      }
-      return "";
-    };
-
     const hasConsent = () => {
-      const consentValue = getConsentValue();
-      return consentValue === "true" || consentValue === "accepted";
+      try {
+        return localStorage.getItem(CONSENT_KEY) === "accepted";
+      } catch {
+        return false;
+      }
     };
 
     const sendPayload = async (payload) => {
@@ -70,11 +61,10 @@ export default function TrackUserGeo() {
     const collectGeo = async () => {
       const ip = await getUserIP();
       const geoData = ip ? await getGeoData(ip, GEO_API_KEY) : null;
-      const consentValue = getConsentValue();
       const payload = {
         ...(geoData && typeof geoData === "object" ? geoData : {}),
         ip: ip || "",
-        cookieConsent: consentValue || "unknown",
+        cookieConsent: "accepted",
         collectedAt: new Date().toISOString(),
       };
 
@@ -107,7 +97,7 @@ export default function TrackUserGeo() {
     };
 
     const onStorage = (event) => {
-      if (CONSENT_KEYS.includes(event.key)) {
+      if (event.key === CONSENT_KEY) {
         tryCollectGeo();
       }
     };
