@@ -10,8 +10,8 @@ import { MdPhoneInTalk } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 import DoctorImg from "../assets/Photo/doc.png";
-const RED_RIBBON_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272630/redreben_hqaury.png";
+import RedRibbonImg from "../assets/Photo/redreben.png";
+const RED_RIBBON_URL = RedRibbonImg;
 const BACKGROUND_IMG_URL =
   "https://res.cloudinary.com/savemedha/image/upload/v1770272543/backgroud_e6kehs.png";
 const COMPUTER_IMAGE_URL =
