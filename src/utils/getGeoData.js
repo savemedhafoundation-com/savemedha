@@ -1,19 +1,17 @@
-const IP_GEOLOCATION_URL =
-  import.meta.env.VITE_IPGEOLOCATION_API_URL ||
-  "https://api.ipgeolocation.io/ipgeo";
+const GEOLOCATION_API_BASE = "https://api.ipgeolocation.io/v2/ipgeo";
 
-export async function getGeoData(ip, apiKey, endpoint = IP_GEOLOCATION_URL) {
+export async function getGeoData(ip, apiKey) {
   if (!ip || !apiKey) return null;
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 7000);
 
   try {
-    const url = new URL(endpoint);
-    url.searchParams.set("apiKey", apiKey);
-    url.searchParams.set("ip", ip);
+    const url = `${GEOLOCATION_API_BASE}?apiKey=${encodeURIComponent(
+      apiKey
+    )}&ip=${encodeURIComponent(ip)}`;
 
-    const response = await fetch(url.toString(), {
+    const response = await fetch(url, {
       method: "GET",
       signal: controller.signal,
       cache: "no-store",
