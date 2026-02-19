@@ -1,4 +1,4 @@
-const GEOLOCATION_API_BASE = "https://api.ipgeolocation.io/ipgeo";
+const GEOLOCATION_API_BASE = "https://api.ipgeolocation.io/v2/ipgeo";
 
 export async function getGeoData(ip, apiKey) {
   if (!ip || !apiKey) return null;
