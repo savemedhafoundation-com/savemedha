@@ -1,47 +1,76 @@
 import { useEffect } from "react";
 import { getGeoData } from "../utils/getGeoData";
+import { getUserIP } from "../utils/getUserIP";
 
-const SESSION_KEY = "geoCollected";
+const SESSION_KEY = "geoCollectedThisSession";
 const CONSENT_KEY = "cookieConsent";
-const COLLECT_ENDPOINT = "https://savemedhabackend.vercel.app/set-preferences";
+const COLLECT_ENDPOINT =
+  import.meta.env.VITE_GEO_COLLECT_ENDPOINT ||
+  "https://savemedhabackend.vercel.app/set-preferences";
 const GEO_API_KEY = import.meta.env.VITE_IPGEOLOCATION_API_KEY;
-const CONSENT_ACCEPTED_EVENT = "cookie-consent-accepted";
+
+const CONSENT_EVENTS = ["cookie-consent-accepted", "cookie-consent-updated"];
+
+function hasCookieConsent() {
+  if (typeof window === "undefined") return false;
+  return window.localStorage.getItem(CONSENT_KEY) === "true";
+}
 
 export default function TrackUserGeo() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (consent !== "true") return;
+    let cancelled = false;
 
-    const alreadyCollected = sessionStorage.getItem(SESSION_KEY);
-    if (alreadyCollected === "true") return;
+    const collectGeoOncePerSession = async () => {
+      if (cancelled) return;
+      if (!hasCookieConsent()) return;
+      if (window.sessionStorage.getItem(SESSION_KEY) === "true") return;
 
-    const collectGeo = async () => {
+      // Lock immediately to avoid duplicate calls from strict mode or multiple events.
+      window.sessionStorage.setItem(SESSION_KEY, "true");
+
+      const ip = await getUserIP();
+      if (!ip || cancelled) return;
+
+      const geoData = await getGeoData(ip, GEO_API_KEY);
+      if (!geoData || cancelled) return;
+
       try {
-        const geoData = await getGeoData(GEO_API_KEY);
-        if (!geoData) return;
-
         await fetch(COLLECT_ENDPOINT, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include", // important for cookies
           body: JSON.stringify(geoData),
         });
-
-        sessionStorage.setItem(SESSION_KEY, "true");
-      } catch (error) {
-        console.error("Geo tracking failed:", error);
+      } catch {
+        // Intentionally no-op to fail gracefully.
       }
     };
 
-    collectGeo();
-    window.addEventListener(CONSENT_ACCEPTED_EVENT, collectGeo);
+    const handleConsentEvent = () => {
+      void collectGeoOncePerSession();
+    };
+
+    const handleStorageEvent = (event) => {
+      if (event.key !== CONSENT_KEY) return;
+      void collectGeoOncePerSession();
+    };
+
+    void collectGeoOncePerSession();
+
+    CONSENT_EVENTS.forEach((eventName) => {
+      window.addEventListener(eventName, handleConsentEvent);
+    });
+    window.addEventListener("storage", handleStorageEvent);
 
     return () => {
-      window.removeEventListener(CONSENT_ACCEPTED_EVENT, collectGeo);
+      cancelled = true;
+      CONSENT_EVENTS.forEach((eventName) => {
+        window.removeEventListener(eventName, handleConsentEvent);
+      });
+      window.removeEventListener("storage", handleStorageEvent);
     };
   }, []);
 
