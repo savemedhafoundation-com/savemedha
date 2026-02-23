@@ -66,7 +66,7 @@ export default function HomePage({ onNavigate }) {
 
   return (
     <>
-      <div className="-mx-4 sm:-mx-6 lg:-mx-20">
+      <div className="-mx-4 sm:-mx-20 lg:-mx-20">
         <HeroBanner showShadows={false} />
       </div>
       <AboutSection onNavigate={onNavigate} />
@@ -90,17 +90,17 @@ export default function HomePage({ onNavigate }) {
 	          </div>
 	        </div>
 
-	        <div className="sm:-mx-6 md:-mx-20">
-	          <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-stretch sm:items-start relative overflow-visible">
+	        <div className="sm:-mx-6 md:-mx-10 lg:-mx-20">
+	          <div className="w-full flex flex-col md:gap-6 lg:flex-row lg:gap-8 justify-center items-center lg:items-start relative overflow-visible">
             {/* Treatment Categories */}
-            <div className="hidden md:block w-full lg:max-w-[10px] xl:max-w-[280px] absolute top-40 left-40 z-30">
+            <div className="hidden md:block w-full md:max-w-[680px] md:mx-auto lg:max-w-[280px] lg:mx-0 md:relative lg:absolute md:top-auto md:left-auto lg:top-40 lg:left-8 xl:left-16 z-30">
               <div className="bg-[#fcfcfc] p-2 rounded-sm">
                 <div className="bg-[#f1f6e6] px-4 py-1 rounded-sm">
                   <h3 className="text-xl font-semibold text-[#30590d] uppercase tracking-wide">
                     Treatment Categories:
                   </h3>
                 </div>
-                <div className="mt-1 space-y-">
+                <div className="mt-1 space-y-2">
                   {treatmentCategories.map((category) => {
                     const isOpen = openCategory === category.id;
                     return (
@@ -142,10 +142,10 @@ export default function HomePage({ onNavigate }) {
             </div>
 
             {/* Body Map */}
-            <div className="flex-1 relative flex justify-center items-center">
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20">
+            <div className="w-full flex-1 relative flex justify-center items-center pt-24 md:pt-28 lg:pt-0">
+              <div className="absolute top-2 md:top-0 left-1/2 -translate-x-1/2 z-20">
                 <div
-                  className="glass-card flex items-center gap-6 px-6 py-3"
+                  className="glass-card flex items-center gap-4 sm:gap-5 px-4 sm:px-5 md:px-6 py-2.5 sm:py-3"
                   style={{
                     "--glass-card-width": "auto",
                     "--glass-card-height": "auto",
@@ -219,7 +219,7 @@ export default function HomePage({ onNavigate }) {
                 </div>
               </div>
 
-              <div className="w-full flex justify-center items-center">
+              <div className="w-full md:max-w-[900px] mx-auto flex justify-center items-center">
                 {sex === "male" ? (
                   <BodyMap onOrganSelect={setSelectedOrgan} />
                 ) : (

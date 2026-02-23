@@ -37,7 +37,7 @@ export function JoinUsText({ className = "", variant = "default" }) {
 
   const spanClassName = isMobileVariant
     ? "inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-[#2F5BD7] text-[42px] font-black uppercase tracking-tight select-none [-webkit-text-stroke:2px_white]"
-    : "inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight cursor-pointer select-none hover:-translate-y-3 hover:scale-110 hover:text-[#7CB342] transition-all duration-300 [-webkit-text-stroke:1px_black] md:[-webkit-text-stroke:2px_black]";
+    : "inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-white text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-black uppercase tracking-tight cursor-pointer select-none hover:-translate-y-3 hover:scale-110 hover:text-[#7CB342] transition-all duration-300 [-webkit-text-stroke:1px_black] md:[-webkit-text-stroke:2px_black]";
 
   return (
     <div ref={ref} className={containerClassName}>
@@ -61,9 +61,9 @@ export function JoinUsText({ className = "", variant = "default" }) {
 
 export default function VolunteerBanner() {
   const textContainerClassName =
-    "mx-auto w-full max-w-[560px] items-center text-center lg:mx-0 lg:ml-auto lg:max-w-[960px] lg:items-end lg:text-right lg:pr-10";
-  const bodyTextClassName = "mx-auto lg:ml-auto";
-  const taglineClassName = "whitespace-nowrap mx-auto lg:ml-auto";
+    "mx-auto w-full max-w-[560px] items-center text-center md:mx-0 md:max-w-none md:items-start md:text-left md:pr-4 lg:mx-0 lg:ml-auto lg:max-w-[960px] lg:items-end lg:text-right lg:pr-10";
+  const bodyTextClassName = "mx-auto md:mx-0 lg:ml-auto";
+  const taglineClassName = "whitespace-nowrap mx-auto md:mx-0 lg:ml-auto";
 
   const [isVolunteerModalOpen, setIsVolunteerModalOpen] = useState(false);
   const [volunteerForm, setVolunteerForm] = useState({ name: "", phone: "" });
@@ -98,7 +98,7 @@ export default function VolunteerBanner() {
 
 	  return (
 	    <section
-	      className="relative w-full pt-8 pb-20 flex justify-center bg-cover bg-right bg-no-repeat -mb-16 z-10 [clip-path:polygon(0_0,0_calc(100%-56px),50%_100%,100%_calc(100%-56px),100%_0)] sm:pt-12 sm:mb-0 sm:z-auto sm:[clip-path:none] sm:bg-center sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20"
+	      className="relative w-full pt-8 pb-20 flex justify-center bg-cover bg-right bg-no-repeat -mb-16 z-10 [clip-path:polygon(0_0,0_calc(100%-56px),50%_100%,100%_calc(100%-56px),100%_0)] sm:pt-12 sm:mb-0 sm:z-auto sm:[clip-path:none] sm:bg-center sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+8rem)] md:-mx-16 lg:w-[calc(100%+10rem)] lg:-mx-20"
 	      style={{ backgroundImage: `url(${VOLUNTEER_BG_URL})` }}
 	    >
       <div
@@ -227,10 +227,10 @@ export default function VolunteerBanner() {
             {/* ANGLED TOP EDGE */}
             <div />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[420px_1fr_420px] gap-10">
-              {/* LEFT COLLAGE */}
-              <div className="relative mx-auto w-full max-w-[520px] px-4 pt-6 pb-6 sm:px-6 sm:pt-8 lg:mx-0 lg:max-w-none lg:px-10 lg:pt-14 lg:pb-14">
-                <div className="relative h-[280px] sm:h-[320px] lg:h-[420px]">
+	            <div className="relative z-10 grid grid-cols-1 md:grid-cols-[340px_minmax(0,1fr)] md:gap-8 lg:grid-cols-[420px_1fr_420px] lg:gap-10">
+	              {/* LEFT COLLAGE */}
+	              <div className="relative mx-auto w-full max-w-[520px] px-4 pt-6 pb-6 sm:px-6 sm:pt-8 md:max-w-[360px] md:px-3 md:pt-10 md:pb-8 lg:mx-0 lg:max-w-none lg:px-10 lg:pt-14 lg:pb-14">
+	                <div className="relative h-[280px] sm:h-[320px] md:h-[300px] lg:h-[420px]">
                   <img
                     src={RectangleBlue1}
                     alt=""
@@ -243,37 +243,37 @@ export default function VolunteerBanner() {
                     className="absolute left-2 top-4 w-[170px] sm:left-3 sm:top-6 sm:w-[200px] lg:left-3 lg:top-10 lg:w-[230px] rounded-[22px] object-cover"
                   />
 
-                  <img
-                    src={Hand2}
-                    alt=""
-                    className="absolute left-[130px] top-6 w-[190px] sm:left-[170px] sm:top-6 sm:w-[220px] lg:left-[250px] lg:top-10 lg:w-[260px] rounded-[22px] object-cover"
-                  />
+	                  <img
+	                    src={Hand2}
+	                    alt=""
+	                    className="absolute left-[130px] top-6 w-[190px] sm:left-[170px] sm:top-6 sm:w-[220px] md:left-[140px] md:w-[190px] lg:left-[250px] lg:top-10 lg:w-[260px] rounded-[22px] object-cover"
+	                  />
 
-                  <div className="absolute left-0 top-[170px] w-[300px] sm:left-2 sm:top-[200px] sm:w-[340px] lg:left-4 lg:top-[270px] lg:w-[390px]">
-                    <img
-                      src={RectangleBlue2}
-                      alt=""
-                      className="w-full select-none pointer-events-none"
-                    />
-                    <img
-                      src={People3}
-                      alt=""
-                      className="absolute left-6 top-3 w-[140px] sm:left-12 sm:top-4 sm:w-[160px] lg:left-20 lg:top-4 lg:w-[190px] rounded-[18px] object-cover"
-                    />
-                  </div>
-                </div>
+	                  <div className="absolute left-0 top-[170px] w-[300px] sm:left-2 sm:top-[200px] sm:w-[340px] md:left-0 md:top-[190px] md:w-[300px] lg:left-4 lg:top-[270px] lg:w-[390px]">
+	                    <img
+	                      src={RectangleBlue2}
+	                      alt=""
+	                      className="w-full select-none pointer-events-none"
+	                    />
+	                    <img
+	                      src={People3}
+	                      alt=""
+	                      className="absolute left-6 top-3 w-[140px] sm:left-12 sm:top-4 sm:w-[160px] md:left-10 md:w-[150px] lg:left-20 lg:top-4 lg:w-[190px] rounded-[18px] object-cover"
+	                    />
+	                  </div>
+	                </div>
 
-                <JoinUsText className="mt-6 justify-center sm:mt-10 lg:mt-30 lg:justify-start" />
-              </div>
+	                <JoinUsText className="mt-6 justify-center sm:mt-10 md:mt-8 md:justify-start lg:mt-30 lg:justify-start" />
+	              </div>
 
-              {/* CENTER CONTENT */}
-              <div
-                className={`px-4 sm:px-6 lg:px-35 py-10 sm:py-12 lg:py-16 flex flex-col justify-center ${textContainerClassName}`}
-              >
-                <h2 className="flex items-baseline justify-center gap-3 leading-none whitespace-nowrap lg:justify-end">
-                  <span className="font-extrabold text-black text-[clamp(1.25rem,4.5vw,3rem)]">
-                    BECOME OUR
-                  </span>
+	              {/* CENTER CONTENT */}
+	              <div
+	                className={`px-4 sm:px-6 md:px-4 lg:px-35 py-10 sm:py-12 md:py-8 lg:py-16 flex flex-col justify-center ${textContainerClassName}`}
+	              >
+	                <h2 className="flex items-baseline justify-center gap-3 leading-none whitespace-nowrap md:justify-start md:flex-wrap md:whitespace-normal lg:justify-end lg:whitespace-nowrap">
+	                  <span className="font-extrabold text-black text-[clamp(1.25rem,4.5vw,3rem)]">
+	                    BECOME OUR
+	                  </span>
                   <span className="font-black text-[#7BCF2A] text-[clamp(1.5rem,5.5vw,3.75rem)]">
                     VOLUNTEER
                   </span>
@@ -302,7 +302,7 @@ export default function VolunteerBanner() {
           </div>
 
           {/* CTA BUTTON */}
-          <div className="relative z-20 mt-6 flex justify-center lg:mt-0 lg:absolute lg:top-[520px] lg:right-1 lg:-translate-x-1/2">
+	          <div className="relative z-20 mt-6 flex justify-center md:justify-end md:pr-6 lg:mt-0 lg:absolute lg:top-[520px] lg:right-1 lg:pr-0 lg:-translate-x-1/2">
             <button
               type="button"
               onClick={() => {

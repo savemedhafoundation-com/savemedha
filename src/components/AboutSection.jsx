@@ -25,15 +25,15 @@ export default function AboutSection({ onNavigate }) {
           <img
             src={ABOUT_FRAME_URL}
             alt="Green circular frame"
-            className="absolute inset-0 w-full h-full object-contain translate-x-4 translate-y-0 sm:translate-x-0 lg:left-4"
+            className="absolute inset-0 w-full md:w-[120%] lg:w-full h-full object-contain translate-x-4 translate-y-0 sm:translate-x-0 lg:left-4"
             loading="lazy"
             decoding="async"
           />
-          <div className="relative z-10 bg-white overflow-hidden w-[85%] sm:w-[75%] md:w-[65%] lg:w-[80%] h-[85%] sm:h-[80%] md:h-[75%] lg:h-[85%] mt-6 sm:mt-8 lg:mt-6 right-0 sm:right-4 lg:right-9 rounded-tr-[160px] rounded-br-[160px] sm:rounded-tr-[180px] sm:rounded-br-[180px] lg:rounded-tr-[200px] lg:rounded-br-[200px] rounded-tl-[60px]">
+          <div className="relative z-10 bg-white overflow-hidden w-[85%] sm:w-[75%] md:w-[60%] lg:w-[80%] h-[85%] sm:h-[80%] md:h-[100%] lg:h-[85%] mt-6 sm:mt-8 lg:mt-6 right-0 sm:right-4 lg:right-9 rounded-tr-[160px] rounded-br-[160px] sm:rounded-tr-[180px] sm:rounded-br-[180px] lg:rounded-tr-[200px] lg:rounded-br-[200px] rounded-tl-[60px] ">
             <img
               src={BG_OFFICE_URL}
               alt="Save Medha Foundation office"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover "
               loading="lazy"
               decoding="async"
             />

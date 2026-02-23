@@ -38,37 +38,45 @@ const DefaultHeroContent = ({ showShadows = true }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="relative z-10 w-full pt-10 sm:pt-12 md:pt-16 text-center md:text-left flex flex-col justify-start">
-      <div className="hidden md:block absolute top-4 left-25 opacity-60">
+    <div className="relative z-10 w-full pt-10 sm:pt-12 md:pt-14 lg:pt-16 text-center md:text-left flex flex-col justify-start">
+      {/* Dot pattern: hidden on phone, visible from md up */}
+      <div className="hidden md:block absolute top-4 left-16 lg:left-25 opacity-60">
         <DotPattern />
       </div>
 
-      <div className="w-full px-4 sm:px-6 md:px-25">
-        <div className="inline-block bg-[#74C425] px-4 py-1.5 sm:px-6 sm:py-2 md:px-[25px] md:py-[5px] text-white rounded-sm mb-4 sm:mb-6 font-bold-250px italic uppercase tracking-wide text-base sm:text-lg md:text-[25px] home-hero-tag">
+      {/* Content wrapper — tighter horizontal padding on tablet, wider on desktop */}
+      <div className="w-full px-4 sm:px-6 md:px-12 lg:px-25">
+        {/* Tag badge */}
+        <div className="inline-block bg-[#74C425] px-4 py-1.5 sm:px-5 sm:py-1.5 md:px-5 md:py-[5px] lg:px-[25px] lg:py-[5px] text-white rounded-sm mb-4 sm:mb-5 md:mb-5 font-bold-250px italic uppercase tracking-wide text-base sm:text-lg md:text-[20px] lg:text-[25px] home-hero-tag">
           Natural Immunotherapy
         </div>
 
-        <h1 className="font-oldstandard home-hero-heading font-extrabold text-black leading-tight text-[32px] sm:text-[42px] md:text-[57px]">
+        {/* Heading line 1 */}
+        <h1 className="font-oldstandard home-hero-heading font-extrabold text-black leading-tight text-[32px] sm:text-[42px] md:text-[46px] lg:text-[57px]">
           Empowering lives,
         </h1>
-        <h2 className="font-oldstandard home-hero-heading font-extrabold text-[#74C425] leading-tight text-[28px] sm:text-[40px] md:text-[55px] mb-3 sm:mb-4">
+
+        {/* Heading line 2 */}
+        <h2 className="font-oldstandard home-hero-heading font-extrabold text-[#74C425] leading-tight text-[28px] sm:text-[40px] md:text-[44px] lg:text-[55px] mb-3 sm:mb-4">
           Saving futures
         </h2>
 
-        <p className="font-sans home-hero-subheading text-[14px] sm:text-[16px] md:text-[20px] font-semibold mb-4 sm:mb-6">
+        {/* Sub-heading */}
+        <p className="font-sans home-hero-subheading text-[14px] sm:text-[16px] md:text-[17px] lg:text-[20px] font-semibold mb-4 sm:mb-5 md:mb-5">
           Fighting to make a{" "}
-          <span className="text-blue-600 font-bold text-[14px] sm:text-[16px] md:text-[20px]">
+          <span className="text-blue-600 font-bold text-[14px] sm:text-[16px] md:text-[17px] lg:text-[20px]">
             CANCER FREE WORLD
           </span>
         </p>
 
+        {/* CTA button */}
         <a
           href="https://nit.care/"
           target="_blank"
           rel="noopener noreferrer"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 md:py-3 font-medium OpenSans home-hero-button text-base sm:text-lg md:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
+          className={`inline-block bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-9 lg:px-10 py-2 sm:py-2.5 md:py-2.5 lg:py-3 font-medium OpenSans home-hero-button text-base sm:text-lg md:text-lg lg:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
             showShadows ? (isHovered ? "shadow-lg" : "shadow-md") : ""
           }`}
         >
@@ -235,8 +243,9 @@ export default function HeroBanner({
     setActiveIndex((current) => (current + 1) % images.length);
   };
 
+  // Tablet gets its own intermediate height between sm and lg
   const heightClassName =
-    containerClassName ?? "min-h-[420px] sm:min-h-[520px] md:min-h-[620px]";
+    containerClassName ?? "min-h-[420px] sm:min-h-[520px] md:min-h-[560px] lg:min-h-[620px]";
 
   const shouldUseMobileFallbackImage =
     !imageMap && (!Array.isArray(backgroundImages) || backgroundImages.length === 0);
@@ -247,6 +256,7 @@ export default function HeroBanner({
     >
       {shouldUseMobileFallbackImage ? (
         <>
+          {/* Phone: dedicated portrait crop — hidden at sm and above */}
           <img
             src={MobileBanner}
             alt={`${imageAlt} mobile`}
@@ -254,10 +264,16 @@ export default function HeroBanner({
             loading="eager"
             fetchPriority="high"
           />
+
+          {/*
+            Tablet (sm–lg): show the banner image but shift the focal point
+            further right so the main subject isn't obscured by the hero text.
+            Desktop (lg+): original crop — object-[80%_center].
+          */}
           <img
             src={images[activeIndex]}
             alt={`${imageAlt} ${activeIndex + 1}`}
-            className="absolute inset-0 hidden h-full w-full object-cover sm:block sm:origin-right  sm:object-[80%_center]"
+            className="absolute inset-0 hidden h-full w-full object-cover sm:block sm:w-[112%] sm:origin-right sm:object-[70%_center] lg:w-full lg:object-[80%_center]"
             loading="eager"
             fetchPriority="high"
             ref={imgRef}
