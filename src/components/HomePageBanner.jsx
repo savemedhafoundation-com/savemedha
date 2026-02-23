@@ -56,9 +56,9 @@ const DefaultHeroContent = ({ showShadows = true }) => {
         </h2>
 
         <p className="font-sans home-hero-subheading text-[14px] sm:text-[16px] md:text-[20px] font-semibold mb-4 sm:mb-6">
-          Fighting to make a{" "}
+          Supporting recovery through{" "}
           <span className="text-blue-600 font-bold text-[14px] sm:text-[16px] md:text-[20px]">
-            CANCER FREE WORLD
+            Intergrative care
           </span>
         </p>
 
