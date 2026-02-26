@@ -1,7 +1,14 @@
+import { memo } from "react";
 import SkeletonBox from "./SkeletonBox";
 
+/**
+ * @param {{
+ *   showMeta?: boolean,
+ *   showImage?: boolean,
+ * }} props
+ */
 // YouTube-style blog card placeholder.
-export default function SkeletonBlogCard({ showMeta = true, showImage = true }) {
+function SkeletonBlogCard({ showMeta = true, showImage = true }) {
   return (
     <article className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
       {/* 16:9 thumbnail placeholder to prevent layout shift */}
@@ -21,3 +28,5 @@ export default function SkeletonBlogCard({ showMeta = true, showImage = true }) 
     </article>
   );
 }
+
+export default memo(SkeletonBlogCard);
