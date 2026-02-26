@@ -117,7 +117,7 @@ export default function EventsProjects({ onNavigate }) {
                 <span className="text-[#9ee06c] italic">Matters Most</span>
               </h1>
 
-              <div className="relative w-[540px] h-[10px]">
+              <div className="relative w-[540px] h-[10px] hidden lg:block">
                 {/* Start dot */}
                 <span className="absolute left-0 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-white" />
 
@@ -156,8 +156,8 @@ export default function EventsProjects({ onNavigate }) {
             </div>
 
             <div className="relative flex-1">
-              <div className="absolute left-30 -top-6 h-18 w-18 rounded-full bg-white/60" />
-              <div className="rounded-[30px] border-4 border-white/70 bg-white/10 p-2 shadow-[0_22px_45px_rgba(0,0,0,0.25)] translate-x-30">
+              <div className="hidden lg:block lg:absolute left-30 -top-6 h-18 w-18 rounded-full bg-white/60" />
+              <div className="rounded-[30px] border-4 border-white/70 bg-white/10 p-2 shadow-[0_22px_45px_rgba(0,0,0,0.25)] lg:translate-x-30">
                 <div className="relative h-[280px] overflow-hidden translate-x-2  rounded-tl-[20px] rounded-tr-[60px] rounded-bl-[50px] rounded-br-[20px] border border-white/70 sm:h-[300px] lg:h-[360px]">
                   {eventBoxImages.map((image, index) => (
                     <img
@@ -209,7 +209,7 @@ export default function EventsProjects({ onNavigate }) {
             </p>
           </div>
 
-          <div className="mx-auto -translate-y-10 w-full max-w-5xl px-6">
+          <div className="hidden lg:block mx-auto -translate-y-10 w-full max-w-5xl px-6">
             <svg
               width="900"
               height="300"
@@ -246,7 +246,7 @@ export default function EventsProjects({ onNavigate }) {
             </svg>
           </div>
 
-          <div className="relative mx-auto -translate-y-50 translate-x-20 grid max-w-5xl gap-10 px-6 md:grid-cols-2">
+          <div className="relative mx-auto mt-8 lg:mt-0 lg:-translate-y-50 lg:translate-x-20 grid max-w-5xl gap-10 px-6 md:grid-cols-2">
             <EventCard
               image={ongoingEventImage}
               label="Ongoing Events"

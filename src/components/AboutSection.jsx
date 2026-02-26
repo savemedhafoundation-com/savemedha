@@ -1,14 +1,32 @@
+import { memo, useCallback } from "react";
+
 const BG_OFFICE_URL =
   "https://res.cloudinary.com/savemedha/image/upload/v1770264935/Rectangle_355_ajipoa.png";
 const ABOUT_FRAME_URL =
   "https://res.cloudinary.com/savemedha/image/upload/v1770264934/Rectangle_354_yefdzc.png";
 
-export default function AboutSection({ onNavigate }) {
-  const handleReadMore = () => {
+// Module-level className constants — defined once, never re-computed on render
+const CLS_FRAME_IMG =
+  "absolute inset-0 w-full md:w-[120%] lg:w-full h-full object-contain translate-x-4 translate-y-0 sm:translate-x-0 lg:left-4";
+
+const CLS_PHOTO_WRAPPER =
+  "relative z-10 bg-white overflow-hidden w-[85%] sm:w-[75%] md:w-[60%] lg:w-[80%] h-[85%] sm:h-[80%] md:h-[100%] lg:h-[85%] mt-6 sm:mt-8 lg:mt-6 right-0 sm:right-4 lg:right-9 rounded-tr-[160px] rounded-br-[160px] sm:rounded-tr-[180px] sm:rounded-br-[180px] lg:rounded-tr-[200px] lg:rounded-br-[200px] rounded-tl-[60px]";
+
+const CLS_PARA_ONE =
+  "mb-5 text-black font-poppins text-[16px] leading-[25px] -translate-y-18 justify-center sm:-translate-y-0 tracking-normal text-left sm:text-gray-800 sm:font-sans sm:text-base sm:leading-relaxed sm:text-left";
+
+const CLS_PARA_TWO =
+  "mb-8 text-black font-poppins text-[16px] justify-center leading-[25px] tracking-normal -translate-y-22 sm:-translate-y-0 text-left sm:text-gray-800 sm:font-sans sm:text-base sm:leading-relaxed sm:text-left";
+
+/**
+ * @param {{ onNavigate?: (page: string) => void }} props
+ */
+function AboutSection({ onNavigate }) {
+  const handleReadMore = useCallback(() => {
     if (typeof onNavigate === "function") {
       onNavigate("about");
     }
-  };
+  }, [onNavigate]);
 
   return (
     <section className="py-16 bg-white">
@@ -25,11 +43,11 @@ export default function AboutSection({ onNavigate }) {
           <img
             src={ABOUT_FRAME_URL}
             alt="Green circular frame"
-            className="absolute inset-0 w-full md:w-[120%] lg:w-full h-full object-contain translate-x-4 translate-y-0 sm:translate-x-0 lg:left-4"
+            className={CLS_FRAME_IMG}
             loading="lazy"
             decoding="async"
           />
-          <div className="relative z-10 bg-white overflow-hidden w-[85%] sm:w-[75%] md:w-[60%] lg:w-[80%] h-[85%] sm:h-[80%] md:h-[100%] lg:h-[85%] mt-6 sm:mt-8 lg:mt-6 right-0 sm:right-4 lg:right-9 rounded-tr-[160px] rounded-br-[160px] sm:rounded-tr-[180px] sm:rounded-br-[180px] lg:rounded-tr-[200px] lg:rounded-br-[200px] rounded-tl-[60px] ">
+          <div className={CLS_PHOTO_WRAPPER}>
             <img
               src={BG_OFFICE_URL}
               alt="Save Medha Foundation office"
@@ -50,20 +68,20 @@ export default function AboutSection({ onNavigate }) {
             </h2>
           </div>
 
-          <p className="mb-5 text-black font-poppins text-[16px] leading-[25px] -translate-y-18 justify-center sm:-translate-y-0 tracking-normal text-left sm:text-gray-800 sm:font-sans sm:text-base sm:leading-relaxed sm:text-left">
+          <p className={CLS_PARA_ONE}>
             <span className="font-semibold">
               Save Medha Foundation is a dedicated NGO committed to fighting
-              cancer through Natural Immunotherapy 
+              cancer through Natural Immunotherapy
             </span>
             <span className="font-normal">
-               {" "}a holistic, science-backed approach that empowers the body’s own
+               {" "}a holistic, science-backed approach that empowers the body's own
               immune system to combat cancer naturally. We have broken away from
               conventional medical procedures to establish an innovative and
               effective Natural Immunotherapy treatment system for our patients.
             </span>
           </p>
 
-          <p className="mb-8 text-black font-poppins text-[16px] justify-center leading-[25px] tracking-normal -translate-y-22 sm:-translate-y-0 text-left sm:text-gray-800 sm:font-sans sm:text-base sm:leading-relaxed sm:text-left">
+          <p className={CLS_PARA_TWO}>
             Remarkably,{" "}
             <span className="font-semibold">
               over 90% of our blood cancer patients have achieved recovery
@@ -89,3 +107,5 @@ export default function AboutSection({ onNavigate }) {
     </section>
   );
 }
+
+export default memo(AboutSection);

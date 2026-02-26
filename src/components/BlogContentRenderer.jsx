@@ -1,4 +1,4 @@
-import { Fragment, useMemo, createElement } from "react";
+import { Fragment, memo, useMemo, createElement } from "react";
 
 const TOKEN_PREFIX = "__BLOG_IMAGE_PLACEHOLDER__";
 const TOKEN_SUFFIX = "__";
@@ -67,6 +67,7 @@ const normalizePlaceholders = (html) => {
 const parseStyleString = (styleValue) => {
   if (!styleValue) return undefined;
   const style = {};
+  let hasEntries = false;
 
   styleValue.split(";").forEach((rule) => {
     const [property, value] = rule.split(":");
@@ -76,9 +77,10 @@ const parseStyleString = (styleValue) => {
       .toLowerCase()
       .replace(/-([a-z])/g, (_, char) => char.toUpperCase());
     style[key] = value.trim();
+    hasEntries = true;
   });
 
-  return Object.keys(style).length ? style : undefined;
+  return hasEntries ? style : undefined;
 };
 
 const mapAttributes = (attributes) => {
@@ -156,14 +158,14 @@ const renderNodes = (nodes, images, keyPrefix) => {
 
     if (Array.isArray(rendered)) {
       rendered.forEach((item) => {
-        if (item !== null && item !== undefined && item !== false) {
+        if (item != null && item !== false) {
           output.push(item);
         }
       });
       return;
     }
 
-    if (rendered !== null && rendered !== undefined && rendered !== false) {
+    if (rendered != null && rendered !== false) {
       output.push(rendered);
     }
   });
@@ -189,7 +191,7 @@ const renderNode = (node, images, keyPrefix) => {
   }
 
   const props = mapAttributes(node.attributes);
-  const children = renderNodes(Array.from(node.childNodes), images, keyPrefix);
+  const children = renderNodes([...node.childNodes], images, keyPrefix);
 
   return createElement(
     tagName,
@@ -198,17 +200,29 @@ const renderNode = (node, images, keyPrefix) => {
   );
 };
 
-export default function BlogContentRenderer({ description = "", blogImage = [] }) {
-  const images = Array.isArray(blogImage) ? blogImage : [];
+/**
+ * @param {{
+ *   description?: string,
+ *   blogImage?: Array<{ imageUrl: string }>,
+ * }} props
+ */
+function BlogContentRenderer({ description = "", blogImage = [] }) {
+  const images = useMemo(
+    () => (Array.isArray(blogImage) ? blogImage : []),
+    [blogImage]
+  );
 
   const content = useMemo(() => {
+    if (typeof window === "undefined") return [];
     const normalized = normalizePlaceholders(description);
     if (!normalized) return [];
 
     const parser = new DOMParser();
-    const document = parser.parseFromString(normalized, "text/html");
-    return renderNodes(Array.from(document.body.childNodes), images, "node");
+    const doc = parser.parseFromString(normalized, "text/html");
+    return renderNodes([...doc.body.childNodes], images, "node");
   }, [description, images]);
 
   return <Fragment>{content}</Fragment>;
 }
+
+export default memo(BlogContentRenderer);

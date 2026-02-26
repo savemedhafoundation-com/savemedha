@@ -90,10 +90,10 @@ export default function HomePage({ onNavigate }) {
 	          </div>
 	        </div>
 
-	        <div className="sm:-mx-6 md:-mx-10 lg:-mx-20">
+	        <div className="sm:-mx-6 md:-mx-10 lg:-mx-20 ">
 	          <div className="w-full flex flex-col md:gap-6 lg:flex-row lg:gap-8 justify-center items-center lg:items-start relative overflow-visible">
             {/* Treatment Categories */}
-            <div className="hidden md:block w-full md:max-w-[680px] md:mx-auto lg:max-w-[280px] lg:mx-0 md:relative lg:absolute md:top-auto md:left-auto lg:top-40 lg:left-8 xl:left-16 z-30">
+            <div className="hidden lg:block w-full md:max-w-[680px] md:mx-auto lg:max-w-[280px] lg:mx-0 md:relative lg:absolute md:top-auto md:left-auto lg:top-40 lg:left-8 xl:left-16 z-30">
               <div className="bg-[#fcfcfc] p-2 rounded-sm">
                 <div className="bg-[#f1f6e6] px-4 py-1 rounded-sm">
                   <h3 className="text-xl font-semibold text-[#30590d] uppercase tracking-wide">
@@ -219,7 +219,7 @@ export default function HomePage({ onNavigate }) {
                 </div>
               </div>
 
-              <div className="w-full md:max-w-[900px] mx-auto flex justify-center items-center">
+              <div className="w-full md:max-w-[1850px] mx-auto flex justify-center items-center">
                 {sex === "male" ? (
                   <BodyMap onOrganSelect={setSelectedOrgan} />
                 ) : (

@@ -1,31 +1,43 @@
-import { useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
-
+/**
+ * @param {string} [text='']
+ * @param {number} [limit=250]
+ * @returns {string}
+ */
 const truncateToNearestWord = (text = '', limit = 250) => {
-  if (text.length <= limit) {
-    return text;
-  }
-
+  if (text.length <= limit) return text;
   const slice = text.slice(0, limit);
   const breakpoint = Math.max(slice.lastIndexOf(' '), slice.lastIndexOf('\n'));
   const safeSlice = breakpoint > 0 ? slice.slice(0, breakpoint) : slice;
-
   return `${safeSlice.trimEnd()}...`;
 };
 
+/**
+ * @param {{
+ *   id?: string | number,
+ *   slug?: string,
+ *   title?: string,
+ *   author?: string,
+ *   date?: string,
+ *   excerpt?: string,
+ *   coverImage?: string,
+ *   onNavigate?: (page: string, params?: object) => void,
+ * }} props
+ */
 const BlogCard = ({ id, slug, title, author, date, excerpt = '', coverImage, onNavigate }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const preview = useMemo(() => truncateToNearestWord(excerpt), [excerpt]);
-  const showToggle = excerpt && excerpt.length > preview.length;
-  const content = isExpanded ? excerpt : preview;
+  const preview = useMemo(
+    () => (excerpt ? truncateToNearestWord(excerpt) : ''),
+    [excerpt]
+  );
 
   const hasMore = excerpt && excerpt.length > preview.length;
-  const handleReadMore = () => {
+
+  const handleReadMore = useCallback(() => {
     if (onNavigate && slug) {
       onNavigate("blogs-detail", { slug });
     }
-  };
+  }, [onNavigate, slug]);
 
   return (
     <article className="flex h-full flex-col rounded-2xl border border-slate-200 bg-slate-50 shadow-sm transition-shadow duration-200 hover:shadow-md ">
@@ -34,6 +46,8 @@ const BlogCard = ({ id, slug, title, author, date, excerpt = '', coverImage, onN
           src={coverImage}
           alt={title}
           className="h-48 w-full rounded-t-2xl object-cover"
+          loading="lazy"
+          decoding="async"
         />
       )}
 
@@ -50,19 +64,8 @@ const BlogCard = ({ id, slug, title, author, date, excerpt = '', coverImage, onN
         </header>
 
         <p className="whitespace-pre-line text-sm text-slate-600 transition-all duration-200 ease-in-out">
-          {content}
+          {preview}
         </p>
-
-        {/* {showToggle && (
-          <button
-            type="button"
-            // onClick={() => setIsExpanded(prev => !prev)}
-            onClick={() => onNavigate("blogs-detail", { id: blog.id })}
-            className="mt-4 w-fit text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 focus:outline-none focus-visible:ring focus-visible:ring-blue-300"
-          >
-            {isExpanded ? 'Read Less' : 'Read More'}
-          </button>
-        )} */}
 
         {hasMore && (
           <button
@@ -78,4 +81,4 @@ const BlogCard = ({ id, slug, title, author, date, excerpt = '', coverImage, onN
   );
 };
 
-export default BlogCard;
+export default memo(BlogCard);
