@@ -1,3 +1,4 @@
+import { Seo } from "../components/Seo";
 import { useState } from "react";
 
 export default function ApplyJob() {
@@ -30,6 +31,7 @@ export default function ApplyJob() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+      <Seo title="Apply" description="Apply to join Save Medha Foundation's team and contribute to our mission of natural cancer treatment." path="/apply" />
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-8">
         <h1 className="text-3xl font-bold text-[#3c6513] mb-2">
           Join Save Medha Foundation

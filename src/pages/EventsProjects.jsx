@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import heroBackgroundOne from "../assets/Photo/event/1.png";
@@ -11,7 +12,7 @@ import eventBoxThree from "../assets/Photo/event/EVENT BOX/3.png";
 import eventBoxFour from "../assets/Photo/event/EVENT BOX/4.png";
 import ongoingEventImage from "../assets/Photo/5.jpg";
 import upcomingEventImage from "../assets/Photo/6.jpg";
-import contactIcon from "../assets/Photo/young woman in headset using laptop and taking notes.png";
+import contactIcon from "../assets/Photo/young_woman_in_headset_using_laptop_and_taking_notes-removebg-preview.png";
 
 const EventCard = ({
   image,
@@ -90,6 +91,7 @@ export default function EventsProjects({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <Seo title="Events & Projects" description="Discover Save Medha Foundation's community events and projects creating meaningful impact." path="/events-projects" />
       <Navbar currentPage="events-projects" onNavigate={onNavigate} />
 
       <main className="w-full">

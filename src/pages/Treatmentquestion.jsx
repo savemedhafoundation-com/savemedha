@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Seo } from "../components/Seo";
 import Header from "../components/Navbar";
 import Footer from "../components/Footer";
 import TreatmentCards from "../components/Treatment_Cards";
@@ -53,6 +54,7 @@ const scrollToQuestionSection = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Seo title="Treatment Questions" description="Find answers to common questions about Natural Immunotherapy cancer treatment at Save Medha Foundation." path="/treatment-questions" />
       <Header currentPage="treatment" onNavigate={onNavigate} />
 
       {/* TOP ORANGE STRIP */}

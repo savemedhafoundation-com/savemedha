@@ -1,6 +1,8 @@
 import { Suspense, lazy } from "react";
 import Footer from "../components/Footer";
 import HomePage from "../components/HeroSection";
+import { Seo } from "../components/Seo";
+import { Schema } from "../components/Schema";
 import Navbar from "../components/Navbar";
 import RenderOnView from "../components/RenderOnView";
 
@@ -12,6 +14,9 @@ const VolunteerAndSupportSection = lazy(() =>
 export default function Home({ onNavigate }) {
   return (
     <div className="min-h-screen bg-white">
+      <Seo path="/" />
+      <Schema type="organization" />
+      <Schema type="website" />
       <Navbar currentPage="home" onNavigate={onNavigate} />
       <main className="w-full px-4 sm:px-6 md:px-20 home-main">
         <HomePage onNavigate={onNavigate} />

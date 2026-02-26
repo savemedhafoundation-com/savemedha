@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import { fetchEbooks } from "../service/api";
 import {
@@ -100,6 +101,7 @@ export default function EbookPage({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-white">
+      <Seo title="E-Books" description="Download free e-books on Natural Immunotherapy, holistic health, and cancer recovery from Save Medha Foundation." path="/ebook" />
       <Navbar currentPage="ebook" onNavigate={onNavigate} />
 
       <main className="bg-white ebook-main">

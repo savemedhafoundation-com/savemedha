@@ -1,4 +1,5 @@
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import kidsImage from "../assets/Photo/kid.png";
@@ -75,6 +76,7 @@ const MosaicRow = ({ large, top, bottom, flip = false }) => {
 export default function OngoingEvents({ onNavigate }) {
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <Seo title="Ongoing Events" description="Stay updated on Save Medha Foundation's ongoing community events and health initiatives." path="/ongoing-events" />
       <Navbar currentPage="events-projects" onNavigate={onNavigate} />
 
       <main className="w-full">

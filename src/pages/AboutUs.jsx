@@ -1,4 +1,5 @@
 import Footer from '../components/Footer';
+import { Seo } from '../components/Seo';
 import Navbar from '../components/Navbar';
 import DoctorImage from '../assets/Photo/doc.png';
 import FssaiLogo from '../assets/Photo/Fssai.png';
@@ -633,6 +634,7 @@ export default function AboutUs({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-[#f5faf6] text-gray-900">
+      <Seo title="About Us" description="Learn about Save Medha Foundation, a Kolkata-based NGO treating cancer through Natural Immunotherapy." path="/about-us" />
       <Navbar currentPage="about" onNavigate={onNavigate} />
       <main className="w-full">
         {isMobileMenuOpen ? renderMobileLayout() : renderDesktopTabletLayout()}

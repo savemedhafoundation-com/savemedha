@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HomePageBanner from "../components/HomePageBanner";
@@ -219,6 +220,7 @@ export default function Donate({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f7f9fb] to-white text-slate-900">
+      <Seo title="Donate" description="Support Save Medha Foundation's mission to provide Natural Immunotherapy cancer treatment. Your donation makes a difference." path="/donate" />
       <Navbar currentPage="donate" onNavigate={onNavigate} />
       <HomePageBanner
         backgroundImages={donateBanners}

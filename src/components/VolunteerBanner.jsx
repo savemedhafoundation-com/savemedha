@@ -168,12 +168,10 @@ export default function VolunteerBanner() {
               </div>
             </div>
 
-            <h3 className="mt-3 text-[22px] translate-y-12 translate-x-2 font-extrabold uppercase tracking-wide text-slate-900">
-              BECOME OUR
+            <h3 className="mt-3 text-[22px] translate-y-11 translate-x-1 font-extrabold uppercase tracking-wide whitespace-nowrap">
+              <span className="text-slate-900">BECOME OUR</span>{" "}
+              <span className="font-black text-[#7BCF2A]">VOLUNTEER</span>
             </h3>
-            <h4 className="text-[22px] font-black translate-x-1 translate-y-10 uppercase tracking-wide text-[#7BCF2A]">
-              VOLUNTEER
-            </h4>
            
             <p className="mt-10 text-[14px] leading-relaxed text-slate-700">
               Fighting cancer the natural way with{" "}
@@ -213,7 +211,7 @@ export default function VolunteerBanner() {
                   setStatus("");
                   setIsVolunteerModalOpen(true);
                 }}
-                className="cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-[16px] font-semibold px-10 py-4 rounded-[18px] shadow-md"
+                className="cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-[16px] font-semibold px-10 py-4 rounded-[18px] shadow-md md:00"
               >
                 BECOME OUR VOLUNTEER
               </button>
@@ -271,7 +269,7 @@ export default function VolunteerBanner() {
 	              <div
 	                className={`px-4 sm:px-6 md:px-4 lg:px-35 py-10 sm:py-12 md:py-8 lg:py-16 flex flex-col justify-center ${textContainerClassName}`}
 	              >
-	                <h2 className="flex items-baseline justify-center gap-3 leading-none whitespace-nowrap md:justify-start md:flex-wrap md:whitespace-normal lg:justify-end lg:whitespace-nowrap">
+	                <h2 className="flex items-baseline justify-center gap-3 leading-none whitespace-nowrap md:justify-start lg:justify-end">
 	                  <span className="font-extrabold text-black text-[clamp(1.25rem,4.5vw,3rem)]">
 	                    BECOME OUR
 	                  </span>

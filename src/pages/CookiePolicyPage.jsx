@@ -1,3 +1,4 @@
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/cookieConsent.css";
@@ -5,6 +6,7 @@ import "../styles/cookieConsent.css";
 export default function CookiePolicyPage({ onNavigate }) {
   return (
     <div className="cookie-policy-page">
+      <Seo title="Cookie Policy" description="Read Save Medha Foundation's cookie policy to understand how we use cookies on our website." path="/cookie-policy" />
       <Navbar currentPage="cookie-policy" onNavigate={onNavigate} />
       <main className="cookie-policy">
         <header className="cookie-policy__header">

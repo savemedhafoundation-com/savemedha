@@ -63,7 +63,7 @@ const Footer = ({ onNavigate }) => {
 
   const navLinks2 = [
     { name: "BLOGS", key: "blogs", href: "/blogs" },
-    { name: "CASE STUDIES", key: "case-studies", href: "/case-studies" },
+    // { name: "CASE STUDIES", key: "case-studies", href: "/case-studies" },
     { name: "E-BOOK", key: "ebook", href: "/ebook" },
     { name: "CAREERS", key: "careers", href: "/careers" },
     { name: "CONTACT", key: "locateus", href: "/contact-us" },

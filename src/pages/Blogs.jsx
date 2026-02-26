@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BlogPageSkeleton from "../components/BlogPageSkeleton";
@@ -216,6 +217,7 @@ export default function Blogs({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <Seo title="Blogs" description="Read expert articles on Natural Immunotherapy, cancer care, and holistic health from Save Medha Foundation." path="/blogs" />
       <Navbar currentPage="blogs" onNavigate={onNavigate} />
 
       <main className="pb-8 blog-main">

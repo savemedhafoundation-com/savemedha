@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import internshipImage from "../assets/Photo/internship.jpg";
 import { useEffect, useRef } from "react";
@@ -234,6 +235,7 @@ const CoverflowCarousel = () => {
 export default function CareersPage({ onNavigate }) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-white">
+      <Seo title="Careers" description="Join Save Medha Foundation's mission to fight cancer. Explore internship and career opportunities in natural health and research." path="/careers" />
       <Navbar currentPage="careers" onNavigate={onNavigate} />
 
       <main>

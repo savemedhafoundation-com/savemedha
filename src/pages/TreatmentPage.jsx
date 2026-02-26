@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import TreatmentBanner from "../components/TreatmentBanner";
@@ -28,6 +29,7 @@ export default function TreatmentPage({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Seo title="Natural Immunotherapy Treatment" description="Discover Save Medha Foundation's holistic Natural Immunotherapy approach to treating cancer and chronic diseases." path="/treatment" />
       <Navbar currentPage="treatment" onNavigate={onNavigate} />
 
       <main className="flex flex-col">

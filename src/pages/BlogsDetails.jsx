@@ -19,7 +19,8 @@ import { fetchBlogPosts } from "../service/api";
 const RELATED_BLOGS_BANNER_URL =
   "https://res.cloudinary.com/savemedha/image/upload/v1770272630/Rectangle_745_e4t1nx.png";
 import insideBlogsBanner2 from "../assets/Photo/insideblogsbanner2.jpeg";
-import {Seo} from "../components/Seo";
+import { Seo } from "../components/Seo";
+import { Schema } from "../components/Schema";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
@@ -96,11 +97,6 @@ export default function BlogsDetails({ onNavigate }) {
   const commentsRef = useRef(null);
   const shareMenuRef = useRef(null);
   const trendingScrollRef = useRef(null);
-
-
-  useEffect(()=>{
-    Seo({title:blog?.title, description:blog?.title, path:`/blogs/${blog?.slug}`})
-  },[blog])
 
   useEffect(() => {
     let cancelled = false;
@@ -613,6 +609,8 @@ export default function BlogsDetails({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <Seo title={blog?.title} description={blog?.excerpt || blog?.description || blog?.title} path={"/blogs/" + (blog?.slug || slug)} />
+      <Schema type="article" article={{ title: blog?.title, description: blog?.excerpt || blog?.description || blog?.title, url: "https://savemedha.com/blogs/" + (blog?.slug || slug), image: blog?.coverImage || blog?.image, datePublished: blog?.createdAt, dateModified: blog?.updatedAt }} />
       <Navbar currentPage="blogs" onNavigate={onNavigate} />
 
       <main className="pb-16 blog-main">

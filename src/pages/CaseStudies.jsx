@@ -1,3 +1,4 @@
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import heroImage from "../assets/Photo/Rectangle 750.png";
@@ -49,6 +50,7 @@ export default function CaseStudies({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-[#f5f5f5] text-slate-900">
+      <Seo title="Case Studies" description="Read patient recovery stories and case studies of cancer treatment through Natural Immunotherapy at Save Medha Foundation." path="/case-studies" />
       <Navbar currentPage="case-studies" onNavigate={onNavigate} />
 
       <main>

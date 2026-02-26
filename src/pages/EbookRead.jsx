@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import { fetchEbooks } from "../service/api";
 import { getEbookSlug, normalizeEbook, normalizeEbookResponse } from "../utils/ebook";
@@ -63,6 +64,7 @@ export default function EbookRead({ onNavigate }) {
 
   return (
     <div className="min-h-screen bg-white">
+      <Seo title={book?.title || "Read E-Book"} path={"/ebook/read/" + (slug || "")} />
       <Navbar currentPage="ebook" onNavigate={onNavigate} />
 
       <main>

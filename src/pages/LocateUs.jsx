@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { MdMyLocation } from "react-icons/md";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import { ImLocation } from "react-icons/im";
 import { GoPin } from "react-icons/go";
@@ -8,16 +9,17 @@ import Footer from "../components/Footer";
 import ContactUsBanner from "../components/ContactUsBanner";
 import ContactGetInTouchSection from "../components/ContactGetInTouchSection";
 // import {contactcall} from "../assets/Photo/contactcal.png";
+import headsetSupportImage from "../assets/Photo/young_woman_in_headset_using_laptop_and_taking_notes-removebg-preview.png";
 import { MdEmail } from "react-icons/md";
 import { MdPeopleAlt } from "react-icons/md";
 import { FaLinkedin } from "react-icons/fa";
 import { signInWithPhoneNumber } from "firebase/auth";
 import { createRecaptcha, clearRecaptcha, auth } from "../Firebase/Setup";
 // import {contactusBanner} from "../assets/Photo/Contactusbanner.png";
-const HEADSET_SUPPORT_IMAGE =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272648/young_woman_in_headset_using_laptop_and_taking_notes_vyijul.png";
+
 const RECTANGLE_265_URL =
   "https://res.cloudinary.com/savemedha/image/upload/v1770956304/Rectangle1_mlebrp.jpg";
+const HEADSET_SUPPORT_IMAGE = headsetSupportImage;
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)
 const getDistance = (lat1, lon1, lat2, lon2) => {
@@ -387,6 +389,7 @@ const sendOtp = async () => {
 
 	  return (
     <>
+      <Seo title="Contact Us" description="Get in touch with Save Medha Foundation. Find our location, phone, and email for inquiries about Natural Immunotherapy treatment." path="/contact-us" />
       <Navbar currentPage="locateus" onNavigate={onNavigate} />
       <ContactUsBanner />
       <ContactGetInTouchSection />

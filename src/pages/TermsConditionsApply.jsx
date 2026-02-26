@@ -1,9 +1,11 @@
+import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function TermsConditionsApply({ onNavigate }) {
   return (
     <div className="min-h-screen bg-[#f7faf4] text-gray-900">
+      <Seo title="Terms & Conditions" description="Read the terms and conditions governing the use of the Save Medha Foundation website and services." path="/terms-conditions-apply" />
       <Navbar currentPage="terms-conditions-apply" onNavigate={onNavigate} />
       <main className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-10 py-12 sm:py-16">
         <header className="space-y-4 border-b border-[#dfe8d8] pb-6">
