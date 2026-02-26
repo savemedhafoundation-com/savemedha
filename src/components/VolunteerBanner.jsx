@@ -293,6 +293,18 @@ export default function VolunteerBanner() {
                 >
                   we are looking for the best people!
                 </p>
+
+                {/* Tablet-only CTA — visible at md, hidden at lg */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStatus("");
+                    setIsVolunteerModalOpen(true);
+                  }}
+                  className="hidden md:block lg:hidden cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-lg font-semibold px-10 py-4 rounded-[20px] mt-6"
+                >
+                  BECOME OUR VOLUNTEER
+                </button>
               </div>
 
               {/* RIGHT IMAGE */}
@@ -301,7 +313,7 @@ export default function VolunteerBanner() {
           </div>
 
           {/* CTA BUTTON */}
-	          <div className="relative z-20 mt-6 flex justify-center md:justify-end md:pr-6 lg:mt-0 lg:absolute lg:top-[520px] lg:right-1 lg:pr-0 lg:-translate-x-1/2">
+	          <div className="relative z-20 mt-6 flex md:hidden lg:flex justify-center lg:mt-0 lg:absolute lg:top-[520px] lg:right-1 lg:pr-0 lg:-translate-x-1/2">
             <button
               type="button"
               onClick={() => {

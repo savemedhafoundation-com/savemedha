@@ -1,21 +1,22 @@
+import { memo, useCallback } from "react";
 import organs from "../data/organs";
 import topRightDecoration from "../assets/Photo/Group 9291.png";
 import "./BodyMap.css";
 
-const BodyMap = ({ onOrganSelect }) => {
-  const handleSelect = (organKey) => {
+const BodyMap = memo(({ onOrganSelect }) => {
+  const handleSelect = useCallback((organKey) => {
     const organ = organs[organKey];
     if (organ && onOrganSelect) {
       onOrganSelect(organ);
     }
-  };
+  }, [onOrganSelect]);
 
-  const handleKeyDown = (event, organKey) => {
+  const handleKeyDown = useCallback((event, organKey) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       handleSelect(organKey);
     }
-  };
+  }, [handleSelect]);
 
   return (
     // this div will take full width of the screen
@@ -695,6 +696,6 @@ Z
       </div>
     </div>
   );
-};
+});
 
 export default BodyMap;

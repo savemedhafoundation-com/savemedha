@@ -1,4 +1,4 @@
-import React from "react";
+import { memo, useCallback } from "react";
 import organs from "../data/organs";
 import topRightDecoration from "../assets/Photo/Group 9291.png";
 import "./FemaleBodyMap.css";
@@ -45,20 +45,20 @@ import "./FemaleBodyMap.css";
 //   },
 // };
 
-const FemaleBodyMap = ({ onOrganSelect }) => {
-  const handleSelect = (organKey) => {
+const FemaleBodyMap = memo(({ onOrganSelect }) => {
+  const handleSelect = useCallback((organKey) => {
     const organ = organs[organKey];
     if (organ && onOrganSelect) {
       onOrganSelect(organ);
     }
-  };
+  }, [onOrganSelect]);
 
-  const handleKeyDown = (event, organKey) => {
+  const handleKeyDown = useCallback((event, organKey) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       handleSelect(organKey);
     }
-  };
+  }, [handleSelect]);
 
   return (
     <div className="body-map-wrapper relative w-full overflow-visible">
@@ -813,6 +813,6 @@ Z
       </div>
     </div>
   );
-};
+});
 
 export default FemaleBodyMap;
