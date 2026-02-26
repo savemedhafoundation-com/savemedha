@@ -176,11 +176,12 @@ export default function VolunteerBanner() {
             </h4>
            
             <p className="mt-10 text-[14px] leading-relaxed text-slate-700">
-              Fighting cancer the natural way   through{" "}
+              Fighting cancer the natural way with{" "}
               <span className="font-semibold text-[#7BCF2A]">
                 Natural Immunotherapy
               </span>{" "}
-              that rebuilds your body’s defense and restores lasting health.
+             
+             is dsigned to support immune function.
             </p>
 
             <p className="mt-4 text-[18px] font-semibold text-[#2F5BD7]">
