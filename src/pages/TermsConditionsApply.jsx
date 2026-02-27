@@ -16,8 +16,7 @@ export default function TermsConditionsApply({ onNavigate }) {
             Terms &amp; Conditions Apply
           </h1>
           <div className="grid gap-2 text-sm text-gray-600 sm:grid-cols-2">
-            <p>Effective Date: [DD Month YYYY]</p>
-            <p>Last Updated: [DD Month YYYY]</p>
+            
           </div>
           <p className="text-base text-gray-700 leading-relaxed">
             These Terms &amp; Conditions apply to the use of the Save Medha
