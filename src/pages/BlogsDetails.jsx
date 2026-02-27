@@ -629,7 +629,7 @@ export default function BlogsDetails({ onNavigate }) {
         <section ref={heroRef} className="max-w-6xl mx-auto px-4 pt-8">
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-3">
-              <div className="h-[32.25rem] overflow-hidden rounded-xl shadow border text-[#74C425] border-gray-200 bg-white">
+              <div className="h-48 sm:h-72 lg:h-[32.25rem] overflow-hidden rounded-xl shadow border text-[#74C425] border-gray-200 bg-white">
                 <img
                   src={meta.banner}
                   alt={meta.title}
@@ -728,13 +728,13 @@ export default function BlogsDetails({ onNavigate }) {
                   )}
                 </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-[#74C425] leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#74C425] leading-tight break-words">
                 {meta.title}
               </h1>
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-2xl bg-[#74C425] text-white p-6 shadow">
+              <div className="rounded-2xl bg-[#74C425] text-white p-4 md:p-6 shadow">
                 <h3 className="text-xl font-bold mb-2">
                   Request a call back from us!
                 </h3>
@@ -742,7 +742,7 @@ export default function BlogsDetails({ onNavigate }) {
                   Fill in the form below to request a call back to get further
                   assistance from us.
                 </p>
-                <form className="space-y-5 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                <form className="space-y-5 bg-white p-4 md:p-6 rounded-2xl shadow-xl border border-gray-100">
 
   {/* Name */}
   <div className="w-full">
@@ -796,7 +796,7 @@ export default function BlogsDetails({ onNavigate }) {
                     href={ebookReferenceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold font-poppins text-sm shadow hover:bg-[#e1951c] transition-all translate-x-17 duration-300 hover:shadow-lg"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold font-poppins text-sm shadow hover:bg-[#e1951c] transition-all lg:translate-x-17 duration-300 hover:shadow-lg"
                   >
                     <IoLogoAmazon size={26} className="text-white" />
                     Ebook Reference
@@ -808,11 +808,11 @@ export default function BlogsDetails({ onNavigate }) {
         </section>
 
         {/* Content */}
-        <section className="max-w-6xl mx-auto px-4 pt-8">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <section className="max-w-6xl mx-auto px-4 sm:px-5 pt-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
             <article
               ref={contentRef}
-              className="prose prose-slate md:prose-lg text-slate-800 font-sen break-words prose-headings:font-poppins prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-p:font-sen prose-p:my-5 prose-p:leading-[1.8] prose-li:font-sen prose-li:my-2 prose-li:leading-[1.8] prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-blockquote:font-sen prose-img:rounded-xl prose-img:shadow-sm"
+              className="prose prose-sm sm:prose-base md:prose-lg prose-slate w-full min-w-0 max-w-none text-slate-800 font-sen break-words [overflow-wrap:anywhere] prose-headings:font-poppins prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-headings:break-words prose-p:font-sen prose-p:my-5 prose-p:leading-[1.8] prose-p:break-words prose-li:font-sen prose-li:my-2 prose-li:leading-[1.8] prose-li:break-words prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:break-all prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-blockquote:font-sen prose-img:w-full prose-img:max-w-full prose-img:h-auto prose-img:rounded-xl prose-img:shadow-sm prose-pre:max-w-full prose-pre:overflow-x-auto prose-pre:whitespace-pre-wrap prose-pre:break-words prose-code:break-words"
             >
               {contentParts.map((part, index) => (
                 <Fragment key={`content-part-${index}`}>

@@ -16,7 +16,9 @@ const PLACEHOLDER_PATTERNS = [
 
 const INLINE_IMAGE_STYLE = {
   display: "block",
-  minWidth: "380px",
+  width: "100%",
+  maxWidth: "100%",
+  minWidth: 0,
   height: "auto",
   maxHeight: "520px",
   margin: "1.5rem 0",
@@ -191,6 +193,16 @@ const renderNode = (node, images, keyPrefix) => {
   }
 
   const props = mapAttributes(node.attributes);
+  if (tagName === "img") {
+    props.style = {
+      ...(props.style || {}),
+      maxWidth: "100%",
+      height: "auto",
+    };
+    if (typeof props.loading === "undefined") {
+      props.loading = "lazy";
+    }
+  }
   const children = renderNodes([...node.childNodes], images, keyPrefix);
 
   return createElement(

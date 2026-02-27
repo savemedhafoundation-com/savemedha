@@ -230,9 +230,9 @@ export default function Blogs({ onNavigate }) {
                 style={{ backgroundImage: `url(${blogBanner})` }}
               >
                 <div className="absolute inset-0 " aria-hidden />
-                <div className="ml-auto flex flex-col items-center gap-4 px-10 py-10 md:px-10 md:py-14 text-right ">
-                  <h2 className="text-7xl  text-[#000000]">BLOGS</h2>
-                  <p className="text-3xl text-blue-900 tracking-wide">
+                <div className="ml-auto flex flex-col items-center gap-4 px-4 py-8 md:px-10 md:py-14 text-right ">
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl text-[#000000]">BLOGS</h2>
+                  <p className="text-xl md:text-3xl text-blue-900 tracking-wide">
                     On Health
                   </p>
                   <button className="bg-[#74C425] text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-[#155300] transition">
@@ -246,7 +246,7 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* Latest + Callback + Trending */}
-        <section className="max-w-7xl  mx-auto px-12 md:px-2 pt-10 pb-12">
+        <section className="max-w-7xl  mx-auto px-4 md:px-2 pt-10 pb-12">
           {showErrorInline && (
             <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               Unable to load blogs
@@ -284,7 +284,7 @@ export default function Blogs({ onNavigate }) {
               <img
                 src={latestPost?.coverImage || blogBanner}
                 alt={latestPost?.title || "Latest blog"}
-                className="w-full h-[35.25rem] object-cover"
+                className="w-full h-48 sm:h-72 md:h-[35.25rem] object-cover"
                 loading="eager"
               />
               <div className="p-6 space-y-3">
@@ -320,7 +320,7 @@ export default function Blogs({ onNavigate }) {
 
             {/* Callback + Trending */}
             <div className="space-y-6">
-              <div className="rounded-lg bg-[#74C425] text-white p-6 shadow">
+              <div className="rounded-lg bg-[#74C425] text-white p-4 md:p-6 shadow">
                 <h4 className="text-xl font-bold mb-3">
                   Request a call back from us!
                 </h4>
@@ -328,7 +328,7 @@ export default function Blogs({ onNavigate }) {
                   Fill in the form below to request a call back to get further
                   assistance from us.
                 </p>
-                <form className="space-y-5 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                <form className="space-y-5 bg-white p-4 md:p-6 rounded-2xl shadow-xl border border-gray-100">
                   {/* Name */}
                   <div className="relative">
                     <input
@@ -426,7 +426,7 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* All Blogs */}
-        <section className="max-w-7xl mx-auto px-12 md:px-2 pb-12">
+        <section className="max-w-7xl mx-auto px-4 md:px-2 pb-12">
           <div className="flex items-center gap-3 mb-4">
             <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
               All Blogs
@@ -532,7 +532,7 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* Categories */}
-        <section className="max-w-7xl mx-auto px-12 md:px-4 pb-12">
+        <section className="max-w-7xl mx-auto px-4 pb-12">
           <div className="flex items-center gap-3 mb-6">
             <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
               All Category
@@ -562,21 +562,21 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         {/* Testimonials banner */}
-        <section className="max-w-7xl mx-auto px-12 md:px-2 pb-12">
+        <section className="max-w-7xl mx-auto px-4 md:px-2 pb-12">
           <div className="rounded-xl overflow-hidden bg-gradient-to-r from-[#3e3db4] to-[#2a2a88] text-white shadow-lg">
             <div className="grid md:grid-cols-2 items-center md:items-stretch justify-items-center md:justify-items-stretch text-center md:text-left">
-              <div className="p-8 md:p-10 flex flex-col items-center md:items-start gap-4">
+              <div className="p-5 md:p-10 flex flex-col items-center md:items-start gap-4">
                 <p className="uppercase text-xs tracking-[0.25em] text-white/80">
                   TESTIMONIALS
                 </p>
-                <h3 className="text-3xl font-bold mt-2 mb-6 leading-tight">
+                <h3 className="text-xl sm:text-3xl font-bold mt-2 mb-6 leading-tight">
                   How will you benefit from our blogs?
                 </h3>
                 <button className="bg-[#74C425] text-white font-semibold px-5 py-2 rounded shadow hover:bg-[#155300] transition">
                   Know more
                 </button>
               </div>
-              <div className="p-8 md:p-10 text-center md:text-left">
+              <div className="p-5 md:p-10 text-center md:text-left">
                 <ul className="list-disc list-inside space-y-2 text-sm leading-relaxed max-w-2xl mx-auto">
                   <li>
                     Our blogs nourish your inner terrain and sharpen your

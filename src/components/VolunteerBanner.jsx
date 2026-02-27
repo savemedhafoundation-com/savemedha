@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import Hand1 from "../assets/Photo/hand1.png";
 import Hand2 from "../assets/Photo/Hand2.png";
 import People3 from "../assets/Photo/pepole3.png";
@@ -66,9 +67,10 @@ export default function VolunteerBanner() {
   const taglineClassName = "whitespace-nowrap mx-auto md:mx-0 lg:ml-auto";
 
   const [isVolunteerModalOpen, setIsVolunteerModalOpen] = useState(false);
-  const [volunteerForm, setVolunteerForm] = useState({ name: "", phone: "" });
+  const [volunteerForm, setVolunteerForm] = useState({ email: "" });
   const [status, setStatus] = useState("");
-  const nameInputRef = useRef(null);
+  const [isError, setIsError] = useState(false);
+  const emailInputRef = useRef(null);
 
   useEffect(() => {
     if (!isVolunteerModalOpen) return;
@@ -78,7 +80,7 @@ export default function VolunteerBanner() {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    nameInputRef.current?.focus();
+    emailInputRef.current?.focus();
 
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isVolunteerModalOpen]);
@@ -90,10 +92,30 @@ export default function VolunteerBanner() {
     setVolunteerForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setStatus("Thank you! We will contact you soon.");
-    setVolunteerForm({ name: "", phone: "" });
+    setStatus("");
+    setIsError(false);
+
+    const email = volunteerForm.email.trim();
+    const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
+
+    if (!isValidEmail) {
+      setIsError(true);
+      setStatus("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      await axios.post("https://savemedhabackend.vercel.app/api/newsletter", {
+        email,
+      });
+      setStatus("Subscribed successfully.");
+      setVolunteerForm({ email: "" });
+    } catch (error) {
+      setIsError(true);
+      setStatus("Subscription failed. Please try again.");
+    }
   };
 
 	  return (
@@ -358,46 +380,28 @@ export default function VolunteerBanner() {
                   Become Our Volunteer
                 </h3>
                 <p className="mt-2 text-sm text-slate-600">
-                  Share your details and our team will reach out.
+                  Share your email and our team will reach out.
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                   <div>
                     <label
-                      htmlFor="volunteer-name"
+                      htmlFor="volunteer-email"
                       className="block text-sm font-medium text-slate-700"
                     >
-                      Full name
+                      Email address
                     </label>
                     <input
-                      ref={nameInputRef}
-                      id="volunteer-name"
-                      name="name"
-                      value={volunteerForm.name}
+                      ref={emailInputRef}
+                      id="volunteer-email"
+                      name="email"
+                      type="email"
+                      inputMode="email"
+                      value={volunteerForm.email}
                       onChange={handleChange}
                       required
                       className="mt-2 w-full rounded-xl bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="volunteer-phone"
-                      className="block text-sm font-medium text-slate-700"
-                    >
-                      Phone number
-                    </label>
-                    <input
-                      id="volunteer-phone"
-                      name="phone"
-                      type="tel"
-                      inputMode="tel"
-                      value={volunteerForm.phone}
-                      onChange={handleChange}
-                      required
-                      className="mt-2 w-full rounded-xl bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
-                      placeholder="Enter your phone number"
+                      placeholder="Enter your email address"
                     />
                   </div>
 
@@ -418,7 +422,11 @@ export default function VolunteerBanner() {
                   </div>
 
                   {status && (
-                    <p className="pt-2 text-center text-sm font-medium text-green-700">
+                    <p
+                      className={`pt-2 text-center text-sm font-medium ${
+                        isError ? "text-red-600" : "text-green-700"
+                      }`}
+                    >
                       {status}
                     </p>
                   )}
