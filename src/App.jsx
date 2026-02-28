@@ -29,11 +29,7 @@ const OngoingEvents = lazy(() => import("./pages/OngoingEvents"));
 const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage"));
 const TermsConditionsApply = lazy(() => import("./pages/TermsConditionsApply"));
 
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-white">
-    <div className="w-8 h-8 border-4 border-[#74C425] border-t-transparent rounded-full animate-spin" />
-  </div>
-);
+const PageLoader = () => <div className="min-h-screen bg-white" />;
 // demo commit
 
 const API_BASE_URL =
