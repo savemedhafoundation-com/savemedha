@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingHeart } from "@fortawesome/free-solid-svg-icons";
 
 const SUPPORT_CAUSE_IMG_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272549/BANNER_26_efsjhk.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770272549/BANNER_26_efsjhk.png";
 
 const VolunteerAndSupportSection = ({ onNavigate }) => {
   return (

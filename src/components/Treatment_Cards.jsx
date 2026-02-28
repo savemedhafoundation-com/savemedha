@@ -1,36 +1,36 @@
 import React, { useState } from "react";
 const CANCER_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266153/CANCER_xmjtjj.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266153/CANCER_xmjtjj.png";
 const CONSTIPATION_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266153/Constipation_dmizbj.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266153/Constipation_dmizbj.png";
 const DIABETICS_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/DIABETICS_bbhnpl.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/DIABETICS_bbhnpl.png";
 const GENITAL_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/GENITAL_zngpaj.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/GENITAL_zngpaj.png";
 const HAIR_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/HAIR_mfmdca.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/HAIR_mfmdca.png";
 const HEART_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266154/HEART_dgtoqd.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/HEART_dgtoqd.png";
 const INDIGESTION_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266155/INDIGESTION_lblubd.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266155/INDIGESTION_lblubd.png";
 const KIDNEY_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266157/KIDNEY_t9qnrc.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266157/KIDNEY_t9qnrc.png";
 const LIVER_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266158/LIVER_i6hqhz.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266158/LIVER_i6hqhz.png";
 const NERVE_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266159/NERVE_vvturs.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266159/NERVE_vvturs.png";
 const OTHER_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266159/OTHER_xaekqs.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266159/OTHER_xaekqs.png";
 const SKIN_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266162/SKIN_yvww0a.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266162/SKIN_yvww0a.png";
 const SPINAL_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266163/SPINAL_g4itqj.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266163/SPINAL_g4itqj.png";
 const THALASSEMIA_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266163/THALASSEMIA_lkc840.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266163/THALASSEMIA_lkc840.png";
 const THYROID_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266166/THYROID_lqqtpt.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266166/THYROID_lqqtpt.png";
 const VITILIGO_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770266166/VITILIGO_vkp4hr.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266166/VITILIGO_vkp4hr.png";
 
 const CARD_IMAGE =
   "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=600&q=80";

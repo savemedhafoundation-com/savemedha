@@ -18,7 +18,7 @@ import { createRecaptcha, clearRecaptcha, auth } from "../Firebase/Setup";
 // import {contactusBanner} from "../assets/Photo/Contactusbanner.png";
 
 const RECTANGLE_265_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770956304/Rectangle1_mlebrp.jpg";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770956304/Rectangle1_mlebrp.jpg";
 const HEADSET_SUPPORT_IMAGE = headsetSupportImage;
 
 // Haversine formula to calculate distance between two lat/lng points (in KM)

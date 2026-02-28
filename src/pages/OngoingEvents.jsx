@@ -6,7 +6,7 @@ import kidsImage from "../assets/Photo/kid.png";
 import donationImage from "../assets/Photo/event/EVENT BOX/1.png";
 import handsImage from "../assets/Photo/event/EVENT BOX/2.png";
 const RECTANGLE_265_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770274809/Rectangle_265_dsoage.jpg";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770274809/Rectangle_265_dsoage.jpg";
 import charityImage from "../assets/Photo/Jar.png";
 import helpImage from "../assets/Photo/event/EVENT BOX/4.png";
 

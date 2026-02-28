@@ -7,7 +7,7 @@ import RectangleBlue1 from "../assets/Photo/rectangleblue1.png";
 import RectangleBlue2 from "../assets/Photo/rectangleblue2.png";
 
 const VOLUNTEER_BG_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272579/Group_uqeqer.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770272579/Group_uqeqer.png";
 
 export function JoinUsText({ className = "", variant = "default" }) {
   const ref = useRef(null);

@@ -17,7 +17,7 @@ import {
 import { MdEmail } from "react-icons/md";
 import { fetchBlogPosts } from "../service/api";
 const RELATED_BLOGS_BANNER_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272630/Rectangle_745_e4t1nx.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770272630/Rectangle_745_e4t1nx.png";
 import insideBlogsBanner2 from "../assets/Photo/insideblogsbanner2.jpeg";
 import { Seo } from "../components/Seo";
 import { Schema } from "../components/Schema";
@@ -27,10 +27,10 @@ const placeholderThumb = "https://placehold.co/400x260";
 const RELATED_BLOG_BANNERS = [RELATED_BLOGS_BANNER_URL, insideBlogsBanner2];
 const RELATED_BLOG_BANNER_ROTATE_MS = 5000;
 const BLOG_AD_IMAGES = [
-  "https://res.cloudinary.com/savemedha/image/upload/v1769683255/WEBSITE_AD_2_ficitx.jpg",
-  "https://res.cloudinary.com/savemedha/image/upload/v1769683255/WEBSITE_AD_znyf0a.jpg",
-  "https://res.cloudinary.com/savemedha/image/upload/v1769683254/6_tjewb0.jpg",
-  "https://res.cloudinary.com/savemedha/image/upload/v1769683254/5_naq52q.jpg"];
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1769683255/WEBSITE_AD_2_ficitx.jpg",
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1769683255/WEBSITE_AD_znyf0a.jpg",
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1769683254/6_tjewb0.jpg",
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1769683254/5_naq52q.jpg"];
 const BLOG_AD_FALLBACK = RELATED_BLOGS_BANNER_URL;
 const BLOG_AD_ROTATE_MS = 5000;
 const RESOURCE_ADS_TOGGLE_MS = 10000;

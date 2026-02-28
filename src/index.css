@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=KoHo:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;600;700&family=Sen:wght@400;600;700;800&family=Shippori+Antique+B1&family=Source+Sans+3:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Shippori+Antique+B1:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@400;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;600;700&display=swap');
+/* Google Fonts are loaded via <link> tags in index.html for better performance */
 
 
 @import "tailwindcss";

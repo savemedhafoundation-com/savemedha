@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
 const HERO_BACKGROUND_URL =
-  'https://res.cloudinary.com/savemedha/image/upload/v1770272544/background_oumysq.jpg';
+  'https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1920/v1770272544/background_oumysq.jpg';
 
 const highlightText = [
   "Medha was a vibrant, spirited 14-year-old girl from Nator, Bangladesh, who had a rare gift, as she lit up every room she entered with her innocent smile and boundless curiosity. A dreamer with an artist's heart, her life was filled with joy, school, friends, and laughter until her world was abruptly changed by a diagnosis of blood cancer. What followed was a painful journey of hospital stays, rigorous chemotherapy, and unimaginable struggle. Despite the physical pain that weighed heavy in her deep, soulful eyes, Medha chose to smile - her light refusing to dim. Support for her battle came from near and far, touching hearts across the world. Renowned figures like Ratan Tata and Sonu Sood, Salman Khan, known for their generosity, extended their aid. But the disease took its toll, and Medha, despite all the love and efforts surrounding her, took her last breath, leaving behind a void that words could never fill.",

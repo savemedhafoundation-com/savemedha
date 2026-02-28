@@ -13,11 +13,11 @@ import DoctorImg from "../assets/Photo/doc.png";
 import RedRibbonImg from "../assets/Photo/redreben.png";
 const RED_RIBBON_URL = RedRibbonImg;
 const BACKGROUND_IMG_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272543/backgroud_e6kehs.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770272543/backgroud_e6kehs.png";
 const COMPUTER_IMAGE_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272630/Remote_work_and_video_call_with_colleagues_qv2tvk.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770272630/Remote_work_and_video_call_with_colleagues_qv2tvk.png";
 const BG_IMG_OF_VIDEO_SECTION_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272552/bgimgofvideosection_fhbtmu.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770272552/bgimgofvideosection_fhbtmu.png";
 import Rectangle374 from "../assets/Photo/Rectangle 374.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";

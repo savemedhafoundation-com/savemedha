@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   Navigate,
@@ -8,27 +8,32 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import Home from "./pages/Home";
-import AboutUs from "./pages/AboutUs";
-import TreatmentPage from "./pages/TreatmentPage";
-import Treatmentquestion from "./pages/Treatmentquestion";
-
-import Blogs from "./pages/Blogs";
-import Donate from "./pages/Donate";
-import ApplyJob from "./pages/ApplyJob";
 import { navigate } from "./store";
-import LocateUs from "./pages/LocateUs";
-import BlogsDetails from "./pages/BlogsDetails";
-import EbookPage from "./pages/EbookPage";
-import EbookRead from "./pages/EbookRead";
-// import CaseStudies from "./pages/CaseStudies";
-import CareersPage from "./pages/CareersPage";
-import EventsProjects from "./pages/EventsProjects";
-import OngoingEvents from "./pages/OngoingEvents";
-import CookiePolicyPage from "./pages/CookiePolicyPage";
-import TermsConditionsApply from "./pages/TermsConditionsApply";
 import CookieBanner from "./components/CookieBanner";
 import TrackUserGeo from "./components/TrackUserGeo";
+
+const Home = lazy(() => import("./pages/Home"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const TreatmentPage = lazy(() => import("./pages/TreatmentPage"));
+const Treatmentquestion = lazy(() => import("./pages/Treatmentquestion"));
+const Blogs = lazy(() => import("./pages/Blogs"));
+const Donate = lazy(() => import("./pages/Donate"));
+const ApplyJob = lazy(() => import("./pages/ApplyJob"));
+const LocateUs = lazy(() => import("./pages/LocateUs"));
+const BlogsDetails = lazy(() => import("./pages/BlogsDetails"));
+const EbookPage = lazy(() => import("./pages/EbookPage"));
+const EbookRead = lazy(() => import("./pages/EbookRead"));
+const CareersPage = lazy(() => import("./pages/CareersPage"));
+const EventsProjects = lazy(() => import("./pages/EventsProjects"));
+const OngoingEvents = lazy(() => import("./pages/OngoingEvents"));
+const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage"));
+const TermsConditionsApply = lazy(() => import("./pages/TermsConditionsApply"));
+
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="w-8 h-8 border-4 border-[#74C425] border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 // demo commit
 
 const API_BASE_URL =
@@ -295,6 +300,7 @@ function App() {
     <div className="app-scale-wrapper">
       <CookieBanner />
       <TrackUserGeo />
+      <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<Home onNavigate={handleNavigate} />} />
         <Route
@@ -368,6 +374,7 @@ function App() {
         <Route path="/locate-us" element={<Navigate to="/contact-us" replace />} />
         <Route path="*" element={<Home onNavigate={handleNavigate} />} />
       </Routes>
+      </Suspense>
     </div>
   );
 }

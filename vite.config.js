@@ -55,5 +55,23 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), tailwindcss(), razorpayApiDevMiddleware()],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            "vendor-react": ["react", "react-dom", "react-router-dom"],
+            "vendor-redux": ["@reduxjs/toolkit", "react-redux"],
+            "vendor-firebase": ["firebase/app", "firebase/auth"],
+            "vendor-animation": ["framer-motion", "gsap"],
+            "vendor-icons": [
+              "react-icons",
+              "lucide-react",
+              "@fortawesome/react-fontawesome",
+            ],
+          },
+        },
+      },
+      chunkSizeWarningLimit: 600,
+    },
   };
 });

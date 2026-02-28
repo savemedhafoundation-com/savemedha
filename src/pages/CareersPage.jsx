@@ -6,17 +6,17 @@ import internshipImage from "../assets/Photo/internship.jpg";
 import { useEffect, useRef } from "react";
 
 const CLINICAL_RESEARCH_IMG =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770268797/scientist-woman-doctor-holding-glass-flask-analyzing-liquid-solution_1_gs6jud.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268797/scientist-woman-doctor-holding-glass-flask-analyzing-liquid-solution_1_gs6jud.png";
 const NUTRITION_IMMUNITY_IMG =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770268796/Mask_group_v8fbar.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268796/Mask_group_v8fbar.png";
 const DATA_CASE_DOC_IMG =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770268796/Mask_group_1_mjllb0.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268796/Mask_group_1_mjllb0.png";
 const MEDIA_AWARENESS_IMG =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770268796/Mask_group_2_m4u60u.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268796/Mask_group_2_m4u60u.png";
 const WEB_TECH_VOLUNTEER_IMG =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770268797/Mask_group_3_vrxctr.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268797/Mask_group_3_vrxctr.png";
 const CAREERS_HERO_IMG =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770271124/carrer_hero_uhicbz.jpg";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1920/v1770271124/carrer_hero_uhicbz.jpg";
 
 const WHY_CARDS = [
   {
@@ -193,23 +193,58 @@ function JobCard({ title, type, location, image, index }) {
   );
 }
 
+// Dynamically loads a script tag and resolves when done
+const loadScript = (src, id) =>
+  new Promise((resolve, reject) => {
+    if (document.getElementById(id)) return resolve();
+    const s = document.createElement("script");
+    s.id = id;
+    s.src = src;
+    s.async = true;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.body.appendChild(s);
+  });
+
+const loadLink = (href, id) => {
+  if (document.getElementById(id)) return;
+  const l = document.createElement("link");
+  l.id = id;
+  l.rel = "stylesheet";
+  l.href = href;
+  document.head.appendChild(l);
+};
+
 // the flipster slide for the careers page
 const CoverflowCarousel = () => {
   const flipsterRef = useRef(null);
 
   useEffect(() => {
-    if (!window.$ || !window.$.fn.flipster) {
-      return;
-    }
-
-    window.$(flipsterRef.current).flipster({
-      style: "flat",
-      spacing: -0.9,
-      nav: false,
-      buttons: true,
-      loop: true,
-      start: 0,
-    });
+    const init = async () => {
+      try {
+        loadLink(
+          "https://cdn.jsdelivr.net/npm/jquery.flipster@1.1.5/dist/jquery.flipster.min.css",
+          "flipster-css"
+        );
+        await loadScript("https://code.jquery.com/jquery-3.6.0.min.js", "jquery-js");
+        await loadScript(
+          "https://cdn.jsdelivr.net/npm/jquery.flipster@1.1.5/dist/jquery.flipster.min.js",
+          "flipster-js"
+        );
+        if (!flipsterRef.current || !window.$ || !window.$.fn.flipster) return;
+        window.$(flipsterRef.current).flipster({
+          style: "flat",
+          spacing: -0.9,
+          nav: false,
+          buttons: true,
+          loop: true,
+          start: 0,
+        });
+      } catch {
+        // Flipster failed to load — carousel won't initialise but page still works
+      }
+    };
+    init();
   }, []);
 
   return (

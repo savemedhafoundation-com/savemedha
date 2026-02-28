@@ -12,7 +12,7 @@ import {
 import { fallbackEbooks } from "../data/ebookFallback";
 import heroFallbackCover from "../assets/Photo/BOOK1 1.png";
 const HERO_BACKDROP_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770977116/WHITEBOARD_cd4z4f.jpg";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1920/v1770977116/WHITEBOARD_cd4z4f.jpg";
 import greenElement from "../assets/Photo/ELEMENT (1).png";
 import demoEbookCover from "../assets/Photo/3.jpg";
 import demoKindleCover from "../assets/Photo/5.jpg";
@@ -21,10 +21,10 @@ import amazonButtonImage from "../assets/Photo/amazon.png";
 import faqBookImage from "../assets/Photo/bookb.png";
 import contentCoverOne from "../assets/Photo/bookcover1.png";
 const CONTENT_TOC_LAYOUT_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272642/Table_of_contents_layout_in_green_jn0jsn.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770272642/Table_of_contents_layout_in_green_jn0jsn.png";
 import contentCoverThree from "../assets/Photo/bookcover3.png";
 const CONTENT_COVER_TWO_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272629/Rectangle_711_hqmhag.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770272629/Rectangle_711_hqmhag.png";
 
 const PAGE_SIZE = 9;
 const HERO_FALLBACK_COVER = heroFallbackCover;

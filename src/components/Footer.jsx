@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 const SMF_LOGO_WHITE_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272640/smf_logo_white.02_eabqf7.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_300/v1770272640/smf_logo_white.02_eabqf7.png";
 const SEND_ICON_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770272637/send_demitw.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_64/v1770272637/send_demitw.png";
 import {
   Facebook,
   Instagram,

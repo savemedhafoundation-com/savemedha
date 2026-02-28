@@ -1,9 +1,9 @@
 import { memo, useCallback } from "react";
 
 const BG_OFFICE_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770264935/Rectangle_355_ajipoa.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770264935/Rectangle_355_ajipoa.png";
 const ABOUT_FRAME_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/v1770264934/Rectangle_354_yefdzc.png";
+  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770264934/Rectangle_354_yefdzc.png";
 
 // Module-level className constants — defined once, never re-computed on render
 const CLS_FRAME_IMG =
