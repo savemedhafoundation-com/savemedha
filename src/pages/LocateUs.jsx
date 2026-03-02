@@ -498,12 +498,12 @@ const sendOtp = async () => {
         </div>
       </section>
 
-      <div className="min-h-screen bg-gray-50 py-8 sm:py-12 px-4">
+      <div className="min-h-screen bg-gray-50 py-8 sm:py-12 px-4 overflow-x-hidden">
         <div className="max-w-7xl mx-auto">
 
           {/* Query Form Section */}
           <div
-            className="relative bg-cover bg-center rounded-2xl shadow-2xl p-5 sm:p-8 md:p-12 max-w-8xl mx-auto overflow-hidden"
+            className="relative w-full max-w-full bg-cover bg-center rounded-2xl shadow-2xl p-5 sm:p-8 md:p-12 overflow-x-hidden overflow-y-hidden"
             style={{ backgroundImage: `url(${RECTANGLE_265_URL})` }}
           >
             {/* Background dimming layer */}
@@ -520,7 +520,7 @@ const sendOtp = async () => {
 
               <div className="grid md:grid-cols-[2fr_1fr] gap-6 sm:gap-8 items-start">
                 {/* Left: Contact Form */}
-                <form className="space-y-6 bg-[#fbf5fc] py-6 sm:py-8 px-4 sm:px-30 rounded-2xl font-sen">
+                <form className="min-w-0 space-y-6 bg-[#fbf5fc] py-6 sm:py-8 px-4 sm:px-30 rounded-2xl font-sen">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input
                       type="text"
@@ -658,7 +658,7 @@ const sendOtp = async () => {
                 </form>
 
                 {/* Right */}
-                <div className="bg-gradient-to-b from-[#74C425] to-[#385E12] text-white rounded-2xl p-6 sm:p-10 text-center space-y-6 sm:space-y-8 shadow-xl h-full pt-6 sm:pt-10 relative">
+                <div className="min-w-0 overflow-hidden bg-gradient-to-b from-[#74C425] to-[#385E12] text-white rounded-2xl p-6 sm:p-10 text-center space-y-6 sm:space-y-8 shadow-xl h-full pt-6 sm:pt-10 relative">
                   <img
                     src={HEADSET_SUPPORT_IMAGE}
                     alt="Support representative"
@@ -674,7 +674,7 @@ const sendOtp = async () => {
                     <p className="text-base sm:text-lg font-normal font-sen">
                       +91 9800808595
                     </p>
-                    <p className="text-base sm:text-lg font-normal font-sen">
+                    <p className="text-base sm:text-lg font-normal font-sen break-words">
                       info@savemedha.com
                     </p>
                   </div>
@@ -691,7 +691,7 @@ const sendOtp = async () => {
                     <p className="text-base sm:text-lg font-normal font-sen">
                       +91 9800808595
                     </p>
-                    <p className="text-base sm:text-lg font-normal font-sen">
+                    <p className="text-base sm:text-lg font-normal font-sen break-words">
                       info@savemedha.com
                     </p>
                   </div>
