@@ -201,7 +201,7 @@ export default function VolunteerBanner() {
                 Natural Immunotherapy
               </span>{" "}
              
-             is dsigned to support immune function.
+             is designed to support immune function.
             </p>
 
             <p className="mt-4 text-[18px] font-semibold text-[#2F5BD7]">
