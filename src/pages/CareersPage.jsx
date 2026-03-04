@@ -73,9 +73,9 @@ const OPEN_POSITIONS = [
     image: WEB_TECH_VOLUNTEER_IMG,
   },
 ];
-function SectionHeading({ title, subtitle }) {
+function SectionHeading({ title, subtitle, className = "" }) {
   return (
-    <div className="max-w-3xl">
+    <div className={`max-w-3xl ${className}`}>
       <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl font-poppins">
         {title}
       </h2>
@@ -111,85 +111,135 @@ function SectionHeading({ title, subtitle }) {
 function Card({ title, children, className = "" }) {
   return (
     <div
-      className={`rounded-2xl border min-h-[16rem] border-lime-300/80 bg-gradient-to-b from-lime-100/80 via-lime-50/70 to-white p-6 shadow-[0_14px_30px_rgba(22,101,52,0.08)] font-poppins ${className}`}
+      className={`relative min-h-[10rem] rounded-xl border border-[#efb29d] bg-[#f8bfa9]/80 p-4 font-poppins shadow-[0_10px_20px_rgba(15,23,42,0.08)] lg:min-h-[16rem] lg:rounded-2xl lg:border-lime-300/80 lg:bg-gradient-to-b lg:from-lime-100/80 lg:via-lime-50/70 lg:to-white lg:p-6 lg:shadow-[0_14px_30px_rgba(22,101,52,0.08)] ${className}`}
     >
-      <h3 className="text-base font-semibold text-slate-900 pb-5">{title}</h3>
-      <div className="mt-3 text-sm font-semibold leading-relaxed text-slate-600">
+      <h3 className="pb-2 text-sm font-semibold text-slate-900 lg:pb-5 lg:text-base">
+        {title}
+      </h3>
+      <div className="mt-1 text-[11px] font-semibold leading-relaxed text-slate-700 lg:mt-3 lg:text-sm lg:text-slate-600">
         {children}
       </div>
-      {/* fade overlay */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-21 bg-gradient-to-t from-white to-transparent" />
     </div>
   );
 }
 
 function JobCard({ title, type, location, image, index }) {
   const isRightCard = index % 2 === 1;
+  const mobileAlignment = isRightCard ? "flex-row-reverse text-right" : "";
+  const mobileMetaAlignment = isRightCard ? "justify-end" : "justify-start";
+  const mobileButtonAlignment = isRightCard ? "justify-end" : "justify-start";
 
   return (
-    <div
-      className={`
-        rounded-3xl border border-lime-200/80 bg-white p-6
-        shadow-[0_18px_40px_rgba(34,197,94,0.12)]
-        transition-transform
-        max-w-xl
-        mb-10
-        font-poppins
-        ${isRightCard ? "lg:translate-y-24 lg:translate-x-24" : ""}
-      `}
-    >
-      <div
-        className={`flex flex-col gap-6 lg:items-center ${
-          isRightCard ? "lg:flex-row-reverse" : "lg:flex-row"
-        }`}
-      >
-        {/* Content */}
-        <div className={` relative ${isRightCard ? "lg:text-right" : ""}`}>
-          <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-
-          <dl className="mt-4 grid gap-2 text-sm text-slate-700">
-            <div className="flex items-center justify-between gap-3">
-              <dt className="text-slate-500">Job type</dt>
-              <dd className="font-medium text-slate-800">{type}</dd>
+    <>
+      <article className="border-b border-slate-200/90 pb-6 last:border-b-0 lg:hidden">
+        <div className={`flex items-start gap-3 ${mobileAlignment}`}>
+          <div className="shrink-0 pt-1">
+            <div className="relative h-24 w-24">
+              <div className="absolute inset-0 rotate-45 rounded-2xl bg-lime-300/80" />
+              <div className="absolute inset-[5px] rotate-45 overflow-hidden rounded-xl bg-white shadow-md">
+                <img
+                  src={image}
+                  alt=""
+                  className="h-full w-full -rotate-45 scale-125 object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
-            <div className="flex items-center justify-between gap-3">
-              <dt className="text-slate-500">Location</dt>
-              <dd className="font-medium text-slate-800">{location}</dd>
-            </div>
-          </dl>
+          </div>
 
-          <div className="mt-6">
-            <Link
-              to="/apply"
-              className="inline-flex min-w-[160px] items-center justify-center
-              rounded-2xl bg-lime-500 px-6 py-2 text-sm font-semibold font-poppins
-              text-white shadow-sm hover:bg-lime-600"
-            >
-              Apply Now
-            </Link>
+          <div className="min-w-0 flex-1 font-poppins">
+            <h3 className="text-[13px] font-semibold leading-snug text-slate-900">
+              {title}
+            </h3>
+
+            <dl className="mt-2 space-y-1 text-[11px] leading-snug text-slate-700">
+              <div className={`flex items-center gap-2 ${mobileMetaAlignment}`}>
+                <dt className="text-slate-500">Job type</dt>
+                <dd className="font-medium text-slate-800">{type}</dd>
+              </div>
+              <div className={`flex items-center gap-2 ${mobileMetaAlignment}`}>
+                <dt className="text-slate-500">Location</dt>
+                <dd className="font-medium text-slate-800">{location}</dd>
+              </div>
+            </dl>
+
+            <div className={`mt-3 flex ${mobileButtonAlignment}`}>
+              <Link
+                to="/apply"
+                className="inline-flex min-w-[96px] items-center justify-center rounded-lg bg-lime-500 px-4 py-1.5 text-[11px] font-semibold text-white shadow-sm hover:bg-lime-600"
+              >
+                Apply Now
+              </Link>
+            </div>
           </div>
         </div>
+      </article>
 
-        {/* Image */}
+      <div
+        className={`
+          hidden rounded-3xl border border-lime-200/80 bg-white p-6
+          shadow-[0_18px_40px_rgba(34,197,94,0.12)]
+          transition-transform
+          max-w-xl
+          mb-10
+          font-poppins
+          lg:block
+          ${isRightCard ? "lg:translate-y-24 lg:translate-x-24" : ""}
+        `}
+      >
         <div
-          className={`absolute flex justify-center ${
-            isRightCard ? "-left-10" : "inset-x-2"
+          className={`flex flex-col gap-6 lg:items-center ${
+            isRightCard ? "lg:flex-row-reverse" : "lg:flex-row"
           }`}
         >
-          <div className="relative h-44 w-44 sm:h-40 sm:w-40">
-            <div className="absolute inset-0 rotate-45 rounded-[1.6rem] bg-lime-200" />
-            <div className="absolute inset-y-1 rotate-45 overflow-hidden rounded-[1.4rem] bg-white shadow-md">
-              <img
-                src={image}
-                alt=""
-                className="h-full w-full -rotate-60 object-cover scale-128"
-                loading="lazy"
-              />
+          {/* Content */}
+          <div className={` relative ${isRightCard ? "lg:text-right" : ""}`}>
+            <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
+
+            <dl className="mt-4 grid gap-2 text-sm text-slate-700">
+              <div className="flex items-center justify-between gap-3">
+                <dt className="text-slate-500">Job type</dt>
+                <dd className="font-medium text-slate-800">{type}</dd>
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <dt className="text-slate-500">Location</dt>
+                <dd className="font-medium text-slate-800">{location}</dd>
+              </div>
+            </dl>
+
+            <div className="mt-6">
+              <Link
+                to="/apply"
+                className="inline-flex min-w-[160px] items-center justify-center
+                rounded-2xl bg-lime-500 px-6 py-2 text-sm font-semibold font-poppins
+                text-white shadow-sm hover:bg-lime-600"
+              >
+                Apply Now
+              </Link>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div
+            className={`absolute flex justify-center ${
+              isRightCard ? "-left-10" : "inset-x-2"
+            }`}
+          >
+            <div className="relative h-44 w-44 sm:h-40 sm:w-40">
+              <div className="absolute inset-0 rotate-45 rounded-[1.6rem] bg-lime-200" />
+              <div className="absolute inset-y-1 rotate-45 overflow-hidden rounded-[1.4rem] bg-white shadow-md">
+                <img
+                  src={image}
+                  alt=""
+                  className="h-full w-full -rotate-60 object-cover scale-128"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -241,26 +291,40 @@ const CoverflowCarousel = () => {
           start: 0,
         });
       } catch {
-        // Flipster failed to load — carousel won't initialise but page still works
+        // Flipster failed to load - carousel won't initialise but page still works
       }
     };
     init();
   }, []);
 
+  const slideStyle = {
+    width: "clamp(170px, 62vw, 260px)",
+    height: "clamp(250px, 90vw, 420px)",
+    fontSize: "clamp(0.9rem, 4vw, 1.375rem)",
+  };
+
   return (
-    <div className="flipster p-20" ref={flipsterRef}>
+    <div className="flipster px-1 py-4 sm:px-10 sm:py-10 lg:p-20" ref={flipsterRef}>
       <ul>
         <li>
-          <div className="slide bg-teal-500">Application Preview</div>
+          <div className="slide bg-teal-500" style={slideStyle}>
+            Application Preview
+          </div>
         </li>
         <li>
-          <div className="slide bg-teal-300">Interaction</div>
+          <div className="slide bg-teal-300" style={slideStyle}>
+            Interaction
+          </div>
         </li>
         <li>
-          <div className="slide bg-teal-100">Role discussion / task</div>
+          <div className="slide bg-teal-100" style={slideStyle}>
+            Role discussion / task
+          </div>
         </li>
         <li>
-          <div className="slide bg-teal-50">Onboarding</div>
+          <div className="slide bg-teal-50" style={slideStyle}>
+            Onboarding
+          </div>
         </li>
       </ul>
     </div>
@@ -307,7 +371,23 @@ export default function CareersPage({ onNavigate }) {
                 </p>
               </div>
               <div className="relative flex justify-center lg:justify-end">
-                <div className="relative">
+                <div className="relative lg:hidden">
+                  <div className="absolute right-2 top-8 z-10 h-10 w-10 rounded-full bg-lime-300/80" />
+                  <div className="absolute -left-8 bottom-24 z-10 h-9 w-9 rounded-full bg-[#74C425]/50" />
+                  <div className="absolute right-20 -bottom-8 z-10 h-10 w-10 rounded-full bg-lime-500" />
+                  <div className="relative h-72 w-72">
+                    <div className="absolute inset-8 rotate-45 rounded-[2.2rem] border-[14px] border-lime-500" />
+                    <div className="absolute inset-12 rotate-45 overflow-hidden rounded-[1.8rem] bg-white shadow-lg">
+                      <img
+                        src={CAREERS_HERO_IMG}
+                        alt="Careers at Save Medha Foundation"
+                        className="h-full w-full -rotate-45 scale-[1.35] object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative hidden lg:block">
                   <div className="absolute -right-0 top-10 h-19 w-19 z-11 rounded-full bg-lime-300/80" />
                   <div className="absolute -left-23 bottom-30 z-11 h-18 w-18 rounded-full bg-[#74C425]/50" />
                   <div className="absolute right-41 -bottom-32 z-11 h-18 w-18 rounded-full bg-lime-500" />
@@ -332,12 +412,12 @@ export default function CareersPage({ onNavigate }) {
           {/* <div className="pointer-events-none absolute -left-32 -top-24 h-80 w-80 rounded-full bg-lime-200/60 blur-3xl" /> */}
 
           <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl text-center lg:text-left">
               <h2 className="text-3xl font-semibold text-black font-poppins">
                 Why work with us
               </h2>
               <svg
-                className="mt-2 h-3 w-64 text-lime-500"
+                className="mx-auto mt-2 h-3 w-64 text-lime-500 lg:mx-0"
                 viewBox="0 0 256 12"
                 fill="none"
                 aria-hidden="true"
@@ -355,13 +435,13 @@ export default function CareersPage({ onNavigate }) {
                   strokeLinecap="round"
                 />
               </svg>
-              <p className="mt-3 text-base font-semibold text-slate-700 max-w-lg sm:text-lg font-sen">
+              <p className="mx-auto mt-3 max-w-lg text-sm font-semibold text-slate-700 sm:text-base lg:mx-0 lg:text-lg font-sen">
                 A calm, professional environment where patients and teams are
                 treated with dignity.
               </p>
             </div>
 
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 lg:grid-cols-4">
               {WHY_CARDS.map((card) => (
                 <Card key={card.title} title={card.title}>
                   <p>{card.description}</p>
@@ -374,9 +454,12 @@ export default function CareersPage({ onNavigate }) {
         {/* 3) OPEN POSITIONS SECTION */}
         <section className="relative overflow-hidden bg-transparent">
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <SectionHeading title="Open Positions" />
+            <SectionHeading
+              title="Open Positions"
+              className="mx-auto text-center lg:mx-0 lg:text-left"
+            />
 
-            <div className="mt-8 grid gap-10 lg:grid-cols-2">
+            <div className="mt-6 space-y-5 lg:mt-8 lg:grid lg:grid-cols-2 lg:gap-10 lg:space-y-0">
               {OPEN_POSITIONS.map((job, index) => (
                 <JobCard
                   key={job.title}
@@ -394,12 +477,12 @@ export default function CareersPage({ onNavigate }) {
         {/* 4) INTERNSHIP & FELLOWSHIP SECTION */}
         <section className="bg-white">
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div className="relative flex justify-center lg:justify-start">
+            <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-10">
+              <div className="order-2 relative flex justify-center lg:order-1 lg:justify-start">
                 <div className="relative">
                   <div className="absolute z-10 -bottom-6 left-12 h-24 w-24 rounded-full bg-lime-400/70" />
                   <div className="absolute -left-6 top-8 h-8 w-8 rounded-full bg-lime-500" />
-                  <div className="relative h-109 w-115 sm:h-96 sm:w-96">
+                  <div className="relative h-72 w-72 sm:h-96 sm:w-96">
                     <div className="absolute inset-0 rounded-full border-[16px] border-lime-500" />
                     <div className="absolute inset-3 -translate-x-2 overflow-hidden rounded-full bg-white shadow-lg">
                       <img
@@ -411,12 +494,12 @@ export default function CareersPage({ onNavigate }) {
                   </div>
                 </div>
               </div>
-              <div className="text-center lg:text-left">
+              <div className="order-1 text-left lg:order-2 lg:text-left">
                 <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl font-poppins">
                   Internship &amp; Fellowship
                 </h2>
                 <svg
-                  className="mx-auto mt-2 h-3 w-56 text-lime-500 lg:mx-0"
+                  className="mt-2 h-3 w-56 text-lime-500"
                   viewBox="0 0 256 12"
                   fill="none"
                   aria-hidden="true"
@@ -434,7 +517,7 @@ export default function CareersPage({ onNavigate }) {
                     strokeLinecap="round"
                   />
                 </svg>
-                <p className="mt-5 text-base leading-relaxed text-slate-600 font-sen">
+                <p className="mt-5 text-sm leading-relaxed text-slate-600 sm:text-base font-sen">
                   We welcome students and freshers who want practical exposure
                   in ethical healthcare work. Opportunities are available across
                   medical support, nutrition, public health, tech, and media.
@@ -542,3 +625,4 @@ export default function CareersPage({ onNavigate }) {
     </div>
   );
 }
+
