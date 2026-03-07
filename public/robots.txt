@@ -1,5 +1,71 @@
+# robots.txt for savemedha.com
+# Last updated: 2026-03-05
+
+# ─── DEFAULT: Allow all crawlers ─────────────────────────────────────────────
 User-agent: *
 Allow: /
 Disallow: /api/
 
+# ─── AI SEARCH CRAWLERS (explicitly allowed) ──────────────────────────────────
+
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+# OpenAI API crawler
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Google Gemini / AI Overviews (Google Extended includes AI training)
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Copilot / Bing AI
+User-agent: Bingbot
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+# Meta AI (Llama)
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Common Crawl (used to train many LLMs)
+User-agent: CCBot
+Allow: /
+
+# Apple Applebot (Siri / Apple Intelligence)
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# Diffbot (used by many AI knowledge graphs)
+User-agent: Diffbot
+Allow: /
+
+# ─── SITEMAP ─────────────────────────────────────────────────────────────────
 Sitemap: https://savemedha.com/sitemap.xml
+
+# ─── LLMs.txt (AI knowledge file) ───────────────────────────────────────────
+# AI systems can read brand facts at: https://savemedha.com/llms.txt

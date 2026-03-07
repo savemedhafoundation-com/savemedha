@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import internshipImage from "../assets/Photo/internship.jpg";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CLINICAL_RESEARCH_IMG =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268797/scientist-woman-doctor-holding-glass-flask-analyzing-liquid-solution_1_gs6jud.png";
@@ -243,68 +243,171 @@ function JobCard({ title, type, location, image, index }) {
   );
 }
 
-// Dynamically loads a script tag and resolves when done
-const loadScript = (src, id) =>
-  new Promise((resolve, reject) => {
-    if (document.getElementById(id)) return resolve();
-    const s = document.createElement("script");
-    s.id = id;
-    s.src = src;
-    s.async = true;
-    s.onload = resolve;
-    s.onerror = reject;
-    document.body.appendChild(s);
+const externalAssetPromises = new Map();
+
+const loadExternalAsset = ({ id, tagName, sourceKey, url, parent, rel }) => {
+  if (externalAssetPromises.has(id)) {
+    return externalAssetPromises.get(id);
+  }
+
+  const promise = new Promise((resolve, reject) => {
+    const existing = document.getElementById(id);
+
+    if (existing) {
+      if (existing.dataset.loaded === "true") {
+        resolve(existing);
+        return;
+      }
+
+      existing.addEventListener("load", () => resolve(existing), { once: true });
+      existing.addEventListener("error", reject, { once: true });
+      return;
+    }
+
+    const element = document.createElement(tagName);
+    element.id = id;
+    if (rel) element.rel = rel;
+    element[sourceKey] = url;
+    if (tagName === "script") element.async = true;
+
+    element.addEventListener(
+      "load",
+      () => {
+        element.dataset.loaded = "true";
+        resolve(element);
+      },
+      { once: true }
+    );
+    element.addEventListener(
+      "error",
+      (error) => {
+        externalAssetPromises.delete(id);
+        reject(error);
+      },
+      { once: true }
+    );
+
+    parent.appendChild(element);
   });
 
-const loadLink = (href, id) => {
-  if (document.getElementById(id)) return;
-  const l = document.createElement("link");
-  l.id = id;
-  l.rel = "stylesheet";
-  l.href = href;
-  document.head.appendChild(l);
+  externalAssetPromises.set(id, promise);
+  return promise;
+};
+
+const loadScript = (src, id) =>
+  loadExternalAsset({
+    id,
+    tagName: "script",
+    sourceKey: "src",
+    url: src,
+    parent: document.body,
+  });
+
+const loadLink = (href, id) =>
+  loadExternalAsset({
+    id,
+    tagName: "link",
+    sourceKey: "href",
+    url: href,
+    parent: document.head,
+    rel: "stylesheet",
+  });
+
+const getCarouselMode = () => {
+  if (typeof window === "undefined") return "default";
+  return window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches
+    ? "tablet"
+    : "default";
 };
 
 // the flipster slide for the careers page
 const CoverflowCarousel = () => {
   const flipsterRef = useRef(null);
+  const [carouselMode, setCarouselMode] = useState(getCarouselMode);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px) and (max-width: 1023px)");
+    const syncMode = () => setCarouselMode(mediaQuery.matches ? "tablet" : "default");
+
+    syncMode();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", syncMode);
+      return () => mediaQuery.removeEventListener("change", syncMode);
+    }
+
+    mediaQuery.addListener(syncMode);
+    return () => mediaQuery.removeListener(syncMode);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const getFlipsterOptions = () => ({
+      style: carouselMode === "tablet" ? "coverflow" : "flat",
+      spacing: carouselMode === "tablet" ? -0.45 : -0.9,
+      nav: false,
+      buttons: true,
+      loop: true,
+      start: 0,
+      touch: true,
+      scrollwheel: false,
+    });
+
     const init = async () => {
       try {
-        loadLink(
-          "https://cdn.jsdelivr.net/npm/jquery.flipster@1.1.5/dist/jquery.flipster.min.css",
-          "flipster-css"
-        );
-        await loadScript("https://code.jquery.com/jquery-3.6.0.min.js", "jquery-js");
+        await Promise.all([
+          loadLink(
+            "https://cdn.jsdelivr.net/npm/jquery.flipster@1.1.5/dist/jquery.flipster.min.css",
+            "flipster-css"
+          ),
+          loadScript("https://code.jquery.com/jquery-3.6.0.min.js", "jquery-js"),
+        ]);
         await loadScript(
           "https://cdn.jsdelivr.net/npm/jquery.flipster@1.1.5/dist/jquery.flipster.min.js",
           "flipster-js"
         );
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        if (cancelled) return;
         if (!flipsterRef.current || !window.$ || !window.$.fn.flipster) return;
+        if (flipsterRef.current.dataset.flipsterInitialized === "true") return;
+
+        flipsterRef.current.dataset.flipsterInitialized = "true";
         window.$(flipsterRef.current).flipster({
-          style: "flat",
-          spacing: -0.9,
-          nav: false,
-          buttons: true,
-          loop: true,
-          start: 0,
+          ...getFlipsterOptions(),
         });
       } catch {
         // Flipster failed to load - carousel won't initialise but page still works
       }
     };
-    init();
-  }, []);
 
-  const slideStyle = {
-    width: "clamp(170px, 62vw, 260px)",
-    height: "clamp(250px, 90vw, 420px)",
-    fontSize: "clamp(0.9rem, 4vw, 1.375rem)",
-  };
+    init();
+    return () => {
+      cancelled = true;
+    };
+  }, [carouselMode]);
+
+  const slideStyle =
+    carouselMode === "tablet"
+      ? {
+          width: "clamp(200px, 30vw, 240px)",
+          height: "clamp(300px, 44vw, 360px)",
+          fontSize: "clamp(1rem, 2.2vw, 1.25rem)",
+        }
+      : {
+          width: "clamp(170px, 62vw, 260px)",
+          height: "clamp(250px, 90vw, 420px)",
+          fontSize: "clamp(0.9rem, 4vw, 1.375rem)",
+        };
 
   return (
-    <div className="flipster px-1 py-4 sm:px-10 sm:py-10 lg:p-20" ref={flipsterRef}>
+    <div
+      key={carouselMode}
+      className="flipster overflow-hidden px-1 py-4 sm:px-10 sm:py-10 lg:p-20"
+      ref={flipsterRef}
+    >
       <ul>
         <li>
           <div className="slide bg-teal-500" style={slideStyle}>
@@ -532,7 +635,7 @@ export default function CareersPage({ onNavigate }) {
 
         {/* 5) HIRING PROCESS SECTION */}
         <section className="bg-white">
-          <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
             <div className="flex justify-center items-center">
               <SectionHeading title="Hiring Process" />
             </div>
