@@ -28,6 +28,7 @@ const EventsProjects = lazy(() => import("./pages/EventsProjects"));
 const OngoingEvents = lazy(() => import("./pages/OngoingEvents"));
 const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage"));
 const TermsConditionsApply = lazy(() => import("./pages/TermsConditionsApply"));
+const DownloadApp = lazy(() => import("./pages/DownloadApp"));
 
 const PageLoader = () => <div className="min-h-screen bg-white" />;
 // demo commit
@@ -250,6 +251,9 @@ function App() {
         case "careers":
           targetPath = "/careers";
           break;
+        case "download-app":
+          targetPath = "/download-app";
+          break;
         case "events-projects":
           targetPath = "/events-projects";
           break;
@@ -338,6 +342,10 @@ function App() {
         <Route
           path="/careers"
           element={<CareersPage onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/download-app"
+          element={<DownloadApp onNavigate={handleNavigate} />}
         />
         <Route
           path="/events-projects"

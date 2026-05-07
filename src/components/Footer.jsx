@@ -66,6 +66,7 @@ const Footer = ({ onNavigate }) => {
     // { name: "CASE STUDIES", key: "case-studies", href: "/case-studies" },
     { name: "E-BOOK", key: "ebook", href: "/ebook" },
     { name: "CAREERS", key: "careers", href: "/careers" },
+    { name: "DOWNLOAD APP", key: "download-app", href: "/download-app" },
     { name: "CONTACT", key: "locateus", href: "/contact-us" },
   ];
 

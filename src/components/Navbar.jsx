@@ -29,6 +29,7 @@ const NAV_ITEMS = [
   // { name: "CASE STUDIES", key: "case-studies", hasDropdown: false },
   { name: "E-BOOK", key: "ebook", hasDropdown: false },
   { name: "CAREERS", key: "careers", hasDropdown: false },
+  { name: "DOWNLOAD APP", key: "download-app", hasDropdown: false },
   { name: "CONTACT US", key: "locateus", hasDropdown: false },
 ];
 
