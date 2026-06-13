@@ -1,71 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { UsersRound } from "lucide-react";
 import Hand1 from "../assets/Photo/hand1.png";
 import Hand2 from "../assets/Photo/Hand2.png";
 import People3 from "../assets/Photo/pepole3.png";
-import RectangleBlue1 from "../assets/Photo/rectangleblue1.png";
-import RectangleBlue2 from "../assets/Photo/rectangleblue2.png";
-
-const VOLUNTEER_BG_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770272579/Group_uqeqer.png";
-
-export function JoinUsText({ className = "", variant = "default" }) {
-  const ref = useRef(null);
-  const text = "JOIN US";
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("animate");
-        }
-      },
-      { threshold: 0.4 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  const isMobileVariant = variant === "mobile";
-
-  const containerClassName = `joinus flex font-neue-machina ${
-    isMobileVariant ? "gap-[2px]" : "gap-2"
-  } ${className}`;
-
-  const spanClassName = isMobileVariant
-    ? "inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-[#2F5BD7] text-[42px] font-black uppercase tracking-tight select-none [-webkit-text-stroke:2px_white]"
-    : "inline-block opacity-0 animate-[bounceDrop_1.2s_ease-out_forwards] text-white text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-black uppercase tracking-tight cursor-pointer select-none hover:-translate-y-3 hover:scale-110 hover:text-[#7CB342] transition-all duration-300 [-webkit-text-stroke:1px_black] md:[-webkit-text-stroke:2px_black]";
-
-  return (
-    <div ref={ref} className={containerClassName}>
-      {text.split("").map((char, i) => (
-        <span
-          key={i}
-          style={{
-            animationDelay: `${i * 120}ms`,
-            textShadow: isMobileVariant
-              ? "0px 6px 0px #7CB342"
-              : "6px 0px 0px #7CB342",
-          }}
-          className={spanClassName}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </div>
-  );
-}
 
 export default function VolunteerBanner() {
-  const textContainerClassName =
-    "mx-auto w-full max-w-[560px] items-center text-center md:mx-0 md:max-w-none md:items-start md:text-left md:pr-4 lg:mx-0 lg:ml-auto lg:max-w-[960px] lg:items-end lg:text-right lg:pr-10";
-  const bodyTextClassName = "mx-auto md:mx-0 lg:ml-auto";
-  const taglineClassName = "whitespace-nowrap mx-auto md:mx-0 lg:ml-auto";
-
   const [isVolunteerModalOpen, setIsVolunteerModalOpen] = useState(false);
   const [volunteerForm, setVolunteerForm] = useState({ email: "" });
   const [status, setStatus] = useState("");
@@ -73,7 +13,7 @@ export default function VolunteerBanner() {
   const emailInputRef = useRef(null);
 
   useEffect(() => {
-    if (!isVolunteerModalOpen) return;
+    if (!isVolunteerModalOpen) return undefined;
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") setIsVolunteerModalOpen(false);
@@ -112,330 +52,153 @@ export default function VolunteerBanner() {
       });
       setStatus("Subscribed successfully.");
       setVolunteerForm({ email: "" });
-    } catch (error) {
+    } catch {
       setIsError(true);
       setStatus("Subscription failed. Please try again.");
     }
   };
 
-	  return (
-	    <section
-	      className="relative w-full pt-8 pb-20 flex justify-center bg-cover bg-right bg-no-repeat -mb-16 z-10 [clip-path:polygon(0_0,0_calc(100%-56px),50%_100%,100%_calc(100%-56px),100%_0)] sm:pt-12 sm:mb-0 sm:z-auto sm:[clip-path:none] sm:bg-center sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+8rem)] md:-mx-16 lg:w-[calc(100%+10rem)] lg:-mx-20"
-	      style={{ backgroundImage: `url(${VOLUNTEER_BG_URL})` }}
-	    >
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/5 to-transparent pointer-events-none sm:hidden"
-        aria-hidden="true"
-      />
-      <div className="relative w-[92%] max-w-[1400px]">
-        {/* Mobile layout (matches screenshot) */}
-        <div className="sm:hidden mx-auto w-full max-w-[420px] overflow-hidden rounded-[28px] bg-white shadow-[0_18px_40px_rgba(0,0,0,0.12)] ring-1 ring-black/10">
-          {/* Top background with Join Us */}
-          <div className="relative h-[140px]">
-            <img
-              src={VOLUNTEER_BG_URL}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover object-right scale-[1.15]"
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-transparent"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute left-6 top-5 h-10 w-10 opacity-60 bg-[radial-gradient(#74C425_1px,transparent_1px)] [background-size:6px_6px]"
-              aria-hidden="true"
-            />
-            <div className="relative z-10 flex h-full items-center justify-center pt-2">
-              <JoinUsText variant="mobile" className="justify-center leading-none" />
-            </div>
-            <div
-              className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-b from-transparent to-white"
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* Middle content */}
-          <div className="px-6 pt-2 pb-6 text-center">
-            <div className="relative mx-auto mt-2 h-[230px] w-full max-w-[340px]">
-              <img
-                src={RectangleBlue1}
-                alt=""
-                aria-hidden="true"
-                className="absolute left-0 top-[58px] w-[260px] select-none pointer-events-none"
-              />
-              <img
-                src={Hand1}
-                alt=""
-                className="absolute left-3 top-2 w-[150px] rounded-[18px] object-cover"
-              />
-              <img
-                src={Hand2}
-                alt=""
-                className="absolute right-2 top-8 w-[160px] rounded-[18px] object-cover"
-              />
-
-              <div className="absolute left-1/2 top-[140px] w-[250px] -translate-x-1/2">
-                <img
-                  src={RectangleBlue2}
-                  alt=""
-                  aria-hidden="true"
-                  className="w-full select-none pointer-events-none"
-                />
-                <img
-                  src={People3}
-                  alt=""
-                  className="absolute left-1/2 top-3 w-[120px] -translate-x-1/2 rounded-[18px] object-cover"
-                />
-              </div>
-            </div>
-
-            <h3 className="mt-3 text-[22px] translate-y-11 translate-x-1 font-extrabold uppercase tracking-wide whitespace-nowrap">
-              <span className="text-slate-900">BECOME OUR</span>{" "}
-              <span className="font-black text-[#7BCF2A]">VOLUNTEER</span>
-            </h3>
-           
-            <p className="mt-10 text-[14px] leading-relaxed text-slate-700">
-              Fighting cancer the natural way with{" "}
-              <span className="font-semibold text-[#7BCF2A]">
-                Natural Immunotherapy
-              </span>{" "}
-             
-             is designed to support immune function.
-            </p>
-
-            <p className="mt-4 text-[18px] font-semibold text-[#2F5BD7]">
-              we are looking for the best people!
-            </p>
-          </div>
-
-          {/* Bottom background + CTA */}
-          <div className="relative h-[190px]">
-            <img
-              src={VOLUNTEER_BG_URL}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 h-full w-full object-cover object-right"
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute top-0 left-0 right-0 h-14 bg-white [clip-path:polygon(0_0,100%_0,100%_60%,50%_100%,0_60%)]"
-              aria-hidden="true"
-            />
-
-            <div className="relative z-10 flex h-full items-end justify-center px-6 pb-10">
-              <button
-                type="button"
-                onClick={() => {
-                  setStatus("");
-                  setIsVolunteerModalOpen(true);
-                }}
-                className="cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-[16px] font-semibold px-10 py-4 rounded-[18px] shadow-md md:00"
-              >
-                BECOME OUR VOLUNTEER
-              </button>
-            </div>
-          </div>
+  return (
+    <section className="home-section bg-[#F8FDF6]">
+      <div className="home-container grid max-w-[920px] items-center gap-8 md:grid-cols-[360px_1fr] lg:gap-10">
+        <div className="mx-auto grid w-full max-w-[360px] grid-cols-[1fr_118px] gap-3 sm:grid-cols-[1fr_128px]">
+          <img
+            src={Hand1}
+            alt="Volunteer hands"
+            className="row-span-2 h-[210px] w-full rounded-[18px] border-[3px] border-[#14980f] object-cover shadow-[0_14px_28px_rgba(15,23,42,0.08)]"
+            loading="lazy"
+          />
+          <img
+            src={Hand2}
+            alt="Community support"
+            className="h-[98px] w-full rounded-[12px] border-[3px] border-[#14980f] object-cover shadow-[0_12px_24px_rgba(15,23,42,0.08)]"
+            loading="lazy"
+          />
+          <img
+            src={People3}
+            alt="Save Medha volunteers"
+            className="h-[98px] w-full rounded-[12px] border-[3px] border-[#14980f] object-cover shadow-[0_12px_24px_rgba(15,23,42,0.08)]"
+            loading="lazy"
+          />
         </div>
 
-        {/* Desktop layout (unchanged) */}
-        <div className="hidden sm:block">
-          {/* MAIN CARD */}
-          <div className="relative rounded-[28px] overflow-hidden ">
-            {/* ANGLED TOP EDGE */}
-            <div />
-
-	            <div className="relative z-10 grid grid-cols-1 md:grid-cols-[340px_minmax(0,1fr)] md:gap-8 lg:grid-cols-[420px_1fr_420px] lg:gap-10">
-	              {/* LEFT COLLAGE */}
-	              <div className="relative mx-auto w-full max-w-[520px] px-4 pt-6 pb-6 sm:px-6 sm:pt-8 md:max-w-[360px] md:px-3 md:pt-10 md:pb-8 lg:mx-0 lg:max-w-none lg:px-10 lg:pt-14 lg:pb-14">
-	                <div className="relative h-[280px] sm:h-[320px] md:h-[300px] lg:h-[420px]">
-                  <img
-                    src={RectangleBlue1}
-                    alt=""
-                    className="absolute left-0 top-[80px] w-[280px] sm:top-[90px] sm:w-[320px] lg:top-[110px] lg:w-[360px] select-none pointer-events-none"
-                  />
-
-                  <img
-                    src={Hand1}
-                    alt=""
-                    className="absolute left-2 top-4 w-[170px] sm:left-3 sm:top-6 sm:w-[200px] lg:left-3 lg:top-10 lg:w-[230px] rounded-[22px] object-cover"
-                  />
-
-	                  <img
-	                    src={Hand2}
-	                    alt=""
-	                    className="absolute left-[130px] top-6 w-[190px] sm:left-[170px] sm:top-6 sm:w-[220px] md:left-[140px] md:w-[190px] lg:left-[250px] lg:top-10 lg:w-[260px] rounded-[22px] object-cover"
-	                  />
-
-	                  <div className="absolute left-0 top-[170px] w-[300px] sm:left-2 sm:top-[200px] sm:w-[340px] md:left-0 md:top-[190px] md:w-[300px] lg:left-4 lg:top-[270px] lg:w-[390px]">
-	                    <img
-	                      src={RectangleBlue2}
-	                      alt=""
-	                      className="w-full select-none pointer-events-none"
-	                    />
-	                    <img
-	                      src={People3}
-	                      alt=""
-	                      className="absolute left-6 top-3 w-[140px] sm:left-12 sm:top-4 sm:w-[160px] md:left-10 md:w-[150px] lg:left-20 lg:top-4 lg:w-[190px] rounded-[18px] object-cover"
-	                    />
-	                  </div>
-	                </div>
-
-	                <JoinUsText className="mt-6 justify-center sm:mt-10 md:mt-8 md:justify-start lg:mt-30 lg:justify-start" />
-	              </div>
-
-	              {/* CENTER CONTENT */}
-	              <div
-	                className={`px-4 sm:px-6 md:px-4 lg:px-35 py-10 sm:py-12 md:py-8 lg:py-16 flex flex-col justify-center ${textContainerClassName}`}
-	              >
-	                <h2 className="flex items-baseline justify-center gap-3 leading-none whitespace-nowrap md:justify-start lg:justify-end">
-	                  <span className="font-extrabold text-black text-[clamp(1.25rem,4.5vw,3rem)]">
-	                    BECOME OUR
-	                  </span>
-                  <span className="font-black text-[#7BCF2A] text-[clamp(1.5rem,5.5vw,3.75rem)]">
-                    VOLUNTEER
-                  </span>
-                </h2>
-
-                <p
-                  className={`mt-4 sm:mt-6 text-base sm:text-lg lg:text-2xl text-black/80 leading-relaxed max-w-[40ch] ${bodyTextClassName}`}
-                >
-                  Fighting cancer the natural way — through{" "}
-                  <span className="text-[#7BCF2A] font-semibold">
-                    Natural Immunotherapy
-                  </span>{" "}
-                  that rebuilds your body’s defense and restores lasting health.
-                </p>
-
-                <p
-                  className={`mt-4 sm:mt-6 text-lg sm:text-2xl lg:text-4xl font-semibold text-[#2F5BD7] ${taglineClassName}`}
-                >
-                  we are looking for the best people!
-                </p>
-
-                {/* Tablet-only CTA — visible at md, hidden at lg */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setStatus("");
-                    setIsVolunteerModalOpen(true);
-                  }}
-                  className="hidden md:block lg:hidden cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-lg font-semibold px-10 py-4 rounded-[20px] mt-6"
-                >
-                  BECOME OUR VOLUNTEER
-                </button>
-              </div>
-
-              {/* RIGHT IMAGE */}
-              <div className="hidden lg:block relative min-h-[520px] overflow-hidden" />
-            </div>
+        <div className="mx-auto w-full max-w-[420px] text-center md:mx-0 md:text-left">
+          <h2 className="text-[25px] font-black leading-tight tracking-tight text-[#050505] sm:text-[29px]">
+            Become <span className="font-black text-[#14980f]">Our Volunteer</span>
+          </h2>
+          <p className="mt-3 max-w-[370px] text-[15px] font-semibold leading-[1.55] text-[#202124] md:max-w-none">
+            Fighting cancer the natural way through{" "}
+            <span className="font-bold text-[#2D7D20]">
+              Natural Immunotherapy
+            </span>{" "}
+            that rebuilds your body's defense and restores lasting health.
+          </p>
+          <div className="mt-4 inline-flex items-center gap-3 rounded-full bg-[#eef2ff] px-4 py-2 text-[13px] font-bold text-[#2142a8]">
+            <span className="grid h-6 w-6 place-items-center rounded-full bg-white text-[#050505] shadow-sm">
+              <UsersRound size={16} strokeWidth={3} />
+            </span>
+            <span>we are looking for the best people!</span>
           </div>
 
-          {/* CTA BUTTON */}
-	          <div className="relative z-20 mt-6 flex md:hidden lg:flex justify-center lg:mt-0 lg:absolute lg:top-[520px] lg:right-1 lg:pr-0 lg:-translate-x-1/2">
+          <button
+            type="button"
+            onClick={() => {
+              setStatus("");
+              setIsVolunteerModalOpen(true);
+            }}
+            className="mx-auto mt-4 block rounded-[10px] bg-[#14980f] px-6 py-3 text-[15px] font-black text-white shadow-[0_10px_22px_rgba(20,152,15,0.18)] transition hover:bg-[#0f7d0b] md:mx-0"
+          >
+            Become our Volunteer
+          </button>
+        </div>
+      </div>
+
+      {isVolunteerModalOpen && (
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4 py-8"
+          onClick={closeModal}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="volunteer-modal-title"
+            className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white"
+            onClick={(event) => event.stopPropagation()}
+          >
             <button
               type="button"
-              onClick={() => {
-                setStatus("");
-                setIsVolunteerModalOpen(true);
-              }}
-              className="cursor-pointer bg-[#F26522] hover:bg-[#1118A6] transition text-white text-lg sm:text-xl lg:text-2xl font-semibold px-10 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 rounded-[20px]"
+              onClick={closeModal}
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/10 text-slate-900 transition hover:bg-slate-900/20"
             >
-              BECOME OUR VOLUNTEER
+              <span className="sr-only">Close</span>
+              <span aria-hidden="true" className="text-2xl leading-none">
+                x
+              </span>
             </button>
-          </div>
-        </div>
 
-        {isVolunteerModalOpen && (
-          <div
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4 py-8"
-            onClick={closeModal}
-          >
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="volunteer-modal-title"
-              className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <button
-                type="button"
-                onClick={closeModal}
-                className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/10 text-slate-900 transition hover:bg-slate-900/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1118A6]"
+            <div className="p-6 sm:p-8">
+              <h3
+                id="volunteer-modal-title"
+                className="text-xl font-extrabold text-slate-900 sm:text-2xl"
               >
-                <span className="sr-only">Close</span>
-                <span aria-hidden="true" className="text-2xl leading-none">
-                  ×
-                </span>
-              </button>
+                Become Our Volunteer
+              </h3>
+              <p className="mt-2 text-sm text-slate-600">
+                Share your email and our team will reach out.
+              </p>
 
-              <div className="p-6 sm:p-8">
-                <h3
-                  id="volunteer-modal-title"
-                  className="text-xl sm:text-2xl font-extrabold text-slate-900"
-                >
-                  Become Our Volunteer
-                </h3>
-                <p className="mt-2 text-sm text-slate-600">
-                  Share your email and our team will reach out.
-                </p>
+              <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                <div>
+                  <label
+                    htmlFor="volunteer-email"
+                    className="block text-sm font-medium text-slate-700"
+                  >
+                    Email address
+                  </label>
+                  <input
+                    ref={emailInputRef}
+                    id="volunteer-email"
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    value={volunteerForm.email}
+                    onChange={handleChange}
+                    required
+                    className="mt-2 w-full rounded-xl bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#74C425]/30"
+                    placeholder="Enter your email address"
+                  />
+                </div>
 
-                <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                  <div>
-                    <label
-                      htmlFor="volunteer-email"
-                      className="block text-sm font-medium text-slate-700"
-                    >
-                      Email address
-                    </label>
-                    <input
-                      ref={emailInputRef}
-                      id="volunteer-email"
-                      name="email"
-                      type="email"
-                      inputMode="email"
-                      value={volunteerForm.email}
-                      onChange={handleChange}
-                      required
-                      className="mt-2 w-full rounded-xl bg-slate-50 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1118A6]/20"
-                      placeholder="Enter your email address"
-                    />
-                  </div>
+                <div className="pt-2 flex flex-col gap-3 sm:flex-row">
+                  <button
+                    type="submit"
+                    className="w-full rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#2D7D20]"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="w-full rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                </div>
 
-                  <div className="pt-2 flex flex-col gap-3 sm:flex-row">
-                    <button
-                      type="submit"
-                      className="w-full rounded-full bg-[#74C425] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#1118A6]"
-                    >
-                      Submit
-                    </button>
-                    <button
-                      type="button"
-                      onClick={closeModal}
-                      className="w-full rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-
-                  {status && (
-                    <p
-                      className={`pt-2 text-center text-sm font-medium ${
-                        isError ? "text-red-600" : "text-green-700"
-                      }`}
-                    >
-                      {status}
-                    </p>
-                  )}
-                </form>
-              </div>
+                {status && (
+                  <p
+                    className={`pt-2 text-center text-sm font-medium ${
+                      isError ? "text-red-600" : "text-green-700"
+                    }`}
+                  >
+                    {status}
+                  </p>
+                )}
+              </form>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }

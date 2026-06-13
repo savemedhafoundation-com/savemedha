@@ -30,9 +30,9 @@ export default function Home({ onNavigate }) {
         </RenderOnView>
         <RenderOnView
           rootMargin="300px 0px"
-          fallback={<div className="mt-2 sm:mt-16 min-h-[260px]" aria-hidden="true" />}
+          fallback={<div className="min-h-[260px]" aria-hidden="true" />}
         >
-          <div className="mt-2 sm:mt-16">
+          <div>
             <Suspense fallback={<div className="min-h-[260px]" aria-hidden="true" />}>
               <TestimonialsSection />
             </Suspense>

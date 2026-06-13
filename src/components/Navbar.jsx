@@ -1,7 +1,19 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
-import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import {
+  CalendarDays,
+  ChevronDown,
+  Clock,
+  Facebook,
+  HeartHandshake,
+  Instagram,
+  Linkedin,
+  Mail,
+  Phone,
+  Search as SearchIcon,
+  Youtube,
+} from "lucide-react";
 import { ImWhatsapp } from "react-icons/im";
 
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
@@ -20,17 +32,15 @@ const LANGUAGE_SELECT_ARROW_DATA_URI =
   "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22%23666%22 viewBox=%220 0 20 20%22%3E%3Cpath d=%22M5.5 7l4.5 4.5L14.5 7%22/%3E%3C/svg%3E";
 
 const NAV_ITEMS = [
-  { name: "HOME", key: "home", hasDropdown: false },
-  { name: "ABOUT US", key: "about", hasDropdown: false },
-  { name: "TREATMENT", key: "treatment", hasDropdown: false },
-  { name: "DONATE", key: "donate", hasDropdown: false },
-  { name: "EVENTS & PROJECTS", key: "events-projects", hasDropdown: false },
-  { name: "BLOGS", key: "blogs", hasDropdown: false },
+  { name: "Home", key: "home", hasDropdown: false },
+  { name: "About Us", key: "about", hasDropdown: false },
+  { name: "Treatment", key: "treatment", hasDropdown: false },
+  { name: "Events & Projects", key: "events-projects", hasDropdown: false },
+  { name: "Blogs", key: "blogs", hasDropdown: false },
   // { name: "CASE STUDIES", key: "case-studies", hasDropdown: false },
-  { name: "E-BOOK", key: "ebook", hasDropdown: false },
-  { name: "CAREERS", key: "careers", hasDropdown: false },
-  { name: "DOWNLOAD APP", key: "download-app", hasDropdown: false },
-  { name: "CONTACT US", key: "locateus", hasDropdown: false },
+  { name: "E-Book", key: "ebook", hasDropdown: false },
+  { name: "Careers", key: "careers", hasDropdown: false },
+  { name: "Contact Us", key: "locateus", hasDropdown: false },
 ];
 
 export default function Navbar({ currentPage = "home", onNavigate }) {
@@ -39,12 +49,35 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [now, setNow] = useState(() => new Date());
+
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(now);
+
+  const formattedTime = `${new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  })
+    .format(now)
+    .replace(":", ".")
+    .replace(" AM", " A.M")
+    .replace(" PM", " P.M")}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => setNow(new Date()), 30000);
+    return () => window.clearInterval(intervalId);
   }, []);
 
   useLayoutEffect(() => {
@@ -117,9 +150,14 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     const translateElement = document.getElementById("google_translate_element");
     if (!translateElement) return;
 
-    const targetMount = document.getElementById(
-      isLanguageMenuOpen ? "google_translate_mount_mobile" : "google_translate_mount"
-    );
+    const isDesktop = window.matchMedia?.("(min-width: 1024px)").matches;
+    const targetMountId =
+      isLanguageMenuOpen && isDesktop
+        ? "google_translate_mount_desktop"
+        : isLanguageMenuOpen
+          ? "google_translate_mount_mobile"
+          : "google_translate_mount";
+    const targetMount = document.getElementById(targetMountId);
 
     if (targetMount) targetMount.appendChild(translateElement);
   }, [isLanguageMenuOpen]);
@@ -562,98 +600,125 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           DESKTOP LAYOUT — lg+ (≥ 1024px)
       ============================================= */}
       <div className="hidden lg:block">
-        {/* Top section */}
-        <div
-          className="px-12 py-3"
-          style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 27.88%, #B7DE4E 100%)" }}
-        >
-          <div className="flex flex-row items-start gap-8">
-            {/* Logo */}
-            <div className="flex-shrink-0 flex justify-start">
-              <button
-                type="button"
-                onClick={() => onNavigate?.("home")}
-                className="focus:outline-none"
-              >
-                <img
-                  src={savemedhaLogo}
-                  alt="Save Medha Foundation Logo"
-                  className="h-17 w-auto object-contain"
-                />
-              </button>
+        <div className="bg-[#189500] px-[54px] text-white">
+          <div className="flex h-[35px] items-center justify-between">
+            <div className="flex items-center gap-5 text-[11px] font-semibold">
+              <a href="mailto:info@savemedha.com" className="flex items-center gap-2 hover:text-white/85">
+                <Mail size={13} fill="currentColor" strokeWidth={0} />
+                <span>info@savemedha.com</span>
+              </a>
+              <span className="h-3 w-px bg-white/45" aria-hidden="true" />
+              <div className="flex items-center gap-2">
+                <CalendarDays size={13} fill="currentColor" strokeWidth={0} />
+                <span>{formattedDate}</span>
+              </div>
+              <span className="h-3 w-px bg-white/45" aria-hidden="true" />
+              <div className="flex items-center gap-2">
+                <Clock size={13} fill="currentColor" strokeWidth={0} />
+                <span>{formattedTime}</span>
+              </div>
             </div>
 
-            {/* Right content */}
-            <div className="flex-1 flex flex-col gap-3">
-              {/* Row 1: Phone + Email */}
-              <div className="flex flex-wrap justify-end items-center gap-4 pb-2 divide-x divide-gray-600">
-                {/* Date */}
-                <div className="flex items-center gap-2 px-2 text-[15px] font-semibold text-gray-900">
-                  <FaCalendarAlt className="text-gray-700" size={18} />
-                  <span className="whitespace-nowrap">
-                    {new Intl.DateTimeFormat("en-US", {
-                      weekday: "short",
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    }).format(new Date())}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-[15px] pr-2">
-                  <a href="tel:+919800808595" className="flex items-center gap-2 text-[15px] pr-2">
-                    <MdPhoneInTalk className="text-gray-700 fill-current hover:text-blue-700" size={18} />
-                    <span className="font-semibold text-gray-900 hover:text-blue-700">9800808595</span>
-                  </a>
-                </div>
-                <div className="flex items-center justify-center gap-2 text-[15px]">
-                  <a href="mailto:info@savemedha.com" className="flex items-center gap-2 text-[15px] pl-2">
-                    <MdAttachEmail className="text-black-600 hover:text-blue-700 fill-current" size={18} />
-                    <span className="font-semibold text-[#000000] hover:text-blue-700 truncate max-w-none">info@savemedha.com</span>
-                  </a>
-                </div>
+            <div className="flex items-center gap-4 text-[10px] font-semibold">
+              <span>Follow Us :</span>
+              <div className="flex items-center gap-3">
+                <a href="https://www.facebook.com/savemedhafoundation" aria-label="Facebook" target="_blank" rel="noreferrer" className="hover:text-white/80">
+                  <Facebook size={11} fill="currentColor" strokeWidth={0} />
+                </a>
+                <a href="https://www.instagram.com/savemedhafoundation/" aria-label="Instagram" target="_blank" rel="noreferrer" className="hover:text-white/80">
+                  <Instagram size={11} />
+                </a>
+                <a href="https://www.linkedin.com/company/save-medha-foundation/" aria-label="LinkedIn" target="_blank" rel="noreferrer" className="hover:text-white/80">
+                  <Linkedin size={11} fill="currentColor" strokeWidth={0} />
+                </a>
+                <a href="https://www.facebook.com/savemedhafoundation" aria-label="Follow Save Medha Foundation" target="_blank" rel="noreferrer" className="text-[11px] leading-none hover:text-white/80">
+                  f
+                </a>
               </div>
-
-              {/* Row 2: Search, Language, Location */}
-              <div className="flex flex-wrap justify-end items-center gap-4">
-                {/* Search */}
-                <form onSubmit={handleSearchSubmit} className="relative w-[200px] shadow-md">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
-                    className="w-full px-2 py-2 text-[15px] bg-white font-semibold text-gray-700 border-2 border-[#74C425] rounded focus:outline-none"
-                  />
-                  <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </button>
-                </form>
-
-                {/* Language */}
-                <div id="google_translate_mount" className="google-translate-mount" />
-
-                {/* Location */}
+              <span className="h-3 w-px bg-white/40" aria-hidden="true" />
+              <div className="relative">
                 <button
-                  onClick={() => onNavigate("locateus")}
-                  className="h-[42px] text-[15px] font-semibold flex items-center gap-2 px-8 py-2 bg-white border-2 border-[#74C425] rounded shadow-md hover:bg-gray-50 transition"
+                  type="button"
+                  aria-label="Select language"
+                  aria-expanded={isLanguageMenuOpen}
+                  aria-controls="desktop-language-menu"
+                  onClick={handleLanguageToggle}
+                  className="flex items-center gap-1.5 hover:text-white/85"
                 >
-                  <IoLocationSharp className="text-[#e05529]" size={18} />
-                  <span className="font-semibold text-gray-900">Locate us</span>
+                  <span>English</span>
+                  <ChevronDown size={10} />
                 </button>
+                <div
+                  id="desktop-language-menu"
+                  className={`absolute right-0 top-full z-[70] mt-3 rounded-md border border-gray-200 bg-white p-3 text-gray-900 shadow-xl ${
+                    isLanguageMenuOpen ? "" : "hidden"
+                  }`}
+                >
+                  <div id="google_translate_mount_desktop" className="google-translate-mount" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Navigation bar */}
-        <div
-          className={`text-white px-12 sticky top-0 z-50 ${scrolled ? "shadow-md" : ""}`}
-          style={{ backgroundColor: COLORS.NAV_GREEN }}
-        >
-          <div className="flex items-center justify-between">
-            <nav className="flex items-center">
+        <div className="bg-white px-[54px]">
+          <div className="flex h-[98px] items-center justify-between gap-8">
+            <button
+              type="button"
+              onClick={() => onNavigate?.("home")}
+              className="focus:outline-none"
+            >
+              <img
+                src={savemedhaLogo}
+                alt="Save Medha Foundation Logo"
+                className="h-[62px] w-[228px] object-contain object-left"
+              />
+            </button>
+
+            <form onSubmit={handleSearchSubmit} className="relative w-[480px] shrink-0">
+              <label htmlFor="desktop-site-search" className="sr-only">
+                Search
+              </label>
+              <input
+                id="desktop-site-search"
+                type="text"
+                placeholder="Search here"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                className="h-[46px] w-full rounded-full border border-[#d7d7d7] bg-white px-9 pr-14 text-[12px] font-medium text-gray-800 placeholder:text-[#9a9a9a] focus:border-[#189500] focus:outline-none"
+              />
+              <button
+                type="submit"
+                aria-label="Submit search"
+                className="absolute right-7 top-1/2 -translate-y-1/2 text-[#1f1f1f]"
+              >
+                <SearchIcon size={20} strokeWidth={2.25} />
+              </button>
+            </form>
+
+            <div className="flex shrink-0 items-center gap-6">
+              <a
+                href="tel:+919800808595"
+                className="flex h-[46px] items-center gap-2 rounded-[9px] bg-[#169bf2] px-5 text-[12px] font-semibold text-white shadow-sm transition hover:bg-[#0787db]"
+              >
+                <Phone size={15} fill="currentColor" strokeWidth={0} />
+                <span>9800808595</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => onNavigate?.("donate")}
+                className="flex h-[46px] items-center gap-2 rounded-[9px] border border-[#ff3d45] bg-white px-5 text-[12px] font-semibold text-[#ff1f35] transition hover:bg-[#fff5f6]"
+              >
+                <span>Donate</span>
+                <HeartHandshake size={16} strokeWidth={2.3} />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className={`bg-white px-[54px] ${scrolled ? "shadow-md" : ""}`}>
+          <div className="flex h-[102px] items-center justify-center border-t border-[#f1f1f1]">
+            <nav className="flex items-center gap-12">
               {NAV_ITEMS.map((item) => {
                 const isActive = item.key && item.key === currentPage;
                 return (
@@ -661,17 +726,14 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     key={item.name}
                     href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                     onClick={item.key ? (event) => handleNavClick(event, item.key) : undefined}
-                    className={`flex items-center gap-1 px-5 py-4 text-sm font-bold uppercase transition ${
-                      isActive ? "text-white" : "text-white hover:bg-[#013970] hover:bg-opacity-10"
+                    className={`relative flex h-[102px] items-center text-[16px] font-bold transition ${
+                      isActive ? "text-[#168f00]" : "text-[#050505] hover:text-[#168f00]"
                     }`}
-                    style={isActive ? { backgroundColor: COLORS.HOME_BLUE } : {}}
                   >
-                    <span className="text-[12px] font-semibold">{item.name}</span>
-                    {item.hasDropdown && (
-                      <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    )}
+                    <span>{item.name}</span>
+                    {isActive ? (
+                      <span className="absolute bottom-[31px] left-0 h-[3px] w-full rounded-full bg-[#168f00]" />
+                    ) : null}
                   </a>
                 );
               })}

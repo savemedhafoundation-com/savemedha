@@ -4,13 +4,18 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from "react";
-import { Play, X } from "lucide-react";
-import { MdPhoneInTalk } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+} from 'react';
 
-import DoctorImg from "../assets/Photo/doc.png";
-import RedRibbonImg from "../assets/Photo/redreben.png";
+import {
+  Play,
+  X,
+} from 'lucide-react';
+import { MdPhoneInTalk } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+
+import DoctorImg from '../assets/Photo/doc.png';
+import RedRibbonImg from '../assets/Photo/redreben.png';
+
 const RED_RIBBON_URL = RedRibbonImg;
 const BACKGROUND_IMG_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770272543/backgroud_e6kehs.png";
@@ -18,7 +23,6 @@ const COMPUTER_IMAGE_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_800/v1770272630/Remote_work_and_video_call_with_colleagues_qv2tvk.png";
 const BG_IMG_OF_VIDEO_SECTION_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1200/v1770272552/bgimgofvideosection_fhbtmu.png";
-import Rectangle374 from "../assets/Photo/Rectangle 374.png";
 
 const DEFAULT_THUMBNAIL = "https://placehold.co/300x220?text=Video";
 const MAX_VIDEOS_TO_FETCH = 12;
@@ -827,28 +831,28 @@ export default function CancerTreatmentPage({ onNavigate }) {
       </section> */}
 
       {/* ===================== HEALTHCARE VIDEOS ===================== */}
-		<section className="w-full pt-6 pb-16 sm:py-16 sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20">
+		<section className="w-full sm:w-[calc(100%+3rem)] sm:-mx-6 md:w-[calc(100%+10rem)] md:-mx-20">
 	        <div className="w-full">
 	          <div className="relative rounded-3xl overflow-hidden bg-[#FBFFF9]">
 	            {/* Mobile-only layout (matches screenshot) */}
 	            <div className="sm:hidden">
-	              <div className="relative px-6 pt-10 pb-6 text-center">
+	              <div className="relative px-6 pt-8 pb-6 text-center">
 	                <h2 className="text-[20px] font-bold tracking-wide text-slate-900">
 	                  <span className="block">BROWSE OUR LATEST</span>
 	                  <span className="block">VIDEOS ON</span>
 	                </h2>
-	                <div className="mt-2">
+	                <div className="home-heading-gap">
 	                  <div className="text-[20px] font-bold text-[#74C425]">
 	                    HEALTHCARE &amp; WELLNESS
 	                  </div>
 	                  <div
-	                    className="mx-auto mt-2 h-1 w-44 rounded-full bg-[#74C425]"
+	                    className="home-heading-gap mx-auto h-1 w-44 rounded-full bg-[#74C425]"
 	                    aria-hidden="true"
 	                  />
 	                </div>
 	              </div>
 
-	              <div className="relative overflow-hidden  px-12 pb-10">
+	              <div className="relative overflow-hidden px-12 pb-8">
 	                <div
 	                  className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 "
 	                  style={{
@@ -857,7 +861,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 	                  aria-hidden="true"
 	                />
 
-	                <div className="relative mx-auto flex w-full max-w-[420px] flex-col gap-6">
+	                <div className="home-card-grid relative mx-auto flex w-full max-w-[420px] flex-col">
 	                  {healthVideos
 	                    .slice(0, mobileVisibleVideosCount)
 	                    .map((video) => (
@@ -918,126 +922,123 @@ export default function CancerTreatmentPage({ onNavigate }) {
 
 	            {/* Desktop layout (unchanged) */}
 	            <div className="hidden sm:block">
-	              {/* Top Header */}
-	              <div className="relative text-center pt-12 pb-2 px-8">
-	                
-	                <div className="inline-flex items-center gap-6 mb-0">
-	                  <div className="relative">
-	                    <img
-	                      src={COMPUTER_IMAGE_URL}
-	                      alt="Healthcare icon"
-	                      className="w-40 h-42"
-	                    />
-	                    <div className="absolute bottom-12 -right-5 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
-	                      <Play className="text-white ml-0.5" size={20} />
-	                    </div>
+	              <section className="home-section relative overflow-hidden">
+	                <div
+	                  className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-14"
+	                  style={{ backgroundImage: `url(${BG_IMG_OF_VIDEO_SECTION_URL})` }}
+	                  aria-hidden="true"
+	                />
+	                <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f8fbf8]/95 to-[#eef4f1]/85" aria-hidden="true" />
+
+	                <div className="home-container relative max-w-[1472px] text-center">
+	                  <h2 className="text-[24px] font-black leading-tight text-slate-950 sm:text-[28px]">
+	                    Browse Our Latest Videos
+	                  </h2>
+	                  <p className="home-heading-gap text-[20px] font-black leading-tight text-slate-950 sm:text-[24px]">
+	                    On <span className="text-[#14980f]">HealthCare &amp; Wellness</span>
+	                  </p>
+
+	                  <div className="home-content-gap home-card-grid mx-auto grid max-w-[1216px] grid-cols-2 sm:grid-cols-4">
+	                    {healthVideos.slice(0, 8).map((video) => (
+	                      <button
+	                        key={video.id}
+	                        onClick={() => handleVideoSelect(video)}
+	                        title={video.title}
+	                        className="group overflow-hidden rounded-[6px] bg-white text-left shadow-[0_10px_24px_rgba(15,23,42,0.14)] ring-1 ring-slate-200 transition hover:-translate-y-1 hover:ring-[#14980f]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#14980f]"
+	                      >
+	                        <div className="relative aspect-video bg-slate-100">
+	                          <img
+	                            src={video.thumbnail || DEFAULT_THUMBNAIL}
+	                            alt={video.title}
+	                            className="h-full w-full object-cover"
+	                          />
+	                          <span className="absolute left-2 top-2 rounded-[3px] bg-[#14980f] px-2 py-1 text-[8px] font-black uppercase tracking-wide text-white">
+	                            Video
+	                          </span>
+	                          <span className="absolute right-2 top-2 grid h-5 w-5 place-items-center rounded-full bg-white text-[#14980f] shadow-sm">
+	                            <Play size={13} fill="currentColor" />
+	                          </span>
+	                          {video.duration && (
+	                            <span className="absolute bottom-2 right-2 rounded-[3px] bg-black/75 px-1.5 py-0.5 text-[9px] font-bold text-white">
+	                              {video.duration}
+	                            </span>
+	                          )}
+	                        </div>
+	                        <div className="px-2 py-2">
+	                          <p className="text-[9px] font-black leading-3 text-slate-900 line-clamp-2">
+	                            {video.title}
+	                          </p>
+	                        </div>
+	                      </button>
+	                    ))}
 	                  </div>
-	                  <div className="text-left">
-	                    <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-slate-900 mb-2 tracking-wide [word-spacing:2px] sm:[word-spacing:4px] md:[word-spacing:6px]">
-	                      BROWSE OUR LATEST VIDEOS ON
-	                    </h2>
-	                    <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#74C425] mt-2 text-center relative">
-	                      HEALTHCARE & WELLNESS
-	                      <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 h-1 w-49 bg-[#74C425]" />
-	                    </p>
-	                  </div>
+
+	                  <a
+	                    href="https://youtube.com/@savemedhafoundation7959?si=y8vz2XCG11RgDmwg"
+	                    target="_blank"
+	                    rel="noopener noreferrer"
+	                    className="home-content-gap inline-flex items-center gap-2 rounded-full bg-[#14980f] px-6 py-2.5 text-[13px] font-black text-white shadow-[0_14px_28px_rgba(20,152,15,0.26)] transition hover:bg-[#0f7d0b]"
+	                  >
+	                    Watch More
+	                    <span className="grid h-5 w-5 place-items-center rounded-full bg-white text-[#14980f]">
+	                      <Play size={13} fill="currentColor" />
+	                    </span>
+	                  </a>
 	                </div>
-	              </div>
-
-	           
-	            {/* Video Grid - 5 columns, fixed card design like screenshot */}
-	            <div className="relative overflow-hidden  pt-50 pb-16 px-2">
-			              <div
-		                className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-		                style={{ backgroundImage: `url(${BG_IMG_OF_VIDEO_SECTION_URL})` }}
-		                aria-hidden="true"
-		              />
-
-	             
-
-              
-
-              <div className="relative">
-        {/* bg-gradient-to-b from-[#74C425] to-[#346700] */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {healthVideos.slice(0, 20).map((video, index) => (
-            <button
-              key={video.id}
-              onClick={() => handleVideoSelect(video)}
-              title={video.title}
-              className="group w-full cursor-pointer rounded-[22px] bg-white p-3 text-left transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]"
-            >
-              <div className="relative overflow-hidden rounded-xl bg-slate-100">
-                <div className="aspect-video w-full">
-                  <img
-                    src={video.thumbnail || DEFAULT_THUMBNAIL}
-                    alt={video.title}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-
-                <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-colors group-hover:bg-black/20">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
-                    <Play className="ml-0.5 text-white" size={22} fill="white" />
-                  </div>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 bg-black/20 px-2 py-1">
-                  <div className="h-1 flex-1 rounded-full bg-white/40">
-                    <div className="h-1 w-2/3 rounded-full bg-[#74C425]" />
-                  </div>
-                  <div
-                    className="h-2 w-3 rounded-sm"
-                    aria-hidden="true"
-                  />
-                </div>
-
-                {video.duration && (
-                  <div className="absolute top-2 right-2 rounded-md bg-black/70 px-2 py-1 text-[10px] font-bold text-white">
-                    {video.duration}
-                  </div>
-                )}
-              </div>
-
-              <span className="mt-3 block w-full cursor-pointer rounded-md bg-[#74C425] px-2 py-2 text-center text-[11px] font-bold uppercase tracking-wide text-white transition-colors group-hover:bg-[#1118A6]">
-                {`Watch now `}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Watch More Button */}
-	        <div className="text-center mt-12">
-	          <a
-	            href="https://youtube.com/@savemedhafoundation7959?si=y8vz2XCG11RgDmwg"
-	            target="_blank"
-	            rel="noopener noreferrer"
-	            className="inline-flex items-center translate-y-10 gap-4 px-12 py-5 bg-[#74C425] hover:bg-[#1118A6] text-white text-xl font-bold rounded-full transition-all transform hover:scale-105"
-	          >
-	            WATCH MORE
-	            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-	              <Play className="text-red-600" size={28} fill="red" />
-	            </div>
-	          </a>
-	        </div>
-	      </div>
-	      </div>
+	              </section>
 	    </div>
 	  </div>
 	            </div>
 	            
- <div className="relative mx-auto mt-20 w-full max-w-6xl overflow-x-hidden px-4 py-10 sm:overflow-x-visible sm:px-6 sm:py-16">
+ <div className="home-section-gap relative w-full overflow-x-hidden sm:overflow-x-visible">
 
 	  {/* GREEN CURVED BACK SHAPE */}
 	  <div
-	    className="hidden sm:block absolute right-[800px] top-1/2 mt-4 -translate-y-1/2 h-[260px] w-[260px] sm:h-[400px] sm:w-[400px] bg-gradient-to-b from-[#74C425] to-[#385E12] z-0"
+	    className="hidden"
 	    style={{
 	      borderRadius: "50% 50% 0% 100% / 46% 43% 57% 54%",
 	    }}
 	  />
 
 	  {/* MAIN CARD */}
-		  <div className="relative z-10 overflow-hidden rounded-[20px] bg-white">
+		  <section className="relative z-10 mx-auto w-[91.5%] overflow-hidden bg-[#078800] px-6 py-16 text-white sm:px-12 sm:py-20 lg:px-20 lg:py-24">
+		    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_84%_20%,rgba(124,255,75,0.35),transparent_10%),radial-gradient(circle_at_58%_84%,rgba(0,91,0,0.55),transparent_14%),linear-gradient(150deg,rgba(255,255,255,0.09)_0_18%,transparent_18%_100%)]" aria-hidden="true" />
+		    <div className="pointer-events-none absolute -left-20 top-5 h-48 w-80 rounded-full bg-[#005c00]/35 blur-2xl" aria-hidden="true" />
+		    <div className="pointer-events-none absolute bottom-0 left-1/2 h-28 w-52 -translate-x-1/2 rounded-t-full bg-[#006d00]/60" aria-hidden="true" />
+
+	    <div className="home-card-grid relative mx-auto grid w-full max-w-[1440px] items-center lg:grid-cols-[1fr_430px]">
+		      <div className="mx-auto max-w-[416px] text-center lg:mx-0 lg:text-left">
+		        <h3 className="text-[26px] font-black leading-tight sm:text-[32px]">
+		          Subhankar Sarkar
+		        </h3>
+		        <p className="home-heading-gap text-[13px] font-black text-white/90">
+		          CEO of Save Medha Foundation
+		        </p>
+		        <p className="home-content-gap text-[14px] font-semibold leading-6 text-white/92 sm:text-[15px]">
+		          At Save Medha Foundation, every initiative we undertake carries one goal: to improve lives through awareness, care, and community action. We envision a future where every individual, regardless of their background, has the knowledge and opportunity to live a healthier life.
+		        </p>
+		        <p className="mt-5 text-[13px] font-black uppercase tracking-wide text-white">
+		          "Our Goal" - Cancer Free World
+		        </p>
+		      </div>
+
+		      <div className="relative mx-auto w-full max-w-[360px] lg:max-w-[390px]">
+		        <div className="absolute -right-5 -top-7 h-16 w-16 rounded-full bg-gradient-to-br from-[#7cff4b] to-[#16820b] shadow-[0_18px_35px_rgba(0,0,0,0.22)]" />
+		        <div className="absolute -bottom-5 left-1/2 h-14 w-14 -translate-x-1/2 rounded-full bg-gradient-to-br from-[#7cff4b] to-[#16820b] shadow-[0_18px_35px_rgba(0,0,0,0.22)]" />
+		        <div className="absolute -right-3 top-1/2 h-2 w-2 rounded-full bg-[#93ff65]" />
+		        <div className="relative rounded-[18px] border-[7px] border-[#72c64a] bg-[#72c64a] p-1 shadow-[0_22px_50px_rgba(0,0,0,0.28)]">
+		          <div className="overflow-hidden rounded-[11px] bg-slate-200">
+		            <img
+		              src={DoctorImg}
+		              alt="Subhankar Sarkar"
+		              className="h-[435px] w-full object-cover grayscale sm:h-[495px]"
+		            />
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </section>
+		  <div className="hidden">
 		    {/* Mobile layout */}
 		    <div
 		      className="relative sm:hidden bg-cover bg-bottom bg-no-repeat px-6 pt-8 pb-10 text-center"

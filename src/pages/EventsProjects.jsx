@@ -10,164 +10,126 @@ import eventBoxOne from "../assets/Photo/event/EVENT BOX/1.png";
 import eventBoxTwo from "../assets/Photo/event/EVENT BOX/2.png";
 import eventBoxThree from "../assets/Photo/event/EVENT BOX/3.png";
 import eventBoxFour from "../assets/Photo/event/EVENT BOX/4.png";
-import ongoingEventImage from "../assets/Photo/5.jpg";
+import kidsImage from "../assets/Photo/kid.png";
 import upcomingEventImage from "../assets/Photo/6.jpg";
 import contactIcon from "../assets/Photo/young_woman_in_headset_using_laptop_and_taking_notes-removebg-preview.png";
 
-const EventCard = ({
-  image,
-  label,
-  offset = false,
-  imageClassName = "",
-  onClick,
-}) => (
-  <div className={`relative ${offset ? "md:mt-14" : ""}`}>
-    {/* <div className="absolute -left-3 -top-3 h-8 w-8 rounded-full border-[6px] border-[#7fc14b] bg-white shadow-sm" /> */}
-    <div className="rounded-[28px] border border-[#a9d971] bg-white p-3 shadow-[0_18px_40px_rgba(0,0,0,0.08)]">
-      <div className="overflow-hidden rounded-[22px] border border-[#d8efbf]">
-        <img
-          src={image}
-          alt={label}
-          className={` w-full object-cover  ${imageClassName}`}
-          loading="lazy"
-        />
-      </div>
+const heroBackgrounds = [heroBackgroundOne, heroBackgroundTwo, heroBackgroundThree];
+const heroFeatureImages = [eventBoxOne, eventBoxTwo, eventBoxThree, eventBoxFour];
+
+const EventCard = ({ image, label, active = false, onClick }) => (
+  <article
+    className={`mx-auto flex w-full max-w-[255px] flex-col overflow-hidden rounded-[10px] border bg-white p-3 shadow-[0_16px_34px_rgba(25,61,31,0.14)] transition hover:-translate-y-1 ${
+      active ? "border-[#159b17] ring-4 ring-[#159b17]" : "border-[#dfe6df]"
+    }`}
+  >
+    <div className="overflow-hidden rounded-[7px]">
+      <img src={image} alt={label} className="h-[255px] w-full object-cover" loading="lazy" />
     </div>
-    <div className="mt-4 flex justify-center">
-      <button
-        type="button"
-        onClick={onClick}
-        className="rounded-full bg-[#def1c5] px-6 py-2 text-sm font-semibold font-poppins text-[#000000] shadow-sm"
-      >
-        {label}
-      </button>
-    </div>
-  </div>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`mt-3 min-h-[62px] rounded-[6px] px-4 text-sm font-black uppercase transition ${
+        active ? "bg-[#159b17] text-white hover:bg-[#0f7c12]" : "bg-[#f4f5f4] text-[#1d241f] hover:bg-[#e8f8e5] hover:text-[#159b17]"
+      }`}
+    >
+      {label}
+    </button>
+  </article>
 );
 
 export default function EventsProjects({ onNavigate }) {
   const eventsRef = useRef(null);
   const [heroIndex, setHeroIndex] = useState(0);
-  const [eventBoxIndex, setEventBoxIndex] = useState(0);
-  const heroBackgrounds = [
-    heroBackgroundOne,
-    heroBackgroundTwo,
-    heroBackgroundThree,
-  ];
-  const eventBoxImages = [
-    eventBoxOne,
-    eventBoxTwo,
-    eventBoxThree,
-    eventBoxFour,
-  ];
+  const [featureIndex, setFeatureIndex] = useState(0);
 
   useEffect(() => {
-    if (heroBackgrounds.length < 2 || typeof window === "undefined")
-      return undefined;
+    if (typeof window === "undefined") return undefined;
 
     const intervalId = window.setInterval(() => {
       setHeroIndex((current) => (current + 1) % heroBackgrounds.length);
-    }, 6000);
+      setFeatureIndex((current) => (current + 1) % heroFeatureImages.length);
+    }, 5500);
 
     return () => window.clearInterval(intervalId);
-  }, [heroBackgrounds.length]);
-
-  useEffect(() => {
-    if (eventBoxImages.length < 2 || typeof window === "undefined")
-      return undefined;
-
-    const intervalId = window.setInterval(() => {
-      setEventBoxIndex((current) => (current + 1) % eventBoxImages.length);
-    }, 5000);
-
-    return () => window.clearInterval(intervalId);
-  }, [eventBoxImages.length]);
+  }, []);
 
   const handleScrollToEvents = () => {
-    if (eventsRef.current) {
-      eventsRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    eventsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <Seo title="Events & Projects" description="Discover Save Medha Foundation's community events and projects creating meaningful impact." path="/events-projects" />
+    <div className="min-h-screen bg-white text-[#1e2520]">
+      <Seo
+        title="Events & Projects"
+        description="Discover Save Medha Foundation's community events and projects creating meaningful impact."
+        path="/events-projects"
+      />
       <Navbar currentPage="events-projects" onNavigate={onNavigate} />
 
-      <main className="w-full">
-        <section className="relative overflow-hidden">
+      <main className="w-full overflow-hidden">
+        <section className="relative min-h-[640px] overflow-hidden px-4 py-20 text-white sm:px-6 lg:px-8">
           <div className="absolute inset-0">
             {heroBackgrounds.map((image, index) => (
-              <div
+              <img
                 key={image}
-                className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+                src={image}
+                alt=""
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
                   index === heroIndex ? "opacity-100" : "opacity-0"
                 }`}
-                style={{ backgroundImage: `url(${image})` }}
                 aria-hidden="true"
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30" />
+            <div className="absolute inset-0 bg-[#0f1719]/78" />
+            <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#159b17] via-[#159b17]/58 to-transparent" />
           </div>
 
-          <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-20 pt-12 lg:flex-row lg:items-center lg:pt-16">
-            <div className="space-y-6 text-white lg:max-w-xl">
-              <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl font-poppins">
-                Creating <span className="text-[#9ee06c] italic">Change</span>
-                <br />
-                Where It{" "}
-                <span className="text-[#9ee06c] italic">Matters Most</span>
+          <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_430px]">
+            <div className="max-w-xl">
+              <h1 className="font-poppins text-4xl font-black leading-tight sm:text-5xl">
+                Creating <em className="text-[#43d22f]">Change</em>
+                <span className="block">
+                  Where It <em className="text-[#43d22f]">Matters Most</em>
+                </span>
               </h1>
 
-              <div className="relative w-[540px] h-[10px] hidden lg:block">
-                {/* Start dot */}
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-white" />
-
-                {/* Main horizontal line */}
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] w-[540px] bg-white/70" />
-
-                {/* Angled line (ending dot attached) */}
-                <span className="absolute left-[540px] top-1/2 h-[2px] w-[180px] bg-white/70 rotate-[320deg] origin-left" />
-
-                {/* End dot */}
-                <span className="absolute left-[540px] top-1/2 h-2 w-2 -translate-y-1/2 translate-x-[136px] -translate-y-[120px] rounded-full bg-white" />
+              <div className="my-8 hidden h-14 max-w-[470px] items-center sm:flex" aria-hidden="true">
+                <span className="h-2 w-2 rounded-full bg-white" />
+                <span className="h-px flex-1 bg-white" />
+                <span className="h-px w-16 -translate-y-5 rotate-[-45deg] bg-white" />
+                <span className="h-2 w-2 -translate-x-1 -translate-y-10 rounded-full bg-white" />
               </div>
 
-              <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base font-sen">
-                <span className="block text-base font-semibold text-white sm:text-lg md:text-xl font-sen">
-                  Empowering communities through sustainable action and
-                  meaningful partnerships.
-                </span>
-                <span className="mt-2 block">
-                  We work at the grassroots level to address real challenges
-                  faced by vulnerable communities. Through sustainable projects,
-                  strong partnerships, and community-led solutions, we create
-                  measurable impact that improves lives and builds a better
-                  future.
-                </span>
+              <p className="font-poppins text-2xl font-bold leading-snug">
+                Empowering communities through sustainable action and meaningful partnerships.
+              </p>
+              <p className="mt-5 max-w-md text-[15px] font-semibold leading-[1.72] text-white/88">
+                We work at the grassroots level to address real challenges faced by vulnerable communities. Through sustainable projects, strong partnerships, and community-led solutions, we create measurable impact that improves lives and builds a better future.
               </p>
 
               <button
                 type="button"
                 onClick={handleScrollToEvents}
-                className="inline-flex items-center gap-3 rounded-full bg-[#e86b2a] px-6 py-3 text-sm font-semibold font-poppins text-white shadow-lg transition hover:bg-[#d96023]"
+                className="mt-8 inline-flex items-center gap-3 rounded-[8px] bg-[#35bd22] px-7 py-4 text-base font-black text-white shadow-[0_16px_36px_rgba(53,189,34,0.28)] transition hover:bg-[#159b17]"
               >
                 View Achievement
-                <ArrowRight size={18} />
+                <ArrowRight size={19} />
               </button>
             </div>
 
-            <div className="relative flex-1">
-              <div className="hidden lg:block lg:absolute left-30 -top-6 h-18 w-18 rounded-full bg-white/60" />
-              <div className="rounded-[30px] border-4 border-white/70 bg-white/10 p-2 shadow-[0_22px_45px_rgba(0,0,0,0.25)] lg:translate-x-30">
-                <div className="relative h-[280px] overflow-hidden translate-x-2  rounded-tl-[20px] rounded-tr-[60px] rounded-bl-[50px] rounded-br-[20px] border border-white/70 sm:h-[300px] lg:h-[360px]">
-                  {eventBoxImages.map((image, index) => (
+            <div className="relative mx-auto w-full max-w-[380px]">
+              <div className="absolute -left-5 -top-5 h-16 w-16 rounded-full bg-[#9af389]/50" />
+              <div className="absolute -bottom-6 -right-4 h-24 w-24 rounded-full bg-white/50 blur-[1px]" />
+              <div className="relative rounded-tl-[26px] rounded-tr-[70px] rounded-bl-[70px] rounded-br-[26px] border-[5px] border-[#81dd58] bg-white/10 p-2 shadow-[0_24px_54px_rgba(0,0,0,0.28)]">
+                <div className="relative h-[300px] overflow-hidden rounded-tl-[18px] rounded-tr-[58px] rounded-bl-[58px] rounded-br-[18px] sm:h-[350px]">
+                  {heroFeatureImages.map((image, index) => (
                     <img
                       key={image}
                       src={image}
-                      alt="Community rescue"
-                      className={`absolute inset-0 h-[280px] w-full object-cover transition-opacity duration-1000 sm:h-[340px] lg:h-[360px] ${
-                        index === eventBoxIndex ? "opacity-100" : "opacity-0"
+                      alt="Save Medha Foundation community work"
+                      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+                        index === featureIndex ? "opacity-100" : "opacity-0"
                       }`}
                       loading="lazy"
                     />
@@ -176,121 +138,47 @@ export default function EventsProjects({ onNavigate }) {
               </div>
             </div>
           </div>
-
-          <div className="absolute -bottom-1 left-0 w-full">
-            <svg
-              viewBox="0 0 1440 120"
-              className="h-20 w-full"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M0,64 C240,120 480,120 720,70 C960,20 1200,20 1440,70 L1440,120 L0,120 Z"
-                fill="#9ad25b"
-              />
-              <path
-                d="M0,88 C240,120 480,120 720,90 C960,60 1200,60 1440,90 L1440,120 L0,120 Z"
-                fill="#ffffff"
-              />
-            </svg>
-          </div>
         </section>
 
-        <section
-          ref={eventsRef}
-          id="events"
-          className="relative bg-white py-16"
-        >
-          <div className="mx-auto max-w-5xl px-6 text-center">
-            <h2 className="text-2xl font-bold text-[#78bb2a] sm:text-3xl font-poppins">
-              Events For You
+        <section ref={eventsRef} id="events" className="bg-white px-4 py-20 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl text-center">
+            <h2 className="font-poppins text-3xl font-black text-[#1d241f]">
+              <em className="text-[#159b17]">Events</em> For You
             </h2>
-            <div className="mx-auto mt-2 h-[3px] w-24 rounded-full bg-[#78bb2a]" />
-            <p className="mt-4 text-sm font-semibold text-slate-700 sm:text-base font-sen">
+            <p className="mt-5 text-base font-semibold text-[#707970]">
               An Evening Dedicated to Hope and Impact
             </p>
-          </div>
 
-          <div className="hidden lg:block mx-auto -translate-y-10 w-full max-w-5xl px-6">
-            <svg
-              width="900"
-              height="300"
-              viewBox="0 0 900 300"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-auto w-full"
-              aria-hidden="true"
-            >
-              {/* Main rounded path */}
-              <path
-                d="
-                  M 40 200
-                  V 120
-                  Q 40 100 60 100
-                  H 580
-                  Q 600 100 600 120
-                  V 160
-                  Q 600 180 620 180
-                  H 840
-                "
-                stroke="#84CC16"
-                strokeWidth="3"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <div className="mt-14 grid gap-12 md:grid-cols-2 md:items-start">
+              <EventCard
+                image={kidsImage}
+                label="Ongoing Events"
+                active
+                onClick={() => onNavigate?.("ongoing-events")}
               />
-
-              {/* Start dot */}
-              <circle cx="40" cy="200" r="6" fill="#84CC16" />
-
-              {/* End dot */}
-              <circle cx="840" cy="180" r="6" fill="#84CC16" />
-            </svg>
-          </div>
-
-          <div className="relative mx-auto mt-8 lg:mt-0 lg:-translate-y-50 lg:translate-x-20 grid max-w-5xl gap-10 px-6 md:grid-cols-2">
-            <EventCard
-              image={ongoingEventImage}
-              label="Ongoing Events"
-              onClick={() => onNavigate?.("ongoing-events")}
-            />
-            <EventCard
-              image={upcomingEventImage}
-              label="Upcoming Events"
-              offset
-              imageClassName="h-[260px] sm:h-[360px]"
-            />
-
-            
-
+              <EventCard image={upcomingEventImage} label="Upcoming Events" />
+            </div>
           </div>
         </section>
 
-        <section className="relative bg-[#e45f26] pb-16 pt-20 text-center text-white">
-          <div className="absolute -top-10 left-1/2 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-xl">
-            <img
-              src={contactIcon}
-              alt=""
-              className="h-14 w-14 object-contain"
-              loading="lazy"
-            />
+        <section className="relative bg-gradient-to-b from-[#65d23b] to-[#14980f] px-4 pb-20 pt-24 text-center text-white sm:px-6 lg:px-8">
+          <div className="absolute -top-16 left-1/2 flex h-36 w-36 -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-[0_18px_40px_rgba(20,152,15,0.2)]">
+            <img src={contactIcon} alt="" className="h-24 w-24 object-contain" loading="lazy" />
           </div>
 
-          <div className="mx-auto max-w-3xl px-6">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/80 font-sen">
-              Get In Touch
-            </p>
-            <h3 className="mt-3 text-2xl font-bold sm:text-3xl font-poppins">
-              we'd Love To Hear From You
-            </h3>
-            <p className="mt-4 text-sm text-white/90 sm:text-base font-sen">
-              We are here to listen, support, and collaborate. Whether it is a
-              simple question or a big idea, do not hesitate to reach out.
+          <div className="mx-auto max-w-3xl">
+            <p className="text-lg font-medium text-white/90">Get In Touch</p>
+            <h2 className="mt-3 font-poppins text-3xl font-black sm:text-4xl">
+              we&apos;d Love To Hear From You
+            </h2>
+            <p className="mt-4 text-base font-semibold leading-relaxed text-white/90">
+              We&apos;re here to listen, support, and collaborate.
+              <span className="block">Whether it&apos;s a simple question or a big idea - don&apos;t hesitate to reach out.</span>
             </p>
             <button
               type="button"
               onClick={() => onNavigate?.("locateus")}
-              className="mt-6 inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-sm font-semibold font-poppins text-[#e45f26] shadow-lg transition hover:bg-[#f8f2ee]"
+              className="mt-8 inline-flex items-center gap-3 rounded-[8px] bg-white px-8 py-4 text-sm font-black text-[#1d241f] shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition hover:bg-[#effbeb] hover:text-[#159b17]"
             >
               Contact with us
               <ArrowRight size={18} />

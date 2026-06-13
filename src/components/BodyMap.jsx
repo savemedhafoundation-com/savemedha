@@ -26,7 +26,7 @@ const BodyMap = memo(({ onOrganSelect }) => {
         src={topRightDecoration}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 -top-24 hidden md:block md:w-[220px] lg:w-[260px] opacity-90 z-20"
+        className="hidden"
       />
 
       <div className="body-card relative z-10">

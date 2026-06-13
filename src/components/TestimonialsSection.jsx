@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Star } from "lucide-react";
+import React, { useCallback, useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import axios from "axios";
 
-import LicenceLogo from "../assets/Photo/licencelogo (2).png";
+import LicenceLogo from "../assets/SMF BY BRATIN/Frame 21.png";
 
 const getInitial = (name) => {
   if (!name) return "?";
@@ -11,16 +11,22 @@ const getInitial = (name) => {
 };
 
 export default function TestimonialsSection() {
-  const testimonialsRef = useRef(null);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const scrollTestimonials = useCallback((dir) => {
-    const el = testimonialsRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * 360, behavior: "smooth" });
-  }, []);
+  const activeTestimonial = testimonials[activeIndex];
+
+  const changeTestimonial = useCallback(
+    (direction) => {
+      if (!testimonials.length) return;
+      setActiveIndex(
+        (current) => (current + direction + testimonials.length) % testimonials.length
+      );
+    },
+    [testimonials.length]
+  );
 
   useEffect(() => {
     let isActive = true;
@@ -73,8 +79,9 @@ export default function TestimonialsSection() {
           })
           .filter(Boolean);
 
+        setActiveIndex(0);
         setTestimonials(normalized);
-      } catch (error) {
+      } catch {
         if (!isActive) return;
         setHasError(true);
         setTestimonials([]);
@@ -93,251 +100,138 @@ export default function TestimonialsSection() {
 
   return (
     <>
-      <div className="mb-6 text-center">
-        <h2 className="relative inline-block text-3xl sm:text-4xl font-bold text-slate-900">
-          <span className="relative">TESTI</span>
-          <div className="absolute bottom-[-10px] left-0 h-1 w-16 sm:w-20 bg-[#74C425]" />
-          <span className="text-[#74C425]">MONIALS</span>
-        </h2>
-        <p className="text-gray-600 mt-2 font-bold pt-3">
-          Turning Vision into Reality
-        </p>
-      </div>
+      <section className="home-section relative overflow-hidden bg-[#F8FDF6] text-center">
+        <div className="home-container relative max-w-[760px]">
+          <h2 className="text-[24px] font-black tracking-tight text-slate-950 sm:text-[28px]">
+            Testimonials
+          </h2>
+          <p className="home-heading-gap text-[12px] font-black text-slate-900">
+            Turning Vision Into Reality
+          </p>
 
-      <section
-        className="relative py-10 px-4 sm:px-10 mb-10 rounded-none sm:rounded-3xl overflow-hidden sm:overflow-visible"
-        style={{
-          background: "linear-gradient(90deg, #74C425 0%, #3A6212 100%)",
-        }}
-      >
-        {/* Mobile: stacked cards (matches design image) */}
-        <div className="sm:hidden">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-white"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-[2px]"
-          >
-            <svg
-              viewBox="0 0 300 100"
-              preserveAspectRatio="none"
-              className="block h-16 w-full"
-            >
-              <path
-    d="
-      M0,20
-      C75,100 225,100 300,20
-      L300,-10
-      L0,-10
-      Z
-    "
-                fill="#ffffff"
-                stroke="#ffffff"
-                strokeWidth="2"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <div className="home-content-gap flex justify-center">
+            <Quote size={52} className="text-[#14980f]" fill="currentColor" />
           </div>
+          <p className="home-heading-gap mx-auto max-w-[240px] text-[18px] font-medium leading-6 text-slate-800">
+            What our customers are saying
+          </p>
 
-          <div className="relative z-10 pt-12 pb-2">
-            <div className="flex flex-col items-center gap-6">
+          <div className="home-content-gap relative mx-auto max-w-[520px]">
+            {testimonials.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  aria-label="Previous testimonial"
+                  onClick={() => changeTestimonial(-1)}
+                  className="absolute left-[-18px] top-1/2 z-20 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-500 shadow ring-1 ring-slate-200 transition hover:text-[#14980f] sm:left-[-70px]"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next testimonial"
+                  onClick={() => changeTestimonial(1)}
+                  className="absolute right-[-18px] top-1/2 z-20 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full bg-white text-slate-500 shadow ring-1 ring-slate-200 transition hover:text-[#14980f] sm:right-[-70px]"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </>
+            )}
+
+            <div className="absolute inset-0 translate-x-5 translate-y-4 rounded-[8px] border border-slate-200 bg-white/60 shadow-sm" />
+            <div className="absolute inset-0 -translate-x-5 translate-y-2 rounded-[8px] border border-slate-200 bg-white/50 shadow-sm" />
+
+            <article className="relative rounded-[8px] border border-slate-200 bg-white px-6 py-6 text-left shadow-[0_18px_36px_rgba(15,23,42,0.12)]">
               {loading ? (
-                <div className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 shadow-lg">
+                <p className="text-sm font-semibold text-slate-500">
                   Loading testimonials...
-                </div>
+                </p>
               ) : hasError ? (
-                <div className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 shadow-lg">
+                <p className="text-sm font-semibold text-red-600">
                   Unable to load testimonials
-                </div>
-              ) : testimonials.length === 0 ? (
-                <div className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 shadow-lg">
+                </p>
+              ) : !activeTestimonial ? (
+                <p className="text-sm font-semibold text-slate-500">
                   No testimonials available
-                </div>
+                </p>
               ) : (
-                testimonials.map((t, idx) => {
-                  const haloClasses = [
-                    "bg-[#74C425]/35",
-                    "bg-[#EF4444]/30",
-                    "bg-[#A855F7]/30",
-                    "bg-[#3B82F6]/30",
-                  ];
-                  const haloClass = haloClasses[idx % haloClasses.length];
+                <>
+                  <p className="text-[15px] font-black leading-6 text-slate-950">
+                    "{activeTestimonial.text}"
+                  </p>
 
-                  return (
-                    <div
-                      key={t.id ?? idx}
-                      className="w-full max-w-[360px] bg-white rounded-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative shadow-lg"
-                    >
-                      <div className="absolute top-5 left-5 h-3 w-3 rounded-full bg-[#74C425]" />
-                      <div
-                        className={`absolute top-7 left-7 h-12 w-12 rounded-full ${haloClass}`}
+                  <div className="mt-5 flex items-center gap-3">
+                    {activeTestimonial.image ? (
+                      <img
+                        src={activeTestimonial.image}
+                        alt={activeTestimonial.name}
+                        className="h-12 w-12 rounded-full object-cover"
+                        loading="lazy"
                       />
-
-                      <div className="relative z-10 flex items-start gap-4 mt-6">
-                        <div className="relative shrink-0">
-                          {t.image ? (
-                            <img
-                              src={t.image}
-                              alt={t.name}
-                              className="w-14 h-14 rounded-full object-cover shadow"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="w-14 h-14 rounded-full bg-green-600 text-white font-semibold flex items-center justify-center text-base shadow">
-                              {getInitial(t.name)}
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="flex-1">
-                          <h4 className="text-sm font-semibold text-gray-900">
-                            {t.name}
-                          </h4>
-                          <div className="flex items-center gap-1 text-[#F7C948] my-2">
-                            {[...Array(t.rating)].map((_, i) => (
-                              <Star
-                                key={i}
-                                size={16}
-                                fill="#F7C948"
-                                className="text-[#F7C948]"
-                              />
-                            ))}
-                          </div>
-                          <p className="text-xs text-gray-700 leading-relaxed">
-                            {t.text}
-                          </p>
-                        </div>
+                    ) : (
+                      <div className="grid h-12 w-12 place-items-center rounded-full bg-[#e93122] text-base font-black text-white">
+                        {getInitial(activeTestimonial.name)}
                       </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Desktop/Laptop: keep existing horizontal scroller */}
-        <div className="hidden sm:block w-full">
-          <div className="relative w-full">
-            <button
-              type="button"
-              onClick={() => scrollTestimonials(-1)}
-              className="flex absolute left-2 sm:-left-20 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white text-green-700 items-center justify-center transition hover:bg-[#edfce0] cursor-pointer"
-              aria-label="Scroll testimonials left"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollTestimonials(1)}
-              className="flex absolute right-2 sm:-right-20 top-1/2 -translate-y-1/2  z-10 w-12 h-12 rounded-full bg-white text-green-700 items-center justify-center transition hover:bg-[#d3f7b4] cursor-pointer"
-              aria-label="Scroll testimonials right"
-            >
-              <ArrowRight size={18} />
-            </button>
-
-            <div
-              ref={testimonialsRef}
-              className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 hide-scrollbar"
-            >
-              {loading ? (
-                <div className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative">
-                  Loading testimonials...
-                </div>
-              ) : hasError ? (
-                <div className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative">
-                  Unable to load testimonials
-                </div>
-              ) : testimonials.length === 0 ? (
-                <div className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative">
-                  No testimonials available
-                </div>
-              ) : (
-                testimonials.map((t, idx) => (
-                  <div
-                    key={t.id ?? idx}
-                    className="snap-start flex-shrink-0 w-[390px] bg-white rounded-[2px] rounded-tr-[2px] rounded-tl-[25px] rounded-br-[52px] p-6 relative"
-                  >
-                    <div className="absolute top-4 left-1 w-4 h-4 rounded-full bg-[#74C425] mt-4 ml-2" />
-                    <div className="absolute top-3 left-3 w-12 h-12 rounded-full bg-[#74C425] opacity-70 mt-8 ml-2" />
-
-                    <div className="relative z-10 flex items-start gap-4 mt-8 ml-4">
-                      <div className="relative shrink-0">
-                        {t.image ? (
-                          <img
-                            src={t.image}
-                            alt={t.name}
-                            className="w-16 h-16 rounded-full object-cover"
+                    )}
+                    <div>
+                      <h3 className="text-[12px] font-black text-slate-950">
+                        {activeTestimonial.name}
+                      </h3>
+                      <p className="text-[10px] font-semibold text-slate-500">
+                        Patient
+                      </p>
+                      <div className="mt-1 flex items-center gap-0.5 text-[#f5bf17]">
+                        {[...Array(activeTestimonial.rating || 5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={12}
+                            fill="currentColor"
+                            className="text-[#f5bf17]"
                           />
-                        ) : (
-                          <div className="w-16 h-16 rounded-full bg-green-600 text-white font-semibold flex items-center justify-center text-lg">
-                            {getInitial(t.name)}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="flex-1">
-                        <h4 className="text-base font-semibold text-gray-900">
-                          {t.name}
-                        </h4>
-                        <div className="flex items-center gap-1 text-[#F7C948] my-2">
-                          {[...Array(t.rating)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={18}
-                              fill="#F7C948"
-                              className="text-[#F7C948]"
-                            />
-                          ))}
-                        </div>
-                        <p className="text-sm text-gray-700 leading-relaxed">
-                          {t.text}
-                        </p>
+                        ))}
                       </div>
                     </div>
                   </div>
-                ))
+                </>
               )}
-            </div>
+            </article>
           </div>
+
+          {testimonials.length > 1 && (
+            <div className="home-content-gap flex justify-center gap-2">
+              {testimonials.slice(0, 6).map((testimonial, index) => (
+                <button
+                  key={testimonial.id}
+                  type="button"
+                  aria-label={`Show testimonial ${index + 1}`}
+                  onClick={() => setActiveIndex(index)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    activeIndex === index
+                      ? "w-10 bg-[#14980f]"
+                      : "w-5 bg-slate-300 hover:bg-slate-400"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Mobile: certified card (matches design image) */}
-      <div className="flex justify-center sm:hidden">
-        <div className="w-full max-w-[360px] -translate-y-4 px-4">
-          <p className="mb-3 text-center text-base font-bold text-gray-900 tracking-wide home-heading">
-            CERTIFIED <span className="text-[#74C425]">BY</span>
+      <section className="home-section bg-[#F8FDF6]">
+        <div className="home-container max-w-[760px] text-center">
+          <p className="text-[22px] font-black tracking-tight text-slate-950">
+            Certified <span className="text-[#14980f]">By</span>
           </p>
-          <div className="w-full rounded-2xl bg-white p-4 shadow-lg ring-2 ring-[#CFE7B2] ring-offset-2 ring-offset-[#EAF7EA]">
+          <div className="home-content-gap mx-auto w-full max-w-[560px] rounded-none bg-[#F8FDF6] px-4 py-2">
             <img
               src={LicenceLogo}
               alt="License logos"
-              className="w-full h-auto object-contain"
+              className="mx-auto h-auto w-full object-contain"
               loading="lazy"
             />
           </div>
         </div>
-      </div>
-
-      {/* Desktop/Laptop: keep existing layout */}
-      <div className="hidden sm:flex justify-center">
-        <div className="w-full max-w-[780px] -translate-y-4">
-          <p className="mb-4 text-center text-lg font-bold text-gray-900 home-heading">
-            CERTIFIED BY
-          </p>
-          <div className="w-full bg-white rounded-md px-6 py-6">
-            <img
-              src={LicenceLogo}
-              alt="License logos"
-              className="w-full h-auto object-contain"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -180,18 +180,181 @@ button, .btn {
   font-family: 'Poppins', 'Open Sans', sans-serif !important;
 }
 
+.home-main {
+  --home-space-1: 8px;
+  --home-space-2: 12px;
+  --home-space-3: 16px;
+  --home-space-4: 24px;
+  --home-space-5: 32px;
+  --home-space-6: 48px;
+  --home-section-between: 78px;
+  --home-section-y: var(--home-space-5);
+  --home-container-x: var(--home-space-3);
+  --home-heading-gap: var(--home-space-2);
+  --home-content-gap: var(--home-space-5);
+  --home-card-gap: var(--home-space-4);
+  background-color: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .home-main {
+    --home-section-y: var(--home-space-6);
+    --home-container-x: var(--home-space-4);
+  }
+}
+
+.home-section {
+  margin-top: var(--home-section-between);
+  padding-top: var(--home-section-y);
+  padding-bottom: var(--home-section-y);
+  background-color: #F8FDF6;
+}
+
+.home-bodymap-section {
+  padding-bottom: var(--home-space-3);
+}
+
+@media (min-width: 640px) {
+  .home-bodymap-section {
+    padding-bottom: var(--home-space-4);
+  }
+}
+
+.home-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--home-container-x);
+  padding-right: var(--home-container-x);
+}
+
+.home-heading-gap {
+  margin-top: var(--home-heading-gap);
+}
+
+.home-content-gap {
+  margin-top: var(--home-content-gap);
+}
+
+.home-section-gap {
+  margin-top: var(--home-section-between);
+}
+
+.home-section-gap-plus-10 {
+  margin-top: var(--home-section-between);
+}
+
+.home-card-grid {
+  gap: var(--home-card-gap);
+}
+
+.home-stack-16 > * + * {
+  margin-top: var(--home-space-3);
+}
+
+.home-stack-24 > * + * {
+  margin-top: var(--home-space-4);
+}
+
 .home-main .home-heading {
   font-family: 'Poppins', 'Open Sans', sans-serif !important;
 }
 
 .home-main .home-hero-heading {
-  font-family: 'Old Standard TT', serif !important;
+  font-family: 'Poppins', 'Inter', sans-serif !important;
 }
 
 .home-main .home-hero-subheading,
 .home-main .home-hero-button,
 .home-main .home-hero-tag {
   font-family: 'Poppins', 'Open Sans', sans-serif !important;
+}
+
+.home-premium-hero {
+  background:
+    radial-gradient(circle at 78% 28%, rgba(109, 255, 77, 0.34) 0, transparent 24%),
+    radial-gradient(circle at 18% 10%, rgba(63, 176, 255, 0.22) 0, transparent 28%),
+    linear-gradient(118deg, rgba(5, 48, 21, 0.92) 0%, rgba(6, 77, 35, 0.88) 42%, rgba(5, 18, 20, 0.96) 100%),
+    url("./assets/SMF BY BRATIN/Frame 9692.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.home-premium-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 28, 15, 0.78) 0%, rgba(3, 28, 15, 0.48) 46%, rgba(3, 28, 15, 0.18) 100%),
+    radial-gradient(circle at 50% 100%, rgba(121, 255, 76, 0.18), transparent 36%);
+  pointer-events: none;
+}
+
+.premium-section {
+  background:
+    radial-gradient(circle at top left, rgba(70, 185, 255, 0.12), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, #f6fbf5 100%);
+}
+
+.premium-card {
+  border: 1px solid rgba(21, 111, 48, 0.1);
+  box-shadow: 0 22px 60px rgba(20, 65, 42, 0.1);
+}
+
+@keyframes premiumFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes homeHeroBadgeFloatUp {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes homeHeroBadgeFloatDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(14px);
+  }
+}
+
+.home-hero-badge-float-up {
+  animation: homeHeroBadgeFloatUp 3.2s ease-in-out infinite;
+}
+
+.home-hero-badge-float-down {
+  animation: homeHeroBadgeFloatDown 3.2s ease-in-out infinite;
+}
+
+.home-hero-discover-button {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.home-hero-discover-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(182.47deg, #57BE2D 2.06%, #189802 97.94%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.home-hero-discover-button:hover::before,
+.home-hero-discover-button:focus-visible::before {
+  opacity: 1;
 }
 
 /* Quill size helpers inside prose content. */

@@ -1,89 +1,59 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import MobileBanner from "../assets/Photo/mobilebanner.png";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+
+import MobileBanner from '../assets/Photo/mobilebanner.png';
+import HomepageHeroFrame from '../assets/homepageimage/Frame 9697.png';
+import HeroEthicalBadge from '../assets/homepageimage/Group 9408.png';
+import HeroHealingBadge from '../assets/homepageimage/Group 9737.png';
 
 const HOME_BANNER_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1920/v1770891682/homepagebannner_nwnzig_aelxxh.jpg";
 
-const DotPattern = () => (
-  <div
-    style={{
-      display: "flex",
-      gap: "4px",
-      paddingLeft: "0px",
-      top: "12px",
-    }}
-  >
-    {[...Array(10)].map((_, i) => (
-      <div
-        key={i}
-        style={{ display: "flex", flexDirection: "column", gap: "4px" }}
-      >
-        {[...Array(6)].map((_, j) => (
-          <div
-            key={j}
-            style={{
-              width: "2px",
-              height: "2px",
-              borderRadius: "50%",
-              backgroundColor: "#74C425",
-            }}
-          />
-        ))}
-      </div>
-    ))}
-  </div>
-);
-
-const DefaultHeroContent = ({ showShadows = true }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
+const DefaultHeroContent = () => {
   return (
-    <div className="relative z-10 w-full pt-10 sm:pt-12 md:pt-14 lg:pt-16 text-center md:text-left flex flex-col justify-start">
-      {/* Dot pattern: hidden on phone, visible from md up */}
-      <div className="hidden md:block absolute top-4 left-16 lg:left-25 opacity-60">
-        <DotPattern />
-      </div>
-
-      {/* Content wrapper — tighter horizontal padding on tablet, wider on desktop */}
-      <div className="w-full px-4 sm:px-6 md:px-12 lg:px-25">
-        {/* Tag badge */}
-        <div className="inline-block bg-[#74C425] px-4 py-1.5 sm:px-5 sm:py-1.5 md:px-5 md:py-[5px] lg:px-[25px] lg:py-[5px] text-white rounded-sm mb-4 sm:mb-5 md:mb-5 font-bold-250px italic uppercase tracking-wide text-base sm:text-lg md:text-[20px] lg:text-[25px] home-hero-tag">
+    <>
+      <div className="absolute left-[15.5%] top-[13%] z-30 hidden w-[35%] max-w-[610px] font-poppins text-white sm:block">
+        <div className="inline-flex items-center gap-3 rounded-full bg-white px-5 py-2 text-[16px] font-bold leading-none text-[#159b17] shadow-[0_10px_22px_rgba(0,0,0,0.18)]">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#57be2d]" />
           Natural Immunotherapy
         </div>
 
-        {/* Heading line 1 */}
-        <h1 className="font-oldstandard home-hero-heading font-extrabold text-black leading-tight text-[32px] sm:text-[42px] md:text-[46px] lg:text-[57px]">
+        <h1 className="mt-7 max-w-[520px] text-[56px] font-black leading-[1.22] tracking-normal text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.35)]">
           Empowering lives,
+          <span className="block">Saving futures</span>
         </h1>
 
-        {/* Heading line 2 */}
-        <h2 className="font-oldstandard home-hero-heading font-extrabold text-[#74C425] leading-tight text-[28px] sm:text-[40px] md:text-[44px] lg:text-[55px] mb-3 sm:mb-4">
-          Saving futures
-        </h2>
-
-        {/* Sub-heading */}
-        <p className="font-sans home-hero-subheading text-[14px] sm:text-[16px] md:text-[17px] lg:text-[20px] font-semibold mb-4 sm:mb-5 md:mb-5">
-          Fighting to make a{" "}
-          <span className="text-blue-600 font-bold text-[14px] sm:text-[16px] md:text-[17px] lg:text-[20px]">
-            CANCER FREE WORLD
-          </span>
+        <p className="mt-7 max-w-[520px] text-[27px] font-semibold leading-[1.22] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
+          Fighting to make a <span className="font-black text-[#20f11d]">CANCER FREE</span>
+          <span className="block font-black text-[#20f11d]">WORLD</span>
         </p>
 
-        {/* CTA button */}
-        <a
-          href="https://nit.care/"
-          target="_blank"
-          rel="noopener noreferrer"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className={`inline-block bg-[#74C425] hover:bg-[#1118A6] cursor-pointer text-white px-6 sm:px-8 md:px-9 lg:px-10 py-2 sm:py-2.5 md:py-2.5 lg:py-3 font-medium OpenSans home-hero-button text-base sm:text-lg md:text-lg lg:text-xl tracking-wide rounded-sm transition-transform duration-500 ${
-            showShadows ? (isHovered ? "shadow-lg" : "shadow-md") : ""
-          }`}
-        >
-          DISCOVER
-        </a>
+        <div className="mt-7 flex flex-wrap items-center gap-7 text-[11px] font-semibold text-white drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]">
+          {["No Chemotherapy", "No Surgery Needed", "Zero Radiation"].map((item) => (
+            <span key={item} className="inline-flex items-center gap-2">
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-black leading-none text-[#159b17]">
+                ✓
+              </span>
+              {item}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
+
+      <a
+        href="https://nit.care/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Discover Natural Immunotherapy"
+        className="home-hero-discover-button absolute left-[15.5%] bottom-[20%] z-30 inline-flex min-h-[55px] min-w-[171px] items-center justify-center rounded-[13px] bg-white px-[47px] py-[17px] font-poppins text-[20px] font-bold leading-none text-[#159b17] shadow-[0_12px_26px_rgba(0,0,0,0.24)] transition duration-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/80 focus:ring-offset-2 focus:ring-offset-[#189802]"
+      >
+        Discover
+      </a>
+    </>
   );
 };
 
@@ -223,6 +193,10 @@ export default function HeroBanner({
 
   const hasMultipleImages = images.length > 1;
   const shouldShowArrows = showArrows && hasMultipleImages;
+  const shouldUseMobileFallbackImage =
+    !imageMap && (!Array.isArray(backgroundImages) || backgroundImages.length === 0);
+  const isDefaultHomepageHero =
+    shouldUseMobileFallbackImage && showDefaultContent && children === undefined;
 
   const content =
     typeof children === "function"
@@ -233,7 +207,7 @@ export default function HeroBanner({
           ? <DefaultHeroContent showShadows={showShadows} />
           : null;
 
-  const shouldRenderDefaultSpacer = children === undefined && showDefaultContent;
+  const shouldRenderDefaultSpacer = children === undefined && showDefaultContent && !isDefaultHomepageHero;
 
   const goPrev = () => {
     setActiveIndex((current) => (current - 1 + images.length) % images.length);
@@ -245,16 +219,35 @@ export default function HeroBanner({
 
   // Tablet gets its own intermediate height between sm and lg
   const heightClassName =
-    containerClassName ?? "min-h-[420px] sm:min-h-[520px] md:min-h-[560px] lg:min-h-[620px]";
-
-  const shouldUseMobileFallbackImage =
-    !imageMap && (!Array.isArray(backgroundImages) || backgroundImages.length === 0);
+    containerClassName ?? "min-h-[420px] sm:min-h-[520px] md:min-h-[560px] lg:min-h-[750px]";
 
   return (
     <div
       className={`relative flex flex-row w-full h-full overflow-hidden ${heightClassName} ${className}`}
     >
-      {shouldUseMobileFallbackImage ? (
+      {isDefaultHomepageHero ? (
+        <>
+          <img
+            src={HomepageHeroFrame}
+            alt={imageAlt}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            loading="eager"
+            fetchPriority="high"
+          />
+          <img
+            src={HeroHealingBadge}
+            alt="Healing Active, Restored Immunity"
+            className="home-hero-badge-float-up absolute right-[10.5%] top-[13%] z-20 hidden w-[17.25%] min-w-[124px] max-w-[196px] sm:block"
+            loading="eager"
+          />
+          <img
+            src={HeroEthicalBadge}
+            alt="Verified Ethical Practice"
+            className="home-hero-badge-float-down absolute bottom-[16%] left-[50.8%] z-20 hidden w-[17.25%] min-w-[124px] max-w-[196px] sm:block"
+            loading="eager"
+          />
+        </>
+      ) : shouldUseMobileFallbackImage ? (
         <>
           {/* Phone: dedicated portrait crop — hidden at sm and above */}
           <img

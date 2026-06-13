@@ -1,34 +1,22 @@
 import React, { useState } from "react";
-const CANCER_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266153/CANCER_xmjtjj.png";
-const CONSTIPATION_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266153/Constipation_dmizbj.png";
-const DIABETICS_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/DIABETICS_bbhnpl.png";
+import CancerCareImg from "../assets/homepageimage/Rectangle 122.png";
+import KidneyCareImg from "../assets/homepageimage/Rectangle 122 (1).png";
+import ImmunityCareImg from "../assets/homepageimage/Rectangle 122 (2).png";
+import DiabeticsCareImg from "../assets/homepageimage/Rectangle 122 (3).png";
+import ConstipationCareImg from "../assets/homepageimage/Rectangle 122 (4).png";
+import SkinCareImg from "../assets/homepageimage/Rectangle 122 (5).png";
 const GENITAL_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/GENITAL_zngpaj.png";
 const HAIR_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/HAIR_mfmdca.png";
-const HEART_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266154/HEART_dgtoqd.png";
 const INDIGESTION_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266155/INDIGESTION_lblubd.png";
-const KIDNEY_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266157/KIDNEY_t9qnrc.png";
-const LIVER_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266158/LIVER_i6hqhz.png";
-const NERVE_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266159/NERVE_vvturs.png";
 const OTHER_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266159/OTHER_xaekqs.png";
-const SKIN_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266162/SKIN_yvww0a.png";
 const SPINAL_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266163/SPINAL_g4itqj.png";
 const THALASSEMIA_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266163/THALASSEMIA_lkc840.png";
-const THYROID_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266166/THYROID_lqqtpt.png";
 const VITILIGO_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_200/v1770266166/VITILIGO_vkp4hr.png";
 
@@ -36,35 +24,63 @@ const CARD_IMAGE =
   "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=600&q=80";
 
 const baseImages = {
-  cancer: CANCER_URL,
-  kidney: KIDNEY_URL,
-  liver: LIVER_URL,
-  heart: HEART_URL,
-  nerve: NERVE_URL,
-  thyroid: THYROID_URL,
+  cancer: KidneyCareImg,
+  kidney: CancerCareImg,
+  nerve: ImmunityCareImg,
+  diabetics: DiabeticsCareImg,
+  constipation: ConstipationCareImg,
+  skin: SkinCareImg,
   genital: GENITAL_URL,
   spinal: SPINAL_URL,
   vitiligo: VITILIGO_URL,
   thalassemia: THALASSEMIA_URL,
-  diabetics: DIABETICS_URL,
-  skin: SKIN_URL,
   hair: HAIR_URL,
-  constipation: CONSTIPATION_URL,
   indigestion: INDIGESTION_URL,
   other: OTHER_URL,
 };
 
 const TREATMENT_CARDS = [
-  { id: 1, key: "cancer", title: "CANCER TREATMENT", image: baseImages.cancer },
-  { id: 2, key: "kidney", title: "KIDNEY TREATMENT", image: baseImages.kidney },
-  { id: 3, key: "liver", title: "LIVER TREATMENT", image: baseImages.liver },
-  { id: 4, key: "heart", title: "HEART TREATMENT", image: baseImages.heart },
-  { id: 5, key: "nerve", title: "NERVE TREATMENT", image: baseImages.nerve },
+  {
+    id: 1,
+    key: "cancer",
+    title: "CANCER TREATMENT",
+    image: baseImages.cancer,
+    text: "A holistic, science-backed approach to support immune response.",
+  },
+  {
+    id: 2,
+    key: "kidney",
+    title: "KIDNEY TREATMENT",
+    image: baseImages.kidney,
+    text: "Natural support focused on urinary wellness and kidney function.",
+  },
+  {
+    id: 3,
+    key: "nerve",
+    title: "NERVE TREATMENT",
+    image: baseImages.nerve,
+    text: "Nerve and spine wellness through structured natural care.",
+  },
+  {
+    id: 4,
+    key: "diabetics",
+    title: "DIABETICS TREATMENT",
+    image: baseImages.diabetics,
+    text: "Support for better metabolic balance and everyday wellness.",
+  },
+  {
+    id: 5,
+    key: "constipation",
+    title: "CONSTIPATION TREATMENT",
+    image: baseImages.constipation,
+    text: "Natural digestive care for improved comfort and bowel wellness.",
+  },
   {
     id: 6,
-    key: "thyroid",
-    title: "THYROID TREATMENT",
-    image: baseImages.thyroid,
+    key: "skin",
+    title: "SKIN TREATMENT",
+    image: baseImages.skin,
+    text: "Natural skin wellness support for healthier skin function.",
   },
   {
     id: 7,
@@ -119,82 +135,98 @@ export default function TreatmentCards({
   selectedCategory,
 }) {
   const [isExpandedOnMobile, setIsExpandedOnMobile] = useState(false);
+  const [localSelectedCategory, setLocalSelectedCategory] = useState("cancer");
+  const activeCategory = selectedCategory ?? localSelectedCategory;
+
+  const handleSelect = (card) => {
+    setLocalSelectedCategory(card.key);
+
+    if (card.key && typeof onSelectCategory === "function") {
+      onSelectCategory(card.key);
+    }
+  };
 
   return (
-    <div className="relative max-w-screen-2xl mx-auto px-2 sm:px-6">
+    <div className="relative mx-auto max-w-[1600px] bg-[#F8FDF6] py-0">
       <div className="text-center">
-        <h3 className="text-2xl sm:text-3xl lg:text-[35px] font-robotocondensed font-bold text-[#1b3610] tracking-tight uppercase">
-          OUR <span className="text-[#74C425]">SERVICES</span>
+        <h3 className="text-[24px] font-black tracking-tight text-black sm:text-[30px]">
+          Our Core Focus Areas
         </h3>
+        <p className="mt-3 mx-auto max-w-[560px] text-[14px] font-medium leading-5 text-[#6b6b6b] sm:text-[17px]">
+          Comprehensive approaches to wellness, bridging natural methods with clinical accountability.
+        </p>
       </div>
 
-      <div className="relative mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-8 lg:grid-rows-2">
-        {TREATMENT_CARDS.map((card, index) => {
-		          const isSelected = selectedCategory === card.key;
-		          const titleParts = String(card.title || "").trim().split(/\s+/);
-		          const titleSuffix = titleParts.length ? titleParts.pop() : "";
-		          const titleMain = titleParts.join(" ");
-              const isHiddenOnMobile = !isExpandedOnMobile && index >= 6;
+      <div className="mt-6 grid grid-cols-1 gap-x-16 gap-y-12 px-4 sm:grid-cols-2 lg:mx-auto lg:max-w-[980px] lg:grid-cols-3 lg:px-0">
+        {TREATMENT_CARDS.slice(0, 6).map((card, index) => {
+          const isSelected = activeCategory === card.key;
+          const isHiddenOnMobile = !isExpandedOnMobile && index >= 6;
 		
-		          return (
-		            <div
-		              key={card.id}
-		              className={`bg-white rounded-2xl shadow-[0_6px_12px_rgba(0,0,0,0.08)] overflow-hidden border flex flex-col transition-colors ${
-		                isSelected
-		                  ? "border-[#5cb624] ring-2 ring-[#5cb624]/30"
-		                  : "border-[#e6e6e6]"
-		              } ${isHiddenOnMobile ? "hidden sm:flex" : ""}`}
-		            >
-				              <div
-				                className="h-28 bg-cover bg-center bg-no-repeat sm:h-16 lg:h-28"
-				                style={{ backgroundImage: `url('${card.image || CARD_IMAGE}')` }}
-				              />
-			              <div
-			                className={`relative -mt-6 flex flex-1 flex-col items-center justify-center gap-2 rounded-[30px] px-3 pb-4 pt-7 text-center sm:mt-0 sm:gap-2 sm:rounded-none sm:px-4 sm:py-3 ${
-			                  isSelected ? "bg-[#1118A5]" : "bg-[#74C425]"
-			                }`}
-			              >
-			                <p className="text-[12px] sm:text-[11px] font-bold text-white leading-[1.1] uppercase tracking-wide">
-			                  <span>{titleMain}</span>
-			                  {titleSuffix ? <span className="block">{titleSuffix}</span> : null}
-			                </p>
+          return (
+            <article
+              key={card.id}
+              className={`group flex min-h-[390px] flex-col overflow-hidden rounded-[14px] border bg-white shadow-[0_12px_28px_rgba(15,23,42,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(17,70,39,0.16)] ${
+                isSelected
+                  ? "border-[#129808] ring-2 ring-[#129808]"
+                  : "border-[#d1d5db]"
+              } ${isHiddenOnMobile ? "hidden sm:flex" : ""}`}
+            >
+                  <div className="h-[230px] overflow-hidden bg-[#F8FDF6]">
+                    <img
+                      src={card.image || CARD_IMAGE}
+                      alt={card.title}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+              <div
+                className={`relative flex flex-1 flex-col items-start justify-between gap-3 px-6 py-5 text-left transition-colors ${
+                  isSelected ? "bg-[#109306]" : "bg-white"
+                }`}
+              >
+                      <div>
+                <h4 className={`text-[14px] font-black uppercase leading-[1.15] tracking-wide ${
+                        isSelected ? "text-white" : "text-[#102a1a]"
+                      }`}>
+                  {card.title}
+                </h4>
+                      <p className={`mt-2 text-[9px] font-semibold leading-[1.45] sm:text-[10px] ${
+                        isSelected ? "text-white/90" : "text-[#334155]"
+                      }`}>
+                        {card.text}
+                      </p>
+                      </div>
 		
-		                <button
-		                  type="button"
-		                  onClick={() => {
-		                    if (card.key && typeof onSelectCategory === "function") {
-		                      onSelectCategory(card.key);
-		                      return;
-		                    }
-		
-		                    onNavigate?.("treatment-questions", { category: card.key });
-		                  }}
-		                  className={`inline-flex items-center justify-center cursor-pointer rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-wide shadow transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:px-4 sm:py-1 sm:text-[10px] ${
-		                    isSelected
-		                      ? "bg-white text-[#1118A5] hover:bg-white/90"
-		                      : "bg-[#d8f4b8] text-[#1b3610] hover:bg-white"
-		                  }`}
-		                  aria-pressed={isSelected}
-		                >
-		                  LEARN MORE
-		                </button>
-		              </div>
-		            </div>
-		          );
-		        })}
+                <button
+                  type="button"
+                  onClick={() => handleSelect(card)}
+                  className={`inline-flex cursor-pointer items-center justify-center rounded-[7px] px-4 py-2 text-[10px] font-black transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#14980f]/40 ${
+                    isSelected
+                      ? "bg-white text-[#109306] hover:bg-white/90"
+                      : "bg-[#109306] text-white hover:bg-[#0c7f04]"
+                  }`}
+                  aria-pressed={isSelected}
+                >
+                  Learn More
+                </button>
+              </div>
+            </article>
+          );
+        })}
       </div>
 
-      {!isExpandedOnMobile && (
-        <div className="mt-6 flex justify-center sm:hidden">
+      <div className="mt-8 flex justify-center">
           <button
             type="button"
-            onClick={() => setIsExpandedOnMobile(true)}
-            className="inline-flex items-center justify-center rounded-md bg-[#1118A6] px-8 py-2 text-sm font-semibold text-white shadow transition hover:bg-[#0d128f]"
+            onClick={() => {
+              setIsExpandedOnMobile(true);
+              onNavigate?.("treatment");
+            }}
+            className="inline-flex items-center justify-center rounded-[13px] bg-[#109306] px-10 py-3 text-[16px] font-black text-white shadow-[0_10px_22px_rgba(16,147,6,0.2)] transition hover:bg-[#0c7f04]"
           >
-            LOAD MORE
+            See All
           </button>
-        </div>
-      )}
+      </div>
     </div>
   );
 }
