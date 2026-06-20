@@ -52,9 +52,19 @@ const razorpayApiDevMiddleware = () => ({
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   Object.assign(process.env, env);
+  const backendProxyTarget =
+    env.VITE_DEV_API_PROXY_TARGET || env.VITE_BACKEND_URL || "http://localhost:3000";
 
   return {
     plugins: [react(), tailwindcss(), razorpayApiDevMiddleware()],
+    server: {
+      proxy: {
+        "/api/social-work": {
+          target: backendProxyTarget,
+          changeOrigin: true,
+        },
+      },
+    },
     build: {
       rollupOptions: {
         output: {

@@ -28,6 +28,7 @@ const resourceLinks = [
   { name: "Blogs", key: "blogs", href: "/blogs" },
   { name: "E-Books", key: "ebook", href: "/ebook" },
   { name: "Events & Projects", key: "events-projects", href: "/events-projects" },
+  { name: "Student Social Work", key: "student-social-work", href: "/student-social-work" },
   { name: "Donate", key: "donate", href: "/donate" },
   { name: "Contact", key: "locateus", href: "/contact-us" },
 ];

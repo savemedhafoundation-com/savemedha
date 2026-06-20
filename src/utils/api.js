@@ -3,9 +3,13 @@ import axios from 'axios';
 const trimTrailingSlash = url => (typeof url === 'string' ? url.replace(/\/$/, '') : url);
 
 const resolveBaseURL = () => {
-  const explicit = import.meta.env.VITE_API_URL;
+  const explicit = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
   if (explicit) {
-    return trimTrailingSlash(explicit);
+    const clean = trimTrailingSlash(explicit);
+    if (!import.meta.env.DEV && clean.startsWith('/')) {
+      return 'https://savemedhabackend.vercel.app/api';
+    }
+    return clean.endsWith('/api') ? clean : `${clean}/api`;
   }
 
   if (import.meta.env.DEV) {
@@ -13,9 +17,7 @@ const resolveBaseURL = () => {
     return '/api';
   }
 
-  const origin =
-    typeof window !== 'undefined' && window.location?.origin ? window.location.origin : '';
-  return `${trimTrailingSlash(origin)}/api`;
+  return 'https://savemedhabackend.vercel.app/api';
 };
 
 const baseURL = resolveBaseURL();
@@ -32,6 +34,10 @@ const api = axios.create({
 
 api.interceptors.request.use(
   config => {
+    if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
       if (token) {

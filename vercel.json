@@ -13,6 +13,10 @@
   ],
   "routes": [
     {
+      "src": "/api/social-work/(.*)",
+      "dest": "https://savemedhabackend.vercel.app/api/social-work/$1"
+    },
+    {
       "src": "/blogs/share/(.*)",
       "dest": "https://savemedhabackend.vercel.app/api/blogs/$1/share"
     },

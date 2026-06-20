@@ -29,6 +29,36 @@ const OngoingEvents = lazy(() => import("./pages/OngoingEvents"));
 const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage"));
 const TermsConditionsApply = lazy(() => import("./pages/TermsConditionsApply"));
 const DownloadApp = lazy(() => import("./pages/DownloadApp"));
+const StudentSocialWorkLanding = lazy(() =>
+  import("./pages/StudentSocialWork").then((module) => ({
+    default: module.StudentSocialWorkLanding,
+  }))
+);
+const StudentSocialWorkApply = lazy(() =>
+  import("./pages/StudentSocialWork").then((module) => ({
+    default: module.StudentSocialWorkApply,
+  }))
+);
+const StudentSocialWorkVerify = lazy(() =>
+  import("./pages/StudentSocialWork").then((module) => ({
+    default: module.StudentSocialWorkVerify,
+  }))
+);
+const StudentSocialWorkAdmin = lazy(() =>
+  import("./pages/StudentSocialWork").then((module) => ({
+    default: module.StudentSocialWorkAdmin,
+  }))
+);
+const StudentSocialWorkDashboard = lazy(() =>
+  import("./pages/StudentSocialWork").then((module) => ({
+    default: module.StudentSocialWorkDashboard,
+  }))
+);
+const StudentSocialWorkCertificatePrint = lazy(() =>
+  import("./pages/StudentSocialWork").then((module) => ({
+    default: module.StudentSocialWorkCertificatePrint,
+  }))
+);
 
 const PageLoader = () => <div className="min-h-screen bg-white" />;
 // demo commit
@@ -257,6 +287,9 @@ function App() {
         case "events-projects":
           targetPath = "/events-projects";
           break;
+        case "student-social-work":
+          targetPath = "/student-social-work";
+          break;
         case "ongoing-events":
           targetPath = "/ongoing-events";
           break;
@@ -347,6 +380,38 @@ function App() {
           path="/download-app"
           element={<DownloadApp onNavigate={handleNavigate} />}
         />
+        <Route
+          path="/student-social-work"
+          element={<StudentSocialWorkLanding onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/student-social-work/apply"
+          element={<StudentSocialWorkApply onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/student-social-work/verify"
+          element={<StudentSocialWorkVerify onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/student-social-work/verify/:certificateId"
+          element={<StudentSocialWorkVerify onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/student-social-work/certificate/:certificateId"
+          element={<StudentSocialWorkCertificatePrint />}
+        />
+        <Route
+          path="/student-dashboard/social-work"
+          element={<StudentSocialWorkDashboard />}
+        />
+        <Route path="/admin/social-work" element={<StudentSocialWorkAdmin />} />
+        <Route path="/admin/social-work/applications" element={<StudentSocialWorkAdmin />} />
+        <Route path="/admin/social-work/students" element={<StudentSocialWorkAdmin />} />
+        <Route path="/admin/social-work/batches" element={<StudentSocialWorkAdmin />} />
+        <Route path="/admin/social-work/attendance" element={<StudentSocialWorkAdmin />} />
+        <Route path="/admin/social-work/reports" element={<StudentSocialWorkAdmin />} />
+        <Route path="/admin/social-work/certificates" element={<StudentSocialWorkAdmin />} />
+        <Route path="/admin/social-work/settings" element={<StudentSocialWorkAdmin />} />
         <Route
           path="/events-projects"
           element={<EventsProjects onNavigate={handleNavigate} />}

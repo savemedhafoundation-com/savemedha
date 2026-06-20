@@ -36,6 +36,7 @@ const NAV_ITEMS = [
   { name: "About Us", key: "about", hasDropdown: false },
   { name: "Treatment", key: "treatment", hasDropdown: false },
   { name: "Events & Projects", key: "events-projects", hasDropdown: false },
+  { name: "Student Social Work", key: "student-social-work", hasDropdown: false },
   { name: "Blogs", key: "blogs", hasDropdown: false },
   // { name: "CASE STUDIES", key: "case-studies", hasDropdown: false },
   { name: "E-Book", key: "ebook", hasDropdown: false },
