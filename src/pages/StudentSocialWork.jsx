@@ -757,7 +757,7 @@ export function StudentSocialWorkAdmin() {
   };
 
   const rows = Array.isArray(data) ? data : [];
-  const applications = activeTab === "applications" ? rows.filter((item) => [item.fullName, item.collegeName, item.email, item.status].join(" ").toLowerCase().includes(search.toLowerCase())) : [];
+  const applications = activeTab === "applications" ? rows.filter((item) => [item.applicationId, item.fullName, item.collegeName, item.email, item.mobile, item.status].join(" ").toLowerCase().includes(search.toLowerCase())) : [];
   const students = activeTab === "students" ? rows.filter((item) => [item.studentCode, item.fullName, item.collegeName, item.status].join(" ").toLowerCase().includes(search.toLowerCase())) : [];
 
   return (
@@ -782,17 +782,26 @@ export function StudentSocialWorkAdmin() {
           title="Applications"
           action={<button onClick={() => downloadCsv("/social-work/export/applications", "social-work-applications.csv")} className="inline-flex items-center gap-2 rounded-lg bg-slate-950 px-4 py-2 text-sm font-black text-white"><Download size={16} /> Export</button>}
         >
-          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search applications" className="mb-4 h-10 w-full rounded-lg border border-slate-300 px-3 md:max-w-sm" />
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search applications by name, ID, email, mobile, college, or status" className="h-10 w-full rounded-lg border border-slate-300 px-3 md:max-w-md" />
+            <p className="text-sm font-bold text-slate-500">{applications.length} submitted form{applications.length === 1 ? "" : "s"}</p>
+          </div>
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">
               <thead className="bg-slate-50 text-slate-500">
-                <tr>{["Name", "College", "Duration", "Work Area", "Status", "Date", "Actions"].map((head) => <th key={head} className="px-3 py-2">{head}</th>)}</tr>
+                <tr>{["Application ID", "Name", "Contact", "College", "Course", "Duration", "Work Area", "Status", "Submitted", "Actions"].map((head) => <th key={head} className="px-3 py-2">{head}</th>)}</tr>
               </thead>
               <tbody>
                 {applications.map((app) => (
                   <tr key={app._id} className="border-t">
+                    <td className="px-3 py-3 font-bold">{app.applicationId}</td>
                     <td className="px-3 py-3 font-bold">{app.fullName}</td>
+                    <td className="px-3 py-3">
+                      <div className="font-bold">{app.mobile}</div>
+                      <div className="text-xs text-slate-500">{app.email}</div>
+                    </td>
                     <td className="px-3 py-3">{app.collegeName}</td>
+                    <td className="px-3 py-3">{app.courseDepartment}</td>
                     <td className="px-3 py-3">{app.preferredDuration} Hours</td>
                     <td className="px-3 py-3">{app.preferredWorkArea}</td>
                     <td className="px-3 py-3">{app.status}</td>
@@ -806,6 +815,13 @@ export function StudentSocialWorkAdmin() {
                     </td>
                   </tr>
                 ))}
+                {!applications.length ? (
+                  <tr>
+                    <td colSpan={10} className="border-t px-3 py-8 text-center font-bold text-slate-500">
+                      No submitted application forms found.
+                    </td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>
@@ -819,22 +835,38 @@ export function StudentSocialWorkAdmin() {
                 <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                   {[
                     ["Application ID", selectedApplication.applicationId],
+                    ["Submitted On", formatDate(selectedApplication.createdAt)],
+                    ["Status", selectedApplication.status],
+                    ["Salutation", selectedApplication.salutation],
+                    ["Date of Birth", formatDate(selectedApplication.dob)],
+                    ["Age", selectedApplication.age],
+                    ["Gender", selectedApplication.gender],
                     ["Email", selectedApplication.email],
                     ["Mobile", selectedApplication.mobile],
+                    ["WhatsApp", selectedApplication.whatsapp],
                     ["College", selectedApplication.collegeName],
                     ["Course", selectedApplication.courseDepartment],
+                    ["Semester/Year", selectedApplication.semesterYear],
                     ["Duration", `${selectedApplication.preferredDuration} Hours`],
                     ["Work Area", selectedApplication.preferredWorkArea],
                     ["Availability", selectedApplication.availability],
                     ["Guardian", selectedApplication.guardianName],
+                    ["Guardian Contact", selectedApplication.guardianContact],
                     ["Emergency", selectedApplication.emergencyContact],
+                    ["Consent Accepted", selectedApplication.consentAccepted ? "Yes" : "No"],
+                    ["Guardian Consent", selectedApplication.guardianConsentAccepted ? "Yes" : "No"],
                   ].map(([label, value]) => (
                     <div key={label}><dt className="font-bold text-slate-500">{label}</dt><dd className="font-black text-slate-900">{value || "-"}</dd></div>
                   ))}
                 </dl>
+                <div className="mt-4 rounded-lg bg-slate-50 p-4 text-sm">
+                  <p className="font-bold text-slate-500">Address</p>
+                  <p className="mt-1 font-black text-slate-900">{selectedApplication.address || "-"}</p>
+                </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {selectedApplication.idProofFile?.url ? <a href={selectedApplication.idProofFile.url} target="_blank" rel="noreferrer" className="rounded bg-slate-100 px-3 py-2 text-sm font-bold">ID proof</a> : null}
                   {selectedApplication.collegeIdFile?.url ? <a href={selectedApplication.collegeIdFile.url} target="_blank" rel="noreferrer" className="rounded bg-slate-100 px-3 py-2 text-sm font-bold">College ID</a> : null}
+                  {!selectedApplication.idProofFile?.url && !selectedApplication.collegeIdFile?.url ? <span className="rounded bg-amber-50 px-3 py-2 text-sm font-bold text-amber-800">No proof files uploaded</span> : null}
                 </div>
                 <textarea value={adminNotes} onChange={(e) => setAdminNotes(e.target.value)} placeholder="Admin notes" className="mt-4 min-h-24 w-full rounded border px-3 py-2" />
                 <div className="mt-4 flex flex-wrap gap-2">
