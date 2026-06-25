@@ -40,6 +40,7 @@ const NAV_ITEMS = [
   { name: "Blogs", key: "blogs", hasDropdown: false },
   // { name: "CASE STUDIES", key: "case-studies", hasDropdown: false },
   { name: "E-Book", key: "ebook", hasDropdown: false },
+  { name: "Download App", key: "download-app", hasDropdown: false },
   { name: "Careers", key: "careers", hasDropdown: false },
   { name: "Contact Us", key: "locateus", hasDropdown: false },
 ];
@@ -718,8 +719,8 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
         </div>
 
         <div className={`bg-white px-[54px] ${scrolled ? "shadow-md" : ""}`}>
-          <div className="flex h-[102px] items-center justify-center border-t border-[#f1f1f1]">
-            <nav className="flex items-center gap-12">
+          <div className="flex h-[70px] items-center justify-center border-t border-[#f1f1f1]">
+            <nav className="flex items-center gap-8">
               {NAV_ITEMS.map((item) => {
                 const isActive = item.key && item.key === currentPage;
                 return (
@@ -727,13 +728,13 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     key={item.name}
                     href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                     onClick={item.key ? (event) => handleNavClick(event, item.key) : undefined}
-                    className={`relative flex h-[102px] items-center text-[16px] font-bold transition ${
+                    className={`relative flex h-[54px] items-center text-[15px] font-bold transition ${
                       isActive ? "text-[#168f00]" : "text-[#050505] hover:text-[#168f00]"
                     }`}
                   >
                     <span>{item.name}</span>
                     {isActive ? (
-                      <span className="absolute bottom-[31px] left-0 h-[3px] w-full rounded-full bg-[#168f00]" />
+                      <span className="absolute bottom-[8px] left-0 h-[3px] w-full rounded-full bg-[#168f00]" />
                     ) : null}
                   </a>
                 );

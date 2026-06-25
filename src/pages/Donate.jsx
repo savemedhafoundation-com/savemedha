@@ -233,7 +233,6 @@ export default function Donate({ onNavigate }) {
       />
 
       <main className="flex flex-col items-center px-4 py-12">
-        {/* Section under banner (placeholders) */}
         <section className="w-full">
           <div className="mx-auto max-w-5xl text-center">
             <h2 className="text-[#7dc553] font-extrabold text-3xl sm:text-4xl font-poppins [-webkit-text-stroke:1px_#ffffff] sm:[-webkit-text-stroke:2px_#ffffff]">
@@ -270,7 +269,6 @@ export default function Donate({ onNavigate }) {
                   to those in need. Donate now and be a part of something truly meaningful!
                 </p>
 
-               
                 {paymentMessage ? (
                   <div className="mt-4 text-sm font-semibold font-sen text-slate-800">
                     {paymentMessage}
@@ -316,33 +314,28 @@ export default function Donate({ onNavigate }) {
                 </div>
               </div>
             </div>
-              <div className="px-6 py-10 sm:px-10">
-                <h3 className="text-center text-2xl sm:text-3xl font-extrabold text-slate-900 font-poppins">
-                  Support Our Cause
-                </h3>
-                <p className="mt-2 text-center text-sm sm:text-base text-slate-600 font-sen">
-                  Help our organization by donating today! Donations go to making a difference for
-                  our cause.
-                </p>
+            <div className="px-6 py-10 sm:px-10">
+              <h3 className="text-center text-2xl sm:text-3xl font-extrabold text-slate-900 font-poppins">
+                Support Our Cause
+              </h3>
+              <p className="mt-2 text-center text-sm sm:text-base text-slate-600 font-sen">
+                Help our organization by donating today! Donations go to making a difference for
+                our cause.
+              </p>
+            </div>
+
+            <div className="mt-14 overflow-hidden border border-slate-200 bg-[#fff6f3]">
+              <div className="overflow-hidden border border-slate-200 bg-white">
+                <div className="relative">
+                  <img
+                    src={supportCauseImage}
+                    alt="Support our cause"
+                    className="h-[240px] w-full object-cover sm:h-[560px]"
+                    loading="lazy"
+                  />
                 </div>
 
-            {/* Support our cause + donation form */}
-            <div className="mt-14 overflow-hidden  border border-slate-200 bg-[#fff6f3]">
-            
-
-                <div className=" overflow-hidden  border border-slate-200 bg-white">
-                  <div className="relative">
-	                    <img
-	                      src={supportCauseImage}
-	                      alt="Support our cause"
-	                      className="h-[240px] w-full object-cover sm:h-[560px]"
-	                      loading="lazy"
-	                    />
-                    
-                  </div>
-                
-
-                <div className="mt-10">
+                <div className="mt-10 px-6 sm:px-10">
                   <h4 className="text-lg sm:text-xl font-extrabold text-slate-900 font-poppins">
                     Impact So Far
                   </h4>
@@ -362,10 +355,7 @@ export default function Donate({ onNavigate }) {
                   </ul>
                 </div>
 
-                <div
-                  id="donate-form"
-                  className="mt-10 overflow-hidden  border border-slate-200 bg-white"
-                >
+                <div id="donate-form" className="mt-10 overflow-hidden border border-slate-200 bg-white">
                   <div className="relative">
                     <img
                       src={naturalBg}
@@ -527,7 +517,6 @@ export default function Donate({ onNavigate }) {
         </section>
       </main>
 
-      {/* Get in touch */}
       <section className="w-full bg-[#e7581f] py-14">
         <div className="mx-auto max-w-5xl px-4 text-center text-white">
           <div className="text-sm sm:text-base font-semibold tracking-wide font-shippori">

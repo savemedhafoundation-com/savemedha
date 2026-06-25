@@ -17,6 +17,7 @@ import { TREATMENT_QUESTIONS_BY_CATEGORY } from "../data/treatmentQuestionsByCat
 
 const HERO_BACKGROUND_URL =
   "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=1800&q=80";
+const NerveImage = "/NEURONE.png";
 
 const treatmentCards = [
   {
@@ -34,7 +35,7 @@ const treatmentCards = [
   {
     key: "nerve",
     title: "Nerve Treatment",
-    image: HeartImage,
+    image: NerveImage,
     text: "Natural care for nerve weakness, stress, and body imbalance.",
   },
   {

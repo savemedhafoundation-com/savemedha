@@ -21,6 +21,10 @@ const RELATED_BLOGS_BANNER_URL =
 import insideBlogsBanner2 from "../assets/Photo/insideblogsbanner2.jpeg";
 import { Seo } from "../components/Seo";
 import { Schema } from "../components/Schema";
+import { CircularTestimonials } from "../components/ui/circular-testimonials";
+import CategoryImageOne from "../assets/Photo/Rectangle 822.png";
+import CategoryImageTwo from "../assets/Photo/Rectangle 823.png";
+import CategoryImageThree from "../assets/Photo/Rectangle 825.png";
 
 const fallbackBanner = "https://placehold.co/1200x640";
 const placeholderThumb = "https://placehold.co/400x260";
@@ -34,6 +38,11 @@ const BLOG_AD_IMAGES = [
 const BLOG_AD_FALLBACK = RELATED_BLOGS_BANNER_URL;
 const BLOG_AD_ROTATE_MS = 5000;
 const RESOURCE_ADS_TOGGLE_MS = 10000;
+const CATEGORY_ANIMATION_IMAGES = [
+  CategoryImageOne,
+  CategoryImageTwo,
+  CategoryImageThree,
+];
 const YOUTUBE_PLACEHOLDER = "Youtubevideo";
 const DEFAULT_EBOOK_REFERENCE_URL =
   "https://www.amazon.in/dp/B0FF2CTTND?ref=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&ref_=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&social_share=cm_sw_r_ffobk_cp_ud_dp_M6XY2MW9A67XPMMKHCX2_2&bestFormat=true";
@@ -312,6 +321,18 @@ export default function BlogsDetails({ onNavigate }) {
       .slice(0, 5)
       .map((label) => ({ label }));
   }, [related]);
+
+  const categoryTestimonials = useMemo(
+    () =>
+      categoryCards.map((cat, index) => ({
+        name: cat.label,
+        designation: "By Subhankar Sarkar",
+        quote:
+          "Explore Save Medha Foundation insights, awareness articles, and practical guidance around natural care, recovery support, and immune wellness.",
+        src: CATEGORY_ANIMATION_IMAGES[index % CATEGORY_ANIMATION_IMAGES.length],
+      })),
+    [categoryCards]
+  );
 
   const rawContent = blog?.content || blog?.description || blog?.excerpt || "";
   const contentParts = useMemo(() => {
@@ -613,23 +634,23 @@ export default function BlogsDetails({ onNavigate }) {
       <Schema type="article" article={{ title: blog?.title, description: blog?.excerpt || blog?.description || blog?.title, url: "https://savemedha.com/blogs/" + (blog?.slug || slug), image: blog?.coverImage || blog?.image, datePublished: blog?.createdAt, dateModified: blog?.updatedAt }} />
       <Navbar currentPage="blogs" onNavigate={onNavigate} />
 
-      <main className="pb-16 blog-main">
-        <div className="max-w-6xl mx-auto px-4 pt-6">
+      <main className="pb-16 blog-main bg-white">
+        <div className="max-w-5xl mx-auto px-4 pt-6">
           <button
             type="button"
             onClick={() => onNavigate?.("blogs")}
-            className="inline-flex items-center gap-2 rounded-full border border-[#74C425] px-4 py-2 text-[#74C425] font-semibold hover:bg-[#74C425] hover:text-white transition"
+            className="inline-flex items-center gap-2 rounded-md border border-[#74C425] px-3 py-1.5 text-xs font-bold text-[#168f00] hover:bg-[#74C425] hover:text-white transition"
           >
-            <ArrowLeft size={18} />
+            <ArrowLeft size={15} />
             Back
           </button>
         </div>
 
         {/* Hero + Sidebar */}
-        <section ref={heroRef} className="max-w-6xl mx-auto px-4 pt-8">
-          <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-3">
-              <div className="h-48 sm:h-72 lg:h-[32.25rem] overflow-hidden rounded-xl shadow border text-[#74C425] border-gray-200 bg-white">
+        <section ref={heroRef} className="max-w-5xl mx-auto px-4 pt-8">
+          <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
+            <div className="space-y-4">
+              <div className="h-52 overflow-hidden rounded-md border border-slate-200 bg-slate-100 shadow-sm sm:h-72 lg:h-[335px]">
                 <img
                   src={meta.banner}
                   alt={meta.title}
@@ -642,8 +663,8 @@ export default function BlogsDetails({ onNavigate }) {
                   }}
                 />
               </div>
-              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600">
-                <span className="inline-flex items-center rounded-full bg-[#74C425] px-3 py-1 text-white font-semibold">
+              <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-500">
+                <span className="inline-flex items-center rounded-full bg-[#74C425] px-3 py-1 text-white">
                   {meta.category}
                 </span>
                 <span>By {meta.author}</span>
@@ -653,7 +674,7 @@ export default function BlogsDetails({ onNavigate }) {
                 <button
                   type="button"
                   onClick={handleScrollToComments}
-                  className="text-slate-600 border-2 border-[#74C425] px-3 py-1 rounded-full hover:text-[#74C425] transition-colors"
+                  className="rounded-full border border-[#74C425] px-3 py-1 text-[#168f00] hover:bg-[#74C425] hover:text-white transition-colors"
                 >
                   Write a Comment
                 </button>
@@ -663,7 +684,7 @@ export default function BlogsDetails({ onNavigate }) {
                   aria-pressed={liked}
                   disabled={likeStatus === "loading"}
                   aria-busy={likeStatus === "loading"}
-                  className={`inline-flex items-center gap-2 border-2 border-[#74C425] px-3 py-1 rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
+                  className={`inline-flex items-center gap-1.5 rounded-full border border-[#74C425] px-3 py-1 transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
                     liked
                       ? "bg-[#74C425] text-white"
                       : "text-[#74C425] hover:bg-[#74C425] hover:text-white"
@@ -686,7 +707,7 @@ export default function BlogsDetails({ onNavigate }) {
                     onClick={handleToggleShare}
                     aria-expanded={isShareOpen}
                     aria-controls="blog-share-menu"
-                    className="inline-flex items-center gap-2 border-2 border-[#74C425] px-3 py-1 rounded-full text-[#74C425] transition-colors hover:bg-[#74C425] hover:text-white"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#74C425] px-3 py-1 text-[#74C425] transition-colors hover:bg-[#74C425] hover:text-white"
                     aria-label="Share this blog"
                   >
                     <Share2 size={14} />
@@ -728,60 +749,53 @@ export default function BlogsDetails({ onNavigate }) {
                   )}
                 </div>
               </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#74C425] leading-tight break-words">
+              <h1 className="max-w-3xl text-2xl font-black leading-tight text-slate-950 sm:text-3xl">
                 {meta.title}
               </h1>
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-2xl bg-[#74C425] text-white p-4 md:p-6 shadow">
-                <h3 className="text-xl font-bold mb-2">
+              <div className="rounded-md bg-slate-100 p-4 shadow-sm ring-1 ring-slate-200">
+                <h3 className="text-sm font-black leading-snug text-slate-950">
                   Request a call back from us!
                 </h3>
-                <p className="text-sm text-white/90 mb-4">
+                <p className="mb-4 mt-1 text-[11px] leading-relaxed text-slate-600">
                   Fill in the form below to request a call back to get further
                   assistance from us.
                 </p>
-                <form className="space-y-5 bg-white p-4 md:p-6 rounded-2xl shadow-xl border border-gray-100">
+                <form className="space-y-3">
 
-  {/* Name */}
   <div className="w-full">
     <input
       type="text"
       id="callback-name"
-      placeholder="Your Name"
+      placeholder="Name"
       required
-      className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800
-                 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition"
+      className="h-9 w-full rounded-sm border border-slate-200 bg-white px-3 text-xs text-slate-800 outline-none transition focus:border-[#74C425]"
     />
   </div>
 
-  {/* Mobile */}
   <div className="w-full">
     <input
       type="text"
       id="callback-mobile"
-      placeholder="Your Mobile No."
-      className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800
-                 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition"
+      placeholder="Mobile no."
+      className="h-9 w-full rounded-sm border border-slate-200 bg-white px-3 text-xs text-slate-800 outline-none transition focus:border-[#74C425]"
     />
   </div>
 
-  {/* Description */}
   <div className="w-full">
     <textarea
       id="callback-description"
       rows={3}
       placeholder="Describe your issue"
-      className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800
-                 focus:border-[#1e3a8a] focus:ring-2 focus:ring-[#1e3a8a]/40 outline-none transition resize-none"
+      className="w-full resize-none rounded-sm border border-slate-200 bg-white px-3 py-2 text-xs text-slate-800 outline-none transition focus:border-[#74C425]"
     />
   </div>
 
-  {/* Button */}
   <button
     type="button"
-    className="w-full bg-[#1e3a8a] hover:bg-[#14275d] text-white font-semibold py-3 rounded-xl transition shadow-md hover:shadow-lg"
+    className="h-9 rounded-md bg-[#74C425] px-5 text-xs font-black text-white transition hover:bg-[#155300]"
   >
     Submit
   </button>
@@ -790,29 +804,24 @@ export default function BlogsDetails({ onNavigate }) {
 
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <a
-                    href={ebookReferenceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-10 py-3 text-white font-semibold font-poppins text-sm shadow hover:bg-[#e1951c] transition-all lg:translate-x-17 duration-300 hover:shadow-lg"
-                  >
-                    <IoLogoAmazon size={26} className="text-white" />
-                    Ebook Reference
-                  </a>
-                </div>
-              </div>
+              <a
+                href={ebookReferenceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#f28b16] px-5 py-3 text-xs font-black text-white shadow-sm transition hover:bg-[#d9790f]"
+              >
+                <IoLogoAmazon size={20} className="text-white" />
+                Ebook Reference
+              </a>
             </div>
           </div>
         </section>
 
-        {/* Content */}
-        <section className="max-w-6xl mx-auto px-4 sm:px-5 pt-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <section className="max-w-5xl mx-auto px-4 pt-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_245px]">
             <article
               ref={contentRef}
-              className="prose prose-sm sm:prose-base md:prose-lg prose-slate w-full min-w-0 max-w-none text-slate-800 font-sen break-words [overflow-wrap:anywhere] prose-headings:font-poppins prose-headings:font-semibold prose-headings:text-slate-900 prose-headings:leading-tight prose-headings:tracking-tight prose-headings:break-words prose-p:font-sen prose-p:my-5 prose-p:leading-[1.8] prose-p:break-words prose-li:font-sen prose-li:my-2 prose-li:leading-[1.8] prose-li:break-words prose-ul:pl-6 prose-ol:pl-6 prose-li:marker:text-[#74C425] prose-strong:font-semibold prose-strong:text-slate-900 prose-[b]:font-semibold prose-[b]:text-slate-900 prose-em:font-semibold prose-em:italic prose-[i]:font-semibold prose-[i]:italic prose-a:text-[#1e3a8a] prose-a:font-medium prose-a:underline prose-a:break-all prose-a:decoration-[#74C425] prose-a:decoration-2 prose-a:underline-offset-4 prose-a:hover:text-[#155300] prose-a:hover:decoration-[#155300] prose-a:focus-visible:outline-none prose-a:focus-visible:ring-2 prose-a:focus-visible:ring-[#74C425]/40 prose-a:focus-visible:ring-offset-2 prose-a:rounded-sm prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-blockquote:font-medium prose-blockquote:font-sen prose-img:w-full prose-img:max-w-full prose-img:h-auto prose-img:rounded-xl prose-img:shadow-sm prose-pre:max-w-full prose-pre:overflow-x-auto prose-pre:whitespace-pre-wrap prose-pre:break-words prose-code:break-words"
+              className="prose prose-sm prose-slate w-full min-w-0 max-w-none text-slate-800 font-sen break-words [overflow-wrap:anywhere] prose-headings:font-poppins prose-headings:font-black prose-headings:text-slate-950 prose-headings:leading-tight prose-p:font-sen prose-p:my-4 prose-p:leading-[1.78] prose-li:font-sen prose-li:my-1.5 prose-li:leading-[1.7] prose-ul:pl-5 prose-ol:pl-5 prose-li:marker:text-[#74C425] prose-strong:font-black prose-strong:text-slate-950 prose-a:text-[#168f00] prose-a:font-bold prose-a:underline prose-a:decoration-[#74C425] prose-a:underline-offset-4 prose-blockquote:border-l-[#74C425] prose-blockquote:text-slate-600 prose-img:w-full prose-img:max-w-full prose-img:h-auto prose-img:rounded-md prose-img:shadow-sm"
             >
               {contentParts.map((part, index) => (
                 <Fragment key={`content-part-${index}`}>
@@ -830,12 +839,12 @@ export default function BlogsDetails({ onNavigate }) {
               <div ref={contentEndRef} />
             </article>
 
-            <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-[10px] bg-gradient-to-b from-[#f59e0b] to-[#fde68a] p-6 shadow-lg border border-[#fbbf24]/40">
-                <h4 className="text-2xl font-extrabold text-white drop-shadow-sm">
+            <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+              <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+                <h4 className="text-base font-black text-slate-950">
                   On this blog:
                 </h4>
-                <div className="mt-4 space-y-3">
+                <div className="mt-3 space-y-2">
                   {["Introduction", "Description", "Conclusion", "Comments"].map(
                     (label) => {
                       const isActive = activeSideSection === label;
@@ -844,10 +853,10 @@ export default function BlogsDetails({ onNavigate }) {
                           key={label}
                           type="button"
                           onClick={() => handleSideSectionClick(label)}
-                          className={`w-full rounded-2xl px-4 py-3 text-left font-semibold font-sen shadow-md ring-1 ring-black/5 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
+                          className={`w-full rounded-sm border px-3 py-2 text-left text-xs font-bold font-sen transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]/50 ${
                             isActive
-                              ? "bg-gradient-to-r from-[#92400e] to-[#a16207] text-white shadow-lg"
-                              : "bg-white/95 text-slate-900 hover:bg-white hover:shadow-lg"
+                              ? "border-[#74C425] bg-[#e8ffd8] text-[#155300]"
+                              : "border-slate-200 bg-white text-slate-700 hover:border-[#74C425]"
                           }`}
                         >
                           {label}
@@ -859,27 +868,27 @@ export default function BlogsDetails({ onNavigate }) {
               </div>
 
               {!showResourceAds && (
-                <div className="rounded-[10px] bg-gradient-to-b from-[#7c4a0a] to-[#5a3608] p-6 shadow-lg border border-white/10">
-                  <h4 className="text-3xl font-extrabold text-white">Resources</h4>
-                  <div className="mt-4 space-y-3">
+                <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+                  <h4 className="text-base font-black text-slate-950">Resources</h4>
+                  <div className="mt-3 space-y-2">
                     <a
                       href={ebookReferenceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold font-sen shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      className="flex w-full items-center justify-between gap-3 rounded-sm border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-[#74C425] hover:text-[#155300] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]/40"
                     >
                       <span>Get E-Book reference</span>
-                      <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#74C425] text-sm leading-none text-white">
                         +
                       </span>
                     </a>
                     <button
                       type="button"
                       onClick={handleScrollToRelated}
-                      className="w-full flex items-center justify-between gap-4 rounded-2xl bg-white/95 px-4 py-3 text-slate-900 font-semibold font-sen shadow-md ring-1 ring-black/5 transition hover:bg-white hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      className="flex w-full items-center justify-between gap-3 rounded-sm border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-[#74C425] hover:text-[#155300] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#74C425]/40"
                     >
                       <span>Get similar links</span>
-                      <span className="h-9 w-9 flex items-center justify-center rounded-xl bg-[#a16207] text-white text-xl leading-none shadow-sm">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#74C425] text-sm leading-none text-white">
                         +
                       </span>
                     </button>
@@ -887,8 +896,8 @@ export default function BlogsDetails({ onNavigate }) {
                 </div>
               )}
               {showResourceAds && (
-                <div className="rounded-[10px] bg-white p-3">
-                  <div className="relative w-full h-[520px] overflow-hidden rounded-xl bg-white">
+                <div className="rounded-md bg-white p-2 shadow-sm ring-1 ring-slate-200">
+                  <div className="relative h-[360px] w-full overflow-hidden rounded-md bg-white">
                     {BLOG_AD_IMAGES.map((src, index) => (
                       <img
                         key={src}
@@ -913,23 +922,23 @@ export default function BlogsDetails({ onNavigate }) {
         </section>
 
         {Array.isArray(blog?.faqs) && blog.faqs.length > 0 && (
-          <section className="max-w-5xl mx-auto px-4 pt-10 space-y-5">
-            <h2 className="text-2xl font-bold text-slate-900">
+          <section className="max-w-5xl mx-auto px-4 pt-12 space-y-5">
+            <h2 className="text-2xl font-black text-slate-950">
               Frequently Asked Questions
             </h2>
             <div className="space-y-3">
               {blog.faqs.map((faq, index) => (
                 <details
                   key={faq.question ? `${faq.question}-${index}` : index}
-                  className="group rounded-xl border border-slate-200 bg-white p-4"
+                  className="group rounded-md border border-slate-200 bg-white p-4 shadow-sm"
                 >
-                  <summary className="cursor-pointer list-none font-semibold text-slate-900 flex items-start justify-between gap-3">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-3 text-sm font-black text-slate-900">
                     <span>{faq.question}</span>
                     <span className="text-[#74C425] text-xl leading-none transition-transform group-open:rotate-45">
                       +
                     </span>
                   </summary>
-                  <div className="mt-3 text-slate-700 leading-relaxed">
+                  <div className="mt-3 text-sm leading-relaxed text-slate-700">
                     {faq.answer}
                   </div>
                 </details>
@@ -940,22 +949,22 @@ export default function BlogsDetails({ onNavigate }) {
 
         {/* Trending Slider */}
         <section ref={relatedSectionRef} className="mt-12 px-4">
-          <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-b from-[#e8ffd8] to-white p-6 shadow-inner relative">
-            <h3 className="text-xl font-bold text-slate-900 mb-4">
+          <div className="relative mx-auto max-w-5xl">
+            <h3 className="mb-5 text-xl font-black text-slate-950">
               Related Blogs
             </h3>
             <div className="relative">
               <button
                 type="button"
                 onClick={() => handleTrendingScroll(-1)}
-                className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white border border-[#74C425] text-[#74C425] shadow cursor-pointer"
+                className="absolute -left-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#74C425] bg-white text-[#74C425] shadow"
                 aria-label="Previous"
               >
                 <ArrowLeft size={18} />
               </button>
               <div
                 ref={trendingScrollRef}
-                className="flex gap-4 overflow-x-auto scroll-smooth pb-2 hide-scrollbar"
+                className="hide-scrollbar flex gap-5 overflow-x-auto scroll-smooth pb-2"
               >
                 {(trendingPosts.length ? trendingPosts : related).map(
                   (item, index) => {
@@ -983,7 +992,7 @@ export default function BlogsDetails({ onNavigate }) {
                         key={blogSlug || item?._id || index}
                         type="button"
                         onClick={() => handleOpenBlog(blogSlug)}
-                        className="min-w-[240px] rounded-xl bg-white border border-gray-200 shadow-sm p-3 flex gap-3 text-left transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#74C425]/40 cursor-pointer"
+                        className="min-w-[230px] max-w-[250px] cursor-pointer rounded-md border border-slate-200 bg-white p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#74C425]/40"
                         aria-label={
                           item?.title ? `Open blog: ${item.title}` : "Open blog"
                         }
@@ -991,7 +1000,7 @@ export default function BlogsDetails({ onNavigate }) {
                         <img
                           src={imageSrc}
                           alt={item?.title || "Blog thumbnail"}
-                          className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                          className="aspect-[1.5] w-full rounded-md object-cover"
                           loading="lazy"
                           onError={(event) => {
                             if (event.currentTarget.src !== placeholderThumb) {
@@ -999,12 +1008,12 @@ export default function BlogsDetails({ onNavigate }) {
                             }
                           }}
                         />
-                        <div className="flex flex-col gap-1">
-                          <p className="text-xs text-slate-500">
+                        <div className="mt-3 flex flex-col gap-1">
+                          <p className="text-[10px] font-semibold text-slate-500">
                             By {authorName}
                             {dateLabel ? ` • ${dateLabel}` : ""}
                           </p>
-                          <h4 className="text-sm font-semibold text-[#74C425] line-clamp-2">
+                          <h4 className="line-clamp-2 text-sm font-black leading-snug text-slate-950">
                             {item?.title || "Untitled"}
                           </h4>
                         </div>
@@ -1016,7 +1025,7 @@ export default function BlogsDetails({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => handleTrendingScroll(1)}
-                className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white border border-[#74C425] text-[#74C425] shadow cursor-pointer"
+                className="absolute -right-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#74C425] bg-white text-[#74C425] shadow"
                 aria-label="Next"
               >
                 <ArrowRight size={18} />
@@ -1026,11 +1035,11 @@ export default function BlogsDetails({ onNavigate }) {
            
          </section>
 
-        <section className="w-full mx-auto px-4 pt-6">
+        <section className="mx-auto max-w-5xl px-4 pt-8">
           <img
             src={RELATED_BLOG_BANNERS[relatedBannerIndex]}
             alt="Related blogs banner"
-            className="w-full rounded-3xl"
+            className="w-full rounded-md shadow-sm"
             loading="lazy"
             onError={(event) => {
               if (event.currentTarget.src !== BLOG_AD_FALLBACK) {
@@ -1041,26 +1050,58 @@ export default function BlogsDetails({ onNavigate }) {
         </section>
 
         {/* Categories */}
-        <section className="max-w-6xl mx-auto px-4 pt-10">
+        <section className="max-w-5xl mx-auto px-4 pt-12">
           <div className="flex items-center gap-3 mb-6">
-            <h3 className="text-xl md:text-2xl font-bold text-slate-900">
+            <h3 className="text-xl font-black text-slate-950 md:text-2xl">
               All Category
             </h3>
             <span className="h-[2px] w-10 bg-slate-900 inline-block" />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="flex justify-center rounded-md border border-slate-200 bg-white px-6 py-8 shadow-sm">
+            <CircularTestimonials
+              testimonials={categoryTestimonials}
+              autoplay={true}
+              colors={{
+                name: "#020617",
+                designation: "#168f00",
+                testimony: "#334155",
+                arrowBackground: "#74C425",
+                arrowForeground: "#ffffff",
+                arrowHoverBackground: "#155300",
+              }}
+              fontSizes={{
+                name: "22px",
+                designation: "12px",
+                quote: "12px",
+              }}
+            />
+          </div>
+          <div className="hidden">
             {categoryCards.map((cat) => (
               <div
                 key={cat.label}
-                className="rounded-2xl bg-[#3B40AA] text-center p-4 shadow border border-gray-100"
+                className="rounded-md border border-slate-200 bg-white p-5 text-left shadow-sm"
               >
-                <div className="w-16 h-16 mx-auto rounded-full bg-[#74C425] text-white flex items-center justify-center text-2xl mb-3">
+                <div className="mb-4 overflow-hidden rounded-md bg-[#e8ffd8]">
+                  <img
+                    src={meta.banner}
+                    alt={cat.label}
+                    className="aspect-[1.6] w-full object-cover"
+                    loading="lazy"
+                  />
+                  {/*
                   📘
                 </div>
-                <p className="font-semibold font-poppins text-white">
+                  */}
+                </div>
+                <p className="font-poppins text-xl font-black text-slate-950">
                   {cat.label}
                 </p>
-                <button className="mt-2 text-sm font-semibold text-[#74C425] hover:text-[#155300]">
+                <p className="mt-2 line-clamp-4 text-sm leading-7 text-slate-600">
+                  Explore Save Medha Foundation insights, awareness articles, and practical
+                  guidance around natural care and recovery support.
+                </p>
+                <button className="mt-4 rounded-full bg-[#74C425] px-3 py-1.5 text-xs font-black text-white hover:bg-[#155300]">
                   Know More
                 </button>
               </div>
@@ -1068,29 +1109,28 @@ export default function BlogsDetails({ onNavigate }) {
           </div>
         </section>
 
-        {/* Comments */}
         <section
           ref={commentsRef}
           id="comments"
-          className="max-w-6xl mx-auto px-4 pt-12 space-y-6"
+          className="max-w-5xl mx-auto px-4 pt-12 space-y-6"
         >
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-[#e8ffd8] text-[#74C425] flex items-center justify-center">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e8ffd8] text-[#74C425]">
               <Quote size={22} />
             </div>
-            <h3 className="text-2xl font-bold font-poppins text-slate-900">
+            <h3 className="font-poppins text-2xl font-black text-slate-950">
               Comments
             </h3>
           </div>
 
           <form
-            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 space-y-3"
+            className="max-w-3xl space-y-3 rounded-md border border-slate-200 bg-white p-5 shadow-sm"
             onSubmit={handleCommentSubmit}
           >
             <div className="space-y-1">
               <label
                 htmlFor="comment-name"
-                className="text-sm font-semibold font-sen text-slate-700"
+                className="font-sen text-xs font-bold text-slate-700"
               >
                 Name
               </label>
@@ -1101,13 +1141,13 @@ export default function BlogsDetails({ onNavigate }) {
                 required
                 autoComplete="name"
                 placeholder="Your name"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425] "
+                className="h-10 w-full rounded-sm border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none focus:border-[#74C425]"
               />
             </div>
             <div className="space-y-1">
               <label
                 htmlFor="comment-phone"
-                className="text-sm font-semibold font-sen text-slate-700"
+                className="font-sen text-xs font-bold text-slate-700"
               >
                 Phone Number
               </label>
@@ -1118,13 +1158,13 @@ export default function BlogsDetails({ onNavigate }) {
                 required
                 autoComplete="tel"
                 placeholder="Your phone number"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
+                className="h-10 w-full rounded-sm border border-slate-200 bg-white px-3 text-sm text-slate-800 outline-none focus:border-[#74C425]"
               />
             </div>
             <div className="space-y-1">
               <label
                 htmlFor="comment-message"
-                className="text-sm font-semibold font-sen text-slate-700"
+                className="font-sen text-xs font-bold text-slate-700"
               >
                 Message
               </label>
@@ -1134,14 +1174,14 @@ export default function BlogsDetails({ onNavigate }) {
                 rows={4}
                 required
                 placeholder="Write your comment"
-                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#74C425]"
+                className="w-full rounded-sm border border-slate-200 bg-white px-3 py-3 text-sm text-slate-800 outline-none focus:border-[#74C425]"
               />
             </div>
             <div className="flex justify-end">
               <button
                 type="submit"
                 disabled={commentStatus === "submitting"}
-                className="rounded-full bg-[#74C425] text-white font-semibold px-5 py-2 hover:bg-[#155300] transition disabled:cursor-not-allowed disabled:opacity-70"
+                className="rounded-md bg-[#74C425] px-5 py-2 text-xs font-black text-white transition hover:bg-[#155300] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {commentStatus === "submitting"
                   ? "Submitting..."

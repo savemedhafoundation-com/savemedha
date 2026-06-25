@@ -1007,7 +1007,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 		    <div className="pointer-events-none absolute bottom-0 left-1/2 h-28 w-52 -translate-x-1/2 rounded-t-full bg-[#006d00]/60" aria-hidden="true" />
 
 	    <div className="home-card-grid relative mx-auto grid w-full max-w-[1440px] items-center lg:grid-cols-[1fr_430px]">
-		      <div className="mx-auto max-w-[416px] text-center lg:mx-0 lg:text-left">
+		      <div className="mx-auto max-w-[560px] text-center lg:mx-0 lg:text-left">
 		        <h3 className="text-[26px] font-black leading-tight sm:text-[32px]">
 		          Subhankar Sarkar
 		        </h3>
@@ -1017,7 +1017,7 @@ export default function CancerTreatmentPage({ onNavigate }) {
 		        <p className="home-content-gap text-[14px] font-semibold leading-6 text-white/92 sm:text-[15px]">
 		          At Save Medha Foundation, every initiative we undertake carries one goal: to improve lives through awareness, care, and community action. We envision a future where every individual, regardless of their background, has the knowledge and opportunity to live a healthier life.
 		        </p>
-		        <p className="mt-5 text-[13px] font-black uppercase tracking-wide text-white">
+		        <p className="mt-7 text-[20px] font-black uppercase tracking-wide text-white sm:text-[24px] lg:text-[28px]">
 		          "Our Goal" - Cancer Free World
 		        </p>
 		      </div>
