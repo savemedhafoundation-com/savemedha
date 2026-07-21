@@ -13,7 +13,7 @@ const VolunteerAndSupportSection = lazy(() =>
 
 export default function Home({ onNavigate }) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="home-figma-hero-shell min-h-screen bg-white">
       <Seo path="/" />
       <Schema type="organization" />
       <Schema type="website" />

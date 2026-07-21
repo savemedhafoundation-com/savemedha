@@ -86,6 +86,16 @@ const LOCATIONS = [
     lng: 88.3772,
   },
   {
+    city: "MUMBAI",
+    address:
+      "301, Rangoli Time Complex (3rd Floor), Dr Babasaheb Ambedkar Marg, Parel, Mumbai - 400012",
+    phone: "+91 9800808595",
+    mapLink:
+      "https://www.google.com/maps/search/?api=1&query=301%2C%20Rangoli%20Time%20Complex%20%283rd%20Floor%29%2C%20Dr%20Babasaheb%20Ambedkar%20Marg%2C%20Parel%2C%20Mumbai%20400012",
+    lat: 19.0054,
+    lng: 72.8424,
+  },
+  {
     city: "SILIGURI",
     address:
       "Baghajatin Colony Main Road, P.S.-Pradhan Nagar, Ward No.-45, Near Laal Building, Dist.-Darjeeling",
@@ -402,7 +412,7 @@ const sendOtp = async () => {
                 aria-hidden="true"
               />
             ) : null}
-		        <div className="relative mx-auto w-full max-w-[1440px] px-4 py-12 sm:px-6 md:px-20">
+		        <div className="relative mx-auto w-full max-w-[1440px] px-4 py-12 sm:px-6 lg:px-10 xl:px-12">
 	          <div className="mt-10 flex flex-col items-center text-center">
 	            <h2 className="text-4xl font-semibold tracking-wide text-[#74C425] sm:text-5xl">
 	              CLINIC CENTERS
@@ -438,7 +448,7 @@ const sendOtp = async () => {
             ) : null}
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-x-0 gap-y-12 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 2xl:gap-8">
             {LOCATIONS.map((loc, index) => {
               const isNearest = nearestLocation === loc;
               const cityLabel = formatCityLabel(loc.city);
@@ -456,20 +466,20 @@ const sendOtp = async () => {
                   ) : null}
 
                   <div
-                    className={`relative flex h-full min-h-[360px] flex-col bg-[#74C425] px-10 py-7 text-white shadow-[0_14px_30px_rgba(0,0,0,0.15)] ${
+                    className={`relative flex h-full min-h-[340px] flex-col bg-[#74C425] py-7 pl-6 pr-[15%] text-white shadow-[0_14px_30px_rgba(0,0,0,0.15)] sm:pl-8 lg:pl-9 ${
                       isNearest
                         ? "ring-4 ring-[#003399]/25 shadow-[0_16px_40px_rgba(0,51,153,0.28)]"
                         : ""
                     }`}
                     style={{ clipPath: CLINIC_CARD_CLIP_PATH }}
                   >
-                    <div className="mx-auto w-full max-w-[300px] rounded-sm -translate-x-5 bg-white px-4 py-3 text-center text-2xl font-semibold text-slate-900 shadow-sm">
+                    <div className="w-full rounded-sm bg-white px-3 py-3 text-center text-xl font-semibold text-slate-900 shadow-sm sm:px-4 sm:text-2xl">
                       {cityLabel}
                     </div>
 
                     <div className="mt-6 flex flex-1 flex-col">
                       <p
-                        className="text-sm font-medium leading-relaxed text-white/95 sm:text-base line-clamp-4 max-h-[104px] overflow-hidden"
+                        className="break-words text-sm font-medium leading-relaxed text-white/95 sm:text-base"
                         title={loc.address}
                       >
                         {loc.address}
@@ -483,7 +493,7 @@ const sendOtp = async () => {
                         <button
                           type="button"
                           onClick={() => openMap(loc.mapLink)}
-                          className="flex w-full items-center justify-center gap-3 rounded-sm -translate-x-5 bg-white px-4 py-3 text-lg font-semibold text-[#003399] shadow-sm transition hover:bg-white/95"
+                          className="flex w-full items-center justify-center gap-3 rounded-sm bg-white px-4 py-3 text-base font-semibold text-[#003399] shadow-sm transition hover:bg-white/95 sm:text-lg"
                         >
                           <GoPin className="text-[#E7581F]" size={20} />
                           Location

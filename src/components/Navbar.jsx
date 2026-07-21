@@ -436,7 +436,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                       key={item.name}
                       href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                       onClick={item.key ? (e) => handleNavClick(e, item.key) : () => setIsMobileMenuOpen(false)}
-                      className={`flex items-center gap-4 px-6 py-5 text-[15px] border-b border-gray-100 transition-all duration-200 ${
+                      className={`flex items-center gap-4 px-6 py-5 text-[18px] border-b border-gray-100 transition-all duration-200 ${
                         isActive ? "bg-gray-100 font-semibold text-gray-900" : "text-gray-700 hover:bg-[#d7f3b3]"
                       }`}
                     >
@@ -490,7 +490,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           {/* Contact + actions row */}
           <div className="flex items-center gap-3 flex-wrap justify-end">
             {/* Date */}
-            <div className="flex items-center gap-1.5 text-[13px] font-semibold text-gray-800">
+            <div className="flex items-center gap-1.5 text-[16px] font-semibold text-gray-800">
               <FaCalendarAlt className="text-gray-600" size={14} />
               <span className="whitespace-nowrap">
                 {new Intl.DateTimeFormat("en-US", {
@@ -505,7 +505,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <span className="text-gray-300">|</span>
 
             {/* Phone */}
-            <a href="tel:+919800808595" className="flex items-center gap-1.5 text-[13px] font-semibold text-gray-800 hover:text-blue-700">
+            <a href="tel:+919800808595" className="flex items-center gap-1.5 text-[16px] font-semibold text-gray-800 hover:text-blue-700">
               <MdPhoneInTalk size={15} />
               <span>9800808595</span>
             </a>
@@ -513,7 +513,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <span className="text-gray-300">|</span>
 
             {/* Email */}
-            <a href="mailto:info@savemedha.com" className="flex items-center gap-1.5 text-[13px] font-semibold text-gray-800 hover:text-blue-700">
+            <a href="mailto:info@savemedha.com" className="flex items-center gap-1.5 text-[16px] font-semibold text-gray-800 hover:text-blue-700">
               <MdAttachEmail size={15} />
               <span>info@savemedha.com</span>
             </a>
@@ -527,7 +527,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                 placeholder="Search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-2 py-1.5 text-[13px] font-semibold text-gray-700 border-2 border-[#74C425] rounded focus:outline-none bg-white"
+                className="w-full px-2 py-1.5 text-[16px] font-semibold text-gray-700 border-2 border-[#74C425] rounded focus:outline-none bg-white"
               />
               <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -555,7 +555,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <button
               type="button"
               onClick={() => onNavigate?.("locateus")}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold border-2 border-[#74C425] rounded bg-white hover:bg-gray-50 transition shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-[16px] font-semibold border-2 border-[#74C425] rounded bg-white hover:bg-gray-50 transition shadow-sm"
             >
               <IoLocationSharp className="text-[#e05529]" size={14} />
               <span className="text-gray-900">Locate us</span>
@@ -564,10 +564,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
         </div>
 
         {/* Nav bar — horizontally scrollable so all items fit on tablet */}
-        <div
-          className={`text-white sticky top-0 z-50 ${scrolled ? "shadow-md" : ""}`}
-          style={{ backgroundColor: COLORS.NAV_GREEN }}
-        >
+        <div className={`sticky top-0 z-50 bg-white ${scrolled ? "shadow-md" : ""}`}>
           {/* overflow-x-auto + scrollbar-hide lets the full nav scroll on smaller tablets */}
           <nav
             className="flex items-center overflow-x-auto"
@@ -580,10 +577,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                   key={item.name}
                   href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                   onClick={item.key ? (e) => handleNavClick(e, item.key) : undefined}
-                  className={`flex-shrink-0 flex items-center gap-1 px-4 py-3.5 text-[11px] font-semibold uppercase whitespace-nowrap transition ${
-                    isActive ? "text-white" : "text-white hover:bg-[#013970]/10"
+                  className={`relative flex-shrink-0 flex items-center gap-1 px-4 py-3.5 text-[13px] font-bold whitespace-nowrap transition ${
+                    isActive ? "text-[#168f00]" : "text-[#050505] hover:text-[#168f00]"
                   }`}
-                  style={isActive ? { backgroundColor: COLORS.HOME_BLUE } : {}}
                 >
                   {item.name}
                   {item.hasDropdown && (
@@ -591,6 +587,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                       <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   )}
+                  {isActive ? (
+                    <span className="absolute inset-x-4 bottom-1 h-[3px] rounded-full bg-[#168f00]" />
+                  ) : null}
                 </a>
               );
             })}
@@ -604,7 +603,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
       <div className="hidden lg:block">
         <div className="bg-[#189500] px-[54px] text-white">
           <div className="flex h-[35px] items-center justify-between">
-            <div className="flex items-center gap-5 text-[11px] font-semibold">
+            <div className="flex items-center gap-5 text-[13px] font-semibold">
               <a href="mailto:info@savemedha.com" className="flex items-center gap-2 hover:text-white/85">
                 <Mail size={13} fill="currentColor" strokeWidth={0} />
                 <span>info@savemedha.com</span>
@@ -621,7 +620,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 text-[10px] font-semibold">
+            <div className="flex items-center gap-4 text-[12px] font-semibold">
               <span>Follow Us :</span>
               <div className="flex items-center gap-3">
                 <a href="https://www.facebook.com/savemedhafoundation" aria-label="Facebook" target="_blank" rel="noreferrer" className="hover:text-white/80">
@@ -633,7 +632,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                 <a href="https://www.linkedin.com/company/save-medha-foundation/" aria-label="LinkedIn" target="_blank" rel="noreferrer" className="hover:text-white/80">
                   <Linkedin size={11} fill="currentColor" strokeWidth={0} />
                 </a>
-                <a href="https://www.facebook.com/savemedhafoundation" aria-label="Follow Save Medha Foundation" target="_blank" rel="noreferrer" className="text-[11px] leading-none hover:text-white/80">
+                <a href="https://www.facebook.com/savemedhafoundation" aria-label="Follow Save Medha Foundation" target="_blank" rel="noreferrer" className="text-[13px] leading-none hover:text-white/80">
                   f
                 </a>
               </div>
@@ -687,7 +686,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                 placeholder="Search here"
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                className="h-[46px] w-full rounded-full border border-[#d7d7d7] bg-white px-9 pr-14 text-[12px] font-medium text-gray-800 placeholder:text-[#9a9a9a] focus:border-[#189500] focus:outline-none"
+                className="h-[46px] w-full rounded-full border border-[#d7d7d7] bg-white px-9 pr-14 text-[14px] font-medium text-gray-800 placeholder:text-[#9a9a9a] focus:border-[#189500] focus:outline-none"
               />
               <button
                 type="submit"
@@ -701,7 +700,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <div className="flex shrink-0 items-center gap-6">
               <a
                 href="tel:+919800808595"
-                className="flex h-[46px] items-center gap-2 rounded-[9px] bg-[#169bf2] px-5 text-[12px] font-semibold text-white shadow-sm transition hover:bg-[#0787db]"
+                className="flex h-[46px] items-center gap-2 rounded-[9px] bg-[#169bf2] px-5 text-[14px] font-semibold text-white shadow-sm transition hover:bg-[#0787db]"
               >
                 <Phone size={15} fill="currentColor" strokeWidth={0} />
                 <span>9800808595</span>
@@ -709,7 +708,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate?.("donate")}
-                className="flex h-[46px] items-center gap-2 rounded-[9px] border border-[#ff3d45] bg-white px-5 text-[12px] font-semibold text-[#ff1f35] transition hover:bg-[#fff5f6]"
+                className="flex h-[46px] items-center gap-2 rounded-[9px] border border-[#ff3d45] bg-white px-5 text-[14px] font-semibold text-[#ff1f35] transition hover:bg-[#fff5f6]"
               >
                 <span>Donate</span>
                 <HeartHandshake size={16} strokeWidth={2.3} />
@@ -720,7 +719,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
 
         <div className={`bg-white px-[54px] ${scrolled ? "shadow-md" : ""}`}>
           <div className="flex h-[70px] items-center justify-center border-t border-[#f1f1f1]">
-            <nav className="flex items-center gap-8">
+            <nav className="flex items-center gap-7 xl:gap-8">
               {NAV_ITEMS.map((item) => {
                 const isActive = item.key && item.key === currentPage;
                 return (
@@ -728,7 +727,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     key={item.name}
                     href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                     onClick={item.key ? (event) => handleNavClick(event, item.key) : undefined}
-                    className={`relative flex h-[54px] items-center text-[15px] font-bold transition ${
+                    className={`relative flex h-[54px] items-center text-[18px] font-bold transition ${
                       isActive ? "text-[#168f00]" : "text-[#050505] hover:text-[#168f00]"
                     }`}
                   >

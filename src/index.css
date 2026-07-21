@@ -270,6 +270,32 @@ button, .btn {
   font-family: 'Poppins', 'Open Sans', sans-serif !important;
 }
 
+.home-figma-hero-shell {
+  background: #FFFFFF;
+}
+
+.home-figma-hero-shell .home-main {
+  background: transparent;
+}
+
+.home-figma-hero-shell .home-main > div:first-child {
+  position: relative;
+  isolation: isolate;
+  background: #FFFFFF;
+}
+
+.home-figma-hero-shell .home-main > div:first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  height: 30%;
+  pointer-events: none;
+  background: #FFFFFF;
+}
+
 .home-premium-hero {
   background:
     radial-gradient(circle at 78% 28%, rgba(109, 255, 77, 0.34) 0, transparent 24%),
