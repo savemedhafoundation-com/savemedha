@@ -1,96 +1,73 @@
 import React from "react";
 import { Mail, Phone } from "lucide-react";
 
-const STRIPES_STYLE = {
-  backgroundImage:
-    "repeating-linear-gradient(90deg, rgba(244, 63, 94, 0.08) 0px, rgba(244, 63, 94, 0.08) 22px, rgba(244, 63, 94, 0.02) 22px, rgba(244, 63, 94, 0.02) 92px)",
-};
-
 const buildMapSrc = ({ lat, lng, zoom }) =>
   `https://www.google.com/maps?q=${encodeURIComponent(
     `${lat},${lng}`
   )}&z=${encodeURIComponent(String(zoom))}&output=embed`;
 
 export default function ContactGetInTouchSection({
-  title = "Get in Touch",
-  subtitle = "We're here to answer your questions and provide the care you need.",
   phone = "+91 9800808595",
   email = "info@savemedha.com",
-  showStripes = false,
   mapLat = 22.6564,
   mapLng = 88.3772,
   mapZoom = 13,
   mapLabel = "Dunlop, Kolkata, West Bengal",
 }) {
   return (
-    <section className="relative bg-[#fbf5fc]">
-      {showStripes ? (
-        <div
-          className="absolute inset-0"
-          style={STRIPES_STYLE}
-          aria-hidden="true"
-        />
-      ) : null}
-      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-12 sm:px-6 md:px-20">
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.2fr]">
-          <div className="max-w-xl">
-            <h2 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl font-poppins">
-              {title}
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg font-sen">
-              {subtitle}
-            </p>
+    <section className="border-b border-slate-200 bg-[#fbfbfb]">
+      <div className="mx-auto grid w-full max-w-[1180px] items-center gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:py-20">
+        <div className="max-w-[470px]">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#effbea] px-3 py-1.5 text-xs font-bold text-[#168f00]">
+            <span className="h-2 w-2 rounded-full bg-[#45bd20]" />
+            We are here to help
+          </span>
 
-            <div className="mt-10 space-y-6">
-              <div className="flex items-center gap-5">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#74C425]/15 text-[#74C425] shadow-sm">
-                  <Phone className="h-8 w-8" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-2xl font-semibold text-slate-900 font-poppins">
-                    Call Us
-                  </p>
-                  <a
-                    href={`tel:${phone.replace(/\s+/g, "")}`}
-                    className="mt-1 inline-block text-xl text-slate-600 hover:text-slate-900 font-sen"
-                  >
-                    {phone}
-                  </a>
-                </div>
-              </div>
+          <h1 className="mt-5 font-poppins text-4xl font-black leading-[1.12] text-slate-950 sm:text-5xl">
+            Get in touch with our team
+          </h1>
+          <p className="mt-5 max-w-[420px] font-sen text-base font-semibold leading-7 text-slate-600">
+            Have questions about our treatments or need support? Reach out to us through any of the channels below, and we&apos;ll get back to you promptly.
+          </p>
 
-              <div className="flex items-center gap-5">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#74C425]/15 text-[#74C425] shadow-sm">
-                  <Mail className="h-8 w-8" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="text-2xl font-semibold text-slate-900 font-poppins">
-                    Email
-                  </p>
-                  <a
-                    href={`mailto:${email}`}
-                    className="mt-1 inline-block text-xl text-slate-600 hover:text-slate-900 font-sen"
-                  >
-                    {email}
-                  </a>
-                </div>
-              </div>
-            </div>
+          <div className="mt-7 grid gap-5 sm:grid-cols-2">
+            <a href={`mailto:${email}`} className="group flex items-center gap-3">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-800 transition group-hover:bg-[#eaf9e5] group-hover:text-[#168f00]">
+                <Mail size={17} />
+              </span>
+              <span className="min-w-0">
+                <strong className="block text-sm text-slate-950">Email</strong>
+                <span className="block truncate text-xs text-slate-500">{email}</span>
+              </span>
+            </a>
+            <a href={`tel:${phone.replace(/\s+/g, "")}`} className="group flex items-center gap-3">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-800 transition group-hover:bg-[#eaf9e5] group-hover:text-[#168f00]">
+                <Phone size={17} />
+              </span>
+              <span>
+                <strong className="block text-sm text-slate-950">Call Us</strong>
+                <span className="block text-xs text-slate-500">{phone}</span>
+              </span>
+            </a>
           </div>
 
-          <div className="relative overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-black/10">
-            <div className="absolute left-4 top-4 z-10 rounded-2xl bg-white/95 px-4 py-3 text-sm font-semibold text-slate-900 shadow-lg">
-              {mapLabel}
-            </div>
-            <iframe
-              title="Location map"
-              src={buildMapSrc({ lat: mapLat, lng: mapLng, zoom: mapZoom })}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="h-[320px] w-full border-0 sm:h-[420px] lg:h-[460px]"
-              allowFullScreen
-            />
+          <a href="#message-form" className="mt-8 inline-flex min-h-12 items-center justify-center rounded-xl bg-gradient-to-b from-[#54d522] to-[#159d0d] px-8 font-poppins text-base font-bold text-white shadow-[0_10px_24px_rgba(34,171,24,0.2)] transition hover:-translate-y-0.5 hover:shadow-lg">
+            Get an appointment
+          </a>
+        </div>
+
+        <div className="relative overflow-hidden rounded-xl bg-white shadow-[0_16px_45px_rgba(15,23,42,0.12)] ring-1 ring-slate-200">
+          <div className="absolute left-4 top-4 z-10 rounded-lg bg-white/95 px-3 py-2 text-xs font-bold text-slate-800 shadow-md">
+            {mapLabel}
           </div>
+          <iframe
+            title="Save Medha Foundation location map"
+            src={buildMapSrc({ lat: mapLat, lng: mapLng, zoom: mapZoom })}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="h-[330px] w-full border-0 sm:h-[390px]"
+            allowFullScreen
+          />
         </div>
       </div>
     </section>
