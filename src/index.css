@@ -260,6 +260,95 @@ button, .btn {
   font-family: 'Poppins', 'Open Sans', sans-serif !important;
 }
 
+.modern-nav-shell {
+  border: 1px solid rgba(168, 198, 146, 0.55);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(246, 251, 242, 0.96) 100%);
+  box-shadow:
+    0 24px 50px rgba(17, 46, 26, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.modern-nav-link {
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease,
+    background-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.modern-nav-link::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(124, 207, 43, 0.1), rgba(62, 163, 79, 0.04));
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.modern-nav-link > * {
+  position: relative;
+  z-index: 1;
+}
+
+.modern-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.45rem;
+  height: 2.5px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #7ccf2b 0%, #3ea34f 100%);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.22s ease;
+  opacity: 0;
+}
+
+.modern-nav-link:hover {
+  color: #0e7a1e;
+  transform: translateY(-1px);
+}
+
+.modern-nav-link:hover::before,
+.modern-nav-link.active::before {
+  opacity: 1;
+}
+
+.modern-nav-link:hover::after,
+.modern-nav-link.active::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.modern-nav-link.active {
+  color: #0f8f1d;
+}
+
+.career-process-card {
+  will-change: transform, opacity;
+}
+
+@keyframes careerProcessFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.career-process-card-content-active {
+  animation: careerProcessFloat 3.2s ease-in-out infinite;
+}
+
 .home-main .home-hero-heading {
   font-family: 'Poppins', 'Inter', sans-serif !important;
 }

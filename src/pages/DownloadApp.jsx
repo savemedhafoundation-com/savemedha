@@ -4,8 +4,8 @@ import Navbar from "../components/Navbar";
 import { Seo } from "../components/Seo";
 import appPreviewImage from "../assets/Photo/mobilebanner.png";
 
-const APK_DOWNLOAD_URL =
-  "https://nktapycq643gtcku.public.blob.vercel-storage.com/medhaclinic/app-release.apk";
+const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.savemedhafoundation.medhaclinic&pli=1";
 
 const benefits = [
   {
@@ -14,8 +14,8 @@ const benefits = [
     icon: Smartphone,
   },
   {
-    title: "Secure Download",
-    description: "Install the Android APK directly from our official download link.",
+    title: "Official Play Store Access",
+    description: "Install the Android app directly from our official Google Play listing.",
     icon: ShieldCheck,
   },
   {
@@ -63,12 +63,13 @@ export default function DownloadApp({ onNavigate }) {
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href={APK_DOWNLOAD_URL}
-                  download
+                  href={PLAY_STORE_URL}
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-md bg-[#74C425] px-7 py-3.5 font-poppins text-base font-extrabold text-white shadow-lg shadow-black/20 transition hover:bg-[#5a9c27]"
                 >
                   <Download className="h-5 w-5" />
-                  Download APK
+                  Get It On Google Play
                 </a>
                 <button
                   type="button"
@@ -121,15 +122,14 @@ export default function DownloadApp({ onNavigate }) {
             <div className="mt-10 grid gap-8 rounded-lg border border-[#e1eddb] bg-white p-6 shadow-[0_18px_55px_rgba(0,0,0,0.07)] md:grid-cols-[1fr_0.8fr] md:p-8">
               <div>
                 <p className="font-poppins text-sm font-extrabold uppercase tracking-[0.25em] text-[#E7581F]">
-                  Android APK
+                  Google Play
                 </p>
                 <h2 className="mt-3 font-poppins text-2xl font-black text-gray-900 sm:text-3xl">
-                  Install Save Medha Clinic on your Android device.
+                  Install Save Medha Clinic from the Play Store.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-700">
-                  Tap the download button, open the downloaded APK on your phone, and follow your
-                  Android installation prompts. If your phone asks for permission to install apps
-                  from the browser, allow it only for this installation.
+                  Tap the button below to open our official Google Play listing, then install the
+                  app on your Android device using the standard Play Store flow.
                 </p>
               </div>
 
@@ -137,17 +137,18 @@ export default function DownloadApp({ onNavigate }) {
                 <div className="flex items-start gap-3">
                   <WifiOff className="mt-1 h-5 w-5 flex-shrink-0 text-[#E7581F]" />
                   <p className="text-sm leading-relaxed text-gray-700">
-                    If the download does not start automatically, long-press the button and choose
-                    open link or save link on your browser.
+                    If Google Play does not open automatically, copy the link into your browser or
+                    search for `Medha Clinic` on the Play Store.
                   </p>
                 </div>
                 <a
-                  href={APK_DOWNLOAD_URL}
-                  download
+                  href={PLAY_STORE_URL}
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#1118A6] px-6 py-3 font-poppins text-sm font-extrabold text-white transition hover:bg-[#0b128a]"
                 >
                   <Download className="h-5 w-5" />
-                  Download Mobile App
+                  Open In Google Play
                 </a>
               </div>
             </div>

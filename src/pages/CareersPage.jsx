@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
+import { CheckCircle2, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
-import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
+import { Seo } from "../components/Seo";
 import internshipImage from "../assets/Photo/internship.jpg";
-import { useEffect, useRef, useState } from "react";
 
 const CLINICAL_RESEARCH_IMG =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268797/scientist-woman-doctor-holding-glass-flask-analyzing-liquid-solution_1_gs6jud.png";
@@ -22,700 +23,543 @@ const WHY_CARDS = [
   {
     title: "Purpose-driven work",
     description:
-      "Every role supports patient care, community awareness, and responsible education around Natural Immunotherapy.",
+      "Support patient care, community awareness, and responsible health communication with empathy and discipline.",
+    featured: true,
   },
   {
     title: "Learning-focused culture",
     description:
-      "We encourage careful reading, thoughtful questions, and steady improvement, guided by science and real-world practice.",
+      "Grow through guided reading, documented workflows, research support, and practical field exposure.",
   },
   {
     title: "Human-first care",
     description:
-      "We treat patients and teammates with respect, privacy, and honesty, especially when situations are difficult.",
+      "We work with honesty, privacy, respectful communication, and steady teamwork in sensitive situations.",
   },
   {
     title: "Real-world impact",
     description:
-      "Your work helps families access reliable guidance, document outcomes, and build healthier communities over time.",
+      "Your contribution helps families access clearer information and better long-term wellness support.",
   },
 ];
 
 const OPEN_POSITIONS = [
   {
     title: "Clinical Research Associate",
-    type: "Full-time",
-    location: "On-site",
+    meta: "Full-time / On-site",
     image: CLINICAL_RESEARCH_IMG,
   },
   {
     title: "Nutrition & Immunity Counselor",
-    type: "Part-time",
-    location: "Hybrid",
+    meta: "Part-time / Hybrid",
     image: NUTRITION_IMMUNITY_IMG,
   },
   {
     title: "Data & Case Documentation Executive",
-    type: "Full-time",
-    location: "On-site",
+    meta: "Full-time / On-site",
     image: DATA_CASE_DOC_IMG,
   },
   {
     title: "Media & Awareness Coordinator",
-    type: "Part-time",
-    location: "Hybrid",
+    meta: "Part-time / Hybrid",
     image: MEDIA_AWARENESS_IMG,
   },
   {
     title: "Web / Tech Volunteer (React / WordPress / AI)",
-    type: "Volunteer",
-    location: "Remote",
+    meta: "Volunteer / Remote",
     image: WEB_TECH_VOLUNTEER_IMG,
   },
 ];
-function SectionHeading({ title, subtitle, className = "" }) {
-  return (
-    <div className={`max-w-3xl ${className}`}>
-      <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl font-poppins">
-        {title}
-      </h2>
-      {subtitle ? (
-        <p className="mt-3 text-base text-slate-600 sm:text-lg font-sen">
-          {subtitle}
-        </p>
-      ) : null}
 
-      <svg
-        className="mt-2 h-3 w-64 text-lime-500"
-        viewBox="0 0 256 12"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M18 8 C 80 2, 152 2, 250 1"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-        <path
-          d="M2 12 C 62 8, 140 8, 246 7"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-        />
-      </svg>
+const WHY_CHOOSE_POINTS = [
+  {
+    title: "Growth & Learning Opportunities",
+    description:
+      "Develop through guided responsibilities, documented processes, and day-to-day collaboration.",
+  },
+  {
+    title: "Supportive Work Culture",
+    description:
+      "We value clarity, professionalism, and respect across clinical, outreach, and support teams.",
+  },
+  {
+    title: "Career Advancement",
+    description:
+      "Strong contributors earn deeper ownership, broader exposure, and mission-aligned growth.",
+  },
+  {
+    title: "Team-driven Environment",
+    description:
+      "You work alongside people committed to patient dignity, ethical care, and measurable impact.",
+  },
+];
+
+const RIBBON_ITEMS = [
+  "Website Development",
+  "UI/UX Design",
+  "React Development",
+  "Graphics Design",
+];
+
+const HIRING_STEPS = [
+  {
+    label: "Step 01",
+    title: "Application review",
+    description:
+      "We review your background, interests, and alignment with the role and the foundation's mission.",
+  },
+  {
+    label: "Step 02",
+    title: "Interaction",
+    description:
+      "Shortlisted candidates join a focused conversation so we can understand communication, intent, and values.",
+  },
+  {
+    label: "Step 03",
+    title: "Role discussion / task",
+    description:
+      "Depending on the role, we may include a practical task or case-based discussion to evaluate working style.",
+  },
+  {
+    label: "Step 04",
+    title: "Onboarding",
+    description:
+      "Selected candidates are guided through role expectations, workflows, and the standards we work with.",
+  },
+];
+
+function SectionDivider() {
+  return (
+    <div className="mx-auto max-w-[1040px] px-5 sm:px-6 lg:px-8">
+      <div className="h-px w-full bg-[#dfe4db]" />
     </div>
   );
 }
 
-function Card({ title, children, className = "" }) {
+function WhyCard({ title, description, featured = false }) {
   return (
-    <div
-      className={`relative min-h-[10rem] rounded-xl border border-[#efb29d] bg-[#f8bfa9]/80 p-4 font-poppins shadow-[0_10px_20px_rgba(15,23,42,0.08)] lg:min-h-[16rem] lg:rounded-2xl lg:border-lime-300/80 lg:bg-gradient-to-b lg:from-lime-100/80 lg:via-lime-50/70 lg:to-white lg:p-6 lg:shadow-[0_14px_30px_rgba(22,101,52,0.08)] ${className}`}
+    <article
+      className={`relative min-h-[176px] rounded-[18px] p-5 shadow-[0_16px_32px_rgba(17,46,26,0.06)] transition hover:-translate-y-1 ${
+        featured
+          ? "bg-[#40bf25] text-white"
+          : "border border-[#ebefea] bg-[#f5f7f4] text-[#1a211a]"
+      }`}
     >
-      <h3 className="pb-2 text-sm font-semibold text-slate-900 lg:pb-5 lg:text-base">
+      <h3 className="max-w-[190px] font-poppins text-[18px] font-semibold leading-[1.15] tracking-[-0.03em]">
         {title}
       </h3>
-      <div className="mt-1 text-[11px] font-semibold leading-relaxed text-slate-700 lg:mt-3 lg:text-sm lg:text-slate-600">
-        {children}
+      <p
+        className={`mt-4 max-w-[210px] text-[12px] font-medium leading-[1.65] ${
+          featured ? "text-white/82" : "text-[#667165]"
+        }`}
+      >
+        {description}
+      </p>
+      <span
+        className={`absolute bottom-4 right-4 h-7 w-7 rounded-full ${
+          featured ? "bg-white" : "bg-[#3bbb20]"
+        }`}
+        aria-hidden="true"
+      />
+    </article>
+  );
+}
+
+function DiamondImage({ image, alt, className = "" }) {
+  return (
+    <div className={`relative h-28 w-28 shrink-0 sm:h-32 sm:w-32 ${className}`}>
+      <div className="absolute inset-0 rotate-45 rounded-[1.75rem] bg-[#37c31d]" />
+      <div className="absolute inset-[5px] rotate-45 overflow-hidden rounded-[1.55rem] bg-white shadow-lg">
+        <img
+          src={image}
+          alt={alt}
+          className="h-full w-full -rotate-45 scale-[1.3] object-cover"
+          loading="lazy"
+        />
       </div>
     </div>
   );
 }
 
-function JobCard({ title, type, location, image, index }) {
-  const isRightCard = index % 2 === 1;
-  const mobileAlignment = isRightCard ? "flex-row-reverse text-right" : "";
-  const mobileMetaAlignment = isRightCard ? "justify-end" : "justify-start";
-  const mobileButtonAlignment = isRightCard ? "justify-end" : "justify-start";
-
+function JobCard({ title, meta, image, reverse = false }) {
   return (
-    <>
-      <article className="border-b border-slate-200/90 pb-6 last:border-b-0 lg:hidden">
-        <div className={`flex items-start gap-3 ${mobileAlignment}`}>
-          <div className="shrink-0 pt-1">
-            <div className="relative h-24 w-24">
-              <div className="absolute inset-0 rotate-45 rounded-2xl bg-lime-300/80" />
-              <div className="absolute inset-[5px] rotate-45 overflow-hidden rounded-xl bg-white shadow-md">
-                <img
-                  src={image}
-                  alt=""
-                  className="h-full w-full -rotate-45 scale-125 object-cover"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="min-w-0 flex-1 font-poppins">
-            <h3 className="text-[13px] font-semibold leading-snug text-slate-900">
-              {title}
-            </h3>
-
-            <dl className="mt-2 space-y-1 text-[11px] leading-snug text-slate-700">
-              <div className={`flex items-center gap-2 ${mobileMetaAlignment}`}>
-                <dt className="text-slate-500">Job type</dt>
-                <dd className="font-medium text-slate-800">{type}</dd>
-              </div>
-              <div className={`flex items-center gap-2 ${mobileMetaAlignment}`}>
-                <dt className="text-slate-500">Location</dt>
-                <dd className="font-medium text-slate-800">{location}</dd>
-              </div>
-            </dl>
-
-            <div className={`mt-3 flex ${mobileButtonAlignment}`}>
-              <Link
-                to="/apply"
-                className="inline-flex min-w-[96px] items-center justify-center rounded-lg bg-lime-500 px-4 py-1.5 text-[11px] font-semibold text-white shadow-sm hover:bg-lime-600"
-              >
-                Apply Now
-              </Link>
-            </div>
-          </div>
-        </div>
-      </article>
-
+    <article
+      className={`relative overflow-visible rounded-[22px] border border-[#d7e8ce] bg-white px-5 py-5 shadow-[0_18px_40px_rgba(17,46,26,0.08)] ${
+        reverse ? "lg:ml-10" : "lg:mr-10"
+      }`}
+    >
       <div
-        className={`
-          hidden rounded-3xl border border-lime-200/80 bg-white p-6
-          shadow-[0_18px_40px_rgba(34,197,94,0.12)]
-          transition-transform
-          max-w-xl
-          mb-10
-          font-poppins
-          lg:block
-          ${isRightCard ? "lg:translate-y-24 lg:translate-x-24" : ""}
-        `}
+        className={`flex flex-col gap-5 sm:items-center ${
+          reverse ? "sm:flex-row-reverse" : "sm:flex-row"
+        }`}
       >
-        <div
-          className={`flex flex-col gap-6 lg:items-center ${
-            isRightCard ? "lg:flex-row-reverse" : "lg:flex-row"
-          }`}
-        >
-          {/* Content */}
-          <div className={` relative ${isRightCard ? "lg:text-right" : ""}`}>
-            <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-
-            <dl className="mt-4 grid gap-2 text-sm text-slate-700">
-              <div className="flex items-center justify-between gap-3">
-                <dt className="text-slate-500">Job type</dt>
-                <dd className="font-medium text-slate-800">{type}</dd>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <dt className="text-slate-500">Location</dt>
-                <dd className="font-medium text-slate-800">{location}</dd>
-              </div>
-            </dl>
-
-            <div className="mt-6">
-              <Link
-                to="/apply"
-                className="inline-flex min-w-[160px] items-center justify-center
-                rounded-2xl bg-lime-500 px-6 py-2 text-sm font-semibold font-poppins
-                text-white shadow-sm hover:bg-lime-600"
-              >
-                Apply Now
-              </Link>
-            </div>
-          </div>
-
-          {/* Image */}
-          <div
-            className={`absolute flex justify-center ${
-              isRightCard ? "-left-10" : "inset-x-2"
-            }`}
+        <div className={`min-w-0 flex-1 ${reverse ? "sm:text-right" : ""}`}>
+          <h3 className="font-poppins text-[21px] font-semibold leading-[1.12] tracking-[-0.04em] text-[#151b15]">
+            {title}
+          </h3>
+          <p className="mt-2 text-[12px] font-medium uppercase tracking-[0.08em] text-[#7e897d]">
+            {meta}
+          </p>
+          <Link
+            to="/apply"
+            className="mt-5 inline-flex min-w-[112px] items-center justify-center rounded-[10px] bg-[#41bd28] px-4 py-2.5 text-[13px] font-semibold text-white transition hover:bg-[#2fa51b]"
           >
-            <div className="relative h-44 w-44 sm:h-40 sm:w-40">
-              <div className="absolute inset-0 rotate-45 rounded-[1.6rem] bg-lime-200" />
-              <div className="absolute inset-y-1 rotate-45 overflow-hidden rounded-[1.4rem] bg-white shadow-md">
-                <img
-                  src={image}
-                  alt=""
-                  className="h-full w-full -rotate-60 object-cover scale-128"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
+            Apply Now
+          </Link>
         </div>
+
+        <DiamondImage image={image} alt={title} />
       </div>
-    </>
+    </article>
   );
 }
 
-const externalAssetPromises = new Map();
+function Ribbon() {
+  return (
+    <div className="bg-[#0d5a14] px-4 py-3 text-white">
+      <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-semibold uppercase tracking-[0.08em] sm:text-[13px]">
+        {RIBBON_ITEMS.map((item, index) => (
+          <div key={item} className="flex items-center gap-5">
+            <span>{item}</span>
+            {index < RIBBON_ITEMS.length - 1 ? (
+              <span className="text-white/55">&bull;</span>
+            ) : null}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-const loadExternalAsset = ({ id, tagName, sourceKey, url, parent, rel }) => {
-  if (externalAssetPromises.has(id)) {
-    return externalAssetPromises.get(id);
-  }
-
-  const promise = new Promise((resolve, reject) => {
-    const existing = document.getElementById(id);
-
-    if (existing) {
-      if (existing.dataset.loaded === "true") {
-        resolve(existing);
-        return;
-      }
-
-      existing.addEventListener("load", () => resolve(existing), { once: true });
-      existing.addEventListener("error", reject, { once: true });
-      return;
-    }
-
-    const element = document.createElement(tagName);
-    element.id = id;
-    if (rel) element.rel = rel;
-    element[sourceKey] = url;
-    if (tagName === "script") element.async = true;
-
-    element.addEventListener(
-      "load",
-      () => {
-        element.dataset.loaded = "true";
-        resolve(element);
-      },
-      { once: true }
-    );
-    element.addEventListener(
-      "error",
-      (error) => {
-        externalAssetPromises.delete(id);
-        reject(error);
-      },
-      { once: true }
-    );
-
-    parent.appendChild(element);
-  });
-
-  externalAssetPromises.set(id, promise);
-  return promise;
-};
-
-const loadScript = (src, id) =>
-  loadExternalAsset({
-    id,
-    tagName: "script",
-    sourceKey: "src",
-    url: src,
-    parent: document.body,
-  });
-
-const loadLink = (href, id) =>
-  loadExternalAsset({
-    id,
-    tagName: "link",
-    sourceKey: "href",
-    url: href,
-    parent: document.head,
-    rel: "stylesheet",
-  });
-
-const getCarouselMode = () => {
-  if (typeof window === "undefined") return "default";
-  return window.matchMedia("(min-width: 768px) and (max-width: 1023px)").matches
-    ? "tablet"
-    : "default";
-};
-
-// the flipster slide for the careers page
-const CoverflowCarousel = () => {
-  const flipsterRef = useRef(null);
-  const [carouselMode, setCarouselMode] = useState(getCarouselMode);
+function ProcessDeck() {
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 768px) and (max-width: 1023px)");
-    const syncMode = () => setCarouselMode(mediaQuery.matches ? "tablet" : "default");
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % HIRING_STEPS.length);
+    }, 2400);
 
-    syncMode();
-
-    if (typeof mediaQuery.addEventListener === "function") {
-      mediaQuery.addEventListener("change", syncMode);
-      return () => mediaQuery.removeEventListener("change", syncMode);
-    }
-
-    mediaQuery.addListener(syncMode);
-    return () => mediaQuery.removeListener(syncMode);
+    return () => window.clearInterval(intervalId);
   }, []);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    const getFlipsterOptions = () => ({
-      style: carouselMode === "tablet" ? "coverflow" : "flat",
-      spacing: carouselMode === "tablet" ? -0.45 : -0.9,
-      nav: false,
-      buttons: true,
-      loop: true,
-      start: 0,
-      touch: true,
-      scrollwheel: false,
-    });
-
-    const init = async () => {
-      try {
-        await Promise.all([
-          loadLink(
-            "https://cdn.jsdelivr.net/npm/jquery.flipster@1.1.5/dist/jquery.flipster.min.css",
-            "flipster-css"
-          ),
-          loadScript("https://code.jquery.com/jquery-3.6.0.min.js", "jquery-js"),
-        ]);
-        await loadScript(
-          "https://cdn.jsdelivr.net/npm/jquery.flipster@1.1.5/dist/jquery.flipster.min.js",
-          "flipster-js"
-        );
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-        await new Promise((resolve) => requestAnimationFrame(resolve));
-
-        if (cancelled) return;
-        if (!flipsterRef.current || !window.$ || !window.$.fn.flipster) return;
-        if (flipsterRef.current.dataset.flipsterInitialized === "true") return;
-
-        flipsterRef.current.dataset.flipsterInitialized = "true";
-        window.$(flipsterRef.current).flipster({
-          ...getFlipsterOptions(),
-        });
-      } catch {
-        // Flipster failed to load - carousel won't initialise but page still works
-      }
-    };
-
-    init();
-    return () => {
-      cancelled = true;
-    };
-  }, [carouselMode]);
-
-  const slideStyle =
-    carouselMode === "tablet"
-      ? {
-          width: "clamp(200px, 30vw, 240px)",
-          height: "clamp(300px, 44vw, 360px)",
-          fontSize: "clamp(1rem, 2.2vw, 1.25rem)",
-        }
-      : {
-          width: "clamp(170px, 62vw, 260px)",
-          height: "clamp(250px, 90vw, 420px)",
-          fontSize: "clamp(0.9rem, 4vw, 1.375rem)",
-        };
-
   return (
-    <div
-      key={carouselMode}
-      className="flipster overflow-hidden px-1 py-4 sm:px-10 sm:py-10 lg:p-20"
-      ref={flipsterRef}
-    >
-      <ul>
-        <li>
-          <div className="slide bg-teal-500" style={slideStyle}>
-            Application Preview
-          </div>
-        </li>
-        <li>
-          <div className="slide bg-teal-300" style={slideStyle}>
-            Interaction
-          </div>
-        </li>
-        <li>
-          <div className="slide bg-teal-100" style={slideStyle}>
-            Role discussion / task
-          </div>
-        </li>
-        <li>
-          <div className="slide bg-teal-50" style={slideStyle}>
-            Onboarding
-          </div>
-        </li>
-      </ul>
+    <div className="mx-auto mt-12 flex max-w-[720px] flex-col items-center gap-8">
+      <div className="relative h-[280px] w-[240px] sm:h-[320px] sm:w-[280px]">
+        {HIRING_STEPS.map((step, index) => {
+          const distance = (index - activeIndex + HIRING_STEPS.length) % HIRING_STEPS.length;
+          const layerStyles = [
+            {
+              transform: "translate3d(0, 0, 0) scale(1)",
+              opacity: 1,
+              zIndex: 40,
+            },
+            {
+              transform: "translate3d(18px, 0, 0) scale(0.94)",
+              opacity: 0.7,
+              zIndex: 30,
+            },
+            {
+              transform: "translate3d(34px, 0, 0) scale(0.88)",
+              opacity: 0.48,
+              zIndex: 20,
+            },
+            {
+              transform: "translate3d(48px, 0, 0) scale(0.82)",
+              opacity: 0,
+              zIndex: 10,
+            },
+          ][distance];
+          const isActive = distance === 0;
+
+          return (
+            <div
+              key={step.title}
+              className={`career-process-card absolute inset-0 rounded-[32px] px-8 text-center transition-[transform,opacity,box-shadow,background-color,color] duration-700 ease-out ${
+                isActive
+                  ? "career-process-card-active bg-[#39bd1f] text-white shadow-[0_30px_60px_rgba(31,128,18,0.22)]"
+                  : "bg-[#dff4cf] text-[#24561d]"
+              }`}
+              style={layerStyles}
+              aria-hidden={!isActive}
+            >
+              <div
+                className={`flex h-full flex-col items-center justify-center ${
+                  isActive ? "career-process-card-content-active" : ""
+                }`}
+              >
+                <p
+                  className={`text-[12px] font-semibold uppercase tracking-[0.18em] ${
+                    isActive ? "text-white/70" : "text-[#2d6f25]/72"
+                  }`}
+                >
+                  {step.label}
+                </p>
+                <h3 className="mt-4 font-poppins text-[34px] font-semibold leading-[1.02] tracking-[-0.05em] sm:text-[42px]">
+                  {step.title}
+                </h3>
+                <span
+                  className={`mt-8 inline-flex h-12 w-12 items-center justify-center rounded-full shadow-md ${
+                    isActive ? "bg-white text-[#16920a]" : "bg-white/80 text-[#2d6f25]"
+                  }`}
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex items-center gap-2">
+        {HIRING_STEPS.map((step, index) => (
+          <button
+            key={step.label}
+            type="button"
+            onClick={() => setActiveIndex(index)}
+            aria-label={`Show ${step.title}`}
+            className={`h-2.5 rounded-full transition-all duration-300 ${
+              activeIndex === index ? "w-10 bg-[#37bd1d]" : "w-2.5 bg-[#c6d3c1]"
+            }`}
+          />
+        ))}
+      </div>
+
+      <p className="max-w-[520px] text-center text-[15px] font-medium leading-[1.9] text-[#6d786d] sm:text-[16px]">
+        {HIRING_STEPS[activeIndex].description}
+      </p>
     </div>
   );
-};
+}
 
 export default function CareersPage({ onNavigate }) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white">
-      <Seo title="Careers" description="Join Save Medha Foundation's mission to fight cancer. Explore internship and career opportunities in natural health and research." path="/careers" />
+    <div className="min-h-screen bg-white text-[#151b15]">
+      <Seo
+        title="Careers"
+        description="Join Save Medha Foundation's mission-driven team. Explore careers, internships, and ethical healthcare opportunities."
+        path="/careers"
+      />
       <Navbar currentPage="careers" onNavigate={onNavigate} />
 
-      <main>
-        {/* 1) HERO SECTION */}
-        <div className="pointer-events-none absolute -right-10 bottom-[120rem] h-201 w-[38rem] rotate-12 rounded-[4rem] bg-lime-100/20" />
-        <div className="pointer-events-none absolute -left-42 bottom-[-3rem] h-620 w-[48rem] rotate-62 rounded-[4rem] bg-lime-100/20" />
-        <section className="bg-white relative mb-22">
-          <div className="pointer-events-none absolute -left-24 top-8 h-64 w-64 rounded-full bg-emerald-100/70 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 left-22 h-72 w-72 rotate-45 rounded-[3rem] bg-lime-100/30" />
-          <div className="pointer-events-none absolute -bottom-24 left-42 h-72 w-72 rotate-45 rounded-[3rem] bg-lime-100/20" />
-          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
-            <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div className="max-w-xl">
-                <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl font-poppins">
-                  Careers at{" "}
-                  <span className="font-bold text-[#74C425]">Save</span>{" "}
-                  <span className="block font-semibold italic text-[#74C425]">
-                    Medha Foundation
-                  </span>
-                </h1>
-                <p className="mt-4 text-lg text-slate-700 sm:text-xl font-sen">
-                  Work with purpose. Heal with science.
-                  <br />
-                  Serve with humanity.
-                </p>
-                <p className="mt-5 text-base leading-relaxed text-slate-600 font-sen">
-                  Save Medha Foundation supports patients through Natural
-                  Immunotherapy and evidence-informed guidance on nutrition,
-                  detoxification, and immunity. We work with an ethical mindset:
-                  clear communication, respectful care, and careful
-                  documentation. Alongside clinical support, we focus on
-                  community awareness so families can make informed, responsible
-                  health decisions.
-                </p>
-              </div>
-              <div className="relative flex justify-center lg:justify-end">
-                <div className="relative lg:hidden">
-                  <div className="absolute right-2 top-8 z-10 h-10 w-10 rounded-full bg-lime-300/80" />
-                  <div className="absolute -left-8 bottom-24 z-10 h-9 w-9 rounded-full bg-[#74C425]/50" />
-                  <div className="absolute right-20 -bottom-8 z-10 h-10 w-10 rounded-full bg-lime-500" />
-                  <div className="relative h-72 w-72">
-                    <div className="absolute inset-8 rotate-45 rounded-[2.2rem] border-[14px] border-lime-500" />
-                    <div className="absolute inset-12 rotate-45 overflow-hidden rounded-[1.8rem] bg-white shadow-lg">
-                      <img
-                        src={CAREERS_HERO_IMG}
-                        alt="Careers at Save Medha Foundation"
-                        className="h-full w-full -rotate-45 scale-[1.35] object-cover"
-                      />
-                    </div>
-                  </div>
-                </div>
+      <main className="bg-white">
+        <section className="py-14 sm:py-18">
+          <div className="mx-auto grid max-w-[1040px] gap-12 px-5 sm:px-6 lg:grid-cols-[1fr_360px] lg:items-center lg:px-8">
+            <div className="max-w-[520px]">
+              <h1 className="font-poppins text-[42px] font-semibold leading-[1.02] tracking-[-0.05em] text-[#171d17] sm:text-[56px]">
+                Careers at{" "}
+                <span className="text-[#2cb51a]">Save Medha Foundation</span>
+              </h1>
+              <p className="mt-6 font-poppins text-[27px] font-medium leading-[1.22] tracking-[-0.03em] text-[#1b211b] sm:text-[33px]">
+                Work with purpose. Heal with science. Serve with humanity.
+              </p>
+              <p className="mt-6 max-w-[470px] text-[15px] font-medium leading-[1.9] text-[#5f6a5f] sm:text-[16px]">
+                Save Medha Foundation supports patients through Natural Immunotherapy
+                and evidence-informed guidance on nutrition, detoxification, and
+                immunity. We work with an ethical mindset: clear communication,
+                respectful care, and careful documentation. Alongside clinical
+                support, we focus on community awareness so families can make
+                informed, responsible health decisions.
+              </p>
+            </div>
 
-                <div className="relative hidden lg:block">
-                  <div className="absolute -right-0 top-10 h-19 w-19 z-11 rounded-full bg-lime-300/80" />
-                  <div className="absolute -left-23 bottom-30 z-11 h-18 w-18 rounded-full bg-[#74C425]/50" />
-                  <div className="absolute right-41 -bottom-32 z-11 h-18 w-18 rounded-full bg-lime-500" />
-                  <div className="relative h-72 w-72 sm:h-96 sm:w-96">
-                    <div className="absolute h-99 w-93 right-0 left-1 top-9 rotate-45 rounded-[2.5rem] border-[28px] border-lime-500" />
-                    <div className="absolute right-0 top-8 rotate-45  overflow-hidden rounded-[2.2rem] bg-white shadow-lg ">
-                      <img
-                        src={CAREERS_HERO_IMG}
-                        alt="Careers at Save Medha Foundation"
-                        className="h-full w-full -rotate-45 object-cover scale-135"
-                      />
-                    </div>
-                  </div>
+            <div className="relative mx-auto w-full max-w-[330px]">
+              <div className="absolute -right-2 top-3 h-10 w-10 rounded-full bg-[#8de259]" />
+              <div className="absolute -left-3 bottom-8 h-10 w-10 rounded-full bg-[#31b61c]" />
+              <div className="relative h-[310px] sm:h-[340px]">
+                <div className="absolute inset-[16px] rotate-45 rounded-[2.5rem] border-[10px] border-[#37c31d]" />
+                <div className="absolute inset-[36px] rotate-45 overflow-hidden rounded-[2rem] bg-white shadow-[0_26px_50px_rgba(17,46,26,0.15)]">
+                  <img
+                    src={CAREERS_HERO_IMG}
+                    alt="Careers at Save Medha Foundation"
+                    className="h-full w-full -rotate-45 scale-[1.38] object-cover"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 2) WHY WORK WITH US (4 CARDS) */}
-        <section className="relative overflow-hidden">
-          {/* <div className="pointer-events-none absolute -left-32 -top-24 h-80 w-80 rounded-full bg-lime-200/60 blur-3xl" /> */}
+        <SectionDivider />
 
-          <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="max-w-3xl text-center lg:text-left">
-              <h2 className="text-3xl font-semibold text-black font-poppins">
-                Why work with us
-              </h2>
-              <svg
-                className="mx-auto mt-2 h-3 w-64 text-lime-500 lg:mx-0"
-                viewBox="0 0 256 12"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M18 8 C 80 2, 152 2, 250 1"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M2 12 C 62 8, 140 8, 246 7"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <p className="mx-auto mt-3 max-w-lg text-sm font-semibold text-slate-700 sm:text-base lg:mx-0 lg:text-lg font-sen">
-                A calm, professional environment where patients and teams are
-                treated with dignity.
-              </p>
-            </div>
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-[1040px] px-5 sm:px-6 lg:px-8">
+            <h2 className="font-poppins text-[34px] font-semibold tracking-[-0.05em] text-[#171d17] sm:text-[42px]">
+              Why work with us
+            </h2>
+            <p className="mt-4 max-w-[520px] text-[16px] font-medium leading-[1.8] text-[#6d786d] sm:text-[18px]">
+              A calm, professional environment where patients and teams are treated
+              with dignity.
+            </p>
 
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 lg:grid-cols-4">
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {WHY_CARDS.map((card) => (
-                <Card key={card.title} title={card.title}>
-                  <p>{card.description}</p>
-                </Card>
+                <WhyCard key={card.title} {...card} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* 3) OPEN POSITIONS SECTION */}
-        <section className="relative overflow-hidden bg-transparent">
-          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <SectionHeading
-              title="Open Positions"
-              className="mx-auto text-center lg:mx-0 lg:text-left"
-            />
+        <SectionDivider />
 
-            <div className="mt-6 space-y-5 lg:mt-8 lg:grid lg:grid-cols-2 lg:gap-10 lg:space-y-0">
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-[1040px] px-5 sm:px-6 lg:px-8">
+            <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+              <div>
+                <h2 className="font-poppins text-[36px] font-semibold leading-[1.04] tracking-[-0.05em] text-[#171d17] sm:text-[48px]">
+                  Open Positions for your{" "}
+                  <span className="italic text-[#2db319]">Career</span>
+                </h2>
+              </div>
+              <p className="max-w-[340px] text-[16px] font-medium leading-[1.9] text-[#6d786d] sm:text-[18px]">
+                Join our team and work with passionate professionals committed to
+                creating meaningful change.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 lg:grid-cols-2">
               {OPEN_POSITIONS.map((job, index) => (
-                <JobCard
-                  key={job.title}
-                  title={job.title}
-                  type={job.type}
-                  location={job.location}
-                  image={job.image}
-                  index={index}
-                />
+                <JobCard key={job.title} {...job} reverse={index % 2 === 1} />
               ))}
             </div>
           </div>
         </section>
 
-        {/* 4) INTERNSHIP & FELLOWSHIP SECTION */}
-        <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-10">
-              <div className="order-2 relative flex justify-center lg:order-1 lg:justify-start">
-                <div className="relative">
-                  <div className="absolute z-10 -bottom-6 left-12 h-24 w-24 rounded-full bg-lime-400/70" />
-                  <div className="absolute -left-6 top-8 h-8 w-8 rounded-full bg-lime-500" />
-                  <div className="relative h-72 w-72 sm:h-96 sm:w-96">
-                    <div className="absolute inset-0 rounded-full border-[16px] border-lime-500" />
-                    <div className="absolute inset-3 -translate-x-2 overflow-hidden rounded-full bg-white shadow-lg">
-                      <img
-                        src={internshipImage}
-                        alt="Internship and fellowship"
-                        className="h-full w-full object-cover"
-                      />
+        <section className="bg-[#f4f5f3] py-16 sm:py-18">
+          <div className="mx-auto grid max-w-[1040px] gap-10 px-5 sm:px-6 lg:grid-cols-[280px_1fr] lg:items-center lg:px-8">
+            <div className="relative mx-auto h-[210px] w-[210px]">
+              <div className="absolute inset-0 rounded-full border-[7px] border-[#35bc20]" />
+              <div className="absolute inset-[14px] overflow-hidden rounded-full bg-white shadow-[0_20px_40px_rgba(17,46,26,0.10)]">
+                <img
+                  src={internshipImage}
+                  alt="Internship and fellowship"
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="absolute bottom-3 right-0 h-12 w-12 rounded-full bg-[#31bc17]" />
+            </div>
+
+            <div className="max-w-[560px]">
+              <h2 className="font-poppins text-[34px] font-semibold tracking-[-0.05em] text-[#171d17] sm:text-[44px]">
+                Internship &amp; Fellowship
+              </h2>
+              <p className="mt-5 text-[15px] font-medium leading-[1.95] text-[#5f6a5f] sm:text-[17px]">
+                We welcome students and freshers who want practical exposure in
+                ethical healthcare work. Opportunities are available across medical
+                support, nutrition, public health, tech, and media. You will learn
+                through real cases, guided tasks, and field exposure. A certificate
+                is provided for sincere participation and documented contribution.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <Ribbon />
+
+        <section
+          className="relative overflow-hidden py-16 text-white sm:py-20"
+          style={{
+            backgroundImage: `linear-gradient(90deg, rgba(4, 53, 11, 0.96) 0%, rgba(6, 74, 18, 0.92) 55%, rgba(4, 53, 11, 0.96) 100%), url("${CAREERS_HERO_IMG}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="mx-auto grid max-w-[1040px] gap-10 px-5 sm:px-6 lg:grid-cols-[310px_1fr] lg:items-start lg:px-8">
+            <div>
+              <h2 className="font-poppins text-[36px] font-semibold leading-[1.02] tracking-[-0.05em] sm:text-[48px]">
+                Why Choose us for your{" "}
+                <span className="italic text-[#7eea59]">Career</span>
+              </h2>
+
+              <div className="mt-8 overflow-hidden rounded-[18px] border border-white/10 bg-white/6 shadow-[0_18px_40px_rgba(0,0,0,0.18)] backdrop-blur-sm">
+                <img
+                  src={internshipImage}
+                  alt="Team learning together"
+                  className="h-[190px] w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2">
+              {WHY_CHOOSE_POINTS.map((point) => (
+                <article
+                  key={point.title}
+                  className="rounded-[18px] border border-white/10 bg-white/6 p-5 backdrop-blur-sm"
+                >
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8cf15c]" />
+                    <div>
+                      <h3 className="font-poppins text-[18px] font-semibold tracking-[-0.03em] text-white">
+                        {point.title}
+                      </h3>
+                      <p className="mt-3 text-[13px] font-medium leading-[1.8] text-white/78">
+                        {point.description}
+                      </p>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="order-1 text-left lg:order-2 lg:text-left">
-                <h2 className="text-3xl font-semibold text-slate-900 sm:text-4xl font-poppins">
-                  Internship &amp; Fellowship
-                </h2>
-                <svg
-                  className="mt-2 h-3 w-56 text-lime-500"
-                  viewBox="0 0 256 12"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M18 8 C 80 2, 152 2, 250 1"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M2 12 C 62 8, 140 8, 246 7"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <p className="mt-5 text-sm leading-relaxed text-slate-600 sm:text-base font-sen">
-                  We welcome students and freshers who want practical exposure
-                  in ethical healthcare work. Opportunities are available across
-                  medical support, nutrition, public health, tech, and media.
-                  You will learn through real cases, guided tasks, and field
-                  exposure. A certificate is provided for sincere participation
-                  and documented contribution.
-                </p>
-              </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* 5) HIRING PROCESS SECTION */}
-        <section className="bg-white">
-          <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-            <div className="flex justify-center items-center">
-              <SectionHeading title="Hiring Process" />
-            </div>
+        <Ribbon />
 
-            {/* <ol className="mt-6 max-w-3xl list-decimal space-y-3 pl-5 text-base text-slate-700">
-              <li>Application review</li>
-              <li>Interaction</li>
-              <li>Role discussion / task</li>
-              <li>Onboarding</li>
-            </ol> */}
+        <section className="py-16 sm:py-20">
+          <SectionDivider />
+          <div className="mx-auto max-w-[1040px] px-5 pt-16 text-center sm:px-6 lg:px-8 sm:pt-20">
+            <h2 className="font-poppins text-[38px] font-semibold tracking-[-0.05em] text-[#171d17] sm:text-[52px]">
+              Hiring Process
+            </h2>
+            <p className="mx-auto mt-4 max-w-[620px] text-[15px] font-medium leading-[1.9] text-[#6d786d] sm:text-[17px]">
+              Our hiring process is designed to identify passionate individuals who
+              are ready to grow, contribute, and succeed with our team.
+            </p>
 
-            <div className=" relative mx-auto max-w-7xl px-4 py-5">
-              <div className="absolute z-10 bottom-121 left-36 h-14 w-14 rounded-full bg-lime-400" />
-              <CoverflowCarousel />
-            </div>
+            <ProcessDeck />
+          </div>
 
-            <div className="mt-6 max-w-4xl rounded-full bg-[#74C425] font-semibold text-lg px-8 py-5 text-center text-sm font-medium text-[#0B2A1F] shadow-md font-sen">
-              <p className="">
-                We do not make fake promises. We hire ethically, communicate
-                respectfully, and keep expectations clear, so candidates can
-                decide with confidence.
+          <div className="mt-10 bg-[#c9f7b9] px-5 py-4 text-center text-[13px] font-semibold text-[#174714] sm:text-[14px]">
+            We do not make fake promises. We hire ethically, communicate
+            respectfully, and keep expectations clear, so candidates can decide
+            with confidence.
+          </div>
+        </section>
+
+        <section className="border-t border-[#e4e8e2] py-16 sm:py-20">
+          <div className="mx-auto max-w-[820px] px-5 text-center sm:px-6">
+            <h2 className="font-poppins text-[34px] font-semibold leading-[1.08] tracking-[-0.05em] text-[#171d17] sm:text-[46px]">
+              Ready to contribute with care and clarity?
+            </h2>
+            <p className="mx-auto mt-4 max-w-[620px] text-[15px] font-medium leading-[1.9] text-[#6d786d] sm:text-[17px]">
+              If our mission feels aligned with your values, we would like to hear
+              from you. Share your background and how you want to help.
+            </p>
+
+            <Link
+              to="/apply"
+              className="mt-8 inline-flex items-center justify-center rounded-[10px] bg-[#3dbc22] px-7 py-3 text-[14px] font-semibold text-white transition hover:bg-[#2ea01b]"
+            >
+              Apply Now
+            </Link>
+
+            <div className="mt-8 space-y-2 text-[15px] font-medium text-[#4e5a4d]">
+              <p>
+                Email:{" "}
+                <a href="mailto:info@savemedha.com" className="font-semibold text-[#163916]">
+                  info@savemedha.com
+                </a>
+              </p>
+              <p>
+                Phone:{" "}
+                <a href="tel:+919800808595" className="font-semibold text-[#163916]">
+                  +91 98008 08595
+                </a>
               </p>
             </div>
-          </div>
-        </section>
 
-        {/* 6) APPLY CTA SECTION */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#f8faf7] via-[#eef6ea] to-[#e6f4f1] shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:px-10">
-          <div className="pointer-events-none absolute -left-20 top-18 h-96 w-96 rounded-full bg-[#5CA415]/8" />
-          <div className="pointer-events-none absolute -right-25 -top-0 h-96 w-96 rounded-full bg-[#5CA415]/8" />
-          <div className="pointer-events-none absolute left-150 top-18 h-26 w-26 rounded-full bg-[#5CA415]" />
-            <div className="pointer-events-none absolute left-190 top-60 h-26 w-26 rounded-full bg-[#5CA415]" />
-             <div className="pointer-events-none absolute left-210 top-50 h-26 w-26 rounded-full bg-[#5CA415]" />
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="mx-auto max-w-3xl rounded-3xl bg-white/70 px-6 py-10 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-sm sm:px-10">
-              <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl font-poppins">
-                Ready to contribute with care and clarity?
-              </h2>
-              <p className="mt-3 text-base text-slate-700 font-sen">
-                If our mission feels aligned with your values, we would like to
-                hear from you. Share your background and how you want to help.
-              </p>
-
-              <div className="mt-6 flex flex-col items-center gap-3">
-                <Link
-                  to="/apply"
-                  className="inline-flex items-center justify-center rounded-full bg-[#74C425] px-8 py-2 text-sm font-semibold font-poppins text-white shadow-sm transition hover:bg-[#64ac1d]"
-                >
-                  Apply Now
-                </Link>
-              </div>
-
-              <div className="mt-6 space-y-1 text-sm text-slate-700 font-sen">
-                <p>
-                  <span className="font-semibold text-slate-900">Email :</span>{" "}
-                  <a
-                    href="mailto:info@savemedha.com"
-                    className="font-medium text-slate-900 underline underline-offset-4"
-                  >
-                    info@savemedha.com
-                  </a>
-                </p>
-                <p>
-                  <span className="font-semibold text-slate-900">Phone :</span>{" "}
-                  <a
-                    href="tel:+919800808595"
-                    className="font-medium text-slate-900 underline underline-offset-4"
-                  >
-                    +91 98008 08595
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 7) FOOTER NOTE */}
-        <section className="bg-slate-50">
-          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            <p className="mx-auto max-w-4xl text-center text-sx font-semibold leading-relaxed text-slate-600 font-sen">
+            <p className="mx-auto mt-8 max-w-[720px] text-[13px] font-medium leading-[1.85] text-[#6d786d] sm:text-[14px]">
               Save Medha Foundation is an equal opportunity organization. We aim
               for respectful hiring, fair evaluation, and a mission-aligned work
               culture where people are treated with dignity.
@@ -728,4 +572,3 @@ export default function CareersPage({ onNavigate }) {
     </div>
   );
 }
-

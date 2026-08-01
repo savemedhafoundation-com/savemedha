@@ -217,6 +217,18 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     setIsSearchOpen(false);
   };
 
+  const getNavToneClasses = (item, isActive) => {
+    if (isActive) {
+      return "bg-white text-[#0c7a1e] shadow-[0_14px_34px_rgba(102,179,0,0.18)] ring-1 ring-[#d8ebc3]";
+    }
+
+    if (item.accent) {
+      return "bg-[#edf7df] text-[#0f7d22] ring-1 ring-[#d8e9c4] hover:bg-white hover:text-[#0f7d22] hover:shadow-[0_12px_28px_rgba(102,179,0,0.15)]";
+    }
+
+    return "text-[#223324] hover:bg-white/90 hover:text-[#0e7a1e] hover:shadow-[0_10px_24px_rgba(15,122,30,0.10)]";
+  };
+
   return (
     <header className="font-sans w-full sticky top-0 z-50">
       {/* =============================================
@@ -436,8 +448,13 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                       key={item.name}
                       href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                       onClick={item.key ? (e) => handleNavClick(e, item.key) : () => setIsMobileMenuOpen(false)}
-                      className={`flex items-center gap-4 px-6 py-5 text-[18px] border-b border-gray-100 transition-all duration-200 ${
-                        isActive ? "bg-gray-100 font-semibold text-gray-900" : "text-gray-700 hover:bg-[#d7f3b3]"
+                      aria-current={isActive ? "page" : undefined}
+                      className={`mx-3 my-1 flex items-center gap-4 rounded-r-full px-6 py-4 font-poppins text-[17px] font-semibold tracking-[0.02em] transition-all duration-200 ${
+                        isActive
+                          ? "bg-[#eef8e2] text-[#0c7a1e] shadow-[0_12px_24px_rgba(102,179,0,0.12)]"
+                          : item.accent
+                            ? "bg-[#f3fae8] text-[#0f7d22]"
+                            : "text-gray-700 hover:bg-[#eef7e2] hover:text-[#0e7a1e]"
                       }`}
                     >
                       {item.name}
@@ -564,36 +581,34 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
         </div>
 
         {/* Nav bar — horizontally scrollable so all items fit on tablet */}
-        <div className={`sticky top-0 z-50 bg-white ${scrolled ? "shadow-md" : ""}`}>
+        <div className={`sticky top-0 z-50 bg-white/95 backdrop-blur-xl ${scrolled ? "shadow-[0_20px_45px_rgba(17,46,26,0.10)]" : ""}`}>
           {/* overflow-x-auto + scrollbar-hide lets the full nav scroll on smaller tablets */}
-          <nav
-            className="flex items-center overflow-x-auto"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {NAV_ITEMS.map((item) => {
-              const isActive = item.key && item.key === currentPage;
-              return (
-                <a
-                  key={item.name}
-                  href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
-                  onClick={item.key ? (e) => handleNavClick(e, item.key) : undefined}
-                  className={`relative flex-shrink-0 flex items-center gap-1 px-4 py-3.5 text-[13px] font-bold whitespace-nowrap transition ${
-                    isActive ? "text-[#168f00]" : "text-[#050505] hover:text-[#168f00]"
-                  }`}
-                >
-                  {item.name}
-                  {item.hasDropdown && (
-                    <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                  {isActive ? (
-                    <span className="absolute inset-x-4 bottom-1 h-[3px] rounded-full bg-[#168f00]" />
-                  ) : null}
-                </a>
-              );
-            })}
-          </nav>
+          <div className="px-4 py-3">
+            <nav
+              className="modern-nav-shell hide-scrollbar flex items-center gap-1.5 overflow-x-auto rounded-full px-2 py-2"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              {NAV_ITEMS.map((item) => {
+                const isActive = item.key && item.key === currentPage;
+                return (
+                  <a
+                    key={item.name}
+                    href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
+                    onClick={item.key ? (e) => handleNavClick(e, item.key) : undefined}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`modern-nav-link ${isActive ? "active" : ""} relative flex flex-shrink-0 items-center gap-1 rounded-full px-4 py-2.5 font-poppins text-[13px] font-semibold whitespace-nowrap transition ${getNavToneClasses(item, isActive)}`}
+                  >
+                    <span>{item.name}</span>
+                    {item.hasDropdown && (
+                      <svg className="ml-1 h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </a>
+                );
+              })}
+            </nav>
+          </div>
         </div>
       </div>
 
@@ -717,9 +732,9 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           </div>
         </div>
 
-        <div className={`bg-white px-[54px] ${scrolled ? "shadow-md" : ""}`}>
-          <div className="flex h-[70px] items-center justify-center border-t border-[#f1f1f1]">
-            <nav className="flex items-center gap-7 xl:gap-8">
+        <div className={`bg-white/95 px-[54px] backdrop-blur-xl ${scrolled ? "shadow-[0_24px_60px_rgba(17,46,26,0.10)]" : ""}`}>
+          <div className="flex h-[84px] items-center justify-center border-t border-[#edf3e7]">
+            <nav className="modern-nav-shell flex items-center gap-1.5 rounded-full px-2.5 py-2">
               {NAV_ITEMS.map((item) => {
                 const isActive = item.key && item.key === currentPage;
                 return (
@@ -727,14 +742,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     key={item.name}
                     href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                     onClick={item.key ? (event) => handleNavClick(event, item.key) : undefined}
-                    className={`relative flex h-[54px] items-center text-[18px] font-bold transition ${
-                      isActive ? "text-[#168f00]" : "text-[#050505] hover:text-[#168f00]"
-                    }`}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`modern-nav-link ${isActive ? "active" : ""} relative flex h-[52px] items-center rounded-full px-4 font-poppins text-[14px] font-semibold transition xl:px-[18px] xl:text-[15px] ${getNavToneClasses(item, isActive)}`}
                   >
                     <span>{item.name}</span>
-                    {isActive ? (
-                      <span className="absolute bottom-[8px] left-0 h-[3px] w-full rounded-full bg-[#168f00]" />
-                    ) : null}
                   </a>
                 );
               })}
