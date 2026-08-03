@@ -48,26 +48,36 @@ const OPEN_POSITIONS = [
     title: "Clinical Research Associate",
     meta: "Full-time / On-site",
     image: CLINICAL_RESEARCH_IMG,
+    imagePosition: "50% 24%",
+    imageScale: 1.04,
   },
   {
     title: "Nutrition & Immunity Counselor",
     meta: "Part-time / Hybrid",
     image: NUTRITION_IMMUNITY_IMG,
+    imagePosition: "50% 18%",
+    imageScale: 1.02,
   },
   {
     title: "Data & Case Documentation Executive",
     meta: "Full-time / On-site",
     image: DATA_CASE_DOC_IMG,
+    imagePosition: "50% 36%",
+    imageScale: 1.06,
   },
   {
     title: "Media & Awareness Coordinator",
     meta: "Part-time / Hybrid",
     image: MEDIA_AWARENESS_IMG,
+    imagePosition: "50% 28%",
+    imageScale: 1.05,
   },
   {
     title: "Web / Tech Volunteer (React / WordPress / AI)",
     meta: "Volunteer / Remote",
     image: WEB_TECH_VOLUNTEER_IMG,
+    imagePosition: "50% 28%",
+    imageScale: 1.05,
   },
 ];
 
@@ -165,23 +175,45 @@ function WhyCard({ title, description, featured = false }) {
   );
 }
 
-function DiamondImage({ image, alt, className = "" }) {
+function DiamondImage({
+  image,
+  alt,
+  objectPosition = "center",
+  imageScale = 1,
+  className = "",
+}) {
   return (
     <div className={`relative h-28 w-28 shrink-0 sm:h-32 sm:w-32 ${className}`}>
       <div className="absolute inset-0 rotate-45 rounded-[1.75rem] bg-[#37c31d]" />
       <div className="absolute inset-[5px] rotate-45 overflow-hidden rounded-[1.55rem] bg-white shadow-lg">
-        <img
-          src={image}
-          alt={alt}
-          className="h-full w-full -rotate-45 scale-[1.3] object-cover"
-          loading="lazy"
-        />
+        <div
+          className="absolute left-1/2 top-1/2 h-[142%] w-[142%]"
+          style={{
+            transform: `translate(-50%, -50%) rotate(-45deg) scale(${imageScale})`,
+            transformOrigin: "center",
+          }}
+        >
+          <img
+            src={image}
+            alt={alt}
+            className="h-full w-full object-cover"
+            style={{ objectPosition }}
+            loading="lazy"
+          />
+        </div>
       </div>
     </div>
   );
 }
 
-function JobCard({ title, meta, image, reverse = false }) {
+function JobCard({
+  title,
+  meta,
+  image,
+  imagePosition,
+  imageScale,
+  reverse = false,
+}) {
   return (
     <article
       className={`relative overflow-visible rounded-[22px] border border-[#d7e8ce] bg-white px-5 py-5 shadow-[0_18px_40px_rgba(17,46,26,0.08)] ${
@@ -208,7 +240,12 @@ function JobCard({ title, meta, image, reverse = false }) {
           </Link>
         </div>
 
-        <DiamondImage image={image} alt={title} />
+        <DiamondImage
+          image={image}
+          alt={title}
+          objectPosition={imagePosition}
+          imageScale={imageScale}
+        />
       </div>
     </article>
   );

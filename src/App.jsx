@@ -1,4 +1,11 @@
-import { Suspense, lazy, useCallback, useEffect, useState } from "react";
+import {
+  Suspense,
+  startTransition,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { useDispatch } from "react-redux";
 import {
   Navigate,
@@ -10,58 +17,35 @@ import {
 } from "react-router-dom";
 import { navigate } from "./store";
 import CookieBanner from "./components/CookieBanner";
+import PageShellSkeleton from "./components/PageShellSkeleton";
 import TrackUserGeo from "./components/TrackUserGeo";
-
-const Home = lazy(() => import("./pages/Home"));
-const AboutUs = lazy(() => import("./pages/AboutUs"));
-const TreatmentPage = lazy(() => import("./pages/TreatmentPage"));
-const Treatmentquestion = lazy(() => import("./pages/Treatmentquestion"));
-const Blogs = lazy(() => import("./pages/Blogs"));
-const Donate = lazy(() => import("./pages/Donate"));
-const ApplyJob = lazy(() => import("./pages/ApplyJob"));
-const LocateUs = lazy(() => import("./pages/LocateUs"));
-const BlogsDetails = lazy(() => import("./pages/BlogsDetails"));
-const EbookPage = lazy(() => import("./pages/EbookPage"));
-const EbookRead = lazy(() => import("./pages/EbookRead"));
-const CareersPage = lazy(() => import("./pages/CareersPage"));
-const EventsProjects = lazy(() => import("./pages/EventsProjects"));
-const OngoingEvents = lazy(() => import("./pages/OngoingEvents"));
-const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage"));
-const TermsConditionsApply = lazy(() => import("./pages/TermsConditionsApply"));
-const DownloadApp = lazy(() => import("./pages/DownloadApp"));
-const StudentSocialWorkLanding = lazy(() =>
-  import("./pages/StudentSocialWork").then((module) => ({
-    default: module.StudentSocialWorkLanding,
-  }))
-);
-const StudentSocialWorkApply = lazy(() =>
-  import("./pages/StudentSocialWork").then((module) => ({
-    default: module.StudentSocialWorkApply,
-  }))
-);
-const StudentSocialWorkVerify = lazy(() =>
-  import("./pages/StudentSocialWork").then((module) => ({
-    default: module.StudentSocialWorkVerify,
-  }))
-);
-const StudentSocialWorkAdmin = lazy(() =>
-  import("./pages/StudentSocialWork").then((module) => ({
-    default: module.StudentSocialWorkAdmin,
-  }))
-);
-const StudentSocialWorkDashboard = lazy(() =>
-  import("./pages/StudentSocialWork").then((module) => ({
-    default: module.StudentSocialWorkDashboard,
-  }))
-);
-const StudentSocialWorkCertificatePrint = lazy(() =>
-  import("./pages/StudentSocialWork").then((module) => ({
-    default: module.StudentSocialWorkCertificatePrint,
-  }))
-);
-
-const PageLoader = () => <div className="min-h-screen bg-white" />;
-// demo commit
+import {
+  AboutUs,
+  ApplyJob,
+  Blogs,
+  BlogsDetails,
+  CareersPage,
+  CookiePolicyPage,
+  Donate,
+  DownloadApp,
+  EbookPage,
+  EbookRead,
+  EventsProjects,
+  getNavigationTarget,
+  Home,
+  LocateUs,
+  OngoingEvents,
+  prefetchRouteByKey,
+  StudentSocialWorkAdmin,
+  StudentSocialWorkApply,
+  StudentSocialWorkCertificatePrint,
+  StudentSocialWorkDashboard,
+  StudentSocialWorkLanding,
+  StudentSocialWorkVerify,
+  TermsConditionsApply,
+  TreatmentPage,
+  Treatmentquestion,
+} from "./routing/routeRegistry";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://savemedhabackend.vercel.app";
@@ -117,6 +101,14 @@ function App() {
   const dispatch = useDispatch();
   const navigateRouter = useNavigate();
   const location = useLocation();
+
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+    if (location.hash) return;
+    if (location.state?.scrollTo) return;
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.hash, location.pathname, location.search, location.state]);
 
   useEffect(() => {
     const SCRIPT_ID = "google-translate-script";
@@ -232,108 +224,36 @@ function App() {
   }, []);
 
   const handleNavigate = useCallback(
-    (pageKey, options = {}) => {
+    async (pageKey, options = {}) => {
       dispatch(navigate(pageKey, options));
+      const targetPath = getNavigationTarget(pageKey, options);
 
-      let targetPath = "/";
-
-      switch (pageKey) {
-        case "about":
-          targetPath = "/about-us";
-          break;
-        case "treatment":
-          targetPath = "/treatment";
-          break;
-        case "blogs":
-          targetPath = options?.query
-            ? `/blogs?q=${encodeURIComponent(options.query)}`
-            : "/blogs";
-          break;
-        // case "case-studies":
-        //   targetPath = "/case-studies";
-        //   break;
-
-        //           case "blogs-detail": {
-        //   const blogId = options?.id;
-        //   console.log("id", blogId);
-        //   if (!blogId) {
-        //     console.warn("blog-detail navigation requires id");
-        //     return;
-        //   }
-        //   targetPath = `/blogs/${blogId}`;
-        //   break;
-        // }
-        case "blogs-detail": {
-          const blogSlug = options?.slug;
-          if (!blogSlug) {
-            console.warn("blogs-detail navigation requires slug");
-            return;
-          }
-          targetPath = `/blogs/${blogSlug}`;
-          break;
-        }
-        case "donate":
-          targetPath = "/donate";
-          break;
-        case "ebook":
-          targetPath = "/ebook";
-          break;
-        case "careers":
-          targetPath = "/careers";
-          break;
-        case "download-app":
-          targetPath = "/download-app";
-          break;
-        case "events-projects":
-          targetPath = "/events-projects";
-          break;
-        case "student-social-work":
-          targetPath = "/student-social-work";
-          break;
-        case "ongoing-events":
-          targetPath = "/ongoing-events";
-          break;
-        case "contact":
-          targetPath = "/contact-us";
-          break;
-        case "apply":
-          targetPath = "/apply";
-          break;
-        case "treatment-questions":
-          targetPath = "/treatment-questions";
-          break;
-        case "locateus":
-          targetPath = "/contact-us";
-          break;
-        case "terms-conditions-apply":
-          targetPath = "/terms-conditions-apply";
-          break;
-        case "cancer-detail":
-        case "kidney-detail":
-        case "heart-detail":
-        case "nerve-detail":
-        case "sma-detail":
-          targetPath = "/treatment";
-          break;
-
-        case "home":
-        default:
-          targetPath = "/";
+      if (!targetPath) {
+        console.warn(`Navigation target is missing for "${pageKey}"`);
+        return;
       }
 
-      navigateRouter(targetPath, { state: options, replace: options?.replace });
+      try {
+        await prefetchRouteByKey(pageKey);
+      } catch {
+        // Chunk warmup is best-effort; navigation should still proceed.
+      }
+
+      startTransition(() => {
+        navigateRouter(targetPath, {
+          state: options,
+          replace: options?.replace,
+        });
+      });
     },
-    [
-      dispatch,
-      navigateRouter
-    ]
+    [dispatch, navigateRouter]
   );
 
   return (
     <div className="app-scale-wrapper">
       <CookieBanner />
       <TrackUserGeo />
-      <Suspense fallback={<PageLoader />}>
+      <Suspense fallback={<PageShellSkeleton />}>
       <Routes>
         <Route path="/" element={<Home onNavigate={handleNavigate} />} />
         <Route

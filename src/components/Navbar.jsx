@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import {
@@ -15,6 +15,8 @@ import {
   Youtube,
 } from "lucide-react";
 import { ImWhatsapp } from "react-icons/im";
+import useViewportRoutePrefetch from "../hooks/useViewportRoutePrefetch";
+import { prefetchRouteByKey } from "../routing/routeRegistry";
 
 import savemedhaLogo from "../assets/Photo/SavemedhaLogo.png";
 const SMF_LOGO_WHITE_URL =
@@ -45,13 +47,21 @@ const NAV_ITEMS = [
   { name: "Contact Us", key: "locateus", hasDropdown: false },
 ];
 
-export default function Navbar({ currentPage = "home", onNavigate }) {
+function Navbar({ currentPage = "home", onNavigate }) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [now, setNow] = useState(() => new Date());
+  const headerRef = useRef(null);
+
+  useViewportRoutePrefetch(headerRef);
+
+  const warmRoute = (routeKey) => {
+    if (!routeKey) return;
+    prefetchRouteByKey(routeKey);
+  };
 
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     weekday: "short",
@@ -212,6 +222,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     event.preventDefault();
     const query = searchQuery.trim();
     if (query && typeof onNavigate === "function") {
+      warmRoute("blogs");
       onNavigate("blogs", { query });
     }
     setIsSearchOpen(false);
@@ -230,7 +241,7 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
   };
 
   return (
-    <header className="font-sans w-full sticky top-0 z-50">
+    <header ref={headerRef} className="font-sans w-full sticky top-0 z-50">
       {/* =============================================
           SEARCH OVERLAY — phones only (< md)
       ============================================= */}
@@ -337,6 +348,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           <button
             type="button"
             onClick={() => onNavigate?.("home")}
+            onMouseEnter={() => warmRoute("home")}
+            onFocus={() => warmRoute("home")}
+            onTouchStart={() => warmRoute("home")}
+            data-prefetch-route="home"
             className="focus:outline-none flex-shrink-0"
           >
             <img
@@ -411,6 +426,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               type="button"
               aria-label="Locate us"
               onClick={() => onNavigate?.("locateus")}
+              onMouseEnter={() => warmRoute("locateus")}
+              onFocus={() => warmRoute("locateus")}
+              onTouchStart={() => warmRoute("locateus")}
+              data-prefetch-route="locateus"
               className="h-12 w-12 rounded-full bg-white/15 border border-white/25 flex items-center justify-center"
             >
               <IoLocationSharp className="w-6 h-6" />
@@ -448,6 +467,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                       key={item.name}
                       href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                       onClick={item.key ? (e) => handleNavClick(e, item.key) : () => setIsMobileMenuOpen(false)}
+                      onMouseEnter={() => warmRoute(item.key)}
+                      onFocus={() => warmRoute(item.key)}
+                      onTouchStart={() => warmRoute(item.key)}
+                      data-prefetch-route={item.key || undefined}
                       aria-current={isActive ? "page" : undefined}
                       className={`mx-3 my-1 flex items-center gap-4 rounded-r-full px-6 py-4 font-poppins text-[17px] font-semibold tracking-[0.02em] transition-all duration-200 ${
                         isActive
@@ -495,6 +518,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
           <button
             type="button"
             onClick={() => onNavigate?.("home")}
+            onMouseEnter={() => warmRoute("home")}
+            onFocus={() => warmRoute("home")}
+            onTouchStart={() => warmRoute("home")}
+            data-prefetch-route="home"
             className="focus:outline-none flex-shrink-0"
           >
             <img
@@ -572,6 +599,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <button
               type="button"
               onClick={() => onNavigate?.("locateus")}
+              onMouseEnter={() => warmRoute("locateus")}
+              onFocus={() => warmRoute("locateus")}
+              onTouchStart={() => warmRoute("locateus")}
+              data-prefetch-route="locateus"
               className="flex items-center gap-1.5 px-3 py-1.5 text-[16px] font-semibold border-2 border-[#74C425] rounded bg-white hover:bg-gray-50 transition shadow-sm"
             >
               <IoLocationSharp className="text-[#e05529]" size={14} />
@@ -595,6 +626,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     key={item.name}
                     href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                     onClick={item.key ? (e) => handleNavClick(e, item.key) : undefined}
+                    onMouseEnter={() => warmRoute(item.key)}
+                    onFocus={() => warmRoute(item.key)}
+                    onTouchStart={() => warmRoute(item.key)}
+                    data-prefetch-route={item.key || undefined}
                     aria-current={isActive ? "page" : undefined}
                     className={`modern-nav-link ${isActive ? "active" : ""} relative flex flex-shrink-0 items-center gap-1 rounded-full px-4 py-2.5 font-poppins text-[13px] font-semibold whitespace-nowrap transition ${getNavToneClasses(item, isActive)}`}
                   >
@@ -682,6 +717,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
             <button
               type="button"
               onClick={() => onNavigate?.("home")}
+              onMouseEnter={() => warmRoute("home")}
+              onFocus={() => warmRoute("home")}
+              onTouchStart={() => warmRoute("home")}
+              data-prefetch-route="home"
               className="focus:outline-none"
             >
               <img
@@ -723,6 +762,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate?.("donate")}
+                onMouseEnter={() => warmRoute("donate")}
+                onFocus={() => warmRoute("donate")}
+                onTouchStart={() => warmRoute("donate")}
+                data-prefetch-route="donate"
                 className="flex h-[46px] items-center gap-2 rounded-[9px] border border-[#ff3d45] bg-white px-5 text-[14px] font-semibold text-[#ff1f35] transition hover:bg-[#fff5f6]"
               >
                 <span>Donate</span>
@@ -742,6 +785,10 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
                     key={item.name}
                     href={item.key ? "#" : `#${item.name.toLowerCase().replace(/ /g, "-")}`}
                     onClick={item.key ? (event) => handleNavClick(event, item.key) : undefined}
+                    onMouseEnter={() => warmRoute(item.key)}
+                    onFocus={() => warmRoute(item.key)}
+                    onTouchStart={() => warmRoute(item.key)}
+                    data-prefetch-route={item.key || undefined}
                     aria-current={isActive ? "page" : undefined}
                     className={`modern-nav-link ${isActive ? "active" : ""} relative flex h-[52px] items-center rounded-full px-4 font-poppins text-[14px] font-semibold transition xl:px-[18px] xl:text-[15px] ${getNavToneClasses(item, isActive)}`}
                   >
@@ -756,3 +803,5 @@ export default function Navbar({ currentPage = "home", onNavigate }) {
     </header>
   );
 }
+
+export default memo(Navbar);

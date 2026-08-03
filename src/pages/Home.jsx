@@ -5,6 +5,7 @@ import { Seo } from "../components/Seo";
 import { Schema } from "../components/Schema";
 import Navbar from "../components/Navbar";
 import RenderOnView from "../components/RenderOnView";
+import SkeletonBox from "../components/SkeletonBox";
 
 const TestimonialsSection = lazy(() => import("../components/TestimonialsSection"));
 const VolunteerAndSupportSection = lazy(() =>
@@ -22,18 +23,42 @@ export default function Home({ onNavigate }) {
         <HomePage onNavigate={onNavigate} />
         <RenderOnView
           rootMargin="250px 0px"
-          fallback={<div className="min-h-[280px]" aria-hidden="true" />}
+          fallback={
+            <SkeletonBox
+              className="min-h-[280px] w-full"
+              roundedClassName="rounded-[28px]"
+            />
+          }
         >
-          <Suspense fallback={<div className="min-h-[280px]" aria-hidden="true" />}>
+          <Suspense
+            fallback={
+              <SkeletonBox
+                className="min-h-[280px] w-full"
+                roundedClassName="rounded-[28px]"
+              />
+            }
+          >
             <VolunteerAndSupportSection onNavigate={onNavigate} />
           </Suspense>
         </RenderOnView>
         <RenderOnView
           rootMargin="300px 0px"
-          fallback={<div className="min-h-[260px]" aria-hidden="true" />}
+          fallback={
+            <SkeletonBox
+              className="min-h-[260px] w-full"
+              roundedClassName="rounded-[28px]"
+            />
+          }
         >
           <div>
-            <Suspense fallback={<div className="min-h-[260px]" aria-hidden="true" />}>
+            <Suspense
+              fallback={
+                <SkeletonBox
+                  className="min-h-[260px] w-full"
+                  roundedClassName="rounded-[28px]"
+                />
+              }
+            >
               <TestimonialsSection />
             </Suspense>
           </div>

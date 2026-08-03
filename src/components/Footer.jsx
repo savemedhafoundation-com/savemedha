@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import {
   AtSign,
   Facebook,
   Instagram,
   Linkedin,
-  Mail,
   Youtube,
 } from "lucide-react";
 import { ImWhatsapp } from "react-icons/im";
 import { CgArrowLongUpL } from "react-icons/cg";
 import { FaPinterestP } from "react-icons/fa";
+import useViewportRoutePrefetch from "../hooks/useViewportRoutePrefetch";
+import { prefetchRouteByKey } from "../routing/routeRegistry";
 
 import HeartIllustration from "../assets/SMF BY BRATIN/344812776_11424076 1.png";
 
@@ -61,6 +62,14 @@ const Footer = ({ onNavigate }) => {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterStatus, setNewsletterStatus] = useState(null);
   const [isSubmittingNewsletter, setIsSubmittingNewsletter] = useState(false);
+  const footerRef = useRef(null);
+
+  useViewportRoutePrefetch(footerRef);
+
+  const warmRoute = (routeKey) => {
+    if (!routeKey) return;
+    prefetchRouteByKey(routeKey);
+  };
 
   const handleNewsletterSubmit = async (event) => {
     event.preventDefault();
@@ -120,6 +129,10 @@ const Footer = ({ onNavigate }) => {
       key={link.name}
       href={link.href}
       onClick={(event) => handleLinkClick(event, link)}
+      onMouseEnter={() => warmRoute(link.key)}
+      onFocus={() => warmRoute(link.key)}
+      onTouchStart={() => warmRoute(link.key)}
+      data-prefetch-route={link.key}
       className="block text-[13px] font-medium leading-7 text-white/82 transition hover:text-[#7cff4b]"
     >
       - {link.name}
@@ -127,7 +140,7 @@ const Footer = ({ onNavigate }) => {
   );
 
   return (
-    <footer className="relative mt-24 bg-[#003f19] text-white">
+    <footer ref={footerRef} className="relative mt-24 bg-[#003f19] text-white">
       <div className="relative mx-auto max-w-[980px] px-5 pt-1">
         <div className="relative mx-auto -mt-16 max-w-[780px] rounded-[18px] bg-[#30bd16] px-6 pb-10 pt-10 shadow-[0_22px_45px_rgba(0,0,0,0.22)] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14">
           <img
@@ -208,16 +221,16 @@ const Footer = ({ onNavigate }) => {
             healing begins with your own immune power."
           </p>
           <div className="mt-8 flex items-center gap-4">
-            {socials.map(({ href, label, icon: Icon }) => (
+            {socials.map((social) => (
               <a
-                key={label}
-                href={href}
-                aria-label={label}
+                key={social.label}
+                href={social.href}
+                aria-label={social.label}
                 target="_blank"
                 rel="noreferrer"
                 className="text-white transition hover:text-[#7cff4b]"
               >
-                <Icon className="h-4 w-4" />
+                {React.createElement(social.icon, { className: "h-4 w-4" })}
               </a>
             ))}
             <a
@@ -256,6 +269,10 @@ const Footer = ({ onNavigate }) => {
         <a
           href="/terms-conditions-apply"
           onClick={handleTermsClick}
+          onMouseEnter={() => warmRoute("terms-conditions-apply")}
+          onFocus={() => warmRoute("terms-conditions-apply")}
+          onTouchStart={() => warmRoute("terms-conditions-apply")}
+          data-prefetch-route="terms-conditions-apply"
           className="text-[12px] font-medium text-white/80 transition hover:text-[#7cff4b]"
         >
           Terms &amp; Conditions Apply
@@ -293,4 +310,4 @@ const Footer = ({ onNavigate }) => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

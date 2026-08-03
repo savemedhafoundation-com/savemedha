@@ -8,6 +8,7 @@ import { FaMale, FaFemale } from "react-icons/fa";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import FemaleBodyMap from "../components/FemaleBodyMap";
 import { treatmentCategories } from "../data/organs";
+import SkeletonBox from "./SkeletonBox";
 
 const PatientStories = lazy(() => import("./PatientStories"));
 const CancerTreatmentPage = lazy(() => import("./CancerTreatmentPage"));
@@ -72,7 +73,12 @@ export default function HomePage({ onNavigate }) {
       <ServicesSection onNavigate={onNavigate} />
       <RenderOnView
         rootMargin="250px 0px"
-        fallback={<div className="min-h-[680px]" aria-hidden="true" />}
+        fallback={
+          <SkeletonBox
+            className="min-h-[680px] w-full"
+            roundedClassName="rounded-[32px]"
+          />
+        }
       >
       <section className="home-section home-bodymap-section relative -mx-4 overflow-hidden bg-[#052107] text-white sm:-mx-6 md:-mx-20">
         <div
@@ -249,20 +255,44 @@ export default function HomePage({ onNavigate }) {
       </RenderOnView>
       <RenderOnView
         rootMargin="350px 0px"
-        fallback={<div className="min-h-[300px]" aria-hidden="true" />}
+        fallback={
+          <SkeletonBox
+            className="min-h-[300px] w-full"
+            roundedClassName="rounded-[28px]"
+          />
+        }
       >
         <div>
-          <Suspense fallback={<div className="min-h-[300px]" aria-hidden="true" />}>
+          <Suspense
+            fallback={
+              <SkeletonBox
+                className="min-h-[300px] w-full"
+                roundedClassName="rounded-[28px]"
+              />
+            }
+          >
             <PatientStories />
           </Suspense>
         </div>
       </RenderOnView>
       <RenderOnView
         rootMargin="450px 0px"
-        fallback={<div className="min-h-[320px]" aria-hidden="true" />}
+        fallback={
+          <SkeletonBox
+            className="min-h-[320px] w-full"
+            roundedClassName="rounded-[28px]"
+          />
+        }
       >
         <div>
-          <Suspense fallback={<div className="min-h-[320px]" aria-hidden="true" />}>
+          <Suspense
+            fallback={
+              <SkeletonBox
+                className="min-h-[320px] w-full"
+                roundedClassName="rounded-[28px]"
+              />
+            }
+          >
             <CancerTreatmentPage onNavigate={onNavigate} />
           </Suspense>
         </div>

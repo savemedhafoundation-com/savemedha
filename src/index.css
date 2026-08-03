@@ -297,21 +297,6 @@ button, .btn {
   z-index: 1;
 }
 
-.modern-nav-link::after {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 0.45rem;
-  height: 2.5px;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, #7ccf2b 0%, #3ea34f 100%);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.22s ease;
-  opacity: 0;
-}
-
 .modern-nav-link:hover {
   color: #0e7a1e;
   transform: translateY(-1px);
@@ -319,12 +304,6 @@ button, .btn {
 
 .modern-nav-link:hover::before,
 .modern-nav-link.active::before {
-  opacity: 1;
-}
-
-.modern-nav-link:hover::after,
-.modern-nav-link.active::after {
-  transform: scaleX(1);
   opacity: 1;
 }
 
