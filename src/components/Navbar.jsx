@@ -241,7 +241,7 @@ function Navbar({ currentPage = "home", onNavigate }) {
   };
 
   return (
-    <header ref={headerRef} className="font-sans w-full sticky top-0 z-50">
+    <header ref={headerRef} className="app-navbar font-sans w-full sticky top-0 z-50">
       {/* =============================================
           SEARCH OVERLAY — phones only (< md)
       ============================================= */}

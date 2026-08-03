@@ -2,12 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowDown,
-  ArrowRight,
-  BookOpen,
   CheckCircle2,
   ChevronDown,
   Download,
-  ShieldCheck,
   ShoppingBag,
 } from "lucide-react";
 import Footer from "../components/Footer";
@@ -27,12 +24,11 @@ import contentCoverOne from "../assets/Photo/bookcover1.png";
 import contentTocImage from "../assets/Photo/Table of contents layout in green.png";
 import contentCoverThree from "../assets/Photo/bookcover3.png";
 import contentSpreadImage from "../assets/Photo/bookb.png";
-
-const HERO_BACKDROP_URL =
-  "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1920/v1770977116/WHITEBOARD_cd4z4f.jpg";
+import ebookHeroArtwork from "../assets/ebook/ebook-hero-nobadge.png";
 
 const PAGE_SIZE = 6;
 const HERO_FALLBACK_COVER = heroFallbackCover;
+const AMAZON_KINDLE_URL = "https://www.amazon.in/";
 const PUBLICATION_FALLBACK_COVERS = [
   HERO_FALLBACK_COVER,
   contentCoverOne,
@@ -56,17 +52,17 @@ const FAQ_ITEMS = [
       "They are written for patients, caregivers, students, and readers who want clear guidance around natural care and nutrition.",
   },
   {
-    question: "Is the information evidence-based?",
+    question: "Is the information evidence-based or opinion-based?",
     answer:
-      "The content is based on established nutrition science, clinical experience, and Save Medha Foundation research work.",
+      "The content is grounded in established nutrition science, clinical experience, and Save Medha Foundation research work.",
   },
   {
-    question: "Can I apply the recommendations directly?",
+    question: "Can I apply the recommendations directly to my health condition?",
     answer:
       "Use the books as educational guidance and consult a qualified medical professional for personal treatment decisions.",
   },
   {
-    question: "Why are these e-books free?",
+    question: "Why are these e-books offered for free?",
     answer:
       "The foundation shares these resources to make awareness and practical health education easier to access.",
   },
@@ -77,11 +73,61 @@ const FAQ_ITEMS = [
   },
 ];
 
-const CONTENT_PREVIEW_IMAGES = [
-  { src: contentCoverOne, alt: "E-book cover preview" },
-  { src: contentTocImage, alt: "Table of contents preview" },
-  { src: contentCoverThree, alt: "E-book page preview" },
+const previewFrames = [
+  {
+    src: contentCoverOne,
+    alt: "Principles of Natural Science e-book cover",
+    label: "Cover",
+  },
+  {
+    src: contentTocImage,
+    alt: "Table of contents preview",
+    label: "Table of contents",
+  },
+  {
+    src: contentCoverThree,
+    alt: "Inside guide page preview",
+    label: "Introduction",
+  },
 ];
+
+const trimCopy = (value = "", max = 118) => {
+  const normalized = String(value).replace(/\s+/g, " ").trim();
+  if (!normalized) return "";
+  if (normalized.length <= max) return normalized;
+  return `${normalized.slice(0, max).trimEnd()}...`;
+};
+
+function SectionHeading({ accent, title, description }) {
+  return (
+    <div className="mx-auto max-w-3xl text-center">
+      {accent ? (
+        <p className="text-sm font-black text-[#27b412]">{accent}</p>
+      ) : null}
+      <h2 className="mt-2 font-poppins text-[28px] font-black leading-tight text-[#1c261a] sm:text-[34px]">
+        {title}
+      </h2>
+      {description ? (
+        <p className="mx-auto mt-3 max-w-2xl text-sm font-medium leading-6 text-[#6d746a] sm:text-[15px]">
+          {description}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function HighlightCard({ text }) {
+  return (
+    <div className="flex min-h-[108px] items-start gap-3 rounded-[18px] border border-[#eceeea] bg-white px-4 py-4 shadow-[0_12px_26px_rgba(15,23,42,0.05)]">
+      <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eaffdf] text-[#23a50f]">
+        <CheckCircle2 size={18} strokeWidth={2.5} />
+      </span>
+      <p className="text-[13px] font-semibold leading-5 text-[#3d433c] sm:text-[14px]">
+        {text}
+      </p>
+    </div>
+  );
+}
 
 export default function EbookPage({ onNavigate }) {
   const [page, setPage] = useState(1);
@@ -100,11 +146,10 @@ export default function EbookPage({ onNavigate }) {
         const rawItems = normalizeEbookResponse(response);
         setEbooks(rawItems.map(normalizeEbook));
         setStatus("success");
-      } catch (err) {
-        console.error("Failed to load ebooks:", err);
+      } catch (error) {
+        console.error("Failed to load ebooks:", error);
         if (!isMounted) return;
-        const fallbackItems = fallbackEbooks.map(normalizeEbook);
-        setEbooks(fallbackItems);
+        setEbooks(fallbackEbooks.map(normalizeEbook));
         setStatus("success");
       }
     };
@@ -128,7 +173,6 @@ export default function EbookPage({ onNavigate }) {
   }, [page, ebooks]);
 
   const heroBook = ebooks[0] || {};
-  const heroCover = heroBook.cover || HERO_FALLBACK_COVER;
   const heroDownloadName = getEbookSlug(heroBook) || "ebook";
   const heroDownloadLink = heroBook.downloadLink;
   const heroDownloadDisabled = !heroDownloadLink;
@@ -136,7 +180,7 @@ export default function EbookPage({ onNavigate }) {
   const showEmptyInline = status === "success" && ebooks.length === 0;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white text-[#1c261a]">
       <Seo
         title="E-Books"
         description="Download free e-books on Natural Immunotherapy, holistic health, and cancer recovery from Save Medha Foundation."
@@ -145,160 +189,149 @@ export default function EbookPage({ onNavigate }) {
       <Navbar currentPage="ebook" onNavigate={onNavigate} />
 
       <main className="ebook-main bg-white">
-        <section
-          className="relative min-h-[430px] overflow-hidden bg-slate-950"
-          style={{
-            backgroundImage: `linear-gradient(90deg, rgba(5, 12, 9, 0.92) 0%, rgba(5, 12, 9, 0.78) 47%, rgba(5, 12, 9, 0.42) 100%), url(${HERO_BACKDROP_URL})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        >
-          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:px-8 lg:py-20">
-            <div className="max-w-xl text-white">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-[#baf27b] ring-1 ring-white/20">
-                <BookOpen size={14} />
-                Free health resources
-              </span>
-              <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">
-                <span className="block text-[#74C425]">E-Books</span>
-                <span className="block">& Research Publications</span>
-              </h1>
-              <p className="mt-4 max-w-lg text-sm leading-7 text-white/82 sm:text-base">
-                Educational resources from Save Medha Foundation, grounded in
-                Natural Immunotherapy, nutrition science, and real clinical
-                experience.
-              </p>
+        <section className="bg-white pb-10 pt-4 lg:pb-12">
+          <div className="w-full">
+            <div className="relative min-h-[420px] overflow-hidden rounded-none border border-[#d6ead0] bg-[#091108] text-white shadow-[0_28px_80px_rgba(12,20,12,0.18)] sm:min-h-[520px] md:min-h-[560px] lg:min-h-[720px]">
+              <img
+                src={ebookHeroArtwork}
+                alt={
+                  heroBook.title
+                    ? `${heroBook.title} hero artwork`
+                    : "E-Books hero artwork"
+                }
+                className="absolute inset-0 h-full w-full scale-[1.08] object-cover object-[center_0%] translate-y-4 transform-gpu sm:translate-y-6 lg:translate-y-10 lg:scale-[1.12]"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,14,5,0.88)_0%,rgba(4,14,5,0.76)_28%,rgba(4,14,5,0.44)_55%,rgba(4,14,5,0.22)_76%,rgba(4,14,5,0.14)_100%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_66%_54%,rgba(255,255,255,0.12),transparent_16%),radial-gradient(circle_at_18%_90%,rgba(67,211,37,0.14),transparent_24%)]" />
+              <div className="relative z-10 flex min-h-[420px] items-end px-6 py-6 sm:min-h-[520px] sm:px-10 sm:py-10 md:min-h-[560px] md:items-start md:px-12 md:pt-16 lg:min-h-[720px] lg:px-12 lg:pt-20 lg:pb-0">
+                <div className="max-w-[540px] rounded-[28px] bg-black/28 p-5 backdrop-blur-[3px] sm:p-6 md:ml-[18%] lg:ml-[22%] xl:ml-[24%] lg:bg-transparent lg:p-0 lg:backdrop-blur-0">
+                  <div className="mb-4 inline-flex items-center rounded-full bg-white/96 px-4 py-1.5 text-[10px] font-black text-[#159b17] shadow-[0_10px_22px_rgba(0,0,0,0.18)] sm:mb-5 sm:px-5 sm:py-2 sm:text-[12px]">
+                    100 % free download
+                  </div>
+                  <h1 className="font-poppins text-[44px] font-black leading-[0.94] drop-shadow-[0_4px_16px_rgba(0,0,0,0.35)] sm:text-[62px] lg:text-[74px]">
+                    <span className="block text-[#26cf10]">E-Books</span>
+                    <span className="block text-[#26cf10]">
+                      &amp; Research
+                    </span>
+                    <span className="block text-white">Publications</span>
+                  </h1>
 
-              <div className="mt-7 flex max-w-xl flex-col gap-3 sm:flex-row">
-                <label className="sr-only" htmlFor="ebook-email">
-                  Email address
-                </label>
-                <input
-                  id="ebook-email"
-                  type="email"
-                  placeholder="Enter your email"
-                  className="h-11 min-w-0 flex-1 rounded-md border border-white/20 bg-white/12 px-4 text-sm text-white outline-none placeholder:text-white/70 focus:border-[#74C425]"
-                />
-                <a
-                  href={heroDownloadLink || "#"}
-                  download={
-                    heroDownloadDisabled ? undefined : `${heroDownloadName}.pdf`
-                  }
-                  onClick={(event) => {
-                    if (heroDownloadDisabled) event.preventDefault();
-                  }}
-                  aria-disabled={heroDownloadDisabled}
-                  className={`inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#74C425] px-5 text-sm font-black text-white shadow-sm transition hover:bg-[#155300] ${
-                    heroDownloadDisabled ? "cursor-not-allowed opacity-65" : ""
-                  }`}
-                >
-                  <Download size={16} />
-                  Download your E-book
-                </a>
+                  <p className="mt-5 max-w-[500px] text-sm font-medium leading-6 text-white/82 drop-shadow-[0_3px_10px_rgba(0,0,0,0.32)] sm:text-[16px] sm:leading-7">
+                    Educational resources from Save Medha Foundation, grounded
+                    in Natural Immunotherapy, nutrition science, and real
+                    clinical experience.
+                  </p>
+
+                  <div className="mt-8 flex max-w-[520px] flex-col gap-3 sm:flex-row">
+                    <label htmlFor="ebook-email" className="sr-only">
+                      Email address
+                    </label>
+                    <div className="flex h-12 flex-1 items-center rounded-full bg-white/95 px-5 text-slate-700 shadow-[0_18px_45px_rgba(0,0,0,0.18)] sm:h-14">
+                      <input
+                        id="ebook-email"
+                        type="email"
+                        placeholder="Enter your email"
+                        className="h-full w-full bg-transparent text-sm font-semibold outline-none placeholder:text-slate-500"
+                      />
+                    </div>
+                    <a
+                      href={heroDownloadLink || "#"}
+                      download={
+                        heroDownloadDisabled
+                          ? undefined
+                          : `${heroDownloadName}.pdf`
+                      }
+                      onClick={(event) => {
+                        if (heroDownloadDisabled) event.preventDefault();
+                      }}
+                      aria-disabled={heroDownloadDisabled}
+                      className={`inline-flex h-12 items-center justify-center rounded-full bg-[#2ecf13] px-7 text-sm font-black text-white shadow-[0_18px_45px_rgba(34,195,42,0.35)] transition hover:bg-[#1dac0b] sm:h-14 ${
+                        heroDownloadDisabled
+                          ? "cursor-not-allowed opacity-65"
+                          : ""
+                      }`}
+                    >
+                      Download your E-book
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="relative hidden min-h-[300px] justify-center lg:flex">
-              <img
-                src={heroCover}
-                alt={heroBook.title || "E-book cover"}
-                className="absolute right-28 top-8 h-56 w-auto rotate-[-8deg] object-contain opacity-55"
-                loading="lazy"
-              />
-              <img
-                src={heroCover}
-                alt=""
-                className="absolute right-8 top-2 h-72 w-auto rotate-[8deg] object-contain opacity-80"
-                loading="lazy"
-                aria-hidden="true"
-              />
-              <img
-                src={heroCover}
-                alt=""
-                className="relative z-10 h-80 w-auto object-contain drop-shadow-2xl"
-                loading="lazy"
-                aria-hidden="true"
-              />
             </div>
           </div>
         </section>
 
-        <section className="bg-[#fafafa] px-4 py-16 sm:px-6 lg:px-8">
+        <section className="bg-white px-4 py-18 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl">
-            <div className="text-center">
-              <h2 className="text-2xl font-black text-slate-950 sm:text-3xl">
-                What Will You Get From Our E-Book?
-              </h2>
-              <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-                Understand Natural Immunotherapy and nutrition science in
-                simple, actionable terms.
-              </p>
-            </div>
+            <SectionHeading
+              title="What Will You Get From Our E-Book?"
+              description="Understand natural immunotherapy and nutrition science in simple, actionable terms without confusing medical jargon."
+            />
 
-            <div className="mx-auto mt-9 grid max-w-4xl gap-4 sm:grid-cols-2">
+            <div className="mx-auto mt-10 grid max-w-[930px] gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {HIGHLIGHTS.map((item) => (
-                <div
-                  key={item}
-                  className="flex min-h-16 items-start gap-3 rounded-md border border-slate-200 bg-white p-4 shadow-sm"
-                >
-                  <CheckCircle2
-                    size={20}
-                    className="mt-0.5 flex-none text-[#16a000]"
-                  />
-                  <p className="text-sm font-semibold leading-6 text-slate-700">
-                    {item}
-                  </p>
-                </div>
+                <HighlightCard key={item} text={item} />
               ))}
             </div>
 
             <div className="mt-8 flex justify-center">
               <a
                 href="#ebook-library"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-[#16a000] shadow-sm transition hover:border-[#74C425] hover:bg-[#f2ffe8]"
-                aria-label="Scroll to publications"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#e7ebe5] bg-white text-[#27b412] shadow-sm transition hover:border-[#30c616] hover:bg-[#f4fff0]"
+                aria-label="Scroll to ebook library"
               >
-                <ArrowDown size={17} />
+                <ArrowDown size={16} />
               </a>
             </div>
           </div>
         </section>
 
-        <section id="ebook-library" className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+        <section id="ebook-library" className="bg-[#fafbf9] px-4 py-18 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
-            <div className="text-center">
-              <h2 className="text-2xl font-black text-slate-950 sm:text-3xl">
-                <span className="text-[#16a000]">E-Books</span> & Research
-                Publications
-              </h2>
-            </div>
+            <SectionHeading
+              accent="E-Books & Research"
+              title="E-Books & Research Publications"
+              description="Curated reading material designed to make complex healing concepts easier to understand and revisit."
+            />
 
-            {showLoadingInline && (
-              <div className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {showLoadingInline ? (
+              <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
-                    key={index}
-                    className="h-[360px] animate-pulse rounded-md border border-slate-200 bg-slate-50"
-                  />
+                    key={`ebook-card-skeleton-${index}`}
+                    className="min-h-[360px] animate-pulse rounded-[22px] border border-[#eceeea] bg-white p-4 shadow-sm"
+                  >
+                    <div className="h-40 rounded-[18px] bg-slate-100" />
+                    <div className="mt-5 h-5 w-3/4 rounded-full bg-slate-100" />
+                    <div className="mt-3 h-4 w-full rounded-full bg-slate-100" />
+                    <div className="mt-2 h-4 w-11/12 rounded-full bg-slate-100" />
+                    <div className="mt-6 flex gap-2">
+                      <div className="h-9 w-24 rounded-full bg-slate-100" />
+                      <div className="h-9 w-28 rounded-full bg-slate-100" />
+                    </div>
+                  </div>
                 ))}
               </div>
-            )}
+            ) : null}
 
-            {showEmptyInline && (
-              <div className="mx-auto mt-9 max-w-xl rounded-md border border-slate-200 bg-slate-50 px-5 py-4 text-center text-sm text-slate-600">
+            {showEmptyInline ? (
+              <div className="mx-auto mt-10 max-w-xl rounded-[22px] border border-[#eceeea] bg-white px-6 py-5 text-center text-sm font-semibold text-[#61695f] shadow-sm">
                 No e-books available right now.
                 <button
                   type="button"
                   onClick={() => setReloadToken((token) => token + 1)}
-                  className="ml-3 rounded-md bg-[#74C425] px-3 py-1.5 text-xs font-black text-white"
+                  className="ml-3 rounded-full bg-[#2bc412] px-4 py-2 text-xs font-black text-white"
                 >
                   Retry
                 </button>
               </div>
-            )}
+            ) : null}
 
-            {!showLoadingInline && visibleEbooks.length > 0 && (
-              <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {!showLoadingInline && visibleEbooks.length > 0 ? (
+              <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {visibleEbooks.map((book, index) => {
                   const cover =
                     book.cover ||
@@ -311,27 +344,29 @@ export default function EbookPage({ onNavigate }) {
                   return (
                     <article
                       key={book.id}
-                      className="group flex min-h-[390px] flex-col rounded-md border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                      className="group flex min-h-[370px] flex-col rounded-[22px] border border-[#eceeea] bg-white p-4 shadow-[0_14px_35px_rgba(15,23,42,0.05)] transition hover:-translate-y-1 hover:shadow-[0_18px_42px_rgba(15,23,42,0.08)]"
                     >
-                      <div className="flex h-44 items-center justify-center rounded-t-md bg-slate-100 p-5">
+                      <div className="flex h-[158px] items-center justify-center rounded-[18px] bg-[#f1f3ef] p-4">
                         <img
                           src={cover}
                           alt={book.title}
-                          className="max-h-full max-w-full object-contain drop-shadow-md transition duration-300 group-hover:scale-105"
+                          className="h-full w-full object-contain transition duration-300 group-hover:scale-105"
                           loading="lazy"
                         />
                       </div>
 
-                      <div className="flex flex-1 flex-col p-5">
-                        <h3 className="line-clamp-2 text-base font-black leading-snug text-slate-950">
+                      <div className="flex flex-1 flex-col px-1 pb-1 pt-4">
+                        <h3 className="line-clamp-2 font-poppins text-[16px] font-black leading-5 text-[#1f281d]">
                           {book.title}
                         </h3>
-                        <p className="mt-1 text-xs font-bold text-slate-500">
-                          By {book.author}
+                        <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#96a191]">
+                          {book.pages || book.category || "Free Guide"}
                         </p>
-                        <p className="mt-3 line-clamp-4 text-sm leading-6 text-slate-600">
-                          {book.desc ||
-                            "A Save Medha Foundation resource for practical health learning and awareness."}
+                        <p className="mt-3 text-[13px] font-medium leading-5 text-[#667062]">
+                          {trimCopy(
+                            book.desc ||
+                              "A Save Medha Foundation resource for practical health learning and awareness."
+                          )}
                         </p>
 
                         <div className="mt-auto flex flex-wrap gap-2 pt-5">
@@ -340,15 +375,16 @@ export default function EbookPage({ onNavigate }) {
                               to={book.readLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex h-9 items-center justify-center rounded-md bg-[#74C425] px-3 text-xs font-black text-white transition hover:bg-[#155300]"
+                              className="inline-flex h-9 items-center justify-center rounded-full bg-[#2dc913] px-4 text-[11px] font-black text-white transition hover:bg-[#22a80c]"
                             >
                               Read Online
                             </Link>
                           ) : (
-                            <span className="inline-flex h-9 items-center justify-center rounded-md bg-slate-100 px-3 text-xs font-black text-slate-400">
+                            <span className="inline-flex h-9 items-center justify-center rounded-full bg-slate-100 px-4 text-[11px] font-black text-slate-400">
                               Read Online
                             </span>
                           )}
+
                           <a
                             href={book.downloadLink || "#"}
                             download={
@@ -358,7 +394,7 @@ export default function EbookPage({ onNavigate }) {
                               if (!canDownload) event.preventDefault();
                             }}
                             aria-disabled={!canDownload}
-                            className={`inline-flex h-9 items-center justify-center rounded-md border border-[#74C425] px-3 text-xs font-black text-[#168f00] transition hover:bg-[#f1ffe8] ${
+                            className={`inline-flex h-9 items-center justify-center rounded-full border border-[#d8ddd4] bg-white px-4 text-[11px] font-black text-[#4b5348] transition hover:border-[#30c616] hover:text-[#1f281d] ${
                               canDownload ? "" : "cursor-not-allowed opacity-55"
                             }`}
                           >
@@ -370,68 +406,65 @@ export default function EbookPage({ onNavigate }) {
                   );
                 })}
               </div>
-            )}
+            ) : null}
 
-            {page < totalPages && (
+            {page < totalPages ? (
               <div className="mt-10 flex justify-center">
                 <button
                   type="button"
                   onClick={() =>
                     setPage((current) => Math.min(totalPages, current + 1))
                   }
-                  className="inline-flex h-11 items-center justify-center rounded-md bg-[#74C425] px-6 text-sm font-black text-white shadow-sm transition hover:bg-[#155300]"
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-[#2dc913] px-7 text-sm font-black text-white shadow-[0_14px_36px_rgba(34,195,42,0.26)] transition hover:bg-[#22a80c]"
                 >
                   Load more publications
                 </button>
               </div>
-            )}
+            ) : null}
           </div>
         </section>
 
-        <section className="bg-[#075d1d] px-4 py-16 text-white sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[280px_minmax(0,1fr)]">
-            <div className="flex justify-center">
+        <section className="bg-[linear-gradient(90deg,#055107_0%,#0d7b0a_50%,#3bc314_100%)] px-4 py-16 text-white sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[220px_minmax(0,1fr)]">
+            <div className="mx-auto">
               <img
                 src={HERO_FALLBACK_COVER}
                 alt="Featured e-book"
-                className="h-72 w-auto object-contain drop-shadow-2xl"
+                className="w-[180px] rotate-[-10deg] object-contain drop-shadow-[0_24px_55px_rgba(0,0,0,0.35)]"
                 loading="lazy"
               />
             </div>
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold text-[#c7ff96] ring-1 ring-white/15">
-                <ShieldCheck size={14} />
-                Foundation reviewed
-              </div>
-              <h2 className="mt-4 text-2xl font-black sm:text-3xl">
+
+            <div className="max-w-2xl">
+              <h2 className="font-poppins text-[28px] font-black leading-tight sm:text-[34px]">
                 Can I trust your E-Book?
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/85">
-                Yes. Our e-books are developed by Save Medha Foundation using
-                established nutrition science, Natural Immunotherapy principles,
-                and documented clinical experience. Every resource is written to
-                be useful, transparent, and practical for everyday readers.
+              <p className="mt-4 text-sm font-medium leading-7 text-white/88 sm:text-[15px]">
+                Yes, our e-books are thoughtfully developed by Save Medha
+                Foundation. They are based on established nutrition science,
+                Natural Immunotherapy principles, and documented clinical
+                experience from our foundation&apos;s practical work.
               </p>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/85">
+              <p className="mt-4 text-sm font-medium leading-7 text-white/88 sm:text-[15px]">
                 The goal is to explain complex health ideas in clear language
-                while encouraging responsible care, accountability, and public
-                awareness.
+                while encouraging responsible, informed, and accountable
+                decision-making through reliable public-benefit education.
               </p>
             </div>
           </div>
         </section>
 
         <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-2">
-            <div className="rounded-md border border-slate-200 bg-white p-6 text-center shadow-sm">
-              <h3 className="text-base font-black text-slate-950">
+          <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+            <div className="rounded-[24px] border border-[#eceeea] bg-white p-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.05)]">
+              <h3 className="font-poppins text-[22px] font-black text-[#1f281d]">
                 Get Free Download
               </h3>
-              <div className="mt-5 flex h-36 items-center justify-center rounded-md bg-slate-100 p-4">
+              <div className="mt-5 overflow-hidden rounded-[18px] bg-[#f4f6f2] p-4">
                 <img
                   src={contentSpreadImage}
-                  alt="E-book pages"
-                  className="h-full w-full object-cover"
+                  alt="Open e-book preview"
+                  className="h-[150px] w-full object-cover"
                   loading="lazy"
                 />
               </div>
@@ -444,7 +477,9 @@ export default function EbookPage({ onNavigate }) {
                   if (heroDownloadDisabled) event.preventDefault();
                 }}
                 aria-disabled={heroDownloadDisabled}
-                className="mt-5 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#74C425] text-white transition hover:bg-[#155300]"
+                className={`mt-5 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#2fc915] text-white transition hover:bg-[#22a80c] ${
+                  heroDownloadDisabled ? "cursor-not-allowed opacity-65" : ""
+                }`}
               >
                 <img
                   src={downloadButtonImage}
@@ -455,21 +490,23 @@ export default function EbookPage({ onNavigate }) {
               </a>
             </div>
 
-            <div className="rounded-md border border-slate-200 bg-white p-6 text-center shadow-sm">
-              <h3 className="text-base font-black text-slate-950">
+            <div className="rounded-[24px] border border-[#eceeea] bg-white p-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.05)]">
+              <h3 className="font-poppins text-[22px] font-black text-[#1f281d]">
                 Buy On Amazon Kindle
               </h3>
-              <div className="mt-5 flex h-36 items-center justify-center rounded-md bg-slate-100 p-4">
+              <div className="mt-5 overflow-hidden rounded-[18px] bg-[#f4f6f2] p-4">
                 <img
                   src={contentSpreadImage}
-                  alt="E-book pages"
-                  className="h-full w-full object-cover"
+                  alt="Kindle preview"
+                  className="h-[150px] w-full object-cover"
                   loading="lazy"
                 />
               </div>
-              <button
-                type="button"
-                className="mt-5 inline-flex h-10 items-center justify-center gap-2 rounded-md border border-slate-200 bg-white px-4 text-xs font-black text-slate-900 transition hover:border-[#74C425]"
+              <a
+                href={AMAZON_KINDLE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#dbded8] bg-white px-4 text-sm font-black text-[#1f281d] transition hover:border-[#2ecf13] hover:text-[#0e7c08]"
               >
                 <ShoppingBag size={14} />
                 <img
@@ -478,67 +515,73 @@ export default function EbookPage({ onNavigate }) {
                   className="h-5 w-auto object-contain"
                   loading="lazy"
                 />
-              </button>
+              </a>
             </div>
           </div>
         </section>
 
-        <section className="bg-[#fafafa] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,1fr)_260px]">
+        <section className="bg-[#fafbf9] px-4 py-18 sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,1fr)_250px]">
             <div>
-              <h2 className="text-2xl font-black text-slate-950">
-                Frequently Asked Questions
-              </h2>
-              <div className="mt-7 divide-y divide-slate-200 rounded-md border border-slate-200 bg-white">
+              <SectionHeading
+                title="Frequently Asked Questions"
+                description=""
+              />
+
+              <div className="mt-8 space-y-3">
                 {FAQ_ITEMS.map((item, index) => (
-                  <details key={item.question} className="group p-4">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-sm font-black text-slate-800">
+                  <details
+                    key={item.question}
+                    className="group overflow-hidden rounded-[16px] border border-[#eceeea] bg-white px-4 py-3 shadow-sm"
+                  >
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-[13px] font-black text-[#384236] sm:text-[14px]">
                       <span>
                         {index + 1}. {item.question}
                       </span>
                       <ChevronDown
-                        size={17}
-                        className="flex-none text-[#16a000] transition group-open:rotate-180"
+                        size={16}
+                        className="shrink-0 text-[#28b312] transition group-open:rotate-180"
                       />
                     </summary>
-                    <p className="mt-3 text-sm leading-6 text-slate-600">
+                    <p className="pt-3 text-sm font-medium leading-6 text-[#667062]">
                       {item.answer}
                     </p>
                   </details>
                 ))}
               </div>
             </div>
-            <div className="mx-auto w-full max-w-[220px] rounded-md bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <img
-                src={contentCoverOne}
-                alt="Principles of Natural Science book"
-                className="w-full object-contain"
-                loading="lazy"
-              />
+
+            <div className="mx-auto w-full max-w-[220px] rounded-[22px] bg-[#e7ffd8] p-5 shadow-[0_14px_35px_rgba(15,23,42,0.06)]">
+              <div className="rounded-[18px] bg-white p-4">
+                <img
+                  src={contentCoverOne}
+                  alt="Principles of Natural Science book"
+                  className="w-full object-contain"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+        <section className="bg-white px-4 py-18 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-2xl font-black text-slate-950">
-              Inside The Guide
-            </h2>
-            <p className="mt-2 text-sm text-slate-600">
-              A look inside our comprehensive health resources.
-            </p>
+            <SectionHeading
+              title="Frequently Asked Questions"
+              description="A look inside our comprehensive guides."
+            />
 
-            <div className="mt-10 grid items-center gap-6 sm:grid-cols-3">
-              {CONTENT_PREVIEW_IMAGES.map((image, index) => (
+            <div className="mt-10 grid items-center gap-5 sm:grid-cols-3">
+              {previewFrames.map((frame, index) => (
                 <div
-                  key={image.src}
-                  className={`rounded-md bg-slate-100 p-4 shadow-sm ring-1 ring-slate-200 ${
-                    index === 1 ? "sm:scale-105" : "opacity-80"
+                  key={frame.src}
+                  className={`rounded-[20px] bg-[#f4f6f2] p-4 shadow-[0_14px_35px_rgba(15,23,42,0.04)] ${
+                    index === 1 ? "sm:scale-[1.03]" : ""
                   }`}
                 >
                   <img
-                    src={image.src}
-                    alt={image.alt}
+                    src={frame.src}
+                    alt={frame.alt}
                     className="mx-auto h-64 w-full object-contain"
                     loading="lazy"
                   />
@@ -546,22 +589,24 @@ export default function EbookPage({ onNavigate }) {
               ))}
             </div>
 
-            <div className="mx-auto mt-8 h-1.5 max-w-md rounded-full bg-slate-200">
-              <div className="h-full w-1/3 rounded-full bg-[#74C425]" />
+            <div className="mx-auto mt-8 h-1.5 max-w-sm rounded-full bg-[#e3e8df]">
+              <div className="h-full w-1/3 rounded-full bg-[#2bc412]" />
             </div>
-            <p className="mt-2 text-xs font-semibold text-slate-500">
+            <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.14em] text-[#8f978b]">
               Pages 1 of 25
             </p>
           </div>
         </section>
 
-        <section className="bg-white">
-          <img
-            src={contentSpreadImage}
-            alt="Open e-book pages"
-            className="h-auto w-full object-cover"
-            loading="lazy"
-          />
+        <section className="bg-white px-4 pb-0 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-t-[26px]">
+            <img
+              src={contentSpreadImage}
+              alt="Open e-book pages"
+              className="h-auto w-full object-cover"
+              loading="lazy"
+            />
+          </div>
         </section>
       </main>
 
