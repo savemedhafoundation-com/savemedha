@@ -17,13 +17,13 @@ const VolunteerAndSupportSection = ({ onNavigate }) => {
             Support Our Cause
           </h2>
 
-          <div className="home-content-gap home-card-grid mx-auto grid max-w-[1800px] grid-cols-3">
+          <div className="home-content-gap home-card-grid mx-auto grid max-w-[1800px] grid-cols-1 sm:grid-cols-3">
             {supportImages.map((image, index) => (
               <img
                 key={image}
                 src={image}
                 alt={`Support cause ${index + 1}`}
-                className="h-[168px] w-full rounded-xl bg-white object-contain shadow-[0_10px_24px_rgba(15,23,42,0.12)] sm:h-[320px]"
+                className="h-[220px] w-full rounded-xl bg-white object-contain shadow-[0_10px_24px_rgba(15,23,42,0.12)] sm:h-[320px]"
                 loading="lazy"
               />
             ))}

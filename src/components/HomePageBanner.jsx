@@ -13,9 +13,39 @@ import HeroHealingBadge from '../assets/homepageimage/Group 9737.png';
 const HOME_BANNER_URL =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_1920/v1770891682/homepagebannner_nwnzig_aelxxh.jpg";
 
+const HERO_BENEFITS = ["No Chemotherapy", "No Surgery Needed", "Zero Radiation"];
+
 const DefaultHeroContent = () => {
   return (
     <>
+      <div className="absolute left-[6%] right-[22%] top-[8%] bottom-[10%] z-30 flex flex-col text-white sm:hidden">
+        <div className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-[14px] font-bold leading-none text-[#159b17] shadow-[0_10px_22px_rgba(0,0,0,0.22)]">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#57be2d]" />
+          Natural Immunotherapy
+        </div>
+
+        <h1 className="mt-7 max-w-[270px] text-[31px] font-black leading-[1.06] tracking-[-0.03em] text-white drop-shadow-[0_4px_14px_rgba(0,0,0,0.42)]">
+          Empowering lives,
+          <span className="block">Saving futures</span>
+        </h1>
+
+        <p className="mt-7 max-w-[290px] text-[18px] font-semibold leading-[1.15] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.4)]">
+          Fighting to make a <span className="font-black text-[#20f11d]">CANCER FREE</span>
+          <span className="block font-black text-[#20f11d]">WORLD</span>
+        </p>
+
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-[11px] font-semibold text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.38)]">
+          {HERO_BENEFITS.map((item) => (
+            <span key={item} className="inline-flex items-center gap-2">
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-black leading-none text-[#159b17]">
+                &#10003;
+              </span>
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="absolute left-[15.5%] top-[13%] z-30 hidden w-[35%] max-w-[610px] font-poppins text-white sm:block">
         <div className="inline-flex items-center gap-3 rounded-full bg-white px-5 py-2 text-[16px] font-bold leading-none text-[#159b17] shadow-[0_10px_22px_rgba(0,0,0,0.18)]">
           <span className="h-2.5 w-2.5 rounded-full bg-[#57be2d]" />
@@ -33,7 +63,7 @@ const DefaultHeroContent = () => {
         </p>
 
         <div className="mt-7 flex flex-wrap items-center gap-7 text-[11px] font-semibold text-white drop-shadow-[0_2px_5px_rgba(0,0,0,0.35)]">
-          {["No Chemotherapy", "No Surgery Needed", "Zero Radiation"].map((item) => (
+          {HERO_BENEFITS.map((item) => (
             <span key={item} className="inline-flex items-center gap-2">
               <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-black leading-none text-[#159b17]">
                 ✓
@@ -49,7 +79,7 @@ const DefaultHeroContent = () => {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Discover Natural Immunotherapy"
-        className="home-hero-discover-button absolute left-[15.5%] bottom-[20%] z-30 inline-flex min-h-[55px] min-w-[171px] items-center justify-center rounded-[13px] bg-white px-[47px] py-[17px] font-poppins text-[20px] font-bold leading-none text-[#159b17] shadow-[0_12px_26px_rgba(0,0,0,0.24)] transition duration-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/80 focus:ring-offset-2 focus:ring-offset-[#189802]"
+        className="home-hero-discover-button absolute left-[15.5%] bottom-[20%] z-30 hidden min-h-[55px] min-w-[171px] items-center justify-center rounded-[13px] bg-white px-[47px] py-[17px] font-poppins text-[20px] font-bold leading-none text-[#159b17] shadow-[0_12px_26px_rgba(0,0,0,0.24)] transition duration-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/80 focus:ring-offset-2 focus:ring-offset-[#189802] sm:inline-flex lg:bottom-[10%]"
       >
         Discover
       </a>
@@ -219,18 +249,19 @@ export default function HeroBanner({
 
   // Tablet gets its own intermediate height between sm and lg
   const heightClassName =
-    containerClassName ?? "min-h-[420px] sm:min-h-[520px] md:min-h-[560px] lg:min-h-[750px]";
+    containerClassName ??
+    "min-h-[420px] sm:min-h-[520px] md:min-h-[560px] lg:min-h-0 lg:aspect-[5950/2400]";
 
   return (
     <div
-      className={`relative flex flex-row w-full h-full overflow-hidden ${heightClassName} ${className}`}
+      className={`relative flex flex-row w-full overflow-hidden bg-[#08210b] ${heightClassName} ${className}`}
     >
       {isDefaultHomepageHero ? (
         <>
           <img
             src={HomepageHeroFrame}
             alt={imageAlt}
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            className="absolute inset-0 h-full w-full object-cover object-[74%_center] sm:object-center"
             loading="eager"
             fetchPriority="high"
           />

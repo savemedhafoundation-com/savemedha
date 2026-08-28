@@ -137,13 +137,37 @@ export default function TreatmentCards({
   const [isExpandedOnMobile, setIsExpandedOnMobile] = useState(false);
   const [localSelectedCategory, setLocalSelectedCategory] = useState("cancer");
   const activeCategory = selectedCategory ?? localSelectedCategory;
+  const deviceSupportsHover =
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(hover: hover)").matches;
 
-  const handleSelect = (card) => {
+  const setActiveCard = (card) => {
     setLocalSelectedCategory(card.key);
 
     if (card.key && typeof onSelectCategory === "function") {
       onSelectCategory(card.key);
     }
+  };
+
+  const handleSelect = (card) => {
+    setActiveCard(card);
+  };
+
+  const handleHoverSelect = (card) => {
+    if (!deviceSupportsHover) {
+      return;
+    }
+
+    setActiveCard(card);
+  };
+
+  const handleTapSelect = (card) => {
+    if (deviceSupportsHover) {
+      return;
+    }
+
+    setActiveCard(card);
   };
 
   return (
@@ -165,6 +189,8 @@ export default function TreatmentCards({
           return (
             <article
               key={card.id}
+              onMouseEnter={() => handleHoverSelect(card)}
+              onClick={() => handleTapSelect(card)}
               className={`group flex min-h-[390px] flex-col overflow-hidden rounded-[14px] border bg-white shadow-[0_12px_28px_rgba(15,23,42,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_38px_rgba(17,70,39,0.16)] ${
                 isSelected
                   ? "border-[#129808] ring-2 ring-[#129808]"

@@ -5,7 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactGetInTouchSection from "../components/ContactGetInTouchSection";
 import ContactPageLayout from "../components/ContactPageLayout";
-import headsetSupportImage from "../assets/Photo/young_woman_in_headset_using_laptop_and_taking_notes-removebg-preview.png";
+import modernSupportAgentImage from "../assets/Photo/modern-support-agent.png";
 import { createRecaptcha, clearRecaptcha, auth } from "../Firebase/Setup";
 
 const LOCATIONS = [
@@ -208,7 +208,7 @@ export default function LocateUs({ onNavigate }) {
           step={step}
           sendOtp={sendOtp}
           verifyOtp={verifyOtp}
-          supportImage={headsetSupportImage}
+          supportImage={modernSupportAgentImage}
         />
       </main>
       <Footer onNavigate={onNavigate} />

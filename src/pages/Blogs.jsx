@@ -74,14 +74,6 @@ const getReadTime = (excerpt = "") => {
   return `${Math.max(3, Math.ceil(words / 120))} min read`;
 };
 
-const categoryFilters = [
-  "View all",
-  "Natural Science",
-  "Chronic Disease",
-  "Nutrition",
-  "Holistic",
-];
-
 const insightTiles = [
   {
     title: "Cognitive Calibration",
@@ -179,7 +171,6 @@ export default function Blogs({ onNavigate }) {
   const [status, setStatus] = useState("idle");
   const [reloadToken, setReloadToken] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeCategory, setActiveCategory] = useState("View all");
 
   const normalizePost = useCallback((post, index) => {
     return {
@@ -243,20 +234,14 @@ export default function Blogs({ onNavigate }) {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [normalizedSearchQuery, activeCategory]);
+  }, [normalizedSearchQuery]);
 
   const visiblePosts = normalizedPosts.filter((post) => {
     const searchableText = [post.title, post.excerpt, post.category, post.author]
       .filter(Boolean)
       .join(" ")
       .toLowerCase();
-    const matchesSearch =
-      !normalizedSearchQuery || searchableText.includes(normalizedSearchQuery);
-    const matchesCategory =
-      activeCategory === "View all" ||
-      post.category?.toLowerCase().includes(activeCategory.toLowerCase());
-
-    return matchesSearch && matchesCategory;
+    return !normalizedSearchQuery || searchableText.includes(normalizedSearchQuery);
   });
 
   const latestPost = visiblePosts[0];
@@ -301,7 +286,7 @@ export default function Blogs({ onNavigate }) {
   const showNoMatchesInline =
     status === "success" &&
     normalizedPosts.length > 0 &&
-    (Boolean(normalizedSearchQuery) || activeCategory !== "View all") &&
+    Boolean(normalizedSearchQuery) &&
     visiblePosts.length === 0;
   const showPostsInline = status === "success" && visiblePosts.length > 0;
 
@@ -373,10 +358,7 @@ export default function Blogs({ onNavigate }) {
               {searchQuery ? ` for "${searchQuery}"` : ""}.
               <button
                 type="button"
-                onClick={() => {
-                  setActiveCategory("View all");
-                  onNavigate?.("blogs");
-                }}
+                onClick={() => onNavigate?.("blogs")}
                 className="ml-3 rounded bg-[#189500] px-3 py-1 text-xs font-semibold text-white"
               >
                 Clear
@@ -470,27 +452,8 @@ export default function Blogs({ onNavigate }) {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
-          <div className="mb-7 flex flex-col gap-4 border-b border-slate-200 pb-4 md:flex-row md:items-center md:justify-between">
+          <div className="mb-7">
             <h2 className="text-3xl font-extrabold text-slate-950">All Blogs</h2>
-            <div className="flex flex-wrap items-center gap-2">
-              {categoryFilters.map((category) => {
-                const isActive = activeCategory === category;
-                return (
-                  <button
-                    key={category}
-                    type="button"
-                    onClick={() => setActiveCategory(category)}
-                    className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                      isActive
-                        ? "bg-[#189500] text-white"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                );
-              })}
-            </div>
           </div>
 
           {status === "loading" ? (

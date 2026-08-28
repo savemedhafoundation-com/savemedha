@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Seo } from "../components/Seo";
 import internshipImage from "../assets/Photo/internship.jpg";
+import internshipCircleCleanImage from "../assets/Photo/internship-circle-clean.png";
 
 const CLINICAL_RESEARCH_IMG =
   "https://res.cloudinary.com/savemedha/image/upload/f_auto,q_auto,w_600/v1770268797/scientist-woman-doctor-holding-glass-flask-analyzing-liquid-solution_1_gs6jud.png";
@@ -48,7 +49,7 @@ const OPEN_POSITIONS = [
     title: "Clinical Research Associate",
     meta: "Full-time / On-site",
     image: CLINICAL_RESEARCH_IMG,
-    imagePosition: "50% 24%",
+    imagePosition: "62% 24%",
     imageScale: 1.04,
   },
   {
@@ -146,11 +147,33 @@ function SectionDivider() {
   );
 }
 
-function WhyCard({ title, description, featured = false }) {
+function WhyCard({
+  title,
+  description,
+  active = false,
+  interactive = false,
+  onSelect,
+}) {
   return (
     <article
+      onClick={interactive ? onSelect : undefined}
+      onKeyDown={
+        interactive
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onSelect?.();
+              }
+            }
+          : undefined
+      }
+      role={interactive ? "button" : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      aria-pressed={interactive ? active : undefined}
       className={`relative min-h-[176px] rounded-[18px] p-5 shadow-[0_16px_32px_rgba(17,46,26,0.06)] transition hover:-translate-y-1 ${
-        featured
+        interactive ? "cursor-pointer" : ""
+      } ${
+        active
           ? "bg-[#40bf25] text-white"
           : "border border-[#ebefea] bg-[#f5f7f4] text-[#1a211a]"
       }`}
@@ -160,14 +183,14 @@ function WhyCard({ title, description, featured = false }) {
       </h3>
       <p
         className={`mt-4 max-w-[210px] text-[12px] font-medium leading-[1.65] ${
-          featured ? "text-white/82" : "text-[#667165]"
+          active ? "text-white/82" : "text-[#667165]"
         }`}
       >
         {description}
       </p>
       <span
         className={`absolute bottom-4 right-4 h-7 w-7 rounded-full ${
-          featured ? "bg-white" : "bg-[#3bbb20]"
+          active ? "bg-white" : "bg-[#3bbb20]"
         }`}
         aria-hidden="true"
       />
@@ -182,6 +205,8 @@ function DiamondImage({
   imageScale = 1,
   className = "",
 }) {
+  const adjustedImageScale = imageScale * 1.05;
+
   return (
     <div className={`relative h-28 w-28 shrink-0 sm:h-32 sm:w-32 ${className}`}>
       <div className="absolute inset-0 rotate-45 rounded-[1.75rem] bg-[#37c31d]" />
@@ -189,7 +214,7 @@ function DiamondImage({
         <div
           className="absolute left-1/2 top-1/2 h-[142%] w-[142%]"
           style={{
-            transform: `translate(-50%, -50%) rotate(-45deg) scale(${imageScale})`,
+            transform: `translate(-50%, -50%) rotate(-45deg) scale(${adjustedImageScale})`,
             transformOrigin: "center",
           }}
         >
@@ -369,6 +394,31 @@ function ProcessDeck() {
 }
 
 export default function CareersPage({ onNavigate }) {
+  const [desktopSelectedWhyCard, setDesktopSelectedWhyCard] = useState(null);
+  const [isDesktopView, setIsDesktopView] = useState(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return false;
+    return window.matchMedia("(min-width: 640px)").matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return undefined;
+
+    const desktopQuery = window.matchMedia("(min-width: 640px)");
+    const handleDesktopChange = (event) => {
+      setIsDesktopView(event.matches);
+    };
+
+    setIsDesktopView(desktopQuery.matches);
+
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener("change", handleDesktopChange);
+      return () => desktopQuery.removeEventListener("change", handleDesktopChange);
+    }
+
+    desktopQuery.addListener(handleDesktopChange);
+    return () => desktopQuery.removeListener(handleDesktopChange);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white text-[#151b15]">
       <Seo
@@ -429,9 +479,22 @@ export default function CareersPage({ onNavigate }) {
             </p>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {WHY_CARDS.map((card) => (
-                <WhyCard key={card.title} {...card} />
-              ))}
+              {WHY_CARDS.map((card) => {
+                const isActive = isDesktopView
+                  ? desktopSelectedWhyCard === card.title
+                  : Boolean(card.featured);
+
+                return (
+                  <WhyCard
+                    key={card.title}
+                    title={card.title}
+                    description={card.description}
+                    active={isActive}
+                    interactive={isDesktopView}
+                    onSelect={() => setDesktopSelectedWhyCard(card.title)}
+                  />
+                );
+              })}
             </div>
           </div>
         </section>
@@ -462,18 +525,14 @@ export default function CareersPage({ onNavigate }) {
         </section>
 
         <section className="bg-[#f4f5f3] py-16 sm:py-18">
-          <div className="mx-auto grid max-w-[1040px] gap-10 px-5 sm:px-6 lg:grid-cols-[280px_1fr] lg:items-center lg:px-8">
-            <div className="relative mx-auto h-[210px] w-[210px]">
-              <div className="absolute inset-0 rounded-full border-[7px] border-[#35bc20]" />
-              <div className="absolute inset-[14px] overflow-hidden rounded-full bg-white shadow-[0_20px_40px_rgba(17,46,26,0.10)]">
-                <img
-                  src={internshipImage}
-                  alt="Internship and fellowship"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <div className="absolute bottom-3 right-0 h-12 w-12 rounded-full bg-[#31bc17]" />
+          <div className="mx-auto grid max-w-[1040px] gap-10 px-5 sm:px-6 lg:grid-cols-[330px_1fr] lg:items-center lg:px-8">
+            <div className="relative mx-auto h-[250px] w-[250px] sm:h-[290px] sm:w-[290px]">
+              <img
+                src={internshipCircleCleanImage}
+                alt="Internship and fellowship"
+                className="h-full w-full object-contain"
+                loading="lazy"
+              />
             </div>
 
             <div className="max-w-[560px]">

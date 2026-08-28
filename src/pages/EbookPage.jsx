@@ -24,7 +24,10 @@ import contentCoverOne from "../assets/Photo/bookcover1.png";
 import contentTocImage from "../assets/Photo/Table of contents layout in green.png";
 import contentCoverThree from "../assets/Photo/bookcover3.png";
 import contentSpreadImage from "../assets/Photo/bookb.png";
+import ebookPagesMobilePreview from "../assets/ebook/ebook-pages-mobile-preview.png";
 import ebookHeroArtwork from "../assets/ebook/ebook-hero-nobadge.png";
+import amazonKindleMobilePreview from "../assets/ebook/amazon-kindle-mobile-preview.png";
+import freeDownloadMobilePreview from "../assets/ebook/get-free-download-mobile-preview.png";
 
 const PAGE_SIZE = 6;
 const HERO_FALLBACK_COVER = heroFallbackCover;
@@ -454,17 +457,23 @@ export default function EbookPage({ onNavigate }) {
           </div>
         </section>
 
-        <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
-            <div className="rounded-[24px] border border-[#eceeea] bg-white p-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.05)]">
-              <h3 className="font-poppins text-[22px] font-black text-[#1f281d]">
+        <section className="bg-[#f4f4f2] px-3 py-8 sm:bg-white sm:px-6 sm:py-16 lg:px-8">
+          <div className="mx-auto grid max-w-4xl gap-7 md:grid-cols-2">
+            <div className="mx-auto w-full max-w-[372px] rounded-[26px] border border-[#d7ddd5] bg-white px-4 pb-8 pt-7 text-center shadow-[0_14px_32px_rgba(0,0,0,0.14)] sm:max-w-none sm:rounded-[24px] sm:border-[#eceeea] sm:p-6 sm:shadow-[0_14px_35px_rgba(15,23,42,0.05)]">
+              <h3 className="font-poppins text-[18px] font-black text-[#1f281d] sm:text-[22px]">
                 Get Free Download
               </h3>
-              <div className="mt-5 overflow-hidden rounded-[18px] bg-[#f4f6f2] p-4">
+              <div className="mx-auto mt-7 max-w-[292px] overflow-hidden rounded-[24px] bg-white p-0 shadow-[0_14px_32px_rgba(15,23,42,0.12)] sm:mt-5 sm:max-w-none sm:rounded-[18px] sm:bg-[#f4f6f2] sm:p-4 sm:shadow-none">
+                <img
+                  src={freeDownloadMobilePreview}
+                  alt="Open e-book preview"
+                  className="h-[146px] w-full object-cover sm:hidden"
+                  loading="lazy"
+                />
                 <img
                   src={contentSpreadImage}
                   alt="Open e-book preview"
-                  className="h-[150px] w-full object-cover"
+                  className="hidden h-[150px] w-full object-cover sm:block"
                   loading="lazy"
                 />
               </div>
@@ -477,7 +486,7 @@ export default function EbookPage({ onNavigate }) {
                   if (heroDownloadDisabled) event.preventDefault();
                 }}
                 aria-disabled={heroDownloadDisabled}
-                className={`mt-5 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#2fc915] text-white transition hover:bg-[#22a80c] ${
+                className={`mt-5 hidden h-10 w-10 items-center justify-center rounded-full bg-[#2fc915] text-white transition hover:bg-[#22a80c] sm:inline-flex ${
                   heroDownloadDisabled ? "cursor-not-allowed opacity-65" : ""
                 }`}
               >
@@ -488,17 +497,38 @@ export default function EbookPage({ onNavigate }) {
                   loading="lazy"
                 />
               </a>
+              <a
+                href={heroDownloadLink || "#"}
+                download={
+                  heroDownloadDisabled ? undefined : `${heroDownloadName}.pdf`
+                }
+                onClick={(event) => {
+                  if (heroDownloadDisabled) event.preventDefault();
+                }}
+                aria-disabled={heroDownloadDisabled}
+                className={`mt-12 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#2fc915] text-white shadow-[0_12px_24px_rgba(47,201,21,0.3)] transition hover:bg-[#22a80c] sm:hidden ${
+                  heroDownloadDisabled ? "cursor-not-allowed opacity-65" : ""
+                }`}
+              >
+                <ArrowDown size={18} strokeWidth={3} />
+              </a>
             </div>
 
-            <div className="rounded-[24px] border border-[#eceeea] bg-white p-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.05)]">
-              <h3 className="font-poppins text-[22px] font-black text-[#1f281d]">
+            <div className="mx-auto w-full max-w-[336px] rounded-[18px] border border-[#d7ddd5] bg-white px-5 py-5 text-center shadow-[0_6px_18px_rgba(15,23,42,0.08)] sm:max-w-none sm:rounded-[24px] sm:border-[#eceeea] sm:p-6 sm:shadow-[0_14px_35px_rgba(15,23,42,0.05)]">
+              <h3 className="font-poppins text-[17px] font-black text-[#1f281d] sm:text-[22px]">
                 Buy On Amazon Kindle
               </h3>
-              <div className="mt-5 overflow-hidden rounded-[18px] bg-[#f4f6f2] p-4">
+              <div className="mt-4 overflow-hidden rounded-[16px] border border-[#e8ebe5] bg-[#f7f8f5] p-0 sm:mt-5 sm:rounded-[18px] sm:border-0 sm:bg-[#f4f6f2] sm:p-4">
+                <img
+                  src={amazonKindleMobilePreview}
+                  alt="Kindle preview"
+                  className="h-[132px] w-full object-cover sm:hidden"
+                  loading="lazy"
+                />
                 <img
                   src={contentSpreadImage}
                   alt="Kindle preview"
-                  className="h-[150px] w-full object-cover"
+                  className="hidden h-[150px] w-full object-cover sm:block"
                   loading="lazy"
                 />
               </div>
@@ -506,7 +536,7 @@ export default function EbookPage({ onNavigate }) {
                 href={AMAZON_KINDLE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#dbded8] bg-white px-4 text-sm font-black text-[#1f281d] transition hover:border-[#2ecf13] hover:text-[#0e7c08]"
+                className="mt-5 hidden h-10 items-center justify-center gap-2 rounded-full border border-[#dbded8] bg-white px-4 text-sm font-black text-[#1f281d] transition hover:border-[#2ecf13] hover:text-[#0e7c08] sm:inline-flex"
               >
                 <ShoppingBag size={14} />
                 <img
@@ -515,6 +545,17 @@ export default function EbookPage({ onNavigate }) {
                   className="h-5 w-auto object-contain"
                   loading="lazy"
                 />
+              </a>
+              <a
+                href={AMAZON_KINDLE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-[10px] border border-[#1f281d] bg-white px-5 text-[16px] font-semibold text-[#1f281d] transition hover:border-[#2ecf13] hover:text-[#0e7c08] sm:hidden"
+              >
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-[4px] bg-black text-[13px] font-black leading-none text-white">
+                  a
+                </span>
+                Amazon
               </a>
             </div>
           </div>
@@ -601,9 +642,15 @@ export default function EbookPage({ onNavigate }) {
         <section className="bg-white px-4 pb-0 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-t-[26px]">
             <img
+              src={ebookPagesMobilePreview}
+              alt="Open e-book pages"
+              className="h-auto w-full object-cover sm:hidden"
+              loading="lazy"
+            />
+            <img
               src={contentSpreadImage}
               alt="Open e-book pages"
-              className="h-auto w-full object-cover"
+              className="hidden h-auto w-full object-cover sm:block"
               loading="lazy"
             />
           </div>

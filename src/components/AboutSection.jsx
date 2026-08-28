@@ -28,7 +28,7 @@ function AboutSection({ onNavigate }) {
   }, [onNavigate]);
 
   return (
-    <section className="home-section bg-[#F8FDF6]">
+    <section className="home-section home-hero-followup-section bg-[#F8FDF6]">
       <div className="home-container max-w-[1710px]">
         <div className="home-card-grid mx-auto grid max-w-[1180px] items-center md:grid-cols-[400px_1fr]">
           <div className="relative mx-auto h-[292px] w-full max-w-[292px]">

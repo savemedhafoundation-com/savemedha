@@ -210,11 +210,31 @@ button, .btn {
   background-color: #F8FDF6;
 }
 
+.home-hero-followup-section {
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.home-about-followup-section {
+  margin-top: 0;
+  padding-top: 24px;
+}
+
 .home-bodymap-section {
   padding-bottom: var(--home-space-3);
 }
 
 @media (min-width: 640px) {
+  .home-hero-followup-section {
+    margin-top: var(--home-section-between);
+    padding-top: var(--home-section-y);
+  }
+
+  .home-about-followup-section {
+    margin-top: var(--home-section-between);
+    padding-top: var(--home-section-y);
+  }
+
   .home-bodymap-section {
     padding-bottom: var(--home-space-4);
   }
@@ -362,6 +382,23 @@ button, .btn {
   height: 30%;
   pointer-events: none;
   background: #FFFFFF;
+}
+
+@media (max-width: 639px) {
+  .home-figma-hero-shell .home-main > div:first-child::after {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-hero-followup-section {
+    margin-top: 36px;
+    padding-top: 32px;
+  }
+
+  .home-figma-hero-shell .home-main > div:first-child::after {
+    display: none;
+  }
 }
 
 .home-premium-hero {

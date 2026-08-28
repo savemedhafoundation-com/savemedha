@@ -10,9 +10,10 @@ import eventBoxOne from "../assets/Photo/event/EVENT BOX/1.png";
 import eventBoxTwo from "../assets/Photo/event/EVENT BOX/2.png";
 import eventBoxThree from "../assets/Photo/event/EVENT BOX/3.png";
 import eventBoxFour from "../assets/Photo/event/EVENT BOX/4.png";
+import eventProjectHeroImage from "../assets/Photo/event-project-hero.png";
 import kidsImage from "../assets/Photo/kid.png";
-import upcomingEventImage from "../assets/Photo/6.jpg";
-import contactIcon from "../assets/Photo/young_woman_in_headset_using_laptop_and_taking_notes-removebg-preview.png";
+import upcomingEventImage from "../assets/Photo/upcoming-events-modern.png";
+import modernSupportAgentImage from "../assets/Photo/modern-support-agent.png";
 
 const heroBackgrounds = [heroBackgroundOne, heroBackgroundTwo, heroBackgroundThree];
 const heroFeatureImages = [eventBoxOne, eventBoxTwo, eventBoxThree, eventBoxFour];
@@ -20,7 +21,7 @@ const heroFeatureImages = [eventBoxOne, eventBoxTwo, eventBoxThree, eventBoxFour
 const EventCard = ({ image, label, active = false, onClick }) => (
   <article
     className={`mx-auto flex w-full max-w-[255px] flex-col overflow-hidden rounded-[10px] border bg-white p-3 shadow-[0_16px_34px_rgba(25,61,31,0.14)] transition hover:-translate-y-1 ${
-      active ? "border-[#159b17] ring-4 ring-[#159b17]" : "border-[#dfe6df]"
+      active ? "border-[#159b17] ring-2 ring-[#159b17]/15" : "border-[#dfe6df]"
     }`}
   >
     <div className="overflow-hidden rounded-[7px]">
@@ -30,7 +31,9 @@ const EventCard = ({ image, label, active = false, onClick }) => (
       type="button"
       onClick={onClick}
       className={`mt-3 min-h-[62px] rounded-[6px] px-4 text-sm font-black uppercase transition ${
-        active ? "bg-[#159b17] text-white hover:bg-[#0f7c12]" : "bg-[#f4f5f4] text-[#1d241f] hover:bg-[#e8f8e5] hover:text-[#159b17]"
+        active
+          ? "bg-[#159b17] text-white hover:bg-[#128415] active:bg-[#128415]"
+          : "bg-[#e5e7eb] text-[#1d241f] hover:bg-[#159b17] hover:text-white active:bg-[#159b17] active:text-white"
       }`}
     >
       {label}
@@ -42,6 +45,7 @@ export default function EventsProjects({ onNavigate }) {
   const eventsRef = useRef(null);
   const [heroIndex, setHeroIndex] = useState(0);
   const [featureIndex, setFeatureIndex] = useState(0);
+  const [selectedEvent, setSelectedEvent] = useState("ongoing");
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -56,6 +60,17 @@ export default function EventsProjects({ onNavigate }) {
 
   const handleScrollToEvents = () => {
     eventsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleEventNavigate = (eventType) => {
+    setSelectedEvent(eventType);
+
+    if (eventType === "upcoming") {
+      onNavigate?.("ongoing-events", { scrollTo: "upcoming-events-section" });
+      return;
+    }
+
+    onNavigate?.("ongoing-events", { scrollTo: "ongoing-events-section" });
   };
 
   return (
@@ -128,19 +143,29 @@ export default function EventsProjects({ onNavigate }) {
                       key={image}
                       src={image}
                       alt="Save Medha Foundation community work"
-                      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+                      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 lg:hidden ${
                         index === featureIndex ? "opacity-100" : "opacity-0"
                       }`}
                       loading="lazy"
                     />
                   ))}
+                  <img
+                    src={eventProjectHeroImage}
+                    alt="Save Medha Foundation event project hero"
+                    className="absolute inset-0 hidden h-full w-full object-cover lg:block"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section ref={eventsRef} id="events" className="bg-white px-4 py-20 sm:px-6 lg:px-8">
+        <section
+          ref={eventsRef}
+          id="events"
+          className="bg-white px-4 pb-32 pt-20 sm:px-6 sm:pb-24 lg:px-8 lg:pb-36"
+        >
           <div className="mx-auto max-w-5xl text-center">
             <h2 className="font-poppins text-3xl font-black text-[#1d241f]">
               <em className="text-[#159b17]">Events</em> For You
@@ -153,17 +178,27 @@ export default function EventsProjects({ onNavigate }) {
               <EventCard
                 image={kidsImage}
                 label="Ongoing Events"
-                active
-                onClick={() => onNavigate?.("ongoing-events")}
+                active={selectedEvent === "ongoing"}
+                onClick={() => handleEventNavigate("ongoing")}
               />
-              <EventCard image={upcomingEventImage} label="Upcoming Events" />
+              <EventCard
+                image={upcomingEventImage}
+                label="Upcoming Events"
+                active={selectedEvent === "upcoming"}
+                onClick={() => handleEventNavigate("upcoming")}
+              />
             </div>
           </div>
         </section>
 
         <section className="relative bg-gradient-to-b from-[#65d23b] to-[#14980f] px-4 pb-20 pt-24 text-center text-white sm:px-6 lg:px-8">
-          <div className="absolute -top-16 left-1/2 flex h-36 w-36 -translate-x-1/2 items-center justify-center rounded-full bg-white shadow-[0_18px_40px_rgba(20,152,15,0.2)]">
-            <img src={contactIcon} alt="" className="h-24 w-24 object-contain" loading="lazy" />
+          <div className="absolute -top-24 left-1/2 flex h-40 w-[12.5rem] -translate-x-1/2 items-center justify-center overflow-hidden rounded-[30px] bg-white p-2 shadow-[0_18px_40px_rgba(20,152,15,0.2)] sm:-top-20 sm:h-44 sm:w-[14rem]">
+            <img
+              src={modernSupportAgentImage}
+              alt="Support specialist using a laptop"
+              className="h-full w-full object-contain"
+              loading="lazy"
+            />
           </div>
 
           <div className="mx-auto max-w-3xl">
@@ -187,7 +222,7 @@ export default function EventsProjects({ onNavigate }) {
         </section>
       </main>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} newsletterVariant="events-projects" />
     </div>
   );
 }

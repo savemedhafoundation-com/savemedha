@@ -1,7 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import {
-  AtSign,
   Facebook,
   Instagram,
   Linkedin,
@@ -57,12 +56,13 @@ const socials = [
   },
 ];
 
-const Footer = ({ onNavigate }) => {
+const Footer = ({ onNavigate, newsletterVariant = "default" }) => {
   const [showTopButton, setShowTopButton] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterStatus, setNewsletterStatus] = useState(null);
   const [isSubmittingNewsletter, setIsSubmittingNewsletter] = useState(false);
   const footerRef = useRef(null);
+  const isEventsProjectsNewsletter = newsletterVariant === "events-projects";
 
   useViewportRoutePrefetch(footerRef);
 
@@ -140,18 +140,31 @@ const Footer = ({ onNavigate }) => {
   );
 
   return (
-    <footer ref={footerRef} className="relative mt-24 bg-[#003f19] text-white">
+    <footer
+      ref={footerRef}
+      className={`relative bg-[#003f19] text-white ${
+        isEventsProjectsNewsletter ? "mt-32 sm:mt-40" : "mt-24"
+      }`}
+    >
       <div className="relative mx-auto max-w-[980px] px-5 pt-1">
-        <div className="relative mx-auto -mt-16 max-w-[780px] rounded-[18px] bg-[#30bd16] px-6 pb-10 pt-10 shadow-[0_22px_45px_rgba(0,0,0,0.22)] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14">
+        <div
+          className={`relative mx-auto -mt-16 max-w-[780px] rounded-[18px] bg-[#30bd16] px-6 pb-10 shadow-[0_22px_45px_rgba(0,0,0,0.22)] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14 ${
+            isEventsProjectsNewsletter ? "pt-20" : "pt-24"
+          }`}
+        >
           <img
             src={HeartIllustration}
             alt=""
             aria-hidden="true"
-            className="pointer-events-none absolute -left-2 -top-24 w-[210px] select-none sm:-left-6 sm:-top-28 sm:w-[250px]"
+            className={`pointer-events-none absolute -translate-x-1/2 select-none sm:-left-6 sm:-top-28 sm:w-[250px] sm:translate-x-0 ${
+              isEventsProjectsNewsletter
+                ? "left-1/2 top-[-72px] w-[112px]"
+                : "left-[54%] top-[-70px] w-[150px]"
+            }`}
             loading="lazy"
           />
 
-          <div className="ml-auto max-w-[520px] text-left">
+          <div className="ml-0 max-w-[520px] text-left sm:ml-auto">
             <h2 className="text-[22px] font-black leading-tight text-white sm:text-[26px]">
               Subscribe to our newsletter
               <br />
@@ -162,30 +175,50 @@ const Footer = ({ onNavigate }) => {
             </p>
 
             <form
-              className="mt-6 flex flex-col gap-3 sm:flex-row"
+              className="mt-6"
               onSubmit={handleNewsletterSubmit}
             >
               <label htmlFor="footer-newsletter-email" className="sr-only">
                 Email address
               </label>
-              <div className="flex min-h-[42px] flex-1 items-center gap-2 rounded-full bg-white px-4 text-slate-700">
-                <AtSign className="h-4 w-4 text-slate-500" />
-                <input
-                  id="footer-newsletter-email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={newsletterEmail}
-                  onChange={(event) => setNewsletterEmail(event.target.value)}
-                  className="w-full bg-transparent text-[13px] font-semibold outline-none placeholder:text-slate-500"
-                />
+              <div className="sm:hidden">
+                <div className="flex min-h-[30px] items-center rounded-full bg-white px-4 shadow-[0_10px_20px_rgba(0,0,0,0.16)]">
+                  <input
+                    id="footer-newsletter-email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={newsletterEmail}
+                    onChange={(event) => setNewsletterEmail(event.target.value)}
+                    className="w-full min-w-0 bg-transparent text-[14px] font-semibold text-slate-700 outline-none placeholder:text-slate-400"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmittingNewsletter}
+                  className="mt-3 min-h-[42px] w-full rounded-full bg-white px-7 text-[12px] font-black text-[#14980f] transition hover:bg-[#e9ffe4] disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isSubmittingNewsletter ? "Subscribing" : "Subscribe"}
+                </button>
               </div>
-              <button
-                type="submit"
-                disabled={isSubmittingNewsletter}
-                className="min-h-[42px] rounded-full bg-white px-7 text-[12px] font-black text-[#14980f] transition hover:bg-[#e9ffe4] disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {isSubmittingNewsletter ? "Subscribing" : "Subscribe"}
-              </button>
+
+              <div className="hidden flex-col gap-3 sm:flex sm:flex-row">
+                <div className="flex min-h-[42px] flex-1 items-center gap-2 rounded-full bg-white px-4 text-slate-700">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={newsletterEmail}
+                    onChange={(event) => setNewsletterEmail(event.target.value)}
+                    className="w-full bg-transparent text-[13px] font-semibold outline-none placeholder:text-slate-500"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmittingNewsletter}
+                  className="min-h-[42px] rounded-full bg-white px-7 text-[12px] font-black text-[#14980f] transition hover:bg-[#e9ffe4] disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isSubmittingNewsletter ? "Subscribing" : "Subscribe"}
+                </button>
+              </div>
             </form>
 
             <p className="mt-5 text-[10px] font-medium leading-4 text-white/78">

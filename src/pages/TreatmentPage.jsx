@@ -1,12 +1,14 @@
-import { useMemo, useState } from "react";
-import { ChevronRight, HelpCircle, Leaf, Search as SearchIcon, ShieldCheck, Sparkles } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ChevronRight, Leaf, Search as SearchIcon, ShieldCheck } from "lucide-react";
 import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import StartNaturalImmunotherapyButton from "../components/StartNaturalImmunotherapyButton";
 import ImmunotherapyBottle from "../assets/treatmentpageasset/Group9199.png";
+import TreatmentBottleMobile from "../assets/treatmentpageasset/TreatmentBottleMobile.png";
 import GroupPeople from "../assets/treatmentpageasset/Grouppeople.png";
-import GreenCapsules from "../assets/treatmentpageasset/greencapsules.png";
+import healthQueryDoctorImage from "../assets/treatmentpageasset/health-query-doctor.png";
+import RecoveryAnimationVideo from "../assets/video/Recovery Animation.mp4";
 import CancerImage from "../assets/treatmentpageasset/TREATMENT IMAGES/CANCER.png";
 import KidneyImage from "../assets/treatmentpageasset/TREATMENT IMAGES/KIDNEY.png";
 import LiverImage from "../assets/treatmentpageasset/TREATMENT IMAGES/LIVER.png";
@@ -128,22 +130,44 @@ function TreatmentQuery({ onNavigate, questionLinks }) {
         </button>
       </form>
 
-      <div className="flex min-h-[250px] items-center justify-center bg-white p-7 shadow-[0_16px_45px_rgba(25,61,31,0.12)]">
-        <div className="relative">
-          <div className="absolute -left-7 -top-5 text-[#ff8bc1]">
-            <HelpCircle size={24} />
-          </div>
-          <div className="absolute right-0 top-0 text-[#9e5cff]">
-            <Sparkles size={22} />
-          </div>
-          <img src={GreenCapsules} alt="Natural immunotherapy green capsules" className="w-48 object-contain" loading="lazy" />
-        </div>
+      <div className="flex min-h-[250px] items-center justify-center bg-white p-5 shadow-[0_16px_45px_rgba(25,61,31,0.12)] sm:p-7">
+        <img
+          src={healthQueryDoctorImage}
+          alt="Doctor answering health related questions"
+          className="w-full max-w-[300px] object-contain"
+          loading="lazy"
+        />
       </div>
     </div>
   );
 }
 
 export default function TreatmentPage({ onNavigate }) {
+  const [desktopSelectedCard, setDesktopSelectedCard] = useState(null);
+  const [isDesktopView, setIsDesktopView] = useState(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return false;
+    return window.matchMedia("(min-width: 1024px)").matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return undefined;
+
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const handleDesktopChange = (event) => {
+      setIsDesktopView(event.matches);
+    };
+
+    setIsDesktopView(desktopQuery.matches);
+
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener("change", handleDesktopChange);
+      return () => desktopQuery.removeEventListener("change", handleDesktopChange);
+    }
+
+    desktopQuery.addListener(handleDesktopChange);
+    return () => desktopQuery.removeListener(handleDesktopChange);
+  }, []);
+
   const questionLinks = useMemo(() => {
     const seen = new Set();
 
@@ -181,8 +205,19 @@ export default function TreatmentPage({ onNavigate }) {
             alt=""
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover lg:hidden"
           />
+          <video
+            className="absolute inset-0 hidden h-full w-full object-cover lg:block"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster={HERO_BACKGROUND_URL}
+          >
+            <source src={RecoveryAnimationVideo} type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-r from-[#073d12]/90 via-[#058312]/78 to-[#159b17]/70" />
           <div className="absolute right-[18%] top-16 h-24 w-24 rounded-full bg-[#4bd62f]/60 blur-[2px]" />
           <div className="absolute bottom-12 right-[8%] h-32 w-32 rounded-full bg-[#35bd22]/60 blur-[2px]" />
@@ -215,14 +250,25 @@ export default function TreatmentPage({ onNavigate }) {
 
         <section className="px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[380px_1fr]">
-            <div className="relative mx-auto w-full max-w-[360px]">
-              <span className="absolute -left-4 bottom-20 h-20 w-20 rounded-full bg-[#e4f8de]" />
-              <img
-                src={ImmunotherapyBottle}
-                alt="Natural immunotherapy food supplement bottle"
-                className="relative w-full object-contain drop-shadow-[0_20px_35px_rgba(32,74,38,0.18)]"
-                loading="lazy"
-              />
+            <div className="mx-auto w-full max-w-[360px]">
+              <div className="mx-auto block w-full max-w-[220px] bg-white px-2 py-3 sm:hidden">
+                <img
+                  src={TreatmentBottleMobile}
+                  alt="Natural immunotherapy food supplement bottle"
+                  className="mx-auto w-full object-contain"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="relative hidden sm:block">
+                <span className="absolute -left-4 bottom-20 h-20 w-20 rounded-full bg-[#e4f8de]" />
+                <img
+                  src={ImmunotherapyBottle}
+                  alt="Natural immunotherapy food supplement bottle"
+                  className="relative w-full object-contain drop-shadow-[0_20px_35px_rgba(32,74,38,0.18)]"
+                  loading="lazy"
+                />
+              </div>
             </div>
 
             <div>
@@ -300,29 +346,33 @@ export default function TreatmentPage({ onNavigate }) {
             </h2>
 
             <div className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-              {treatmentCards.map((card, index) => {
-                const isPrimary = index === 0;
+              {treatmentCards.map((card) => {
+                const isSelected = isDesktopView && desktopSelectedCard === card.key;
 
                 return (
                   <article
                     key={card.key}
+                    onClick={() => {
+                      if (!isDesktopView) return;
+                      setDesktopSelectedCard(card.key);
+                    }}
                     className={`group overflow-hidden rounded-[8px] border bg-white text-left shadow-[0_12px_30px_rgba(18,49,24,0.12)] transition hover:-translate-y-1 ${
-                      isPrimary ? "border-[#159b17]" : "border-[#e5e8e5]"
+                      isSelected ? "border-[#159b17]" : "border-[#e5e8e5]"
                     }`}
                   >
                     <div className="h-40 overflow-hidden bg-[#eef7ed]">
                       <img src={card.image} alt={card.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
                     </div>
-                    <div className={isPrimary ? "bg-[#159b17] p-5 text-white" : "p-5 text-[#1d241f]"}>
+                    <div className={isSelected ? "bg-[#159b17] p-5 text-white" : "p-5 text-[#1d241f]"}>
                       <h3 className="font-poppins text-sm font-black uppercase">{card.title}</h3>
-                      <p className={`mt-2 min-h-[48px] text-xs font-semibold leading-relaxed ${isPrimary ? "text-white/90" : "text-[#5a625b]"}`}>
+                      <p className={`mt-2 min-h-[48px] text-xs font-semibold leading-relaxed ${isSelected ? "text-white/90" : "text-[#5a625b]"}`}>
                         {card.text}
                       </p>
                       <button
                         type="button"
                         onClick={() => onNavigate?.("treatment-questions", { category: card.key })}
                         className={`mt-4 rounded-[5px] px-4 py-2 text-[11px] font-black transition ${
-                          isPrimary ? "bg-white text-[#159b17] hover:bg-[#edfbea]" : "bg-[#159b17] text-white hover:bg-[#0f7c12]"
+                          isSelected ? "bg-white text-[#159b17] hover:bg-[#edfbea]" : "bg-[#159b17] text-white hover:bg-[#0f7c12]"
                         }`}
                       >
                         Learn More

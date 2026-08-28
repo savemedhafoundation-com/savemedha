@@ -1,9 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Award, BarChart3, Building2, HeartHandshake, Leaf, Target, Users } from "lucide-react";
+import {
+  Award,
+  BarChart3,
+  Building2,
+  HeartHandshake,
+  Leaf,
+  Target,
+  Users,
+} from "lucide-react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Seo } from "../components/Seo";
 import AboutHeroImage from "../assets/aboutus/Rectangle 646.png";
+import AboutUsHeroMobile from "../assets/aboutus/AboutUsHeroMobile.png";
 import DoctorImage from "../assets/aboutus/Rectangle 571.png";
 import CertificationLogos from "../assets/aboutus/Frame 21.png";
 
@@ -98,10 +107,11 @@ const ImpactOverview = () => {
   return (
     <section ref={sectionRef} className="bg-[#03450e] px-4 py-14 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <div className="flex items-end justify-between gap-6 border-b border-white/35 pb-7">
-          <div>
-            <h2 className="font-poppins text-2xl font-black sm:text-3xl">Impact Overview</h2>
-            <p className="mt-3 inline-block bg-[#2fbf23] px-3 py-1 text-sm font-semibold text-white">
+        <div className="pb-7 text-center sm:flex sm:items-end sm:justify-between sm:gap-6 sm:border-b sm:border-white/35">
+          <div className="mx-auto sm:mx-0 sm:text-left">
+            <BarChart3 className="mx-auto mb-5 text-white sm:hidden" size={34} strokeWidth={2.4} />
+            <h2 className="font-poppins text-[28px] font-black sm:text-3xl">Impact Overview</h2>
+            <p className="mx-auto mt-6 inline-flex rounded-[10px] bg-[#2fbf23] px-5 py-2 text-[13px] font-semibold text-white sm:mx-0 sm:mt-3 sm:inline-block sm:rounded-none sm:px-3 sm:py-1 sm:text-sm">
               The scale of our expanding community.
             </p>
           </div>
@@ -150,17 +160,24 @@ export default function AboutUs({ onNavigate }) {
       <Navbar currentPage="about" onNavigate={onNavigate} />
 
       <main className="w-full overflow-hidden">
-        <section className="relative bg-[#063f12] px-4 py-16 text-white sm:px-6 lg:px-8 lg:py-20">
+        <section className="relative overflow-hidden bg-[#063f12] text-white sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+          <img
+            src={AboutUsHeroMobile}
+            alt="About Us poster for Save Medha Foundation"
+            fetchPriority="high"
+            decoding="async"
+            className="block w-full sm:hidden"
+          />
           <img
             src={HERO_BACKGROUND_URL}
             alt=""
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover opacity-25"
+            className="absolute inset-0 hidden h-full w-full object-cover opacity-25 sm:block"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#063f12] via-[#064816]/95 to-[#063f12]/80" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-[#063f12] via-[#064816]/95 to-[#063f12]/80 sm:block" />
 
-          <div className="relative mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.02fr_0.98fr]">
+          <div className="relative mx-auto hidden max-w-6xl items-center gap-10 sm:grid lg:grid-cols-[1.02fr_0.98fr]">
             <div>
               <p className="font-poppins text-xs font-bold uppercase tracking-[0.45em] text-[#d9f9d2]">
                 Save Medha Foundation

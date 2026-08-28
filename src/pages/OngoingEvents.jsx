@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ArrowDown, MapPin } from "lucide-react";
 import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
@@ -185,8 +186,27 @@ function EventsSection({
 }
 
 export default function OngoingEvents({ onNavigate }) {
+  const location = useLocation();
   const [visibleOngoingCount, setVisibleOngoingCount] = useState(4);
   const [visibleUpcomingCount, setVisibleUpcomingCount] = useState(2);
+
+  useEffect(() => {
+    const stateTarget =
+      location?.state && typeof location.state === "object"
+        ? location.state.scrollTo
+        : null;
+    const hashTarget = location?.hash ? location.hash.replace(/^#/, "") : null;
+    const targetId = stateTarget || hashTarget;
+
+    if (!targetId) return;
+
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) return;
+
+    window.requestAnimationFrame(() => {
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [location.hash, location.key, location.state]);
 
   const handleScrollToOngoing = () => {
     const ongoingSection = document.getElementById("ongoing-events-section");

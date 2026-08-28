@@ -110,7 +110,11 @@ export default function TestimonialsSection() {
           </p>
 
           <div className="home-content-gap flex justify-center">
-            <Quote size={52} className="text-[#14980f]" fill="currentColor" />
+            <Quote
+              size={52}
+              className="rotate-180 text-[#14980f] sm:rotate-0"
+              fill="currentColor"
+            />
           </div>
           <p className="home-heading-gap mx-auto max-w-[240px] text-[18px] font-medium leading-6 text-slate-800">
             What our customers are saying

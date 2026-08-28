@@ -682,9 +682,6 @@ function Navbar({ currentPage = "home", onNavigate }) {
                 <a href="https://www.linkedin.com/company/save-medha-foundation/" aria-label="LinkedIn" target="_blank" rel="noreferrer" className="hover:text-white/80">
                   <Linkedin size={11} fill="currentColor" strokeWidth={0} />
                 </a>
-                <a href="https://www.facebook.com/savemedhafoundation" aria-label="Follow Save Medha Foundation" target="_blank" rel="noreferrer" className="text-[13px] leading-none hover:text-white/80">
-                  f
-                </a>
               </div>
               <span className="h-3 w-px bg-white/40" aria-hidden="true" />
               <div className="relative">
