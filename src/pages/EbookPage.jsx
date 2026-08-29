@@ -307,7 +307,7 @@ export default function EbookPage({ onNavigate }) {
                     key={`ebook-card-skeleton-${index}`}
                     className="min-h-[360px] animate-pulse rounded-[22px] border border-[#eceeea] bg-white p-4 shadow-sm"
                   >
-                    <div className="h-40 rounded-[18px] bg-slate-100" />
+                    <div className="aspect-[1050/656] rounded-[18px] bg-slate-100" />
                     <div className="mt-5 h-5 w-3/4 rounded-full bg-slate-100" />
                     <div className="mt-3 h-4 w-full rounded-full bg-slate-100" />
                     <div className="mt-2 h-4 w-11/12 rounded-full bg-slate-100" />
@@ -349,11 +349,11 @@ export default function EbookPage({ onNavigate }) {
                       key={book.id}
                       className="group flex min-h-[370px] flex-col rounded-[22px] border border-[#eceeea] bg-white p-4 shadow-[0_14px_35px_rgba(15,23,42,0.05)] transition hover:-translate-y-1 hover:shadow-[0_18px_42px_rgba(15,23,42,0.08)]"
                     >
-                      <div className="flex h-[158px] items-center justify-center rounded-[18px] bg-[#f1f3ef] p-4">
+                      <div className="aspect-[1050/656] w-full overflow-hidden rounded-[18px] bg-[#f1f3ef]">
                         <img
                           src={cover}
                           alt={book.title}
-                          className="h-full w-full object-contain transition duration-300 group-hover:scale-105"
+                          className="block h-full w-full object-cover transition duration-300 group-hover:scale-105"
                           loading="lazy"
                         />
                       </div>
