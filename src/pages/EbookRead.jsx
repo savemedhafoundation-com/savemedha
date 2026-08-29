@@ -4,7 +4,11 @@ import Footer from "../components/Footer";
 import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
 import { fetchEbooks } from "../service/api";
-import { getEbookSlug, normalizeEbook, normalizeEbookResponse } from "../utils/ebook";
+import {
+  getEbookSlug,
+  normalizeEbook,
+  normalizeEbookResponse,
+} from "../utils/ebook";
 import { fallbackEbooks } from "../data/ebookFallback";
 
 export default function EbookRead({ onNavigate }) {
@@ -143,13 +147,13 @@ export default function EbookRead({ onNavigate }) {
                       Download PDF
                     </a>
                     <a
-                      href={book.downloadLink || undefined}
-                      target={book.downloadLink ? "_blank" : undefined}
-                      rel={book.downloadLink ? "noopener noreferrer" : undefined}
-                      aria-disabled={!book.downloadLink}
-                      tabIndex={book.downloadLink ? undefined : -1}
+                      href={book.viewLink || undefined}
+                      target={book.viewLink ? "_blank" : undefined}
+                      rel={book.viewLink ? "noopener noreferrer" : undefined}
+                      aria-disabled={!book.viewLink}
+                      tabIndex={book.viewLink ? undefined : -1}
                       className={`inline-flex items-center justify-center rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 ${
-                        book.downloadLink ? "" : "cursor-not-allowed opacity-60"
+                        book.viewLink ? "" : "cursor-not-allowed opacity-60"
                       }`}
                     >
                       Open in New Tab
@@ -161,10 +165,10 @@ export default function EbookRead({ onNavigate }) {
                   <p className="mt-6 text-slate-700">{book.desc}</p>
                 )}
 
-                {book.downloadLink ? (
+                {book.viewLink ? (
                   <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                     <iframe
-                      src={book.downloadLink}
+                      src={book.viewLink}
                       title={book.title}
                       className="h-[80vh] w-full"
                     />

@@ -341,7 +341,7 @@ export default function EbookPage({ onNavigate }) {
                     PUBLICATION_FALLBACK_COVERS[
                       index % PUBLICATION_FALLBACK_COVERS.length
                     ];
-                  const canRead = Boolean(book.readLink);
+                  const canRead = Boolean(book.readLink && book.viewLink);
                   const canDownload = Boolean(book.downloadLink);
 
                   return (

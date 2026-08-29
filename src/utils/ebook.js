@@ -57,14 +57,24 @@ const resolveCoverImage = (book) => {
   );
 };
 
-const resolveDownloadLink = (book) => {
+const resolveViewLink = (book) => {
   return (
-    book?.downloadUrl ||
-    book?.downloadLink ||
     book?.pdfUrl ||
     book?.pdf ||
     book?.fileUrl ||
     book?.file ||
+    book?.downloadUrl ||
+    book?.downloadLink ||
+    ""
+  );
+};
+
+const resolveDownloadLink = (book, viewLink) => {
+  return (
+    book?.pdfDownloadUrl ||
+    book?.downloadUrl ||
+    book?.downloadLink ||
+    viewLink ||
     ""
   );
 };
@@ -73,6 +83,7 @@ export const normalizeEbook = (book, index = 0) => {
   const id = book?._id || book?.id || `ebook-${index}`;
   const title = book?.title || "Untitled E-Book";
   const slug = getEbookSlug({ ...book, _id: id, id, title });
+  const viewLink = resolveViewLink(book);
 
   const pagesValue = book?.pages || book?.pageCount;
   const pages = pagesValue ? `${pagesValue} pages` : "";
@@ -83,12 +94,16 @@ export const normalizeEbook = (book, index = 0) => {
     title,
     author:
       book?.writtenBy ||
+      (Array.isArray(book?.authors) && book.authors.length
+        ? book.authors.join(", ")
+        : "") ||
       book?.author?.name ||
       book?.author ||
       "Save Medha Foundation",
     desc: book?.description || book?.desc || "",
     cover: resolveCoverImage(book),
-    downloadLink: resolveDownloadLink(book),
+    viewLink,
+    downloadLink: resolveDownloadLink(book, viewLink),
     readLink: slug ? `/ebook/read/${slug}` : "",
     pages,
     readTime: book?.readTime || book?.duration || "",

@@ -26,3 +26,5 @@ dist-ssr
 
 # Local work logs
 docs/today-work*.md
+.vercel
+.env*
