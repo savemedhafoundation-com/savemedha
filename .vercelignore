@@ -1,0 +1,10 @@
+# Keep local configuration and work-in-progress artifacts out of deployment uploads.
+.env
+.env.*
+tmp/
+docs/today-work*.md
+*.log
+.agents/
+.codex/
+.claude/
+.vscode/

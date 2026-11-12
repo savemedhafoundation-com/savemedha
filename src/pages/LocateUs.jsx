@@ -68,7 +68,7 @@ const LOCATIONS = [
   {
     city: "BANGLADESH",
     address: "Rongpur, Bangladesh - 5400",
-    phone: "+880 1616-850300",
+    phone: "+91 9800808595",
     mapLink: "https://www.google.com/maps/search/?api=1&query=Rangpur%2C%20Bangladesh%205400",
     lat: 25.760085,
     lng: 89.2673581,
