@@ -1,6 +1,6 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import Footer from "../components/Footer";
 import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
@@ -20,8 +20,6 @@ const PUBLICATION_COVERS = {
   "https://res.cloudinary.com/dttk2mf1y/image/upload/v1788171929/savemedha/ebooks/banners/qgd8knaqydox9kzlqvjb.jpg": autoimmuneCover,
   "https://res.cloudinary.com/dttk2mf1y/image/upload/v1787996437/savemedha/ebooks/banners/etvxy80epl2fsqulu77o.jpg": cancerNeverAgainCover,
 };
-
-const LATEST_BOOKS_PER_PAGE = 4;
 
 function preparePublication(book, index) {
   const publication = normalizeEbook(book, index);
@@ -133,47 +131,6 @@ function BookCard({ book, showActions = false }) {
         </a>
       </div>
     </article>
-  );
-}
-
-function LatestPublications({ books }) {
-  const [page, setPage] = useState(0);
-  const pageCount = Math.ceil(books.length / LATEST_BOOKS_PER_PAGE);
-  const start = page * LATEST_BOOKS_PER_PAGE;
-
-  return (
-    <>
-      <div id="ebook-latest-covers" className="ebook-latest-covers ebook-container">
-        {books.slice(start, start + LATEST_BOOKS_PER_PAGE).map((book, index) => (
-          <BookCard key={book.id} book={book} showActions={index === 0} />
-        ))}
-      </div>
-      {pageCount > 1 && (
-        <div className="ebook-publication-pagination ebook-container" role="group" aria-label="Publication pages">
-          <button
-            type="button"
-            className="ebook-button ebook-button-outline"
-            aria-controls="ebook-latest-covers"
-            aria-disabled={page === 0}
-            onClick={() => setPage((current) => Math.max(0, current - 1))}
-          >
-            <ChevronLeft size={18} aria-hidden="true" />
-            Previous
-          </button>
-          <button
-            type="button"
-            className="ebook-button ebook-button-outline"
-            aria-controls="ebook-latest-covers"
-            aria-disabled={page === pageCount - 1}
-            onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))}
-          >
-            Next
-            <ChevronRight size={18} aria-hidden="true" />
-          </button>
-          <span className="sr-only" role="status">Page {page + 1} of {pageCount}</span>
-        </div>
-      )}
-    </>
   );
 }
 
@@ -303,12 +260,16 @@ export default function EbookPage({ onNavigate }) {
           {status === "loading" ? (
             <div className="ebook-latest-covers ebook-container" role="status">
               <span className="sr-only">Loading publications...</span>
-              {Array.from({ length: LATEST_BOOKS_PER_PAGE }, (_, index) => (
+              {Array.from({ length: 4 }, (_, index) => (
                 <div key={index} className="ebook-cover ebook-cover-skeleton" />
               ))}
             </div>
           ) : ebooks.length ? (
-            <LatestPublications books={ebooks} />
+            <div className="ebook-latest-covers ebook-container">
+              {ebooks.slice(0, 4).map((book, index) => (
+                <BookCard key={book.id} book={book} showActions={index === 0} />
+              ))}
+            </div>
           ) : (
             <div className="ebook-empty ebook-container" role="status">
               <p>
