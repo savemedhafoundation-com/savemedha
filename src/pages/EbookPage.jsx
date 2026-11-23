@@ -117,10 +117,10 @@ function BookActions({ book }) {
   );
 }
 
-function BookCard({ book, showActions = false }) {
+function BookCard({ book }) {
   return (
     <article
-      className={`ebook-cover${showActions ? " ebook-cover-featured" : ""}`}
+      className="ebook-cover"
       aria-label={book.title}
     >
       <img
@@ -251,11 +251,7 @@ function BookShelf({ books, row, playing }) {
     >
       <div className="ebook-shelf-track">
         {shelfBooks.map((book, index) => (
-          <BookCard
-            key={`${book.id}-${index}`}
-            book={book}
-            showActions={(index - centerIndex - row) % bookCount === 0}
-          />
+          <BookCard key={`${book.id}-${index}`} book={book} />
         ))}
       </div>
     </div>

@@ -151,13 +151,14 @@
   padding: 40px 12px 18px;
   background: linear-gradient(transparent, rgb(246 247 246 / 96%) 50%);
   opacity: 0;
+  pointer-events: none;
   transition: opacity 180ms ease;
 }
 
 .ebook-cover:hover .ebook-cover-actions,
-.ebook-cover:focus-within .ebook-cover-actions,
-.ebook-cover-featured .ebook-cover-actions {
+.ebook-cover:focus-within .ebook-cover-actions {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .ebook-button {
@@ -488,7 +489,7 @@
   .ebook-latest-covers .ebook-cover { width: 100%; max-width: none; }
   .ebook-latest-covers .ebook-cover:only-child { grid-column: 1 / -1; width: 60%; justify-self: center; }
   .ebook-latest-covers:has(> :nth-child(3):last-child) > :last-child { grid-column: 1 / -1; width: calc((100% - 20px) / 2); justify-self: center; }
-  .ebook-cover-actions { opacity: 1; gap: 6px; padding: 32px 6px 12px; }
+  .ebook-cover-actions { gap: 6px; padding: 32px 6px 12px; }
   .ebook-cover-actions .ebook-button { flex: 1; min-width: 0; min-height: 44px; padding-inline: 4px; font-size: 10px; white-space: normal; }
   .ebook-library { padding-top: 70px; }
   .ebook-shelves { gap: 30px; margin-top: 32px; }
@@ -534,8 +535,8 @@
   .ebook-faq-item p { padding: 0 36px 22px 18px; font-size: 14px; }
 }
 
-@media (hover: none) and (min-width: 768px) {
-  .ebook-cover-actions { opacity: 1; }
+@media (hover: none) {
+  .ebook-cover-actions { opacity: 1; pointer-events: auto; }
   .ebook-cover-actions .ebook-button { min-height: 44px; }
 }
 
