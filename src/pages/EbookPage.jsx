@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Minus, Plus } from "lucide-react";
 import Footer from "../components/Footer";
@@ -143,6 +143,42 @@ function BookCard({ book, showActions = false }) {
   );
 }
 
+function BookShelf({ books, row }) {
+  const shelfRef = useRef(null);
+  // Repeat covers to create the continuous, staggered shelves in the design.
+  const shelfBooks = Array.from(
+    { length: Math.max(9, books.length % 2 ? books.length : books.length + 1) },
+    (_, index) => books[(index + row) % books.length],
+  );
+
+  useEffect(() => {
+    const shelf = shelfRef.current;
+    if (shelf) {
+      shelf.scrollLeft = (shelf.scrollWidth - shelf.clientWidth) / 2;
+    }
+  }, [books, row]);
+
+  return (
+    <div
+      ref={shelfRef}
+      className="ebook-shelf"
+      role="region"
+      aria-label={`Publication shelf ${row + 1}, scroll to browse books`}
+      tabIndex={0}
+    >
+      <div className="ebook-shelf-track">
+        {shelfBooks.map((book, index) => (
+          <BookCard
+            key={`${book.id}-${index}`}
+            book={book}
+            showActions={index === 4 + row}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function EbookPage({ onNavigate }) {
   const [ebooks, setEbooks] = useState([]);
   const [status, setStatus] = useState("loading");
@@ -238,11 +274,27 @@ export default function EbookPage({ onNavigate }) {
               ))}
             </div>
           ) : ebooks.length ? (
-            <div className="ebook-latest-covers ebook-container">
-              {ebooks.slice(0, 4).map((book, index) => (
-                <BookCard key={book.id} book={book} showActions={index === 0} />
-              ))}
-            </div>
+            <CoverflowCarousel
+              className="ebook-latest-carousel ebook-container"
+              label="Latest publications"
+              cardWidth="clamp(148px, 42vw, 267px)"
+              cardAspectRatio={400 / 630}
+              slides={ebooks.map((book) => ({
+                id: book.id,
+                src: book.cover || fallbackCover,
+                fallbackSrc: fallbackCover,
+                alt: book.title,
+                title: book.title,
+              }))}
+              showCaption
+              showNavigation
+              showPagination
+              renderActions={(_, index) => (
+                <div className="ebook-carousel-actions">
+                  <BookActions book={ebooks[index]} />
+                </div>
+              )}
+            />
           ) : (
             <div className="ebook-empty ebook-container" role="status">
               <p>
@@ -272,27 +324,10 @@ export default function EbookPage({ onNavigate }) {
             description="Curated reading material designed to make complex healing concepts easier to understand and revisit."
           />
           {ebooks.length > 0 ? (
-            <CoverflowCarousel
-              className="ebook-library-carousel ebook-container"
-              label="Browse e-books and research publications"
-              cardWidth="clamp(148px, 42vw, 267px)"
-              cardAspectRatio={400 / 630}
-              slides={ebooks.map((book) => ({
-                id: book.id,
-                src: book.cover || fallbackCover,
-                fallbackSrc: fallbackCover,
-                alt: book.title,
-                title: book.title,
-              }))}
-              showCaption
-              showNavigation
-              showPagination
-              renderActions={(_, index) => (
-                <div className="ebook-carousel-actions">
-                  <BookActions book={ebooks[index]} />
-                </div>
-              )}
-            />
+            <div className="ebook-shelves">
+              <BookShelf books={ebooks} row={0} />
+              <BookShelf books={ebooks} row={1} />
+            </div>
           ) : status === "loading" ? (
             <div className="ebook-latest-covers ebook-container" aria-hidden="true">
               {Array.from({ length: 4 }, (_, index) => (

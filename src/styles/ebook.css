@@ -89,6 +89,22 @@
   text-align: right;
 }
 
+.ebook-latest-carousel {
+  margin-top: clamp(12px, 2.8vw, 40px);
+}
+
+.ebook-carousel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ebook-carousel-actions .ebook-button {
+  padding-inline: 20px;
+}
+
 .ebook-latest-covers {
   display: flex;
   justify-content: space-between;
@@ -204,20 +220,28 @@
   scroll-margin-top: 110px;
 }
 
-.ebook-library-carousel {
-  margin-top: clamp(12px, 2.8vw, 40px);
+.ebook-shelves { display: grid; gap: 60px; margin-top: 60px; }
+
+.ebook-shelf {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
 }
 
-.ebook-carousel-actions {
+.ebook-shelf::-webkit-scrollbar { display: none; }
+
+.ebook-shelf-track {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 16px;
+  width: max-content;
+  gap: var(--ebook-cover-gap);
+  padding-inline: 24px;
 }
 
-.ebook-carousel-actions .ebook-button {
-  padding-inline: 20px;
+.ebook-shelf .ebook-cover { scroll-snap-align: center; }
+
+.ebook-shelves .ebook-shelf:nth-child(2) .ebook-shelf-track {
+  gap: calc(var(--ebook-cover-gap) * 1.15);
 }
 
 .ebook-library-empty { padding-top: 40px; }
@@ -388,7 +412,8 @@
 .ebook-faq-item p { padding: 0 76px 30px 36px; font-size: 19px; line-height: 1.45; }
 
 .ebook-redesign a:focus-visible,
-.ebook-redesign button:focus-visible {
+.ebook-redesign button:focus-visible,
+.ebook-shelf:focus-visible {
   outline: 3px solid #126b1b;
   outline-offset: 5px;
 }
@@ -453,6 +478,7 @@
   .ebook-cover-actions { opacity: 1; gap: 6px; padding: 32px 6px 12px; }
   .ebook-cover-actions .ebook-button { flex: 1; min-width: 0; min-height: 44px; padding-inline: 4px; font-size: 10px; white-space: normal; }
   .ebook-library { padding-top: 70px; }
+  .ebook-shelves { gap: 30px; margin-top: 32px; }
   .ebook-benefits { padding-top: 90px; }
   .ebook-centered-heading p { max-width: 330px; margin-top: 22px; }
   .ebook-benefits-grid {
