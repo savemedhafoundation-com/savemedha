@@ -1,6 +1,6 @@
-﻿import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Pause, Play, Plus } from "lucide-react";
 import Footer from "../components/Footer";
 import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
@@ -143,20 +143,100 @@ function BookCard({ book, showActions = false }) {
   );
 }
 
-function BookShelf({ books, row }) {
+function BookShelf({ books, row, playing }) {
   const shelfRef = useRef(null);
-  // Repeat covers to create the continuous, staggered shelves in the design.
+  const loopRef = useRef(null);
+  const touchPauseUntil = useRef(0);
+  const bookCount = books.length;
+  const initialCount = Math.max(9, bookCount % 2 ? bookCount : bookCount + 1);
+  const centerIndex = Math.floor(initialCount / 2);
+  // The extra cycle gives each row enough room to wrap without an empty edge.
   const shelfBooks = Array.from(
-    { length: Math.max(9, books.length % 2 ? books.length : books.length + 1) },
-    (_, index) => books[(index + row) % books.length],
+    { length: initialCount + (bookCount > 1 ? bookCount : 0) },
+    (_, index) => books[(index + row) % bookCount],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const shelf = shelfRef.current;
-    if (shelf) {
-      shelf.scrollLeft = (shelf.scrollWidth - shelf.clientWidth) / 2;
-    }
-  }, [books, row]);
+    const track = shelf.firstElementChild;
+    const centerCard = track.children[centerIndex];
+    const centeredOffset = () => centerCard.offsetLeft + (centerCard.offsetWidth - shelf.clientWidth) / 2;
+
+    shelf.scrollLeft = centeredOffset();
+    if (bookCount < 2) return;
+
+    const measureLoop = () => {
+      const distance = track.children[bookCount].offsetLeft - track.firstElementChild.offsetLeft;
+      const maxStart = shelf.scrollWidth - shelf.clientWidth - distance;
+      loopRef.current = distance > 0 && maxStart >= 0
+        ? { distance, start: Math.min(maxStart, Math.max(0, centeredOffset() - distance / 2)) }
+        : null;
+    };
+
+    measureLoop();
+    const resize = new ResizeObserver(measureLoop);
+    resize.observe(shelf);
+    resize.observe(track);
+    return () => resize.disconnect();
+  }, [bookCount, centerIndex]);
+
+  useEffect(() => {
+    if (!playing) return;
+    const shelf = shelfRef.current;
+    const hoverable = window.matchMedia("(hover: hover)");
+    const direction = row === 0 ? 1 : -1;
+    let frame = null;
+    let lastTime = null;
+    let remainingPixels = 0;
+
+    const animate = (now) => {
+      const elapsed = lastTime === null ? 0 : Math.min(now - lastTime, 50);
+      const loop = loopRef.current;
+      lastTime = now;
+
+      const interacting = now < touchPauseUntil.current
+        || shelf.matches(":focus-within")
+        || (hoverable.matches && shelf.matches(":hover"));
+
+      if (loop && !interacting) {
+        // Scroll offsets can round to whole pixels, so carry the fractional step forward.
+        remainingPixels += elapsed * 0.032;
+        const step = Math.floor(remainingPixels);
+        if (step > 0) {
+          const { start, distance } = loop;
+          const offset = shelf.scrollLeft + direction * step - start;
+          shelf.scrollLeft = start + ((offset % distance + distance) % distance);
+          remainingPixels -= step;
+        }
+      }
+
+      frame = requestAnimationFrame(animate);
+    };
+
+    const stop = () => {
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = null;
+      lastTime = null;
+    };
+
+    const visibility = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (frame === null) frame = requestAnimationFrame(animate);
+      } else {
+        stop();
+      }
+    });
+    visibility.observe(shelf);
+
+    return () => {
+      visibility.disconnect();
+      stop();
+    };
+  }, [playing, row]);
+
+  const finishTouch = (event) => {
+    if (event.touches.length === 0) touchPauseUntil.current = performance.now() + 1000;
+  };
 
   return (
     <div
@@ -165,17 +245,56 @@ function BookShelf({ books, row }) {
       role="region"
       aria-label={`Publication shelf ${row + 1}, scroll to browse books`}
       tabIndex={0}
+      onTouchStart={() => { touchPauseUntil.current = Infinity; }}
+      onTouchEnd={finishTouch}
+      onTouchCancel={finishTouch}
     >
       <div className="ebook-shelf-track">
         {shelfBooks.map((book, index) => (
           <BookCard
             key={`${book.id}-${index}`}
             book={book}
-            showActions={index === 4 + row}
+            showActions={(index - centerIndex - row) % bookCount === 0}
           />
         ))}
       </div>
     </div>
+  );
+}
+
+function PublicationShelves({ books }) {
+  const [playing, setPlaying] = useState(
+    () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const canPlay = books.length > 1;
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncPreference = (event) => setPlaying(!event.matches);
+    reducedMotion.addEventListener("change", syncPreference);
+    return () => reducedMotion.removeEventListener("change", syncPreference);
+  }, []);
+
+  return (
+    <>
+      {canPlay && (
+        <div className="ebook-shelf-controls ebook-container">
+          <button
+            type="button"
+            className="ebook-button ebook-button-outline"
+            aria-controls="ebook-publication-shelves"
+            onClick={() => setPlaying((current) => !current)}
+          >
+            {playing ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
+            {playing ? "Pause animation" : "Play animation"}
+          </button>
+        </div>
+      )}
+      <div id="ebook-publication-shelves" className="ebook-shelves">
+        <BookShelf books={books} row={0} playing={canPlay && playing} />
+        <BookShelf books={books} row={1} playing={canPlay && playing} />
+      </div>
+    </>
   );
 }
 
@@ -324,10 +443,7 @@ export default function EbookPage({ onNavigate }) {
             description="Curated reading material designed to make complex healing concepts easier to understand and revisit."
           />
           {ebooks.length > 0 ? (
-            <div className="ebook-shelves">
-              <BookShelf books={ebooks} row={0} />
-              <BookShelf books={ebooks} row={1} />
-            </div>
+            <PublicationShelves books={ebooks} />
           ) : status === "loading" ? (
             <div className="ebook-latest-covers ebook-container" aria-hidden="true">
               {Array.from({ length: 4 }, (_, index) => (
