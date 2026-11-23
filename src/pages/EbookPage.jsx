@@ -4,6 +4,7 @@ import { Minus, Plus } from "lucide-react";
 import Footer from "../components/Footer";
 import { Seo } from "../components/Seo";
 import Navbar from "../components/Navbar";
+import { CoverflowCarousel } from "../components/ui/coverflow-carousel";
 import { fetchEbooks } from "../service/api";
 import { normalizeEbook, normalizeEbookResponse } from "../utils/ebook";
 import fallbackCover from "../assets/Photo/BOOK1 1.png";
@@ -79,10 +80,44 @@ function PublicationHeading({ id, title, description }) {
   );
 }
 
-function BookCard({ book, showActions = false }) {
+function BookActions({ book }) {
   const canDownload = Boolean(book.downloadLink);
   const canRead = Boolean(book.readLink && book.viewLink);
 
+  return (
+    <>
+      {canRead ? (
+        <Link
+          to={book.readLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ebook-button ebook-button-green"
+          aria-label={`Read ${book.title} online`}
+        >
+          Read Online
+        </Link>
+      ) : (
+        <button type="button" className="ebook-button ebook-button-green" disabled>
+          Read Online
+        </button>
+      )}
+      <a
+        href={book.downloadLink || undefined}
+        download={canDownload ? `${book.slug || book.id}.pdf` : undefined}
+        target={canDownload ? "_blank" : undefined}
+        rel={canDownload ? "noopener noreferrer" : undefined}
+        aria-label={`Download ${book.title} PDF`}
+        aria-disabled={!canDownload}
+        tabIndex={canDownload ? undefined : -1}
+        className="ebook-button ebook-button-outline"
+      >
+        Download PDF
+      </a>
+    </>
+  );
+}
+
+function BookCard({ book, showActions = false }) {
   return (
     <article
       className={`ebook-cover${showActions ? " ebook-cover-featured" : ""}`}
@@ -102,33 +137,7 @@ function BookCard({ book, showActions = false }) {
         }}
       />
       <div className="ebook-cover-actions">
-        {canRead ? (
-          <Link
-            to={book.readLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ebook-button ebook-button-green"
-            aria-label={`Read ${book.title} online`}
-          >
-            Read Online
-          </Link>
-        ) : (
-          <button className="ebook-button ebook-button-green" disabled>
-            Read Online
-          </button>
-        )}
-        <a
-          href={book.downloadLink || undefined}
-          download={canDownload ? `${book.slug || book.id}.pdf` : undefined}
-          target={canDownload ? "_blank" : undefined}
-          rel={canDownload ? "noopener noreferrer" : undefined}
-          aria-label={`Download ${book.title} PDF`}
-          aria-disabled={!canDownload}
-          tabIndex={canDownload ? undefined : -1}
-          className="ebook-button ebook-button-outline"
-        >
-          Download PDF
-        </a>
+        <BookActions book={book} />
       </div>
     </article>
   );
@@ -265,11 +274,27 @@ export default function EbookPage({ onNavigate }) {
               ))}
             </div>
           ) : ebooks.length ? (
-            <div className="ebook-latest-covers ebook-container">
-              {ebooks.slice(0, 4).map((book, index) => (
-                <BookCard key={book.id} book={book} showActions={index === 0} />
-              ))}
-            </div>
+            <CoverflowCarousel
+              className="ebook-latest-carousel ebook-container"
+              label="Latest publications"
+              cardWidth="clamp(148px, 42vw, 267px)"
+              cardAspectRatio={400 / 630}
+              slides={ebooks.map((book) => ({
+                id: book.id,
+                src: book.cover || fallbackCover,
+                fallbackSrc: fallbackCover,
+                alt: book.title,
+                title: book.title,
+              }))}
+              showCaption
+              showNavigation
+              showPagination
+              renderActions={(_, index) => (
+                <div className="ebook-carousel-actions">
+                  <BookActions book={ebooks[index]} />
+                </div>
+              )}
+            />
           ) : (
             <div className="ebook-empty ebook-container" role="status">
               <p>

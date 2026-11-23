@@ -89,6 +89,22 @@
   text-align: right;
 }
 
+.ebook-latest-carousel {
+  margin-top: clamp(12px, 2.8vw, 40px);
+}
+
+.ebook-carousel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ebook-carousel-actions .ebook-button {
+  padding-inline: 20px;
+}
+
 .ebook-latest-covers {
   display: flex;
   justify-content: space-between;
