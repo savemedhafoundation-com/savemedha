@@ -7,7 +7,7 @@ const buildMapSrc = ({ lat, lng, zoom }) =>
   )}&z=${encodeURIComponent(String(zoom))}&output=embed`;
 
 export default function ContactGetInTouchSection({
-  phone = "08031933317",
+  phone = "+91 9800808595",
   email = "info@savemedha.com",
   mapLat = 22.6564,
   mapLng = 88.3772,
