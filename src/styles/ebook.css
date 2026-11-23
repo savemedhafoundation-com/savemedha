@@ -105,6 +105,22 @@
   justify-content: space-evenly;
 }
 
+.ebook-publication-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.ebook-publication-pagination .ebook-button {
+  gap: 6px;
+  padding-inline: 16px;
+}
+
+.ebook-publication-pagination .ebook-button[aria-disabled='false'] {
+  cursor: pointer;
+}
+
 .ebook-cover {
   position: relative;
   flex: 0 0 var(--ebook-cover-width);
